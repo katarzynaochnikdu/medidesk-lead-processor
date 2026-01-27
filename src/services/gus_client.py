@@ -1,11 +1,8 @@
 """
-Klient GUS/REGON - pobieranie danych firm z rejestru.
-Port sprawdzonego kodu z wFirma/APIV1/app.py.
+Klient GUS/REGON - proxy do zewnętrznego API na Render (wfirma-api).
 """
 
 import logging
-import re
-import xml.etree.ElementTree as ET
 from typing import Optional
 
 import httpx
@@ -19,38 +16,35 @@ logger = logging.getLogger(__name__)
 
 class GUSClient:
     """
-    Klient do komunikacji z API GUS/REGON (BIR).
-    Obsługuje logowanie SOAP, wyszukiwanie podmiotów i parsowanie odpowiedzi.
+    Klient do komunikacji z API GUS przez zewnętrzny serwis wfirma-api na Render.
+    Prostsze i bardziej niezawodne niż bezpośrednia komunikacja SOAP.
     """
     
     # Timeouty
-    LOGIN_TIMEOUT = 10
-    SEARCH_TIMEOUT = 15
+    REQUEST_TIMEOUT = 15
+    
+    # URL API na Render
+    DEFAULT_API_URL = "https://wfirma-api.onrender.com"
     
     def __init__(self, settings: Optional[Settings] = None):
         self.settings = settings or get_settings()
         self._http_client: Optional[httpx.AsyncClient] = None
     
     @property
-    def api_key(self) -> str:
+    def api_url(self) -> str:
+        """URL API GUS na Render."""
+        return getattr(self.settings, 'gus_api_url', None) or self.DEFAULT_API_URL
+    
+    @property
+    def api_token(self) -> str:
+        """Token do autoryzacji API na Render."""
         return self.settings.gus_api_key
-    
-    @property
-    def bir_host(self) -> str:
-        """Host API GUS - test lub produkcja."""
-        if self.settings.gus_use_test or self.api_key == "abcde12345abcde12345":
-            return "wyszukiwarkaregontest.stat.gov.pl"
-        return "wyszukiwarkaregon.stat.gov.pl"
-    
-    @property
-    def bir_url(self) -> str:
-        return f"https://{self.bir_host}/wsBIR/UslugaBIRzewnPubl.svc"
     
     async def _get_client(self) -> httpx.AsyncClient:
         """Lazy initialization klienta HTTP."""
         if self._http_client is None:
             self._http_client = httpx.AsyncClient(
-                timeout=httpx.Timeout(30.0),
+                timeout=httpx.Timeout(self.REQUEST_TIMEOUT),
                 headers={
                     "User-Agent": "LeadProcessor/1.0",
                 },
@@ -63,212 +57,9 @@ class GUSClient:
             await self._http_client.aclose()
             self._http_client = None
     
-    def _escape_xml(self, unsafe: str) -> str:
-        """Bezpieczne wstawianie wartości do SOAP XML."""
-        if not isinstance(unsafe, str):
-            return ""
-        return (
-            unsafe.replace("&", "&amp;")
-            .replace("<", "&lt;")
-            .replace(">", "&gt;")
-            .replace('"', "&quot;")
-            .replace("'", "&apos;")
-        )
-    
-    def _decode_bir_inner_xml(self, encoded: str) -> str:
-        """Dekodowanie wewnętrznego XML zwracanego przez GUS."""
-        if not isinstance(encoded, str):
-            return ""
-        
-        return (
-            encoded.lstrip("\ufeff")
-            .replace("&amp;amp;", "&amp;")
-            .replace("&#xD;", "\r")
-            .replace("&#xA;", "\n")
-            .replace("&lt;", "<")
-            .replace("&gt;", ">")
-            .replace("&quot;", '"')
-            .replace("&apos;", "'")
-            .replace("&amp;", "&")
-            .strip()
-        )
-    
-    def _build_login_envelope(self) -> str:
-        """Buduje envelope SOAP do logowania."""
-        safe_api_key = self._escape_xml(self.api_key)
-        return (
-            '<?xml version="1.0" encoding="utf-8"?>'
-            '<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" '
-            'xmlns:ns="http://CIS/BIR/PUBL/2014/07">'
-            '<soap:Header xmlns:wsa="http://www.w3.org/2005/08/addressing">'
-            f'<wsa:To>{self.bir_url}</wsa:To>'
-            '<wsa:Action>http://CIS/BIR/PUBL/2014/07/IUslugaBIRzewnPubl/Zaloguj</wsa:Action>'
-            '</soap:Header>'
-            '<soap:Body>'
-            '<ns:Zaloguj>'
-            f'<ns:pKluczUzytkownika>{safe_api_key}</ns:pKluczUzytkownika>'
-            '</ns:Zaloguj>'
-            '</soap:Body>'
-            '</soap:Envelope>'
-        )
-    
-    def _build_search_envelope(self, nip: str, sid: str) -> str:
-        """Buduje envelope SOAP do wyszukiwania po NIP."""
-        safe_nip = self._escape_xml(nip)
-        return (
-            '<?xml version="1.0" encoding="utf-8"?>'
-            '<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" '
-            'xmlns:ns="http://CIS/BIR/PUBL/2014/07" '
-            'xmlns:q1="http://CIS/BIR/PUBL/2014/07/DataContract" '
-            'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">'
-            '<soap:Header xmlns:wsa="http://www.w3.org/2005/08/addressing">'
-            f'<wsa:To>{self.bir_url}</wsa:To>'
-            '<wsa:Action>http://CIS/BIR/PUBL/2014/07/IUslugaBIRzewnPubl/DaneSzukajPodmioty</wsa:Action>'
-            '</soap:Header>'
-            '<soap:Body>'
-            '<ns:DaneSzukajPodmioty>'
-            '<ns:pParametryWyszukiwania>'
-            '<q1:Krs xsi:nil="true"/>'
-            '<q1:Krsy xsi:nil="true"/>'
-            f'<q1:Nip>{safe_nip}</q1:Nip>'
-            '<q1:Nipy xsi:nil="true"/>'
-            '<q1:Regon xsi:nil="true"/>'
-            '<q1:Regony14zn xsi:nil="true"/>'
-            '<q1:Regony9zn xsi:nil="true"/>'
-            '</ns:pParametryWyszukiwania>'
-            '</ns:DaneSzukajPodmioty>'
-            '</soap:Body>'
-            '</soap:Envelope>'
-        )
-    
-    async def _post_soap(
-        self, 
-        envelope: str, 
-        sid: Optional[str] = None,
-        timeout: float = 10.0
-    ) -> httpx.Response:
-        """Wysyła żądanie SOAP do GUS."""
-        client = await self._get_client()
-        
-        headers = {
-            "Content-Type": "application/soap+xml; charset=utf-8",
-            "Accept": "application/soap+xml",
-        }
-        if sid:
-            headers["sid"] = sid
-        
-        response = await client.post(
-            self.bir_url,
-            content=envelope.encode("utf-8"),
-            headers=headers,
-            timeout=timeout,
-        )
-        return response
-    
-    async def _login(self) -> Optional[str]:
-        """Logowanie do GUS - zwraca SID lub None."""
-        try:
-            envelope = self._build_login_envelope()
-            response = await self._post_soap(envelope, timeout=self.LOGIN_TIMEOUT)
-            
-            # Wyciągnij SID z odpowiedzi
-            sid_match = re.search(
-                r'<ZalogujResult>([^<]*)</ZalogujResult>', 
-                response.text or ''
-            )
-            sid = sid_match.group(1).strip() if sid_match else None
-            
-            if sid:
-                logger.debug("GUS: Zalogowano, SID otrzymany")
-            else:
-                logger.warning("GUS: Logowanie nie zwróciło SID")
-            
-            return sid
-            
-        except Exception as e:
-            logger.error("GUS: Błąd logowania: %s", e)
-            return None
-    
-    def _parse_search_response(self, response_text: str) -> list[dict]:
-        """Parsuje odpowiedź wyszukiwania GUS."""
-        soap_part = response_text
-        
-        # Obsługa multipart response
-        if 'Content-Type: application/xop+xml' in soap_part:
-            match = re.search(
-                r'Content-Type: application/xop\+xml[^\r\n]*\r?\n\r?\n([\s\S]*?)\r?\n--uuid:',
-                soap_part,
-                re.MULTILINE | re.DOTALL,
-            )
-            if match:
-                soap_part = match.group(1)
-        
-        # Pusty wynik
-        if re.search(r'<DaneSzukajResult\s*/>', soap_part):
-            return []
-        
-        # Wyciągnij wynik
-        result_match = re.search(
-            r'<DaneSzukajPodmiotyResult>([\s\S]*?)</DaneSzukajPodmiotyResult>',
-            soap_part,
-            re.MULTILINE | re.DOTALL,
-        )
-        inner_xml = result_match.group(1) if result_match else ''
-        
-        if not inner_xml:
-            return []
-        
-        # Dekoduj
-        decoded_xml = self._decode_bir_inner_xml(inner_xml)
-        if not decoded_xml:
-            return []
-        
-        # Parsuj XML
-        try:
-            root = ET.fromstring(decoded_xml)
-        except ET.ParseError as e:
-            logger.error("GUS: Błąd parsowania XML: %s", e)
-            return []
-        
-        # Wyciągnij dane
-        data_list = []
-        for dane in root.findall('.//dane'):
-            def get_text(tag: str) -> Optional[str]:
-                el = dane.find(tag)
-                return el.text if el is not None else None
-            
-            # Sprawdź czy to błąd
-            error_code = get_text('ErrorCode')
-            if error_code:
-                logger.warning("GUS: ErrorCode=%s: %s", error_code, get_text('ErrorMessagePl'))
-                continue
-            
-            mapped = {
-                'regon': get_text('Regon'),
-                'nip': get_text('Nip'),
-                'nazwa': get_text('Nazwa'),
-                'wojewodztwo': get_text('Wojewodztwo'),
-                'powiat': get_text('Powiat'),
-                'gmina': get_text('Gmina'),
-                'miejscowosc': get_text('Miejscowosc'),
-                'kodPocztowy': get_text('KodPocztowy'),
-                'ulica': get_text('Ulica'),
-                'nrNieruchomosci': get_text('NrNieruchomosci'),
-                'nrLokalu': get_text('NrLokalu'),
-                'typ': get_text('Typ'),
-                'silosId': get_text('SilosID'),
-                'miejscowoscPoczty': get_text('MiejscowoscPoczty'),
-                'krs': get_text('Krs'),
-            }
-            
-            if mapped.get('nazwa'):
-                data_list.append(mapped)
-        
-        return data_list
-    
     async def lookup_nip(self, nip: str) -> GUSData:
         """
-        Wyszukuje firmę po NIP w rejestrze GUS.
+        Wyszukuje firmę po NIP przez API na Render.
         
         Args:
             nip: NIP (10 cyfr)
@@ -286,41 +77,45 @@ class GUSClient:
         if not is_valid_nip(clean_nip):
             return GUSData(found=False, error="NIP nie przechodzi walidacji sumy kontrolnej")
         
-        # Sprawdź czy mamy klucz API
-        if not self.api_key:
+        # Sprawdź czy mamy token API
+        if not self.api_token or self.api_token.startswith("your-"):
+            logger.warning("GUS: Brak tokenu API - pomijam wyszukiwanie")
             return GUSData(found=False, error="Brak klucza GUS_API_KEY")
         
-        logger.info("GUS: Wyszukuję NIP=%s (host=%s)", clean_nip, self.bir_host)
+        logger.info("GUS: Wyszukuję NIP=%s przez %s", clean_nip, self.api_url)
         
         try:
-            # Logowanie
-            sid = await self._login()
-            if not sid:
-                return GUSData(found=False, error="Logowanie do GUS nie powiodło się")
+            client = await self._get_client()
             
-            # Wyszukiwanie
-            envelope = self._build_search_envelope(clean_nip, sid)
-            response = await self._post_soap(envelope, sid=sid, timeout=self.SEARCH_TIMEOUT)
+            # Wywołaj API na Render
+            response = await client.post(
+                f"{self.api_url}/api/gus/name-by-nip",
+                json={"nip": clean_nip},
+                headers={
+                    "Content-Type": "application/json",
+                    "X-API-Key": self.api_token,
+                },
+            )
             
-            # Parsowanie
-            data_list = self._parse_search_response(response.text or '')
+            # Sprawdź odpowiedź
+            if response.status_code == 401:
+                logger.error("GUS: Nieprawidłowy token API")
+                return GUSData(found=False, error="Nieprawidłowy token API GUS")
             
-            if not data_list:
+            if response.status_code == 404:
                 logger.info("GUS: NIP %s nie znaleziony", clean_nip)
-                return GUSData(found=False, error=None)  # Nie błąd, po prostu nie znaleziono
+                return GUSData(found=False, error=None)
             
-            # Weź pierwszy rekord
-            data = data_list[0]
+            if response.status_code != 200:
+                logger.error("GUS: Błąd API: %s", response.status_code)
+                return GUSData(found=False, error=f"Błąd API GUS: {response.status_code}")
             
-            # Zbuduj adres
-            address_parts = []
-            if data.get('ulica'):
-                addr = data['ulica']
-                if data.get('nrNieruchomosci'):
-                    addr += f" {data['nrNieruchomosci']}"
-                if data.get('nrLokalu'):
-                    addr += f"/{data['nrLokalu']}"
-                address_parts.append(addr)
+            # Parsuj odpowiedź
+            data = response.json()
+            
+            # Sprawdź czy znaleziono
+            if not data.get("found") and not data.get("nazwa"):
+                return GUSData(found=False, error=None)
             
             logger.info(
                 "GUS: Znaleziono firmę: %s (REGON: %s)",
@@ -328,27 +123,29 @@ class GUSClient:
                 data.get('regon', 'N/A')
             )
             
+            # Mapuj odpowiedź z Render API na GUSData
             return GUSData(
                 found=True,
                 regon=data.get('regon'),
-                full_name=data.get('nazwa'),
-                street=data.get('ulica'),
-                building_number=data.get('nrNieruchomosci'),
-                apartment_number=data.get('nrLokalu'),
-                city=data.get('miejscowosc'),
-                zip_code=data.get('kodPocztowy'),
-                voivodeship=data.get('wojewodztwo'),
-                county=data.get('powiat'),
-                commune=data.get('gmina'),
-                status="active",  # GUS zwraca tylko aktywne podmioty
+                full_name=data.get('nazwa') or data.get('full_name'),
+                short_name=data.get('short_name'),
+                street=data.get('ulica') or data.get('street'),
+                building_number=data.get('nrNieruchomosci') or data.get('building_number'),
+                apartment_number=data.get('nrLokalu') or data.get('apartment_number'),
+                city=data.get('miejscowosc') or data.get('city'),
+                zip_code=data.get('kodPocztowy') or data.get('zip_code'),
+                voivodeship=data.get('wojewodztwo') or data.get('voivodeship'),
+                county=data.get('powiat') or data.get('county'),
+                commune=data.get('gmina') or data.get('commune'),
+                status="active",  # API zwraca tylko aktywne podmioty
             )
             
         except httpx.TimeoutException:
             logger.error("GUS: Timeout podczas wyszukiwania NIP=%s", clean_nip)
-            return GUSData(found=False, error="Timeout komunikacji z GUS")
+            return GUSData(found=False, error="Timeout komunikacji z API GUS")
         except Exception as e:
             logger.error("GUS: Błąd wyszukiwania NIP=%s: %s", clean_nip, e)
-            return GUSData(found=False, error=f"Błąd komunikacji z GUS: {str(e)}")
+            return GUSData(found=False, error=f"Błąd komunikacji z API GUS: {str(e)}")
 
 
 class GUSClientMock:
@@ -419,7 +216,7 @@ def get_gus_client(settings: Optional[Settings] = None, use_mock: bool = False) 
     settings = settings or get_settings()
     
     # Jeśli brak klucza API, użyj mocka
-    if not settings.gus_api_key:
+    if not settings.gus_api_key or settings.gus_api_key.startswith("your-"):
         logger.warning("Brak GUS_API_KEY - używam mocka GUS")
         return GUSClientMock()
     

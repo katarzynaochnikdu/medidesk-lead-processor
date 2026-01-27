@@ -28,15 +28,17 @@ class Settings(BaseSettings):
     # Vertex AI
     vertex_ai_model: str = "gemini-1.5-flash-001"
     
-    # GUS/REGON (obsługuje też BIR1_GUS_API_KEY z env)
-    gus_api_key: str = ""
+    # GUS/REGON - proxy przez wfirma-api na Render
+    gus_api_key: str = ""  # Token do API na Render (REGON_API_KEY_TOKEN)
+    gus_api_url: str = "https://wfirma-api.onrender.com"  # URL API na Render
     gus_use_test: bool = False
     
     @field_validator("gus_api_key", mode="before")
     @classmethod
     def resolve_gus_api_key(cls, v):
-        """Sprawdź alternatywną nazwę zmiennej."""
-        alt = os.getenv("BIR1_GUS_API_KEY")
+        """Sprawdź alternatywne nazwy zmiennej."""
+        # Priorytet: BIR1_GUS_API_KEY > REGON_API_KEY_TOKEN > GUS_API_KEY
+        alt = os.getenv("BIR1_GUS_API_KEY") or os.getenv("REGON_API_KEY_TOKEN")
         if alt:
             return alt
         if v and not v.startswith("your-"):
@@ -130,12 +132,6 @@ class Settings(BaseSettings):
         }
         return region_map.get(self.zoho_region, region_map["eu"])
     
-    @property
-    def gus_api_host(self) -> str:
-        """Zwraca host API GUS (test lub produkcja)."""
-        if self.gus_use_test or self.gus_api_key == "abcde12345abcde12345":
-            return "https://wyszukiwarkaregontest.stat.gov.pl"
-        return "https://wyszukiwarkaregon.stat.gov.pl"
 
 
 @lru_cache
