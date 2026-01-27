@@ -1,0 +1,65 @@
+# Cloud Build - CI/CD dla Lead Processing Service
+# Deploy do Cloud Run w regionie europe-central2 (Warszawa)
+
+substitutions:
+  _SERVICE_NAME: lead-processor
+  _REGION: europe-west1
+  _MEMORY: 512Mi
+  _CPU: '1'
+  _MIN_INSTANCES: '0'
+  _MAX_INSTANCES: '10'
+  _TIMEOUT: '300s'
+
+steps:
+  # 1. Build obrazu Docker
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/lead-processor/${_SERVICE_NAME}:$BUILD_ID'
+      - '-t'
+      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/lead-processor/${_SERVICE_NAME}:latest'
+      - '.'
+
+  # 2. Push do Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'push'
+      - '--all-tags'
+      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/lead-processor/${_SERVICE_NAME}'
+
+  # 3. Deploy do Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'gcloud'
+    args:
+      - 'run'
+      - 'deploy'
+      - '${_SERVICE_NAME}'
+      - '--image'
+      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/lead-processor/${_SERVICE_NAME}:$BUILD_ID'
+      - '--region'
+      - '${_REGION}'
+      - '--platform'
+      - 'managed'
+      - '--memory'
+      - '${_MEMORY}'
+      - '--cpu'
+      - '${_CPU}'
+      - '--min-instances'
+      - '${_MIN_INSTANCES}'
+      - '--max-instances'
+      - '${_MAX_INSTANCES}'
+      - '--timeout'
+      - '${_TIMEOUT}'
+      - '--allow-unauthenticated'
+      - '--set-env-vars'
+      - 'ENVIRONMENT=production,GCP_REGION=${_REGION},GCP_PROJECT_ID=$PROJECT_ID'
+      - '--set-secrets'
+      - 'GUS_API_KEY=BIR1_GUS_API_KEY:latest,API_KEY=GCP_API_KEY_ID:latest,ZOHO_CLIENT_ID=ZOHO_MD_CRM_LEADY_CRUD_CLIENT_ID:latest,ZOHO_CLIENT_SECRET=ZOHO_MD_CRM_LEADY_CRUD_CLIENT_SECRET:latest,ZOHO_REFRESH_TOKEN=ZOHO_MD_CRM_LEADY_CRUD_REFRESH_TOKEN:latest'
+
+images:
+  - '${_REGION}-docker.pkg.dev/$PROJECT_ID/lead-processor/${_SERVICE_NAME}:$BUILD_ID'
+  - '${_REGION}-docker.pkg.dev/$PROJECT_ID/lead-processor/${_SERVICE_NAME}:latest'
+
+options:
+  logging: CLOUD_LOGGING_ONLY

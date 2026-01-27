@@ -1,0 +1,37 @@
+# .gcloudignore - pliki wykluczane podczas Cloud Build
+.git
+.gitignore
+.gcloudignore
+
+# Python
+__pycache__
+*.py[cod]
+*$py.class
+.venv
+venv
+ENV
+*.egg-info
+dist
+build
+
+# IDE
+.idea
+.vscode
+*.swp
+*.swo
+
+# Testing
+.pytest_cache
+.coverage
+htmlcov
+
+# Local files
+.env
+.env.local
+*.log
+*.pkl
+
+# Dokumentacja/eksporty lokalne
+*.md
+md_crm_export_only_*
+zoho_integration

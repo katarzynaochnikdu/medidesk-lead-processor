@@ -1,0 +1,235 @@
+/**
+ * Funkcja Deluge do przetwarzania leada przez Lead Processor API
+ * 
+ * Sposób użycia:
+ * 1. Utwórz Connection w Zoho CRM:
+ *    Settings > Developer Hub > Connections > Create Connection
+ *    - Connection Name: LeadProcessorAPI
+ *    - Connection Type: Custom
+ *    - Grant Type: API Key (lub bez autoryzacji jeśli API_KEY w headerze)
+ * 
+ * 2. Utwórz tę funkcję:
+ *    Settings > Developer Hub > Functions > Create Function
+ *    - Function Name: processLeadWithAI
+ *    - Category: Automation (lub Custom)
+ *    - Return Type: void lub map
+ * 
+ * 3. Wywołaj z Workflow Rule lub Button
+ */
+
+// === KONFIGURACJA ===
+SERVICE_URL = "https://lead-processor-XXXXX-ew.a.run.app";  // Zmień na swój URL
+API_KEY = zoho.decrypt("YOUR_ENCRYPTED_API_KEY");  // Lub użyj Connection
+
+
+/**
+ * Główna funkcja przetwarzająca lead
+ * @param leadId - ID leada do przetworzenia
+ * @return map z wynikami przetwarzania
+ */
+map processLead(string leadId) {
+    
+    // 1. Pobierz dane leada
+    leadRecord = zoho.crm.getRecordById("Leads", leadId);
+    
+    if (leadRecord == null) {
+        return {"error": "Lead nie znaleziony", "lead_id": leadId};
+    }
+    
+    // 2. Przygotuj dane do wysłania
+    requestData = Map();
+    requestData.put("data", leadRecord);
+    requestData.put("skip_ai", false);
+    requestData.put("skip_gus", false);
+    requestData.put("skip_duplicates", false);
+    
+    // 3. Wywołaj API
+    headers = Map();
+    headers.put("Content-Type", "application/json");
+    headers.put("X-API-Key", API_KEY);
+    
+    response = invokeurl [
+        url: SERVICE_URL + "/process"
+        type: POST
+        parameters: requestData.toString()
+        headers: headers
+    ];
+    
+    // 4. Parsuj odpowiedź
+    if (response == null) {
+        return {"error": "Brak odpowiedzi z API"};
+    }
+    
+    result = response.toMap();
+    
+    // 5. Zaktualizuj lead jeśli sukces
+    if (result.get("success") == true) {
+        normalized = result.get("normalized");
+        recommendation = result.get("recommendation");
+        
+        // Przygotuj update
+        updateData = Map();
+        
+        // Znormalizowane dane osobowe
+        if (normalized.get("first_name") != null) {
+            updateData.put("First_Name", normalized.get("first_name"));
+        }
+        if (normalized.get("last_name") != null) {
+            updateData.put("Last_Name", normalized.get("last_name"));
+        }
+        if (normalized.get("gender") != null) {
+            // Mapuj gender na Salutation
+            gender = normalized.get("gender");
+            if (gender == "male") {
+                updateData.put("Salutation", "Pan");
+            } else if (gender == "female") {
+                updateData.put("Salutation", "Pani");
+            }
+        }
+        
+        // Znormalizowane dane kontaktowe
+        if (normalized.get("phone") != null) {
+            updateData.put("Phone", normalized.get("phone"));
+        }
+        if (normalized.get("email") != null) {
+            updateData.put("Email", normalized.get("email"));
+        }
+        
+        // Dane firmowe
+        if (normalized.get("company_full_name") != null) {
+            updateData.put("Company", normalized.get("company_full_name"));
+        }
+        
+        // NIP
+        if (normalized.get("nip") != null) {
+            updateData.put("NIP", normalized.get("nip"));
+        }
+        
+        // Status walidacji NIP
+        if (normalized.get("nip_valid") != null) {
+            updateData.put("NIP_Validated", normalized.get("nip_valid"));
+        }
+        
+        // Dane z GUS
+        gusData = result.get("gus_data");
+        if (gusData != null && gusData.get("found") == true) {
+            if (gusData.get("regon") != null) {
+                updateData.put("REGON", gusData.get("regon"));
+            }
+            // Można dodać więcej pól z GUS
+        }
+        
+        // Rekomendacja jako notatka
+        if (recommendation != null) {
+            action = recommendation.get("action");
+            reason = recommendation.get("reason");
+            suggestions = recommendation.get("suggestions");
+            
+            note = "=== AI Processing ===\n";
+            note = note + "Action: " + action + "\n";
+            note = note + "Reason: " + reason + "\n";
+            if (suggestions != null && suggestions.size() > 0) {
+                note = note + "Suggestions:\n";
+                for each suggestion in suggestions {
+                    note = note + "- " + suggestion + "\n";
+                }
+            }
+            updateData.put("Description", note);
+        }
+        
+        // Wykonaj update
+        if (updateData.size() > 0) {
+            zoho.crm.updateRecord("Leads", leadId, updateData);
+        }
+        
+        // Obsługa duplikatów
+        duplicates = result.get("duplicates");
+        if (duplicates != null) {
+            contacts = duplicates.get("contacts");
+            if (contacts != null && contacts.size() > 0) {
+                bestMatch = contacts.get(0);
+                if (bestMatch.get("score") >= 0.8) {
+                    // Oznacz jako potencjalny duplikat
+                    zoho.crm.updateRecord("Leads", leadId, {
+                        "Lead_Status": "Potential Duplicate",
+                        "Potential_Duplicate_ID": bestMatch.get("id")
+                    });
+                }
+            }
+        }
+    }
+    
+    return result;
+}
+
+
+/**
+ * Szybka normalizacja - tylko AI, bez GUS i duplikatów
+ */
+map normalizeLeadQuick(string leadId) {
+    
+    leadRecord = zoho.crm.getRecordById("Leads", leadId);
+    
+    requestData = Map();
+    requestData.put("data", leadRecord);
+    requestData.put("skip_ai", false);
+    requestData.put("skip_gus", true);
+    requestData.put("skip_duplicates", true);
+    
+    headers = Map();
+    headers.put("Content-Type", "application/json");
+    headers.put("X-API-Key", API_KEY);
+    
+    response = invokeurl [
+        url: SERVICE_URL + "/normalize"
+        type: POST
+        parameters: requestData.toString()
+        headers: headers
+    ];
+    
+    return response.toMap();
+}
+
+
+/**
+ * Sprawdzenie duplikatów
+ */
+map checkDuplicates(string leadId) {
+    
+    leadRecord = zoho.crm.getRecordById("Leads", leadId);
+    
+    requestData = Map();
+    requestData.put("data", leadRecord);
+    
+    headers = Map();
+    headers.put("Content-Type", "application/json");
+    headers.put("X-API-Key", API_KEY);
+    
+    response = invokeurl [
+        url: SERVICE_URL + "/check-duplicates"
+        type: POST
+        parameters: requestData.toString()
+        headers: headers
+    ];
+    
+    return response.toMap();
+}
+
+
+/**
+ * Walidacja NIP
+ */
+map validateNIP(string nip) {
+    
+    headers = Map();
+    headers.put("Content-Type", "application/json");
+    headers.put("X-API-Key", API_KEY);
+    
+    response = invokeurl [
+        url: SERVICE_URL + "/validate-nip?nip=" + nip
+        type: POST
+        headers: headers
+    ];
+    
+    return response.toMap();
+}
