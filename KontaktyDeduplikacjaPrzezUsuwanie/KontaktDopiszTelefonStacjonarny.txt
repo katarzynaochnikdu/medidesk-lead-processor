@@ -1,0 +1,167 @@
+string standalone.KontaktDopiszTelefonStacjonarny(string telefon, string wewnetrzny, bool rodo, string targetId)
+{
+    // Funkcja sprawdza czy telefon stacjonarny występuje w rekordzie docelowym
+    // Jeśli nie, to szuka wolnego pola i dopisuje telefon wraz z numerem wewnętrznym
+    info "=== DOPISYWANIE TELEFONU STACJONARNEGO DO KONTAKTU ===";
+    info "Telefon do dopisania: " + telefon;
+    info "Numer wewnętrzny: " + wewnetrzny;
+    info "Flaga RODO: " + rodo;
+    info "ID rekordu docelowego: " + targetId;
+    
+    if(telefon == null || telefon == "")
+    {
+        info "Telefon jest pusty, nie ma co dopisywać";
+        return "{\"status\": \"error\", \"message\": \"Telefon jest pusty\"}";
+    }
+    
+    // Pobierz rekord docelowy
+    targetContact = zoho.crm.getRecordById("Contacts", targetId);
+    if(targetContact == null)
+    {
+        info "Błąd: Nie można pobrać rekordu docelowego o ID: " + targetId;
+        return "{\"status\": \"error\", \"message\": \"Nie można pobrać rekordu docelowego\"}";
+    }
+    
+    // Pola telefonów stacjonarnych w rekordzie docelowym
+    targetLandlineFields = {"Phone", "Other_Phone", "Telefon_stacjonarny_3"};
+    info "Pola telefonów stacjonarnych w rekordzie docelowym: " + targetLandlineFields.toString();
+    
+    // Mapowanie pól numerów wewnętrznych do odpowiadających im telefonów stacjonarnych
+    extensionMapping = {
+        "Phone": "wew_tel_stac_1",
+        "Other_Phone": "wew_tel_stac_2",
+        "Telefon_stacjonarny_3": "wew_tel_stac_3"
+    };
+    
+    // Oczyszczenie numeru telefonu (usunięcie wszystkich znaków niebędących cyframi)
+    telefonClean = telefon.toString().replaceAll("[^0-9]","");
+    info "Oczyszczony numer telefonu: " + telefonClean;
+    
+    // Sprawdź, czy telefon już występuje w rekordzie docelowym
+    duplicateFound = false;
+    duplicateField = "";
+    
+    for each field in targetLandlineFields
+    {
+        fieldValue = targetContact.get(field);
+        info "Wartość pola " + field + ": " + fieldValue;
+        
+        if(fieldValue != null && fieldValue != "")
+        {
+            fieldValueClean = fieldValue.toString().replaceAll("[^0-9]","");
+            info "Oczyszczona wartość pola " + field + ": " + fieldValueClean;
+            
+            if(fieldValueClean == telefonClean)
+            {
+                duplicateFound = true;
+                duplicateField = field;
+                info "Telefon " + telefon + " już występuje w polu " + field;
+                break;
+            }
+        }
+    }
+    
+    // Jeśli telefon już występuje, aktualizuj tylko numer wewnętrzny i flagę RODO
+    if(duplicateFound)
+    {
+        info "Telefon " + telefon + " już występuje w polu " + duplicateField + ", aktualizuję tylko numer wewnętrzny i flagę RODO";
+        
+        // Określ pole numeru wewnętrznego dla znalezionego pola telefonu
+        extensionField = extensionMapping.get(duplicateField);
+        
+        // Określ pole RODO dla znalezionego pola telefonu
+        rodoField = "";
+        if(duplicateField == "Phone")
+        {
+            rodoField = "Tel_stac1_RODO_wyrazona_niezgoda";
+        }
+        else if(duplicateField == "Other_Phone")
+        {
+            rodoField = "Tel_stac2_RODO_wyrazona_niezgoda";
+        }
+        else if(duplicateField == "Telefon_stacjonarny_3")
+        {
+            rodoField = "Tel_stac3_RODO_wyrazona_niezgoda";
+        }
+        
+        // Aktualizuj numer wewnętrzny i flagę RODO jeśli potrzeba
+        updateMap = Map();
+        
+        if(extensionField != "" && wewnetrzny != null && wewnetrzny != "")
+        {
+            updateMap.put(extensionField, wewnetrzny);
+        }
+        
+        if(rodoField != "" && rodo == true)
+        {
+            updateMap.put(rodoField, true);
+        }
+        
+        if(!updateMap.isEmpty())
+        {
+            updateResp = zoho.crm.updateRecord("Contacts", targetId, updateMap);
+            info "Zaktualizowano numer wewnętrzny i/lub flagę RODO dla pola " + duplicateField + ": " + updateResp;
+            
+            return "{\"status\": \"success\", \"message\": \"Telefon już istnieje, zaktualizowano numer wewnętrzny i/lub flagę RODO\", \"field\": \"" + duplicateField + "\", \"updated\": true}";
+        }
+        
+        return "{\"status\": \"success\", \"message\": \"Telefon już istnieje\", \"field\": \"" + duplicateField + "\", \"updated\": false}";
+    }
+    
+    // Jeśli telefon nie występuje, znajdź pierwsze wolne pole
+    freeField = "";
+    for each field in targetLandlineFields
+    {
+        fieldValue = targetContact.get(field);
+        if(fieldValue == null || fieldValue == "")
+        {
+            freeField = field;
+            info "Znaleziono wolne pole " + field + " dla telefonu " + telefon;
+            break;
+        }
+    }
+    
+    // Jeśli nie ma wolnego pola, zwróć błąd
+    if(freeField == "")
+    {
+        info "Brak wolnego pola dla telefonu " + telefon;
+        return "{\"status\": \"error\", \"message\": \"Brak wolnego pola dla telefonu\"}";
+    }
+    
+    // Określ pole numeru wewnętrznego dla znalezionego wolnego pola
+    extensionField = extensionMapping.get(freeField);
+    
+    // Określ pole RODO dla znalezionego wolnego pola
+    rodoField = "";
+    if(freeField == "Phone")
+    {
+        rodoField = "Tel_stac1_RODO_wyrazona_niezgoda";
+    }
+    else if(freeField == "Other_Phone")
+    {
+        rodoField = "Tel_stac2_RODO_wyrazona_niezgoda";
+    }
+    else if(freeField == "Telefon_stacjonarny_3")
+    {
+        rodoField = "Tel_stac3_RODO_wyrazona_niezgoda";
+    }
+    
+    // Aktualizuj rekord
+    updateMap = Map();
+    updateMap.put(freeField, telefon);
+    
+    if(extensionField != "" && wewnetrzny != null && wewnetrzny != "")
+    {
+        updateMap.put(extensionField, wewnetrzny);
+    }
+    
+    if(rodoField != "" && rodo == true)
+    {
+        updateMap.put(rodoField, true);
+    }
+    
+    updateResp = zoho.crm.updateRecord("Contacts", targetId, updateMap);
+    info "Zaktualizowano rekord, dodano telefon " + telefon + " do pola " + freeField + ": " + updateResp;
+    
+    return "{\"status\": \"success\", \"message\": \"Dodano telefon\", \"field\": \"" + freeField + "\", \"updated\": true}";
+} 

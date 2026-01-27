@@ -132,6 +132,11 @@ class GUSClient:
             )
             
             # Mapuj odpowiedź z Render API na GUSData
+            # Województwo - zawsze małymi literami
+            wojewodztwo = data.get('wojewodztwo') or data.get('voivodeship')
+            if wojewodztwo:
+                wojewodztwo = wojewodztwo.lower()
+            
             return GUSData(
                 found=True,
                 regon=data.get('regon'),
@@ -142,7 +147,7 @@ class GUSClient:
                 apartment_number=data.get('nrLokalu') or data.get('apartment_number'),
                 city=data.get('miejscowosc') or data.get('city'),
                 zip_code=data.get('kodPocztowy') or data.get('zip_code'),
-                voivodeship=data.get('wojewodztwo') or data.get('voivodeship'),
+                voivodeship=wojewodztwo,
                 county=data.get('powiat') or data.get('county'),
                 commune=data.get('gmina') or data.get('commune'),
                 status="active",  # API zwraca tylko aktywne podmioty

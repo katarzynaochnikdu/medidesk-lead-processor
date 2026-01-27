@@ -1,0 +1,172 @@
+string standalone.ContactModulesConnectionTransfer(String sourceRecordId, String targetRecordId)
+{
+    info "=== START: Przenoszenie powiązań z kontaktu " + sourceRecordId + " do " + targetRecordId + " ===";
+    
+    // Sprawdzenie czy kontakty istnieją
+    sourceContact = zoho.crm.getRecordById("Contacts", sourceRecordId);
+    targetContact = zoho.crm.getRecordById("Contacts", targetRecordId);
+    
+    if(sourceContact == null || targetContact == null)
+    {
+        info "BŁĄD: Jeden z kontaktów nie istnieje";
+        return "Błąd: Nie znaleziono kontaktu źródłowego lub docelowego";
+    }
+    
+    // Lista standardowych modułów do przeniesienia
+    standardModules = List();
+    standardModules.add("Deals");
+    standardModules.add("Notes");
+    standardModules.add("Tasks");
+    standardModules.add("Calls");
+    standardModules.add("Events");
+    standardModules.add("Campaigns");
+    
+    transferSummary = Map();
+    
+    // Przenoszenie powiązań dla standardowych modułów
+    for each module in standardModules
+    {
+        info "=== MODUŁ: " + module + " ===";
+        relatedRecords = zoho.crm.getRelatedRecords(module, "Contacts", sourceRecordId);
+        
+        if(relatedRecords != null && relatedRecords.size() > 0)
+        {
+            info "Znaleziono " + relatedRecords.size() + " rekordów do przeniesienia w module " + module;
+            successCount = 0;
+            for each record in relatedRecords
+            {
+                info "Przetwarzanie rekordu ID: " + record.get("id") + " z modułu " + module;
+                
+                // Sprawdzenie czy rekord nie jest już powiązany z kontaktem docelowym
+                existingRelation = zoho.crm.getRelatedRecords(module, "Contacts", targetRecordId);
+                isAlreadyRelated = false;
+                
+                if(existingRelation != null)
+                {
+                    info "Sprawdzanie istniejących powiązań dla target kontaktu (" + existingRelation.size() + " rekordów)";
+                    for each existing in existingRelation
+                    {
+                        info "Porównanie: rekord " + record.get("id") + " z istniejącym " + existing.get("id");
+                        if(existing.get("id") == record.get("id"))
+                        {
+                            isAlreadyRelated = true;
+                            info "Rekord " + record.get("id") + " jest już powiązany z kontaktem docelowym";
+                            break;
+                        }
+                    }
+                }
+                
+                if(!isAlreadyRelated)
+                {
+                    info "Próba przeniesienia powiązania dla rekordu " + record.get("id");
+                    updateMap = Map();
+                    
+                    if(module == "Calls" || module == "Tasks" || module == "Events")
+                    {
+                        updateMap.put("Who_Id", targetContact.get("id"));
+                        info "Wysyłanie żądania aktualizacji dla " + module + ": " + updateMap.toString();
+                        response = zoho.crm.updateRecord(module, record.get("id"), updateMap);
+                        info "Odpowiedź z API: " + response.toString();
+                        
+                        if(response != null && response.get("id") != null)
+                        {
+                            successCount = successCount + 1;
+                            info "SUKCES: Zaktualizowano powiązanie dla " + module + " " + record.get("id");
+                        }
+                    }
+                    else if(module == "Campaigns")
+                    {
+                        campaignId = record.get("id");
+                        info "Przetwarzanie kampanii ID: " + campaignId;
+                        
+                        // Pobierz szczegóły kampanii
+                        campaignDetails = zoho.crm.getRecordById("Campaigns", campaignId);
+                        if(campaignDetails != null)
+                        {
+                            // Przygotowanie danych dla kampanii
+                            dataMap = Map();
+                            contactsList = List();
+                            contactsList.add(targetContact.get("id"));
+                            
+                            dataMap.put("Contacts", contactsList);
+                            dataMap.put("$se_module", "Contacts");
+                            
+                            info "Wysyłanie żądania aktualizacji kampanii: " + dataMap.toString();
+                            response = zoho.crm.updateRecord("Campaigns", campaignId, dataMap);
+                            info "Odpowiedź z API kampanii: " + response.toString();
+                            
+                            if(response != null && response.get("id") != null)
+                            {
+                                successCount = successCount + 1;
+                                info "SUKCES: Dodano kontakt do kampanii " + campaignId;
+                            }
+                            else 
+                            {
+                                info "BŁĄD: Nie udało się dodać kontaktu do kampanii " + campaignId + ". Szczegóły: " + response.toString();
+                            }
+                        }
+                        else
+                        {
+                            info "BŁĄD: Nie znaleziono kampanii o ID: " + campaignId;
+                        }
+                    }
+                    else
+                    {
+                        updateMap.put("Contact_Name", targetContact.get("id"));
+                        info "Wysyłanie standardowego żądania aktualizacji: " + updateMap.toString();
+                        response = zoho.crm.updateRecord(module, record.get("id"), updateMap);
+                        info "Odpowiedź z API: " + response.toString();
+                        
+                        if(response != null && response.get("id") != null)
+                        {
+                            successCount = successCount + 1;
+                            info "SUKCES: Zaktualizowano powiązanie dla rekordu " + record.get("id");
+                        }
+                    }
+                }
+            }
+            info "Podsumowanie dla modułu " + module + ": przeniesiono " + successCount + " z " + relatedRecords.size() + " rekordów";
+            transferSummary.put(module, successCount + " z " + relatedRecords.size());
+        }
+        else
+        {
+            info "Brak rekordów do przeniesienia w module " + module;
+        }
+    }
+    
+    // Aktualizacja pola Kontakt_w_bazie w modułach Leads
+    leadModules = List();
+    leadModules.add("Leads");
+    leadModules.add("Marketing_Leads");
+    leadModules.add("EDU_Leads");
+    
+    for each leadModule in leadModules
+    {
+        info "=== MODUŁ LEAD: " + leadModule + " ===";
+        searchCriteria = "(Kontakt_w_bazie:equals:" + sourceRecordId.toLong() + ")";
+        info "Wyszukiwanie z kryteriami: " + searchCriteria;
+        searchLeads = zoho.crm.searchRecords(leadModule, searchCriteria);
+        
+        if(searchLeads != null && searchLeads.size() > 0)
+        {
+            successCount = 0;
+            for each lead in searchLeads
+            {
+                info "Przetwarzanie leada ID: " + lead.get("id");
+                updateMap = Map();
+                updateMap.put("Kontakt_w_bazie", targetRecordId);
+                response = zoho.crm.updateRecord(leadModule, lead.get("id"), updateMap);
+                
+                if(response != null && response.get("id") != null)
+                {
+                    successCount = successCount + 1;
+                    info "SUKCES: Zaktualizowano lead " + lead.get("id");
+                }
+            }
+            transferSummary.put(leadModule, successCount + " z " + searchLeads.size());
+        }
+    }
+    
+    info "=== ZAKOŃCZONO PRZENOSZENIE POWIĄZAŃ ===";
+    return transferSummary.toString();
+}

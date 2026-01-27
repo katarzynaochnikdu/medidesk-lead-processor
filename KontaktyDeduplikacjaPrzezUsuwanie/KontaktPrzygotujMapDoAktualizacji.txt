@@ -1,0 +1,460 @@
+string standalone.KontaktPrzygotujMapDoAktualizacji(string sourceId, string targetId)
+{
+// Funkcja przygotowuje mapę aktualizacji - przenosi dane z rekordu źródłowego do docelowego
+// według różnych strategii
+info "=== PRZYGOTOWANIE MAPY AKTUALIZACJI ===";
+info "ID rekordu źródłowego: " + sourceId;
+info "ID rekordu docelowego: " + targetId;
+// Pobieramy rekordy na podstawie ID
+sourceContact = zoho.crm.getRecordById("Contacts",sourceId);
+targetContact = zoho.crm.getRecordById("Contacts",targetId);
+if(sourceContact == null)
+{
+	info "Błąd: Nie można pobrać rekordu źródłowego o ID: " + sourceId;
+	return "{\"error\": \"Nie można pobrać rekordu źródłowego\"}";
+}
+if(targetContact == null)
+{
+	info "Błąd: Nie można pobrać rekordu docelowego o ID: " + targetId;
+	return "{\"error\": \"Nie można pobrać rekordu docelowego\"}";
+}
+info "Pobrano rekord źródłowy: " + sourceContact.toString();
+info "Pobrano rekord docelowy: " + targetContact.toString();
+updateMap = Map();
+// Pobierz listy pól dla różnych strategii z arkusza Zoho Sheet
+sheetUrl = "https://sheet.zoho.eu/sheet/open/jkuu19954234476a34a50b017e5642f2e182a";
+info "=== POBIERANIE LIST PÓL Z ARKUSZA ZOHO SHEET ===";
+info "URL arkusza: " + sheetUrl;
+info "Pobieranie listy pól dla strategii: Deduplikacja_przenies_jesli_puste";
+standardFieldsStr = standalone.ListaAPIzWorkDrive(sheetUrl,"Sheet1","Deduplikacja_przenies_jesli_puste");
+info "Otrzymano listę pól (Deduplikacja_przenies_jesli_puste): " + standardFieldsStr;
+info "Pobieranie listy pól dla strategii: Deduplikacja_scal_zrodlo";
+sourceFieldsStr = standalone.ListaAPIzWorkDrive(sheetUrl,"Sheet1","Deduplikacja_scal_zrodlo");
+info "Otrzymano listę pól (Deduplikacja_scal_zrodlo): " + sourceFieldsStr;
+info "Pobieranie listy pól dla strategii: Deduplikacja_sprawdz_date_z_pary_zostaw_wczesniejsza_jesli_puste";
+dateFieldsStr = standalone.ListaAPIzWorkDrive(sheetUrl,"Sheet1","Deduplikacja_sprawdz_date_z_pary_zostaw_wczesniejsza_jesli_puste");
+info "Otrzymano listę pól (Deduplikacja_sprawdz_date_z_pary_zostaw_wczesniejsza_jesli_puste): " + dateFieldsStr;
+info "Pobieranie listy pól dla strategii: Deduplikacja_polacz_dane";
+mergeFieldsStr = standalone.ListaAPIzWorkDrive(sheetUrl,"Sheet1","Deduplikacja_polacz_dane");
+info "Otrzymano listę pól (Deduplikacja_polacz_dane): " + mergeFieldsStr;
+// Konwersja stringów na listy
+info "=== KONWERSJA STRINGÓW NA LISTY ===";
+standardFields = standardFieldsStr.toList(",");
+info "Lista pól (Deduplikacja_przenies_jesli_puste): " + standardFields.toString();
+sourceFields = sourceFieldsStr.toList(",");
+info "Lista pól (Deduplikacja_scal_zrodlo): " + sourceFields.toString();
+dateFieldsRaw = dateFieldsStr.toList(",");
+info "Lista pól (Deduplikacja_sprawdz_date_z_pary_zostaw_wczesniejsza_jesli_puste): " + dateFieldsRaw.toString();
+mergeFields = mergeFieldsStr.toList(",");
+info "Lista pól (Deduplikacja_polacz_dane): " + mergeFields.toString();
+// Przygotowanie par pól data-boolean
+info "=== PRZYGOTOWANIE PAR PÓL DATA-BOOLEAN ===";
+dateFieldPairs = Map();
+// Poprawka: Pola w dateFieldsRaw są w kolejności: boolean, data, boolean, data, itd.
+// Musimy je poprawnie sparować
+fieldCount = dateFieldsRaw.size();
+// Tworzymy pary pól boolean-data (co drugie pole)
+if(fieldCount >= 2)
+{
+	dateFieldPairs.put(dateFieldsRaw.get(1),dateFieldsRaw.get(2));
+	info "Dodano parę pól: " + dateFieldsRaw.get(0) + " -> " + dateFieldsRaw.get(1);
+}
+if(fieldCount >= 4)
+{
+	dateFieldPairs.put(dateFieldsRaw.get(3),dateFieldsRaw.get(4));
+	info "Dodano parę pól: " + dateFieldsRaw.get(2) + " -> " + dateFieldsRaw.get(3);
+}
+if(fieldCount >= 6)
+{
+	dateFieldPairs.put(dateFieldsRaw.get(5),dateFieldsRaw.get(6));
+	info "Dodano parę pól: " + dateFieldsRaw.get(4) + " -> " + dateFieldsRaw.get(5);
+}
+if(fieldCount >= 8)
+{
+	dateFieldPairs.put(dateFieldsRaw.get(7),dateFieldsRaw.get(7));
+	info "Dodano parę pól: " + dateFieldsRaw.get(6) + " -> " + dateFieldsRaw.get(7);
+}
+info "Utworzone pary pól data-boolean: " + dateFieldPairs.toString();
+// 1. Strategia: Deduplikacja_przenies_jesli_puste
+info "=== STRATEGIA: DEDUPLIKACJA_PRZENIES_JESLI_PUSTE ===";
+// Przenosi dane jeśli pole docelowe jest puste, lub w specjalnych przypadkach dla Imienia i Nazwiska.
+for each  field in standardFields
+{
+	info "Sprawdzanie pola: " + field;
+	sourceValue = sourceContact.get(field);
+	destValue = targetContact.get(field);
+	info "Wartość w rekordzie źródłowym: " + sourceValue;
+	info "Wartość w rekordzie docelowym: " + destValue;
+	shouldUpdate = false;
+	// Domyślna strategia: przenieś, jeśli pole docelowe jest puste, a źródłowe ma wartość
+	if((destValue == null || destValue == "") && sourceValue != null && sourceValue != "")
+	{
+		shouldUpdate = true;
+		info "Warunek podstawowy spełniony: pole docelowe puste, źródłowe nie.";
+	}
+	else if(sourceValue != null && sourceValue != "")
+	{
+		// Specjalna obsługa dla pól First_Name i Last_Name
+		if(field == "First_Name")
+		{
+			// Jeśli w docelowym jest placeholder [b.imienia]
+			if(destValue == "[b.imienia]")
+			{
+				shouldUpdate = true;
+				info "Warunek specjalny (First_Name): pole docelowe to placeholder '[b.imienia]'.";
+			}
+			// Jeśli w docelowym imię jest bardzo krótkie (np. inicjał), a w źródłowym jest dłuższe
+			else if(destValue != null && destValue.length() <= 2 && sourceValue.length() > destValue.length())
+			{
+				shouldUpdate = true;
+				info "Warunek specjalny (First_Name): imię w celu jest krótkie, a w źródle dłuższe.";
+			}
+		}
+		else if(field == "Last_Name")
+		{
+			// Jeśli w docelowym jest placeholder [b.nazwiska]
+			if(destValue == "[b.nazwiska]")
+			{
+				shouldUpdate = true;
+				info "Warunek specjalny (Last_Name): pole docelowe to placeholder '[b.nazwiska]'.";
+			}
+			// Jeśli w docelowym nazwisko jest bardzo krótkie, a w źródłowym jest dłuższe
+			else if(destValue != null && destValue.length() <= 2 && sourceValue.length() > destValue.length())
+			{
+				shouldUpdate = true;
+				info "Warunek specjalny (Last_Name): nazwisko w celu jest krótkie, a w źródle dłuższe.";
+			}
+		}
+	}
+	// Wykonaj aktualizację, jeśli któryś z warunków został spełniony
+	if(shouldUpdate)
+	{
+		updateMap.put(field,sourceValue);
+		info "Aktualizuję pole " + field + " wartością ze źródła.";
+	}
+	else
+	{
+		if(destValue != null && destValue != "")
+		{
+			info "Pole " + field + " w rekordzie docelowym ma już wartość i nie spełnia warunków specjalnych, nie przenosimy";
+		}
+		else if(sourceValue == null || sourceValue == "")
+		{
+			info "Pole " + field + " w rekordzie źródłowym jest puste, nie ma co przenosić";
+		}
+	}
+}
+// 2. Strategia: Deduplikacja_scal_zrodlo
+info "=== STRATEGIA: DEDUPLIKACJA_SCAL_ZRODLO ===";
+// Jeśli którekolwiek z tych pól nie jest puste w docelowym, to nie przenosimy ŻADNEGO pola
+// Najpierw sprawdzamy, czy wszystkie pola są puste w rekordzie docelowym
+allFieldsEmpty = true;
+for each  field in sourceFields
+{
+	info "Sprawdzanie pola: " + field;
+	destValue = targetContact.get(field);
+	info "Wartość w rekordzie docelowym: " + destValue;
+	if(destValue != null && destValue != "")
+	{
+		allFieldsEmpty = false;
+		info "Pole " + field + " w rekordzie docelowym ma już wartość, nie przenosimy ŻADNEGO pola (strategia: scal_zrodlo)";
+		break;
+	}
+	else
+	{
+		info "Pole " + field + " w rekordzie docelowym jest puste";
+	}
+}
+// Jeśli wszystkie pola są puste, przenosimy wartości ze źródła
+if(allFieldsEmpty)
+{
+	info "Wszystkie pola w rekordzie docelowym są puste, przenosimy wartości ze źródła";
+	for each  field in sourceFields
+	{
+		info "Sprawdzanie pola: " + field;
+		sourceValue = sourceContact.get(field);
+		info "Wartość w rekordzie źródłowym: " + sourceValue;
+		if(sourceValue != null && sourceValue != "")
+		{
+			updateMap.put(field,sourceValue);
+			info "Przenoszę wartość pola " + field + " ze źródła do celu (strategia: scal_zrodlo)";
+		}
+		else
+		{
+			info "Pole " + field + " w rekordzie źródłowym jest puste, nie ma co przenosić";
+		}
+	}
+}
+else
+{
+	info "Co najmniej jedno pole w rekordzie docelowym ma już wartość, nie przenosimy ŻADNEGO pola (strategia: scal_zrodlo)";
+}
+// 3. Strategia: Deduplikacja_sprawdz_date_z_pary_zostaw_wczesniejsza_jesli_puste
+info "=== STRATEGIA: DEDUPLIKACJA_SPRAWDZ_DATE_Z_PARY_ZOSTAW_WCZESNIEJSZA_JESLI_PUSTE ===";
+// Dla par pól (boolean + data), wybieramy wcześniejszą datę lub przenosimy jeśli puste
+for each  boolField in dateFieldPairs.keys()
+{
+	dateField = dateFieldPairs.get(boolField);
+	info "Sprawdzanie pary pól: " + boolField + " -> " + dateField;
+	// Sprawdzamy, czy nazwy pól są zgodne z oczekiwaniami
+	if(!boolField.contains("_data") && dateField.contains("_data"))
+	{
+		// Wszystko OK, pola są w poprawnej kolejności
+		info "Pola są w poprawnej kolejności: pole boolean (" + boolField + ") i pole daty (" + dateField + ")";
+	}
+	else if(boolField.contains("_data") && !dateField.contains("_data"))
+	{
+		// Pola są zamienione miejscami, zamieniamy je z powrotem
+		info "Wykryto zamienione miejscami pola daty i boolean. Zamieniam je z powrotem.";
+		tempField = boolField;
+		boolField = dateField;
+		dateField = tempField;
+	}
+	sourceBoolValue = sourceContact.get(boolField);
+	sourceDateValue = sourceContact.get(dateField);
+	destBoolValue = targetContact.get(boolField);
+	destDateValue = targetContact.get(dateField);
+	info "Wartość boolean w rekordzie źródłowym: " + sourceBoolValue;
+	info "Wartość daty w rekordzie źródłowym: " + sourceDateValue;
+	info "Wartość boolean w rekordzie docelowym: " + destBoolValue;
+	info "Wartość daty w rekordzie docelowym: " + destDateValue;
+	// Sprawdzamy, czy wartości są odpowiedniego typu
+	isSourceDateValid = false;
+	isDestDateValid = false;
+	// Sprawdzamy, czy wartość daty w rekordzie źródłowym jest poprawną datą
+	if(sourceDateValue != null && sourceDateValue != "")
+	{
+		try 
+		{
+			if(sourceDateValue.toString().matches("\\d{4}-\\d{2}-\\d{2}.*"))
+			{
+				// Wygląda jak data w formacie YYYY-MM-DD
+				isSourceDateValid = true;
+				info "Wartość daty w rekordzie źródłowym jest poprawną datą";
+			}
+			else if(sourceDateValue.toString().equals("true") || sourceDateValue.toString().equals("false"))
+			{
+				info "Wartość daty w rekordzie źródłowym jest typu boolean, nie datą";
+			}
+			else
+			{
+				// Próbujemy konwersji
+				testDate = sourceDateValue.toDate();
+				isSourceDateValid = true;
+				info "Wartość daty w rekordzie źródłowym jest poprawną datą (po konwersji)";
+			}
+		}
+		catch (e)
+		{
+			info "Wartość daty w rekordzie źródłowym nie jest poprawną datą: " + e;
+		}
+	}
+	// Sprawdzamy, czy wartość daty w rekordzie docelowym jest poprawną datą
+	if(destDateValue != null && destDateValue != "")
+	{
+		try 
+		{
+			if(destDateValue.toString().matches("\\d{4}-\\d{2}-\\d{2}.*"))
+			{
+				// Wygląda jak data w formacie YYYY-MM-DD
+				isDestDateValid = true;
+				info "Wartość daty w rekordzie docelowym jest poprawną datą";
+			}
+			else if(destDateValue.toString().equals("true") || destDateValue.toString().equals("false"))
+			{
+				info "Wartość daty w rekordzie docelowym jest typu boolean, nie datą";
+			}
+			else
+			{
+				// Próbujemy konwersji
+				testDate = destDateValue.toDate();
+				isDestDateValid = true;
+				info "Wartość daty w rekordzie docelowym jest poprawną datą (po konwersji)";
+			}
+		}
+		catch (e)
+		{
+			info "Wartość daty w rekordzie docelowym nie jest poprawną datą: " + e;
+		}
+	}
+	// Jeśli pole daty w rekordzie docelowym jest puste, a w rekordzie źródłowym ma poprawną wartość daty
+	if((destDateValue == null || destDateValue == "" || !isDestDateValid) && sourceDateValue != null && sourceDateValue != "" && isSourceDateValid)
+	{
+		updateMap.put(boolField,sourceBoolValue);
+		updateMap.put(dateField,sourceDateValue);
+		info "Przenoszę parę pól " + boolField + "/" + dateField + " ze źródła do celu (strategia: sprawdz_date)";
+	}
+	// Jeśli oba pola daty mają poprawne wartości, wybieramy wcześniejszą datę
+	else if(isDestDateValid && isSourceDateValid)
+	{
+		try 
+		{
+			info "Obie daty mają poprawne wartości, porównuję daty";
+			destDate = destDateValue.toDate();
+			sourceDate = sourceDateValue.toDate();
+			info "Data w rekordzie źródłowym (po konwersji): " + sourceDate;
+			info "Data w rekordzie docelowym (po konwersji): " + destDate;
+			if(sourceDate < destDate)
+			{
+				updateMap.put(boolField,sourceBoolValue);
+				updateMap.put(dateField,sourceDateValue);
+				info "Zastępuję parę pól " + boolField + "/" + dateField + " wcześniejszą datą ze źródła (strategia: sprawdz_date)";
+			}
+			else
+			{
+				info "Zachowuję parę pól " + boolField + "/" + dateField + " w celu, data jest wcześniejsza (strategia: sprawdz_date)";
+			}
+		}
+		catch (e)
+		{
+			info "Błąd podczas porównywania dat: " + e;
+			info "Zachowuję parę pól " + boolField + "/" + dateField + " w celu (z powodu błędu porównywania)";
+		}
+	}
+	else
+	{
+		info "Nie mogę porównać dat - co najmniej jedna z nich nie jest poprawną datą";
+		if(isDestDateValid)
+		{
+			info "Zachowuję parę pól " + boolField + "/" + dateField + " w celu (data docelowa jest poprawna)";
+		}
+		else if(isSourceDateValid)
+		{
+			updateMap.put(boolField,sourceBoolValue);
+			updateMap.put(dateField,sourceDateValue);
+			info "Przenoszę parę pól " + boolField + "/" + dateField + " ze źródła do celu (data źródłowa jest poprawna, a docelowa nie)";
+		}
+		else
+		{
+			info "Żadna z dat nie jest poprawna, nie wprowadzam zmian";
+		}
+	}
+}
+// 4. Strategia: Deduplikacja_polacz_dane
+info "=== STRATEGIA: DEDUPLIKACJA_POLACZ_DANE ===";
+// Dla pola Historia_scalen (tekst) - łączymy wartości, dla Ilosc_scalen (liczba) - sumujemy
+for each  field in mergeFields
+{
+	info "Sprawdzanie pola: " + field;
+	sourceValue = sourceContact.get(field);
+	destValue = targetContact.get(field);
+	info "Wartość w rekordzie źródłowym: " + sourceValue;
+	info "Wartość w rekordzie docelowym: " + destValue;
+	if(field == "Historia_scalen")
+	{
+		info "Przetwarzanie pola Historia_scalen (tekst)";
+		// Łączymy teksty z nową linią
+		if(sourceValue != null && sourceValue != "")
+		{
+			if(destValue != null && destValue != "")
+			{
+				updateMap.put(field,destValue + "\n" + sourceValue);
+				info "Łączę wartości pola Historia_scalen: " + destValue + " + " + sourceValue;
+			}
+			else
+			{
+				updateMap.put(field,sourceValue);
+				info "Przenoszę wartość pola Historia_scalen ze źródła do celu: " + sourceValue;
+			}
+		}
+		else
+		{
+			info "Pole Historia_scalen w rekordzie źródłowym jest puste, nie ma co przenosić";
+		}
+	}
+	else if(field == "Ilosc_scalen")
+	{
+		info "Przetwarzanie pola Ilosc_scalen (liczba)";
+		// Sumujemy liczby
+		sourceNum = 0;
+		destNum = 0;
+		try 
+		{
+			if(sourceValue != null && sourceValue != "")
+			{
+				sourceNum = sourceValue.toNumber();
+				info "Wartość liczbowa w rekordzie źródłowym (po konwersji): " + sourceNum;
+			}
+			else
+			{
+				info "Pole Ilosc_scalen w rekordzie źródłowym jest puste, używam wartości 0";
+			}
+			if(destValue != null && destValue != "")
+			{
+				destNum = destValue.toNumber();
+				info "Wartość liczbowa w rekordzie docelowym (po konwersji): " + destNum;
+			}
+			else
+			{
+				info "Pole Ilosc_scalen w rekordzie docelowym jest puste, używam wartości 0";
+			}
+			updateMap.put(field,sourceNum + destNum);
+			info "Sumuję wartości pola Ilosc_scalen: " + destNum + " + " + sourceNum + " = " + (sourceNum + destNum);
+		}
+		catch (e)
+		{
+			info "Błąd podczas konwersji liczb: " + e;
+			// W przypadku błędu, zachowujemy wartość docelową lub ustawiamy 0
+			if(destValue != null && destValue != "")
+			{
+				info "Zachowuję wartość pola Ilosc_scalen w celu (z powodu błędu konwersji): " + destValue;
+			}
+			else
+			{
+				updateMap.put(field,0);
+				info "Ustawiam wartość pola Ilosc_scalen na 0 (z powodu błędu konwersji)";
+			}
+		}
+	}
+	else
+	{
+		info "Pole " + field + " nie jest obsługiwane przez strategię polacz_dane";
+	}
+}
+// 5. Strategia: Łączenie Tagów
+info "=== STRATEGIA: ŁĄCZENIE TAGÓW ===";
+sourceTags = sourceContact.get("Tag");
+targetTags = targetContact.get("Tag");
+info "Tagi źródłowe: " + sourceTags;
+info "Tagi docelowe: " + targetTags;
+mergedTags = List();
+targetTagNames = List();
+// Najpierw dodajemy istniejące tagi z rekordu docelowego
+if(targetTags != null && targetTags.size() > 0)
+{
+	mergedTags.addAll(targetTags);
+	for each  tag in targetTags
+	{
+		targetTagNames.add(tag.get("name"));
+	}
+}
+info "Nazwy tagów docelowych: " + targetTagNames;
+// Teraz dodajemy tagi z rekordu źródłowego, jeśli nie istnieją w docelowym
+if(sourceTags != null && sourceTags.size() > 0)
+{
+	for each  tag in sourceTags
+	{
+		if(!targetTagNames.contains(tag.get("name")))
+		{
+			mergedTags.add(tag);
+			info "Dodaję tag '" + tag.get("name") + "' z rekordu źródłowego.";
+		}
+		else
+		{
+			info "Tag '" + tag.get("name") + "' już istnieje w rekordzie docelowym. Pomijam.";
+		}
+	}
+}
+// Jeśli lista połączonych tagów nie jest pusta, dodajemy ją do mapy aktualizacji
+if(mergedTags.size() > 0)
+{
+	updateMap.put("Tag",mergedTags);
+	info "Finalna lista połączonych tagów do aktualizacji: " + mergedTags;
+}
+else
+{
+	info "Brak tagów do połączenia lub zaktualizowania.";
+}
+// Zwracamy mapę jako string
+return updateMap.toString();
+}

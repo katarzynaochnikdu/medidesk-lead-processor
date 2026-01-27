@@ -85,79 +85,118 @@ def format_nip(nip: Optional[str]) -> Optional[str]:
     return f"{normalized[:3]}-{normalized[3:6]}-{normalized[6:8]}-{normalized[8:10]}"
 
 
-def normalize_phone(phone: Optional[str], default_country: str = "48") -> Optional[str]:
+def normalize_phone(phone: Optional[str], default_country: str = "PL") -> Optional[str]:
     """
-    Normalizuje numer telefonu do formatu +XXXXXXXXXXXX.
+    Normalizuje numer telefonu do formatu E.164 (+XXXXXXXXXXXX bez spacji).
+    Używa phonenumbers library dla prawidłowego parsowania wszystkich krajów.
     
     Args:
         phone: Telefon w dowolnym formacie
-        default_country: Domyślny prefix kraju (bez +)
+        default_country: Domyślny kraj jako ISO kod (PL, US, FR, etc.)
     
     Returns:
-        Telefon w formacie +48XXXXXXXXX lub None
+        Telefon w formacie E.164: +48XXXXXXXXX lub None
     """
     if not phone:
         return None
     
-    phone_str = str(phone).strip()
+    try:
+        import phonenumbers
+        
+        phone_str = str(phone).strip()
+        
+        # Parsuj z domyślnym krajem
+        parsed = phonenumbers.parse(phone_str, default_country)
+        
+        # Waliduj
+        if not phonenumbers.is_valid_number(parsed):
+            return None
+        
+        # Zwróć w formacie E.164 (bez spacji)
+        return phonenumbers.format_number(parsed, phonenumbers.PhoneNumberFormat.E164)
+        
+    except Exception:
+        # Fallback jeśli phonenumbers nie zadziała
+        return None
+
+
+def capitalize_name(name: Optional[str]) -> Optional[str]:
+    """
+    Kapitalizuje imię lub nazwisko - pierwsza litera każdego słowa WIELKA, reszta małe.
+    Obsługuje nazwiska dwuczłonowe ze spacjami i myślnikami.
     
-    # Usuń wszystko oprócz cyfr i +
-    cleaned = "".join(c for c in phone_str if c.isdigit() or c == "+")
+    Args:
+        name: Imię lub nazwisko
     
-    if not cleaned:
+    Returns:
+        Skapitalizowane imię/nazwisko
+    
+    Examples:
+        "jan kowalski" -> "Jan Kowalski"
+        "MARIA NOWAK-KOWALSKA" -> "Maria Nowak-Kowalska"
+        "anne-marie" -> "Anne-Marie"
+    """
+    if not name:
         return None
     
-    # Obsługa różnych formatów
-    if cleaned.startswith("+"):
-        # Już ma prefix międzynarodowy
-        digits = cleaned[1:]
-        if len(digits) >= 9:
-            return f"+{digits}"
-    elif cleaned.startswith("00"):
-        # Format 0048...
-        digits = cleaned[2:]
-        if len(digits) >= 9:
-            return f"+{digits}"
-    elif cleaned.startswith("0"):
-        # Format 0601... (stary polski)
-        digits = cleaned[1:]
-        if len(digits) == 9:
-            return f"+{default_country}{digits}"
-    else:
-        # Bez prefixu
-        if len(cleaned) == 9:
-            # Polski numer bez prefixu
-            return f"+{default_country}{cleaned}"
-        elif len(cleaned) > 9:
-            # Może już zawiera prefix
-            if cleaned.startswith(default_country):
-                return f"+{cleaned}"
-            return f"+{cleaned}"
+    name = name.strip()
     
-    return None
+    # Podziel na słowa (spacje) i części z myślnikami
+    words = []
+    for word in name.split():
+        # Dla każdego słowa: obsłuż myślniki
+        parts = word.split("-")
+        capitalized_parts = [p.capitalize() for p in parts if p]
+        words.append("-".join(capitalized_parts))
+    
+    return " ".join(words)
 
 
 def format_phone(phone: Optional[str]) -> Optional[str]:
     """
-    Formatuje telefon do czytelnej postaci +48 XXX XXX XXX.
+    Formatuje telefon do czytelnej postaci z spacjami.
+    - Polski: +48 XXX XXX XXX
+    - Zagraniczny: +XX XXX XXX XXX (format międzynarodowy)
     
     Args:
-        phone: Znormalizowany telefon (+48XXXXXXXXX)
+        phone: Telefon w dowolnym formacie
     
     Returns:
-        Sformatowany telefon lub None
+        Sformatowany telefon ze spacjami lub None
     """
-    normalized = normalize_phone(phone)
-    if not normalized:
+    if not phone:
         return None
     
-    # Dla polskich numerów
-    if normalized.startswith("+48") and len(normalized) == 12:
-        digits = normalized[3:]
-        return f"+48 {digits[:3]} {digits[3:6]} {digits[6:]}"
-    
-    # Dla innych - prosty format
-    return normalized
+    try:
+        import phonenumbers
+        
+        phone_str = str(phone).strip()
+        
+        # Jeśli już znormalizowany (E.164)
+        if phone_str.startswith("+"):
+            parsed = phonenumbers.parse(phone_str, None)
+        else:
+            # Spróbuj sparsować z domyślnym krajem PL
+            parsed = phonenumbers.parse(phone_str, "PL")
+        
+        # Waliduj
+        if not phonenumbers.is_valid_number(parsed):
+            return None
+        
+        # Formatuj z spacjami (INTERNATIONAL format)
+        return phonenumbers.format_number(parsed, phonenumbers.PhoneNumberFormat.INTERNATIONAL)
+        
+    except Exception:
+        # Fallback - prosty format dla polskich
+        normalized = normalize_phone(phone)
+        if not normalized:
+            return None
+        
+        if normalized.startswith("+48") and len(normalized) == 12:
+            digits = normalized[3:]
+            return f"+48 {digits[:3]} {digits[3:6]} {digits[6:]}"
+        
+        return normalized
 
 
 def is_valid_email(email: Optional[str]) -> bool:

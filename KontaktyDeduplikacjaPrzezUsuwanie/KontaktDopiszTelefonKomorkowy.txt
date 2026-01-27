@@ -1,0 +1,146 @@
+string standalone.KontaktDopiszTelefonKomorkowy(string telefon, bool rodo, string targetId)
+{
+    // Funkcja sprawdza czy telefon komórkowy występuje w rekordzie docelowym
+    // Jeśli nie, to szuka wolnego pola i dopisuje telefon
+    info "=== DOPISYWANIE TELEFONU KOMÓRKOWEGO DO KONTAKTU ===";
+    info "Telefon do dopisania: " + telefon;
+    info "Flaga RODO: " + rodo;
+    info "ID rekordu docelowego: " + targetId;
+    
+    if(telefon == null || telefon == "")
+    {
+        info "Telefon jest pusty, nie ma co dopisywać";
+        return "{\"status\": \"error\", \"message\": \"Telefon jest pusty\"}";
+    }
+    
+    // Pobierz rekord docelowy
+    targetContact = zoho.crm.getRecordById("Contacts", targetId);
+    if(targetContact == null)
+    {
+        info "Błąd: Nie można pobrać rekordu docelowego o ID: " + targetId;
+        return "{\"status\": \"error\", \"message\": \"Nie można pobrać rekordu docelowego\"}";
+    }
+    
+    // Pola telefonów komórkowych w rekordzie docelowym
+    targetMobileFields = {"Home_Phone", "Mobile", "Telefon_komorkowy_3"};
+    info "Pola telefonów komórkowych w rekordzie docelowym: " + targetMobileFields.toString();
+    
+    // Oczyszczenie numeru telefonu (usunięcie wszystkich znaków niebędących cyframi)
+    telefonClean = telefon.toString().replaceAll("[^0-9]","");
+    info "Oczyszczony numer telefonu: " + telefonClean;
+    
+    // Sprawdź, czy telefon już występuje w rekordzie docelowym
+    duplicateFound = false;
+    duplicateField = "";
+    
+    for each field in targetMobileFields
+    {
+        fieldValue = targetContact.get(field);
+        info "Wartość pola " + field + ": " + fieldValue;
+        
+        if(fieldValue != null && fieldValue != "")
+        {
+            fieldValueClean = fieldValue.toString().replaceAll("[^0-9]","");
+            info "Oczyszczona wartość pola " + field + ": " + fieldValueClean;
+            
+            if(fieldValueClean == telefonClean)
+            {
+                duplicateFound = true;
+                duplicateField = field;
+                info "Telefon " + telefon + " już występuje w polu " + field;
+                break;
+            }
+        }
+    }
+    
+    // Jeśli telefon już występuje, aktualizuj tylko flagę RODO
+    if(duplicateFound)
+    {
+        info "Telefon " + telefon + " już występuje w polu " + duplicateField + ", aktualizuję tylko flagę RODO";
+        
+        // Określ pole RODO dla znalezionego pola telefonu
+        rodoField = "";
+        if(duplicateField == "Home_Phone")
+        {
+            rodoField = "Tel_kom1_RODO_wyrazona_niezgoda";
+        }
+        else if(duplicateField == "Mobile")
+        {
+            rodoField = "Tel_kom2_RODO_wyrazona_niezgoda";
+        }
+        else if(duplicateField == "Telefon_komorkowy_3")
+        {
+            rodoField = "Tel_kom3_RODO_wyrazona_niezgoda";
+        }
+        
+        // Aktualizuj flagę RODO tylko jeśli w docelowym jest false, a w wywołaniu true
+        if(rodoField != "" && rodo == true)
+        {
+            currentRodoValue = targetContact.get(rodoField);
+            if(currentRodoValue == false || currentRodoValue == null)
+            {
+                updateMap = Map();
+                updateMap.put(rodoField, true);
+                updateResp = zoho.crm.updateRecord("Contacts", targetId, updateMap);
+                info "Zaktualizowano flagę RODO dla pola " + duplicateField + ": " + updateResp;
+                
+                return "{\"status\": \"success\", \"message\": \"Telefon już istnieje, zaktualizowano flagę RODO\", \"field\": \"" + duplicateField + "\", \"updated\": true}";
+            }
+        }
+        
+        return "{\"status\": \"success\", \"message\": \"Telefon już istnieje\", \"field\": \"" + duplicateField + "\", \"updated\": false}";
+    }
+    
+    // Jeśli telefon nie występuje, znajdź pierwsze wolne pole
+    freeField = "";
+    for each field in targetMobileFields
+    {
+        fieldValue = targetContact.get(field);
+        if(fieldValue == null || fieldValue == "")
+        {
+            freeField = field;
+            info "Znaleziono wolne pole " + field + " dla telefonu " + telefon;
+            break;
+        }
+    }
+    
+    // Jeśli nie ma wolnego pola, zwróć błąd
+    if(freeField == "")
+    {
+        info "Brak wolnego pola dla telefonu " + telefon;
+        return "{\"status\": \"error\", \"message\": \"Brak wolnego pola dla telefonu\"}";
+    }
+    
+    // Określ pole RODO dla znalezionego wolnego pola
+    rodoField = "";
+    if(freeField == "Home_Phone")
+    {
+        rodoField = "Tel_kom1_RODO_wyrazona_niezgoda";
+    }
+    else if(freeField == "Mobile")
+    {
+        rodoField = "Tel_kom2_RODO_wyrazona_niezgoda";
+    }
+    else if(freeField == "Telefon_komorkowy_3")
+    {
+        rodoField = "Tel_kom3_RODO_wyrazona_niezgoda";
+    }
+    
+    // Aktualizuj rekord
+    updateMap = Map();
+    updateMap.put(freeField, telefon);
+    
+    if(rodoField != "" && rodo == true)
+    {
+        currentRodoValue = targetContact.get(rodoField);
+        if(currentRodoValue == false || currentRodoValue == null)
+        {
+            updateMap.put(rodoField, true);
+        }
+    }
+    
+    updateResp = zoho.crm.updateRecord("Contacts", targetId, updateMap);
+    info "Zaktualizowano rekord, dodano telefon " + telefon + " do pola " + freeField + ": " + updateResp;
+    
+    return "{\"status\": \"success\", \"message\": \"Dodano telefon\", \"field\": \"" + freeField + "\", \"updated\": true}";
+} 

@@ -60,7 +60,7 @@ class GUSData(BaseModel):
     full_name: Optional[str] = Field(None, description="Pełna nazwa z rejestru")
     short_name: Optional[str] = Field(None, description="Nazwa skrócona")
     
-    # Adres z rejestru
+    # Adres z rejestru (format GUS)
     street: Optional[str] = None
     building_number: Optional[str] = None
     apartment_number: Optional[str] = None
@@ -80,6 +80,45 @@ class GUSData(BaseModel):
     
     # Błąd (jeśli wystąpił)
     error: Optional[str] = Field(None, description="Komunikat błędu z GUS")
+    
+    def to_billing_fields(self) -> dict:
+        """
+        Mapuje dane GUS do pól Billing (siedziba) w Zoho CRM.
+        
+        Returns:
+            Dict z polami Billing_* gotowymi do zapisu w Zoho
+        """
+        if not self.found:
+            return {}
+        
+        # Złóż pełną ulicę z komponentów
+        street_parts = []
+        if self.street:
+            street_parts.append(self.street)
+        if self.building_number:
+            street_parts.append(self.building_number)
+        if self.apartment_number:
+            street_parts.append(f"/{self.apartment_number}")
+        
+        full_street = " ".join(street_parts) if street_parts else None
+        
+        return {
+            # Pełny adres (jako jest w GUS)
+            "Billing_Street": full_street,
+            
+            # Komponenty adresu
+            "Billing_Street_Name": self.street,
+            "Billing_Building_Number": self.building_number,
+            "Billing_Local_Number": self.apartment_number,
+            
+            # Lokalizacja
+            "Billing_Code": self.zip_code,
+            "Billing_City": self.city,
+            "Billing_Gmina": self.commune,
+            "Billing_Powiat": self.county,
+            "Billing_State": self.voivodeship,
+            "Billing_Country": "Polska",
+        }
 
 
 class DuplicateMatch(BaseModel):

@@ -1,0 +1,212 @@
+string standalone.AccountsSprawdzCzyJestLepsza(String existingAccountRecordId)
+{
+    info "=== SPRAWDZANIE CZY ISTNIEJE LEPSZA FIRMA ===";
+    responseMap = Map();
+    
+    // Pobierz dane istniejącej firmy
+    existingAccount = zoho.crm.getRecordById("Accounts", existingAccountRecordId);
+    if(existingAccount == null)
+    {
+        responseMap.put("status", "error");
+        responseMap.put("message", "Nie znaleziono firmy o podanym ID");
+        return responseMap.toString();
+    }
+    
+    nazwaFirmy = existingAccount.get("Account_Name");
+    if(nazwaFirmy == null || nazwaFirmy == "")
+    {
+        responseMap.put("status", "error");
+        responseMap.put("message", "Firma nie ma nazwy");
+        return responseMap.toString();
+    }
+    
+    // Oblicz scoring dla istniejącej firmy
+    existingScoreStr = standalone.CalculateAccountScore(existingAccountRecordId);
+    if(existingScoreStr == null || existingScoreStr == "")
+    {
+        responseMap.put("status", "error");
+        responseMap.put("message", "Nie udało się obliczyć scoringu dla istniejącej firmy");
+        return responseMap.toString();
+    }
+    
+    existingScoreMap = existingScoreStr.toMap();
+    existingTotalScore = existingScoreMap.get("AccountScoreDetale") + 
+                        existingScoreMap.get("AccountScorePowiazaniaModuly") + 
+                        existingScoreMap.get("AccountScorePowiazaniaRekordyModulow") +
+                        existingScoreMap.get("AccountScoreFirmyPowiazane") +
+                        existingScoreMap.get("AccountScoreKlienci");
+    
+    info "Scoring istniejącej firmy: " + existingTotalScore;
+    
+    // Szukaj innych firm o tej samej nazwie
+    accessToken = standalone.AccessToken();
+    if(accessToken.startsWith("Błąd"))
+    {
+        responseMap.put("status", "error");
+        responseMap.put("message", "Nie udało się pobrać tokenu dostępu");
+        return responseMap.toString();
+    }
+    
+    // Normalizuj nazwę przed wyszukiwaniem (usuń podwójne spacje, ujednolić wielkość liter)
+    nazwaFirmyNorm = nazwaFirmy.trim().replaceAll("\\s+", " ");
+    searchCriteria = "Account_Name:equals:" + nazwaFirmyNorm;
+    znalezioneFiremyStr1 = standalone.searchAccountsByAPI(searchCriteria, accessToken);
+
+    // Wyszukiwanie po wersji uppercase zostawiamy jako backup
+    searchCriteria = "Account_Name:equals:" + nazwaFirmy.toUpperCase();
+    znalezioneFiremyStr2 = standalone.searchAccountsByAPI(searchCriteria, accessToken);
+
+    // Połącz wyniki i usuń duplikaty
+    znalezioneFirmy = List();
+    uniqueIds = Map();
+
+    if(znalezioneFiremyStr1 != null && znalezioneFiremyStr1 != "")
+    {
+        for each firmaId in znalezioneFiremyStr1.toList(",")
+        {
+            if(!uniqueIds.containsKey(firmaId))
+            {
+                uniqueIds.put(firmaId, true);
+                znalezioneFirmy.add(firmaId);
+            }
+        }
+    }
+
+    if(znalezioneFiremyStr2 != null && znalezioneFiremyStr2 != "")
+    {
+        for each firmaId in znalezioneFiremyStr2.toList(",")
+        {
+            if(!uniqueIds.containsKey(firmaId))
+            {
+                uniqueIds.put(firmaId, true);
+                znalezioneFirmy.add(firmaId);
+            }
+        }
+    }
+
+    if(znalezioneFirmy.size() == 0)
+    {
+        responseMap.put("status", "success");
+        responseMap.put("message", "Nie znaleziono innych firm o tej nazwie");
+        responseMap.put("znalezionoLepsza", false);
+        return responseMap.toString();
+    }
+    
+    najlepszyScoring = existingTotalScore;
+    najlepszaFirmaId = existingAccountRecordId;
+    
+    // Sprawdź scoring każdej znalezionej firmy
+    for each firmaId in znalezioneFirmy
+    {
+        if(firmaId != existingAccountRecordId)
+        {
+            scoringResultStr = standalone.CalculateAccountScore(firmaId);
+            if(scoringResultStr != null && scoringResultStr != "")
+            {
+                scoringMap = scoringResultStr.toMap();
+                currentScore = scoringMap.get("AccountScoreDetale") + 
+                             scoringMap.get("AccountScorePowiazaniaModuly") + 
+                             scoringMap.get("AccountScorePowiazaniaRekordyModulow") +
+                             scoringMap.get("AccountScoreFirmyPowiazane") +
+                             scoringMap.get("AccountScoreKlienci");
+                
+                info "Scoring dla firmy " + firmaId + ": " + currentScore;
+                
+                if(currentScore > najlepszyScoring)
+                {
+                    najlepszyScoring = currentScore;
+                    najlepszaFirmaId = firmaId;
+                }
+            }
+        }
+    }
+    
+    // Przygotuj odpowiedź
+    responseMap.put("status", "success");
+    responseMap.put("znalezionoLepsza", najlepszaFirmaId != existingAccountRecordId);
+    responseMap.put("najlepszaFirmaId", najlepszaFirmaId);
+    responseMap.put("najlepszyScoring", najlepszyScoring);
+    responseMap.put("aktualnyScoring", existingTotalScore);
+    
+    if(najlepszaFirmaId != existingAccountRecordId)
+    {
+        // Po przeniesieniu kontaktów, sprawdź ponownie powiązania
+        existingAccount = zoho.crm.getRecordById("Accounts", existingAccountRecordId);
+        if(existingAccount != null)
+        {
+            info "=== SPRAWDZANIE MOŻLIWOŚCI USUNIĘCIA FIRMY ===";
+            info "ID firmy: " + existingAccountRecordId;
+            info "Scoring firmy: " + existingTotalScore;
+            
+            // Sprawdź tylko powiązane kontakty
+            hasPowiazania = false;
+            searchCriteria = "Account_Name:equals:" + existingAccountRecordId;
+            powiazaneKontakty = standalone.searchContactsByAPI(searchCriteria, accessToken);
+            if(powiazaneKontakty != null && powiazaneKontakty != "" && powiazaneKontakty.size() > 0)
+            {
+                hasPowiazania = true;
+                info "Znaleziono powiązane kontakty: " + powiazaneKontakty.size();
+            }
+            
+            // Sprawdź powiązania parent/child z lepszą firmą
+            hasParentChildRelation = false;
+            
+            // Sprawdź czy firma jest powiązana jako parent z lepszą firmą
+            lepszaFirma = zoho.crm.getRecordById("Accounts", najlepszaFirmaId);
+            if(lepszaFirma != null && lepszaFirma.containsKey("Parent_Account") && lepszaFirma.get("Parent_Account") == existingAccountRecordId)
+            {
+                hasParentChildRelation = true;
+                info "Firma jest rodzicem lepszej firmy";
+            }
+            
+            // Sprawdź czy firma jest powiązana jako child z lepszą firmą
+            if(existingAccount.containsKey("Parent_Account") && existingAccount.get("Parent_Account") == najlepszaFirmaId)
+            {
+                hasParentChildRelation = true;
+                info "Firma jest dzieckiem lepszej firmy";
+            }
+            
+            // Jeśli nie ma już kontaktów, nie ma relacji parent/child i scoring < 5, usuń firmę
+            if(!hasPowiazania && !hasParentChildRelation && existingTotalScore < 5)
+            {
+                info "Próba usunięcia firmy o niskim scoringu...";
+                deleteResult = standalone.AccountRecordDeleteInvokeConnector(existingAccountRecordId);
+                
+                if(deleteResult.containsKey("status") && deleteResult.get("status") == "success")
+                {
+                    info "✅ Firma została pomyślnie usunięta";
+                    responseMap.put("usunietoFirme", true);
+                }
+                else 
+                {
+                    info "❌ Błąd podczas usuwania firmy: " + deleteResult;
+                    responseMap.put("usunietoFirme", false);
+                    responseMap.put("bladUsuwania", deleteResult.toString());
+                }
+            }
+            else
+            {
+                info "Firma nie może zostać usunięta:";
+                if(hasPowiazania)
+                {
+                    info "- Posiada powiązane kontakty";
+                }
+                if(hasParentChildRelation)
+                {
+                    info "- Posiada relację parent/child z lepszą firmą";
+                }
+                if(existingTotalScore >= 5)
+                {
+                    info "- Scoring firmy (" + existingTotalScore + ") jest >= 5";
+                }
+                responseMap.put("usunietoFirme", false);
+                responseMap.put("powodBrakUsuniecia", "Powiązane kontakty: " + hasPowiazania + 
+                               ", Relacja parent/child: " + hasParentChildRelation + 
+                               ", Scoring: " + existingTotalScore);
+            }
+            info "=== KONIEC SPRAWDZANIA ===";
+        }
+    }
+    
+    return responseMap.toString();
+}

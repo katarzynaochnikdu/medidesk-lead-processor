@@ -1,0 +1,141 @@
+string standalone.KontaktDopiszEmail(string email, boolean rodo, string targetId)
+{
+    // Funkcja sprawdza czy email występuje w rekordzie docelowym
+    // Jeśli nie, to szuka wolnego pola i dopisuje email
+    info "=== DOPISYWANIE EMAILA DO KONTAKTU ===";
+    info "Email do dopisania: " + email;
+    info "Flaga RODO: " + rodo;
+    info "ID rekordu docelowego: " + targetId;
+    
+    if(email == null || email == "")
+    {
+        info "Email jest pusty, nie ma co dopisywać";
+        return "{\"status\": \"error\", \"message\": \"Email jest pusty\"}";
+    }
+    
+    // Pobierz rekord docelowy
+    targetContact = zoho.crm.getRecordById("Contacts", targetId);
+    if(targetContact == null)
+    {
+        info "Błąd: Nie można pobrać rekordu docelowego o ID: " + targetId;
+        return "{\"status\": \"error\", \"message\": \"Nie można pobrać rekordu docelowego\"}";
+    }
+    
+    // Pola email w rekordzie docelowym
+    targetEmailFields = {"Email", "Secondary_Email", "Email_3"};
+    info "Pola email w rekordzie docelowym: " + targetEmailFields.toString();
+    
+    // Sprawdź, czy email już występuje w rekordzie docelowym
+    duplicateFound = false;
+    duplicateField = "";
+    
+    for each field in targetEmailFields
+    {
+        fieldValue = targetContact.get(field);
+        info "Wartość pola " + field + ": " + fieldValue;
+        
+        if(fieldValue == email)
+        {
+            duplicateFound = true;
+            duplicateField = field;
+            info "Email " + email + " już występuje w polu " + field;
+            break;
+        }
+    }
+    
+    // Jeśli email już występuje, aktualizuj tylko flagę RODO
+    if(duplicateFound)
+    {
+        info "Email " + email + " już występuje w polu " + duplicateField + ", aktualizuję tylko flagę RODO";
+        
+        // Określ pole RODO dla znalezionego pola email
+        rodoField = "";
+        if(duplicateField == "Email")
+        {
+            rodoField = "EMail1_RODO_wyrazona_niezgoda";
+        }
+        else if(duplicateField == "Secondary_Email")
+        {
+            rodoField = "EMail2_RODO_wyrazona_niezgoda";
+        }
+        else if(duplicateField == "Email_3")
+        {
+            rodoField = "EMail3_RODO_wyrazona_niezgoda";
+        }
+        
+        // Aktualizuj flagę RODO tylko jeśli w źródle jest true, a w docelowym false lub null
+        if(rodoField != "" && rodo == true)
+        {
+            // Sprawdź aktualną wartość flagi RODO w rekordzie docelowym
+            currentRodoValue = targetContact.get(rodoField);
+            
+            // Aktualizuj tylko jeśli obecna wartość to false lub null
+            if(currentRodoValue == false || currentRodoValue == null)
+            {
+                updateMap = Map();
+                updateMap.put(rodoField, true);
+                updateResp = zoho.crm.updateRecord("Contacts", targetId, updateMap);
+                info "Zaktualizowano flagę RODO dla pola " + duplicateField + ": " + updateResp;
+                
+                return "{\"status\": \"success\", \"message\": \"Email już istnieje, zaktualizowano flagę RODO\", \"field\": \"" + duplicateField + "\", \"updated\": true}";
+            }
+            else
+            {
+                info "Flaga RODO już jest ustawiona na true, nie aktualizuję";
+                return "{\"status\": \"success\", \"message\": \"Email już istnieje, flaga RODO już ustawiona\", \"field\": \"" + duplicateField + "\", \"updated\": false}";
+            }
+        }
+        
+        return "{\"status\": \"success\", \"message\": \"Email już istnieje\", \"field\": \"" + duplicateField + "\", \"updated\": false}";
+    }
+    
+    // Jeśli email nie występuje, znajdź pierwsze wolne pole
+    freeField = "";
+    for each field in targetEmailFields
+    {
+        fieldValue = targetContact.get(field);
+        if(fieldValue == null || fieldValue == "")
+        {
+            freeField = field;
+            info "Znaleziono wolne pole " + field + " dla emaila " + email;
+            break;
+        }
+    }
+    
+    // Jeśli nie ma wolnego pola, zwróć błąd
+    if(freeField == "")
+    {
+        info "Brak wolnego pola dla emaila " + email;
+        return "{\"status\": \"error\", \"message\": \"Brak wolnego pola dla emaila\"}";
+    }
+    
+    // Określ pole RODO dla znalezionego wolnego pola
+    rodoField = "";
+    if(freeField == "Email")
+    {
+        rodoField = "EMail1_RODO_wyrazona_niezgoda";
+    }
+    else if(freeField == "Secondary_Email")
+    {
+        rodoField = "EMail2_RODO_wyrazona_niezgoda";
+    }
+    else if(freeField == "Email_3")
+    {
+        rodoField = "EMail3_RODO_wyrazona_niezgoda";
+    }
+    
+    // Aktualizuj rekord
+    updateMap = Map();
+    updateMap.put(freeField, email);
+    
+    if(rodoField != "" && rodo == true)
+    {
+        // Dla nowego pola zawsze ustawiamy flagę RODO zgodnie z parametrem
+        updateMap.put(rodoField, true);
+    }
+    
+    updateResp = zoho.crm.updateRecord("Contacts", targetId, updateMap);
+    info "Zaktualizowano rekord, dodano email " + email + " do pola " + freeField + ": " + updateResp;
+    
+    return "{\"status\": \"success\", \"message\": \"Dodano email\", \"field\": \"" + freeField + "\", \"updated\": true}";
+} 

@@ -1,0 +1,495 @@
+string standalone.KontaktHistoriaScalen(String sourcerecordId, String targetrecordId)
+{
+	// Inicjalizacja zmiennych
+	wynik = "";
+	
+	try
+	{
+		// Pobieranie listy pól do historii z arkusza
+		laczetrwaledopliku = "https://sheet.zoho.eu/sheet/open/jkuu19954234476a34a50b017e5642f2e182a"; // Tutaj należy wstawić właściwy identyfikator arkusza
+		
+		// Dodanie walidacji linku do arkusza
+		if(laczetrwaledopliku == null || laczetrwaledopliku == "")
+		{
+			return "Błąd: Brak poprawnego linku do arkusza";
+		}
+		
+		// Pobieranie list pól z poszczególnych kategorii
+		historia_dane_osobiste = standalone.ListaAPIzWorkDrive(laczetrwaledopliku, "Sheet1", "Historia_dane_osobiste");
+		historia_rola = standalone.ListaAPIzWorkDrive(laczetrwaledopliku, "Sheet1", "Historia_rola");
+		historia_dane_kontaktowe_email = standalone.ListaAPIzWorkDrive(laczetrwaledopliku, "Sheet1", "Historia_dane_kontaktowe_email");
+		historia_dane_kontaktowe_telefon_komorkowy = standalone.ListaAPIzWorkDrive(laczetrwaledopliku, "Sheet1", "Historia_dane_kontaktowe_telefon_komorkowy");
+		historia_dane_kontaktowe_telefon_stacjonarny = standalone.ListaAPIzWorkDrive(laczetrwaledopliku, "Sheet1", "Historia_dane_kontaktowe_telefon_stacjonarny");
+		historia_social_media = standalone.ListaAPIzWorkDrive(laczetrwaledopliku, "Sheet1", "Historia_social_media");
+		historia_zrodlo_kontaktu = standalone.ListaAPIzWorkDrive(laczetrwaledopliku, "Sheet1", "Historia_zrodlo_kontaktu");
+		historia_marketing = standalone.ListaAPIzWorkDrive(laczetrwaledopliku, "Sheet1", "Historia_marketing");
+		
+		// Konwersja list pól na listy - używamy poprawnej metody w Deluge
+		dane_osobiste_lista = historia_dane_osobiste.toList(",");
+		rola_lista = historia_rola.toList(",");
+		email_lista = historia_dane_kontaktowe_email.toList(",");
+		tel_kom_lista = historia_dane_kontaktowe_telefon_komorkowy.toList(",");
+		tel_stac_lista = historia_dane_kontaktowe_telefon_stacjonarny.toList(",");
+		social_lista = historia_social_media.toList(",");
+		zrodlo_lista = historia_zrodlo_kontaktu.toList(",");
+		marketing_lista = historia_marketing.toList(",");
+		
+		// Pobieranie danych z rekordów źródłowego i docelowego
+		sourceRecord = zoho.crm.getRecordById("Contacts", sourcerecordId);
+		targetRecord = zoho.crm.getRecordById("Contacts", targetrecordId);
+		
+		if(sourceRecord == null || targetRecord == null)
+		{
+			return "Błąd: Nie można pobrać danych kontaktów";
+		}
+		
+		// Pobieranie aktualnych wartości z rekordu docelowego
+		ilosc_scalen = targetRecord.get("Ilosc_scalen");
+		historia_scalen = targetRecord.get("Historia_scalen");
+		
+		// Jeśli pole ilosc_scalen jest puste, inicjalizujemy je na 0
+		if(ilosc_scalen == null)
+		{
+			ilosc_scalen = 0;
+		}
+		
+		// Zwiększamy licznik scalonych kontaktów
+		ilosc_scalen = ilosc_scalen + 1;
+		
+		// Przygotowanie nowej historii scalenia - z lepszym formatowaniem i kolorami
+		data_scalenia = zoho.currentdate.toString("yyyy-MM-dd HH:mm:ss");
+		nowa_historia = "<div style='border: 1px solid #3498db; border-radius: 5px; padding: 10px; margin-bottom: 15px; background-color: #f8f9fa;'>";
+		nowa_historia = nowa_historia + "<h3 style='color: #3498db; border-bottom: 1px solid #3498db; padding-bottom: 5px;'>Scalenie #" + ilosc_scalen + " - " + data_scalenia + "</h3>";
+		nowa_historia = nowa_historia + "<p style='color: #7f8c8d;'><i>ID źródłowego kontaktu:</i> <code style='background-color: #f0f0f0; padding: 2px 4px;'>" + sourcerecordId + "</code></p>";
+		
+		// Dane osobiste
+		sekcja_dane_osobiste = "";
+		for each pole in dane_osobiste_lista
+		{
+			// Sprawdzanie i dodawanie niepustych pól
+			nazwa_pola = pole.trim();
+			wartosc = sourceRecord.get(nazwa_pola);
+			if(wartosc != null && wartosc.toString().trim() != "")
+			{
+				sekcja_dane_osobiste = sekcja_dane_osobiste + "<span style='display: inline-block; margin-bottom: 3px;'><strong style='color: #2c3e50;'>" + nazwa_pola + ":</strong> <span style='color: #3498db;'>" + wartosc + "</span></span><br/>";
+			}
+		}
+		
+		if(sekcja_dane_osobiste != "")
+		{
+			nowa_historia = nowa_historia + "<div style='margin-bottom: 10px; background-color: #ebf5fb; padding: 5px; border-left: 3px solid #3498db;'><h4 style='color: #2980b9; margin: 0 0 5px 0;'>👤 Dane osobiste</h4><br/>" + sekcja_dane_osobiste + "</div>";
+			nowa_historia = nowa_historia + "<div style='height: 15px;'></div>";
+		}
+		
+		// Dane dotyczące roli
+		sekcja_rola = "";
+		for each pole in rola_lista
+		{
+			nazwa_pola = pole.trim();
+			wartosc = sourceRecord.get(nazwa_pola);
+			if(wartosc != null && wartosc.toString().trim() != "")
+			{
+				sekcja_rola = sekcja_rola + "<span style='display: inline-block; margin-bottom: 3px;'><strong style='color: #2c3e50;'>" + nazwa_pola + ":</strong> <span style='color: #3498db;'>" + wartosc + "</span></span><br/>";
+			}
+		}
+		
+		if(sekcja_rola != "")
+		{
+			nowa_historia = nowa_historia + "<div style='margin-bottom: 10px; background-color: #eafaf1; padding: 5px; border-left: 3px solid #27ae60;'><h4 style='color: #27ae60; margin: 0 0 5px 0;'>🏢 Rola i firma</h4><br/>" + sekcja_rola + "</div>";
+			nowa_historia = nowa_historia + "<div style='height: 15px;'></div>";
+		}
+		
+		// Dane kontaktowe - email
+		sekcja_email = "";
+		// Sprawdzamy czy istnieją niepuste wartości emaili przed dodaniem statusów RODO
+		email1 = sourceRecord.get("Email");
+		email2 = sourceRecord.get("Secondary_Email");
+		email3 = sourceRecord.get("Email_3");
+		
+		// Dodajemy tylko niepuste emaile
+		if(email1 != null && email1.toString().trim() != "")
+		{
+			sekcja_email = sekcja_email + "<span style='display: inline-block; margin-bottom: 3px;'><strong style='color: #2c3e50;'>Email 1:</strong> <span style='color: #3498db;'>" + email1 + "</span></span><br/>";
+			
+			// Dodajemy status RODO tylko jeśli email istnieje
+			rodo_email1 = sourceRecord.get("EMail1_RODO_wyrazona_niezgoda");
+			if(rodo_email1 != null)
+			{
+				rodoColor = "";
+				if(rodo_email1 == true)
+				{
+					rodoColor = "#e74c3c";
+				}
+				else
+				{
+					rodoColor = "#000000";
+				}
+				sekcja_email = sekcja_email + "<span style='display: inline-block; margin-bottom: 3px; margin-left: 20px;'><strong style='color: #7f8c8d;'>Status RODO:</strong> <span style='color: " + rodoColor + ";'>" + rodo_email1 + "</span></span><br/>";
+			}
+		}
+		
+		if(email2 != null && email2.toString().trim() != "")
+		{
+			sekcja_email = sekcja_email + "<span style='display: inline-block; margin-bottom: 3px;'><strong style='color: #2c3e50;'>Email 2:</strong> <span style='color: #3498db;'>" + email2 + "</span></span><br/>";
+			
+			// Dodajemy status RODO tylko jeśli email istnieje
+			rodo_email2 = sourceRecord.get("EMail2_RODO_wyrazona_niezgoda");
+			if(rodo_email2 != null)
+			{
+				rodoColor = "";
+				if(rodo_email2 == true)
+				{
+					rodoColor = "#e74c3c";
+				}
+				else
+				{
+					rodoColor = "#000000";
+				}
+				sekcja_email = sekcja_email + "<span style='display: inline-block; margin-bottom: 3px; margin-left: 20px;'><strong style='color: #7f8c8d;'>Status RODO:</strong> <span style='color: " + rodoColor + ";'>" + rodo_email2 + "</span></span><br/>";
+			}
+		}
+		
+		if(email3 != null && email3.toString().trim() != "")
+		{
+			sekcja_email = sekcja_email + "<span style='display: inline-block; margin-bottom: 3px;'><strong style='color: #2c3e50;'>Email 3:</strong> <span style='color: #3498db;'>" + email3 + "</span></span><br/>";
+			
+			// Dodajemy status RODO tylko jeśli email istnieje
+			rodo_email3 = sourceRecord.get("EMail3_RODO_wyrazona_niezgoda");
+			if(rodo_email3 != null)
+			{
+				rodoColor = "";
+				if(rodo_email3 == true)
+				{
+					rodoColor = "#e74c3c";
+				}
+				else
+				{
+					rodoColor = "#000000";
+				}
+				sekcja_email = sekcja_email + "<span style='display: inline-block; margin-bottom: 3px; margin-left: 20px;'><strong style='color: #7f8c8d;'>Status RODO:</strong> <span style='color: " + rodoColor + ";'>" + rodo_email3 + "</span></span><br/>";
+			}
+		}
+		
+		// Dodajemy pozostałe pola związane z emailem
+		for each pole in email_lista
+		{
+			nazwa_pola = pole.trim();
+			// Pomijamy pola, które już obsłużyliśmy
+			if(nazwa_pola == "Email" || nazwa_pola == "Secondary_Email" || nazwa_pola == "Email_3" || 
+			   nazwa_pola == "EMail1_RODO_wyrazona_niezgoda" || nazwa_pola == "EMail2_RODO_wyrazona_niezgoda" || nazwa_pola == "EMail3_RODO_wyrazona_niezgoda")
+			{
+				continue;
+			}
+			
+			wartosc = sourceRecord.get(nazwa_pola);
+			if(wartosc != null && wartosc.toString().trim() != "")
+			{
+				sekcja_email = sekcja_email + "<span style='display: inline-block; margin-bottom: 3px;'><strong style='color: #2c3e50;'>" + nazwa_pola + ":</strong> <span style='color: #3498db;'>" + wartosc + "</span></span><br/>";
+			}
+		}
+		
+		if(sekcja_email != "")
+		{
+			nowa_historia = nowa_historia + "<div style='margin-bottom: 10px; background-color: #fef9e7; padding: 5px; border-left: 3px solid #f1c40f;'><h4 style='color: #f39c12; margin: 0 0 5px 0;'>✉️ Adresy email</h4><br/>" + sekcja_email + "</div>";
+			nowa_historia = nowa_historia + "<div style='height: 15px;'></div>";
+		}
+		
+		// Dane kontaktowe - telefon komórkowy
+		sekcja_tel_kom = "";
+		// Sprawdzamy czy istnieją niepuste wartości telefonów przed dodaniem statusów RODO
+		tel_kom1 = sourceRecord.get("Mobile");
+		tel_kom2 = sourceRecord.get("Telefon_komorkowy_2");
+		tel_kom3 = sourceRecord.get("Telefon_komorkowy_3");
+		
+		// Dodajemy tylko niepuste telefony komórkowe
+		if(tel_kom1 != null && tel_kom1.toString().trim() != "")
+		{
+			sekcja_tel_kom = sekcja_tel_kom + "<span style='display: inline-block; margin-bottom: 3px;'><strong style='color: #2c3e50;'>Telefon komórkowy 1:</strong> <span style='color: #3498db;'>" + tel_kom1 + "</span></span><br/>";
+			
+			// Dodajemy status RODO tylko jeśli telefon istnieje
+			rodo_tel_kom1 = sourceRecord.get("Odmowa_RODO_telefon_komorkowy_1");
+			if(rodo_tel_kom1 != null)
+			{
+				rodoColor = "";
+				if(rodo_tel_kom1 == true)
+				{
+					rodoColor = "#e74c3c";
+				}
+				else
+				{
+					rodoColor = "#000000";
+				}
+				sekcja_tel_kom = sekcja_tel_kom + "<span style='display: inline-block; margin-bottom: 3px; margin-left: 20px;'><strong style='color: #7f8c8d;'>Status RODO:</strong> <span style='color: " + rodoColor + ";'>" + rodo_tel_kom1 + "</span></span><br/>";
+			}
+		}
+		
+		if(tel_kom2 != null && tel_kom2.toString().trim() != "")
+		{
+			sekcja_tel_kom = sekcja_tel_kom + "<span style='display: inline-block; margin-bottom: 3px;'><strong style='color: #2c3e50;'>Telefon komórkowy 2:</strong> <span style='color: #3498db;'>" + tel_kom2 + "</span></span><br/>";
+			
+			// Dodajemy status RODO tylko jeśli telefon istnieje
+			rodo_tel_kom2 = sourceRecord.get("Odmowa_RODO_telefon_komorkowy_2");
+			if(rodo_tel_kom2 != null)
+			{
+				rodoColor = "";
+				if(rodo_tel_kom2 == true)
+				{
+					rodoColor = "#e74c3c";
+				}
+				else
+				{
+					rodoColor = "#000000";
+				}
+				sekcja_tel_kom = sekcja_tel_kom + "<span style='display: inline-block; margin-bottom: 3px; margin-left: 20px;'><strong style='color: #7f8c8d;'>Status RODO:</strong> <span style='color: " + rodoColor + ";'>" + rodo_tel_kom2 + "</span></span><br/>";
+			}
+		}
+		
+		if(tel_kom3 != null && tel_kom3.toString().trim() != "")
+		{
+			sekcja_tel_kom = sekcja_tel_kom + "<span style='display: inline-block; margin-bottom: 3px;'><strong style='color: #2c3e50;'>Telefon komórkowy 3:</strong> <span style='color: #3498db;'>" + tel_kom3 + "</span></span><br/>";
+			
+			// Dodajemy status RODO tylko jeśli telefon istnieje
+			rodo_tel_kom3 = sourceRecord.get("Odmowa_RODO_telefon_komorkowy_3");
+			if(rodo_tel_kom3 != null)
+			{
+				rodoColor = "";
+				if(rodo_tel_kom3 == true)
+				{
+					rodoColor = "#e74c3c";
+				}
+				else
+				{
+					rodoColor = "#000000";
+				}
+				sekcja_tel_kom = sekcja_tel_kom + "<span style='display: inline-block; margin-bottom: 3px; margin-left: 20px;'><strong style='color: #7f8c8d;'>Status RODO:</strong> <span style='color: " + rodoColor + ";'>" + rodo_tel_kom3 + "</span></span><br/>";
+			}
+		}
+		
+		// Dodajemy pozostałe pola związane z telefonami komórkowymi
+		for each pole in tel_kom_lista
+		{
+			nazwa_pola = pole.trim();
+			// Pomijamy pola, które już obsłużyliśmy
+			if(nazwa_pola == "Mobile" || nazwa_pola == "Telefon_komorkowy_2" || nazwa_pola == "Telefon_komorkowy_3" || 
+			   nazwa_pola == "Odmowa_RODO_telefon_komorkowy_1" || nazwa_pola == "Odmowa_RODO_telefon_komorkowy_2" || nazwa_pola == "Odmowa_RODO_telefon_komorkowy_3")
+			{
+				continue;
+			}
+			
+			wartosc = sourceRecord.get(nazwa_pola);
+			if(wartosc != null && wartosc.toString().trim() != "")
+			{
+				sekcja_tel_kom = sekcja_tel_kom + "<span style='display: inline-block; margin-bottom: 3px;'><strong style='color: #2c3e50;'>" + nazwa_pola + ":</strong> <span style='color: #3498db;'>" + wartosc + "</span></span><br/>";
+			}
+		}
+		
+		if(sekcja_tel_kom != "")
+		{
+			nowa_historia = nowa_historia + "<div style='margin-bottom: 10px; background-color: #fdedec; padding: 5px; border-left: 3px solid #e74c3c;'><h4 style='color: #c0392b; margin: 0 0 5px 0;'>📱 Telefony komórkowe</h4><br/>" + sekcja_tel_kom + "</div>";
+			nowa_historia = nowa_historia + "<div style='height: 15px;'></div>";
+		}
+		
+		// Dane kontaktowe - telefon stacjonarny
+		sekcja_tel_stac = "";
+		
+		// Grupowanie powiązanych pól telefonów stacjonarnych z lepszym formatowaniem
+		telefon1 = sourceRecord.get("Phone");
+		if(telefon1 != null && telefon1.toString().trim() != "")
+		{
+			sekcja_tel_stac = sekcja_tel_stac + "<div style='margin-bottom: 10px;'><strong style='color: #2c3e50;'>Telefon stacjonarny 1:</strong> <span style='color: #3498db;'>" + telefon1;
+			
+			// Dodanie numeru wewnętrznego, jeśli istnieje
+			wew1 = sourceRecord.get("wew_tel_stac_1");
+			if(wew1 != null && wew1.toString().trim() != "")
+			{
+				sekcja_tel_stac = sekcja_tel_stac + " <span style='color: #7f8c8d;'>wew.</span> " + wew1;
+			}
+			
+			sekcja_tel_stac = sekcja_tel_stac + "</span>";
+			
+			// Dodanie informacji o RODO tylko jeśli telefon istnieje
+			rodo1 = sourceRecord.get("Odmowa_RODO_telefon_stacjonarny_1");
+			if(rodo1 != null)
+			{
+				rodoColor = "";
+				if(rodo1 == true)
+				{
+					rodoColor = "#e74c3c";
+				}
+				else
+				{
+					rodoColor = "#000000";
+				}
+				sekcja_tel_stac = sekcja_tel_stac + "<br/><span style='display: inline-block; margin-left: 20px; margin-top: 3px;'><strong style='color: #7f8c8d;'>Status RODO:</strong> <span style='color: " + rodoColor + ";'>" + rodo1 + "</span></span>";
+			}
+			
+			sekcja_tel_stac = sekcja_tel_stac + "</div>";
+		}
+		
+		// Drugi telefon stacjonarny
+		telefon2 = sourceRecord.get("Other_Phone");
+		if(telefon2 != null && telefon2.toString().trim() != "")
+		{
+			sekcja_tel_stac = sekcja_tel_stac + "<div style='margin-bottom: 10px;'><strong style='color: #2c3e50;'>Telefon stacjonarny 2:</strong> <span style='color: #3498db;'>" + telefon2;
+			
+			// Dodanie numeru wewnętrznego, jeśli istnieje
+			wew2 = sourceRecord.get("wew_tel_stac_2");
+			if(wew2 != null && wew2.toString().trim() != "")
+			{
+				sekcja_tel_stac = sekcja_tel_stac + " <span style='color: #7f8c8d;'>wew.</span> " + wew2;
+			}
+			
+			sekcja_tel_stac = sekcja_tel_stac + "</span>";
+			
+			// Dodanie informacji o RODO tylko jeśli telefon istnieje
+			rodo2 = sourceRecord.get("Odmowa_RODO_telefon_stacjonarny_2");
+			if(rodo2 != null)
+			{
+				rodoColor = "";
+				if(rodo2 == true)
+				{
+					rodoColor = "#e74c3c";
+				}
+				else
+				{
+					rodoColor = "#000000";
+				}
+				sekcja_tel_stac = sekcja_tel_stac + "<br/><span style='display: inline-block; margin-left: 20px; margin-top: 3px;'><strong style='color: #7f8c8d;'>Status RODO:</strong> <span style='color: " + rodoColor + ";'>" + rodo2 + "</span></span>";
+			}
+			
+			sekcja_tel_stac = sekcja_tel_stac + "</div>";
+		}
+		
+		// Trzeci telefon stacjonarny
+		telefon3 = sourceRecord.get("Telefon_stacjonarny_3");
+		if(telefon3 != null && telefon3.toString().trim() != "")
+		{
+			sekcja_tel_stac = sekcja_tel_stac + "<div style='margin-bottom: 10px;'><strong style='color: #2c3e50;'>Telefon stacjonarny 3:</strong> <span style='color: #3498db;'>" + telefon3;
+			
+			// Dodanie numeru wewnętrznego, jeśli istnieje
+			wew3 = sourceRecord.get("wew_tel_stac_3");
+			if(wew3 != null && wew3.toString().trim() != "")
+			{
+				sekcja_tel_stac = sekcja_tel_stac + " <span style='color: #7f8c8d;'>wew.</span> " + wew3;
+			}
+			
+			sekcja_tel_stac = sekcja_tel_stac + "</span>";
+			
+			// Dodanie informacji o RODO tylko jeśli telefon istnieje
+			rodo3 = sourceRecord.get("Odmowa_RODO_telefon_stacjonarny_3");
+			if(rodo3 != null)
+			{
+				rodoColor = "";
+				if(rodo3 == true)
+				{
+					rodoColor = "#e74c3c";
+				}
+				else
+				{
+					rodoColor = "#000000";
+				}
+				sekcja_tel_stac = sekcja_tel_stac + "<br/><span style='display: inline-block; margin-left: 20px; margin-top: 3px;'><strong style='color: #7f8c8d;'>Status RODO:</strong> <span style='color: " + rodoColor + ";'>" + rodo3 + "</span></span>";
+			}
+			
+			sekcja_tel_stac = sekcja_tel_stac + "</div>";
+		}
+		
+		if(sekcja_tel_stac != "")
+		{
+			nowa_historia = nowa_historia + "<div style='margin-bottom: 10px; background-color: #eaecee; padding: 5px; border-left: 3px solid #7f8c8d;'><h4 style='color: #2c3e50; margin: 0 0 5px 0;'>☎️ Telefony stacjonarne</h4><br/>" + sekcja_tel_stac + "</div>";
+			nowa_historia = nowa_historia + "<div style='height: 15px;'></div>";
+		}
+		
+		// Social media
+		sekcja_social = "";
+		for each pole in social_lista
+		{
+			nazwa_pola = pole.trim();
+			wartosc = sourceRecord.get(nazwa_pola);
+			if(wartosc != null && wartosc.toString().trim() != "")
+			{
+				sekcja_social = sekcja_social + "<span style='display: inline-block; margin-bottom: 3px;'><strong style='color: #2c3e50;'>" + nazwa_pola + ":</strong> <span style='color: #3498db;'>" + wartosc + "</span></span><br/>";
+			}
+		}
+		
+		if(sekcja_social != "")
+		{
+			nowa_historia = nowa_historia + "<div style='margin-bottom: 10px; background-color: #e8f4fd; padding: 5px; border-left: 3px solid #3498db;'><h4 style='color: #2980b9; margin: 0 0 5px 0;'>🌐 Social media</h4><br/>" + sekcja_social + "</div>";
+			nowa_historia = nowa_historia + "<div style='height: 15px;'></div>";
+		}
+		
+		// Źródło kontaktu
+		sekcja_zrodlo = "";
+		for each pole in zrodlo_lista
+		{
+			nazwa_pola = pole.trim();
+			wartosc = sourceRecord.get(nazwa_pola);
+			if(wartosc != null && wartosc.toString().trim() != "")
+			{
+				sekcja_zrodlo = sekcja_zrodlo + "<span style='display: inline-block; margin-bottom: 3px;'><strong style='color: #2c3e50;'>" + nazwa_pola + ":</strong> <span style='color: #3498db;'>" + wartosc + "</span></span><br/>";
+			}
+		}
+		
+		if(sekcja_zrodlo != "")
+		{
+			nowa_historia = nowa_historia + "<div style='margin-bottom: 10px; background-color: #f4ecf7; padding: 5px; border-left: 3px solid #8e44ad;'><h4 style='color: #8e44ad; margin: 0 0 5px 0;'>🔍 Źródło kontaktu</h4><br/>" + sekcja_zrodlo + "</div>";
+			nowa_historia = nowa_historia + "<div style='height: 15px;'></div>";
+		}
+		
+		// Marketing
+		sekcja_marketing = "";
+		for each pole in marketing_lista
+		{
+			nazwa_pola = pole.trim();
+			wartosc = sourceRecord.get(nazwa_pola);
+			if(wartosc != null && wartosc.toString().trim() != "")
+			{
+				sekcja_marketing = sekcja_marketing + "<span style='display: inline-block; margin-bottom: 3px;'><strong style='color: #2c3e50;'>" + nazwa_pola + ":</strong> <span style='color: #3498db;'>" + wartosc + "</span></span><br/>";
+			}
+		}
+		
+		if(sekcja_marketing != "")
+		{
+			nowa_historia = nowa_historia + "<div style='margin-bottom: 10px; background-color: #fdebd0; padding: 5px; border-left: 3px solid #e67e22;'><h4 style='color: #d35400; margin: 0 0 5px 0;'>📊 Marketing</h4><br/>" + sekcja_marketing + "</div>";
+		}
+		
+		// Zamknięcie sekcji historii
+		nowa_historia = nowa_historia + "</div>";
+		
+		// Łączenie nowej historii z istniejącą
+		if(historia_scalen == null)
+		{
+			historia_scalen = "";
+		}
+		
+		pelna_historia = nowa_historia + "<br/>" + historia_scalen;
+		
+		// Jeśli przekroczony limit 50000 znaków, ucinamy starą historię
+		if(pelna_historia.length() > 50000)
+		{
+			pelna_historia = nowa_historia + "<br/>... (wcześniejsze historie zostały usunięte ze względu na limit znaków)";
+		}
+		
+		// Aktualizacja rekordu docelowego
+		updateMap = Map();
+		updateMap.put("Ilosc_scalen", ilosc_scalen);
+		updateMap.put("Historia_scalen", pelna_historia);
+		
+		updateResponse = zoho.crm.updateRecord("Contacts", targetrecordId, updateMap);
+		
+		if(updateResponse.get("success") == true)
+		{
+			wynik = "Zaktualizowano historię scalenia dla kontaktu " + targetrecordId;
+		}
+		else
+		{
+			wynik = "Błąd podczas aktualizacji historii: " + updateResponse;
+		}
+	}
+	catch (e)
+	{
+		wynik = "Błąd podczas przetwarzania historii scalenia: " + e;
+	}
+	
+	return wynik;
+}

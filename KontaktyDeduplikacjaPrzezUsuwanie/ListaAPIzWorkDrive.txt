@@ -1,0 +1,161 @@
+string standalone.ListaAPIzWorkDrive(String laczetrwaledopliku, String worksheetName, String kolumna)
+{
+	// Inicjalizacja zmiennej wynikowej
+	finalResult = "";
+	// Flaga do kontrolowania ilości komunikatów diagnostycznych
+	debugMode = false;
+	
+	try 
+	{
+		// Sprawdzenie czy parametry zostały określone
+		if(laczetrwaledopliku == null || laczetrwaledopliku == "")
+		{
+			return "Błąd: Nie podano łącza trwałego do pliku";
+		}
+		
+		// Sprawdzenie czy podano nazwę arkusza
+		if(worksheetName == null || worksheetName == "")
+		{
+			// Domyślna nazwa arkusza, jeśli nie podano
+			worksheetName = "Sheet1";
+			if(debugMode) {info "Używam domyślnej nazwy arkusza: " + worksheetName;}
+		}
+		else
+		{
+			if(debugMode) {info "Używam podanej nazwy arkusza: " + worksheetName;}
+		}
+		
+		// Jeśli nie podano nazwy kolumny, używamy domyślnie pierwszej kolumny
+		if(kolumna == null || kolumna == "")
+		{
+			// Ustawiamy flagę, że będziemy używać indeksu kolumny zamiast nazwy
+			useColumnIndex = true;
+			columnIndex = 0; // Indeks 0 odpowiada pierwszej kolumnie (indeksowanie od 0)
+			info("Używam domyślnej kolumny (pierwsza kolumna)");
+		}
+		else
+		{
+			useColumnIndex = false;
+			// Wyświetlamy nazwę kolumny tylko raz
+			info("Nazwa kolumny do pobrania: " + kolumna);
+		}
+		
+		// Przygotowanie parametrów do pobrania danych z arkusza
+		queryParams = Map();
+		
+		// Wyciągamy identyfikator arkusza z URL, jeśli podano pełny URL
+		if(laczetrwaledopliku.startsWith("https://sheet.zoho.eu/sheet/open/"))
+		{
+			// Wyciągamy identyfikator z URL
+			sheetId = laczetrwaledopliku.substring(laczetrwaledopliku.lastIndexOf("/") + 1);
+			if(debugMode) {info "Wyciągnięty identyfikator arkusza z URL: " + sheetId;}
+		}
+		else
+		{
+			// Używamy podanego identyfikatora bezpośrednio
+			sheetId = laczetrwaledopliku;
+		}
+		
+		// Używamy wyciągniętego identyfikatora
+		response = zoho.sheet.getRecords(sheetId, worksheetName, queryParams, "zohosheetconnection");
+		if(debugMode) {info "Pobranie pliku ZOHO SHEET z mapowaniem: " + response;}
+		
+		if(response != null && response.get("status") == "success")
+		{
+			// Pobieramy rekordy z odpowiedzi
+			excelContent = response.get("records");
+			
+			// Inicjalizacja listy pól
+			fieldsList = List();
+			
+			// Przetwarzanie danych z arkusza
+			rowNumber = 0;
+			for each row in excelContent
+			{
+				rowNumber = rowNumber + 1;
+				
+				// Pobieranie wartości z określonej kolumny
+				if(useColumnIndex)
+				{
+					// Pobieranie wartości przez indeks kolumny
+					if(row.size() > columnIndex)
+					{
+						// Pobieramy wartość z pierwszej kolumny (indeks 0)
+						keys = row.keys().toList();
+						if(keys.size() > columnIndex)
+						{
+							columnKey = keys.get(columnIndex);
+							fieldName = row.get(columnKey).toString().trim();
+							// Pomijamy puste wiersze, "ND" i komentarze
+							if(fieldName != "" && fieldName != "ND" && !fieldName.startsWith("#"))
+							{
+								fieldsList.add(fieldName);
+								info("Dodano pole: " + fieldName);
+							}
+						}
+					}
+				}
+				else
+				{
+					// Pobieranie wartości przez nazwę kolumny
+					if(row.containsKey(kolumna) && row.get(kolumna) != null)
+					{
+						fieldName = row.get(kolumna).toString().trim();
+						// Dodajemy informację diagnostyczną o wartości pola
+						// info("Wiersz " + rowNumber + ", wartość: '" + fieldName + "'");
+						
+						// Pomijamy puste wiersze, "ND" i komentarze
+						if(fieldName != "" && fieldName != "ND" && !fieldName.startsWith("#"))
+						{
+							fieldsList.add(fieldName);
+							// info("Dodano pole: " + fieldName);
+						}
+						else
+						{
+							info("Pominięto pole '" + fieldName + "' w wierszu " + rowNumber + " (puste, ND lub komentarz)");
+						}
+					}
+					else
+					{
+						info("Wiersz " + rowNumber + " nie zawiera kolumny '" + kolumna + "' lub wartość jest null");
+					}
+				}
+			}
+			
+			// Konwersja listy na string z separatorem przecinka
+			if(fieldsList.size() > 0)
+			{
+				finalResult = fieldsList.toString();
+				// Usuwamy nawiasy kwadratowe z początku i końca
+				finalResult = finalResult.replaceAll("\\[|\\]", "");
+			}
+			else
+			{
+				finalResult = "Ostrzeżenie: Nie znaleziono pól w kolumnie " + kolumna;
+			}
+		}
+		else
+		{
+			// Szczegółowa informacja diagnostyczna
+			errorMsg = "Nie można pobrać danych z arkusza. ";
+			
+			if(response != null)
+			{
+				errorMsg = errorMsg + "Kod błędu: " + response.get("error_code") + ". ";
+				errorMsg = errorMsg + "Opis błędu: " + response.get("error_message");
+			}
+			else
+			{
+				errorMsg = errorMsg + "Brak odpowiedzi od API.";
+			}
+			
+			finalResult = "Błąd: " + errorMsg;
+		}
+	}
+	catch (e)
+	{
+		finalResult = "Błąd podczas pobierania danych z arkusza: " + e;
+	}
+	
+	return finalResult;
+}

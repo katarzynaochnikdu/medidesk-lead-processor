@@ -1,0 +1,129 @@
+string standalone.KontaktZnajdzNajlepszyDuplikat(string recordId, map duplicateIdsMap)
+{
+    // Funkcja znajduje najlepszy duplikat kontaktu na podstawie scoringu
+    // i określa który rekord będzie docelowy, a który źródłowy
+    info "=== ZNAJDOWANIE NAJLEPSZEGO DUPLIKATU KONTAKTU ===";
+    info "ID analizowanego rekordu: " + recordId;
+    info "Lista przekazanych duplikatów: " + duplicateIdsMap.toString();
+    
+    // Inicjalizacja mapy wynikowej
+    resultMap = Map();
+    resultMap.put("bestDupId", "");
+    resultMap.put("bestDupScore", -1);
+    resultMap.put("targetId", "");
+    resultMap.put("sourceId", "");
+    resultMap.put("status", "error");
+    resultMap.put("message", "");
+    
+    // Pobierz rekord wejściowy
+    contact = zoho.crm.getRecordById("Contacts", recordId);
+    if(contact == null)
+    {
+        resultMap.put("message", "❌ Błąd: Kontakt o ID " + recordId + " nie istnieje");
+        return resultMap.toString();
+    }
+    
+    // Oblicz scoring rekordu wejściowego
+    scoringResultStr = standalone.calculateContactScore(recordId);
+    incomingScore = 0;
+
+    if(scoringResultStr != null && scoringResultStr != "")
+    {
+        try
+        {
+            scoringMap = scoringResultStr.toMap();
+            if(scoringMap != null && scoringMap.containsKey("OverallScore"))
+            {
+                incomingScore = scoringMap.get("OverallScore");
+            }
+            else
+            {
+                info "Brak klucza 'OverallScore' w wyniku calculateContactScore: " + scoringResultStr;
+            }
+        }
+        catch(e)
+        {
+            info "Błąd podczas przetwarzania wyniku calculateContactScore: " + e;
+        }
+    }
+    else
+    {
+        info "Funkcja calculateContactScore zwróciła pustą wartość dla rekordu: " + recordId;
+    }
+
+    info "Scoring rekordu wejściowego: " + incomingScore + " (szczegóły: " + scoringResultStr + ")";
+    
+    // Znajdź wśród duplikatów rekord z najwyższym scoringiem
+    bestDupId = "";
+    bestDupScore = -1;
+    for each dupIdKey in duplicateIdsMap.keys()
+    {
+        dupId = duplicateIdsMap.get(dupIdKey);
+        if(dupId == recordId)
+        {
+            continue;
+        }
+        dupContact = zoho.crm.getRecordById("Contacts", dupId);
+        if(dupContact != null)
+        {
+            info "Analizuję duplikat: " + dupContact.toString();
+            dupScoreResultStr = standalone.calculateContactScore(dupId);
+            dupScore = 0;
+
+            try
+            {
+                dupScoreMap = dupScoreResultStr.toMap();
+                if(dupScoreMap != null && dupScoreMap.containsKey("OverallScore"))
+                {
+                    dupScore = dupScoreMap.get("OverallScore");
+                }
+                else
+                {
+                    info "Brak klucza 'OverallScore' w wyniku calculateContactScore dla duplikatu: " + dupScoreResultStr;
+                }
+            }
+            catch(e)
+            {
+                info "Błąd podczas przetwarzania wyniku calculateContactScore dla duplikatu: " + e;
+            }
+
+            info "Scoring duplikatu " + dupId + ": " + dupScore + " (szczegóły: " + dupScoreResultStr + ")";
+            
+            if(dupScore != null && (bestDupScore == -1 || dupScore > bestDupScore))
+            {
+                bestDupScore = dupScore;
+                bestDupId = dupId;
+                info "Znaleziono nowy najlepszy duplikat: ID=" + bestDupId + " ze scoringiem: " + bestDupScore;
+            }
+        }
+    }
+    
+    if(bestDupId == "")
+    {
+        resultMap.put("message", "⚠️ Brak duplikatów dla kontaktu o ID " + recordId);
+        return resultMap.toString();
+    }
+    
+    info "Najlepszy duplikat: " + bestDupId + " ze scoringiem: " + bestDupScore;
+    resultMap.put("bestDupId", bestDupId);
+    resultMap.put("bestDupScore", bestDupScore);
+    
+    // Ustal który rekord będzie docelowy (target) a który źródłowy (source)
+    if(incomingScore >= bestDupScore)
+    {
+        resultMap.put("targetId", recordId);
+        resultMap.put("sourceId", bestDupId);
+        info "Rekord wejściowy ma wyższy scoring (" + incomingScore + ") niż najlepszy duplikat (" + bestDupScore + ") - będzie rekordem docelowym";
+    }
+    else
+    {
+        resultMap.put("targetId", bestDupId);
+        resultMap.put("sourceId", recordId);
+        info "Najlepszy duplikat ma wyższy scoring (" + bestDupScore + ") niż rekord wejściowy (" + incomingScore + ") - będzie rekordem docelowym";
+    }
+    
+    info "Rekord docelowy (target): " + resultMap.get("targetId") + ", Rekord źródłowy (source) do przeniesienia: " + resultMap.get("sourceId");
+    
+    resultMap.put("status", "success");
+    return resultMap.toString();
+}

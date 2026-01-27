@@ -25,15 +25,20 @@ ZASADY EKSTRAKCJI:
 3. NIE ignoruj PODPISU SŁUŻBOWEGO - z niego wyciągaj dane (imię+nazwisko, stanowisko, firma, telefon/email).
 
 ZASADY NORMALIZACJI:
-1. Imiona i nazwiska: popraw wielkość liter (Jan Kowalski, nie JAN KOWALSKI).
-2. title: wyciągnij tytuł naukowy/zawodowy jeśli jest (dr, dr n. med., dr hab., prof., lek., mgr, inż.) - NIE włączaj do first_name/last_name.
-3. Nazwy firm: rozdziel nazwę od formy prawnej (sp. z o.o., S.A., sp.k., sp.j., s.c.).
-4. company_keyword: 1-2 słowa kluczowe do wyszukiwania firmy (unikalny rdzeń nazwy, NIE ogólniki jak "MEDICAL", "CLINIC", "SP", "ZOO").
-5. Telefony: znormalizuj do formatu +48XXXXXXXXX, rozróżnij phone (stacjonarny/służbowy) od mobile (komórkowy).
-6. Email: lowercase.
-7. NIP: tylko 10 cyfr (bez myślników).
-8. Adresy: popraw wielkość liter.
-9. Wykryj płeć na podstawie polskiego imienia.
+1. Imiona i nazwiska: 
+   - Pierwsza litera każdego słowa WIELKA, reszta małe (Jan Kowalski, Maria Nowak-Kowalska)
+   - Dozwolone spacje i myślniki (nazwiska dwuczłonowe)
+   - Sprawdź literówki, ALE nie zmieniaj na siłę imion obcych (ukraińskie, angielskie - George zostaje George, nie Grzegorz)
+2. title: wyciągnij tytuł naukowy/zawodowy (dr, prof., lek., mgr, inż.) - NIE włączaj do first_name/last_name.
+3. Nazwy firm: rozdziel nazwę od formy prawnej (sp. z o.o., S.A., sp.k.).
+4. company_keyword: 1-2 unikalne słowa (NIE ogólniki jak MEDICAL, CLINIC).
+5. Telefony:
+   - Polskie: +48 XXX XXX XXX
+   - Zagraniczne: zachowaj prefix kraju +XX i formatuj
+6. Email: WSZYSTKO MAŁYMI literami.
+7. NIP: tylko 10 cyfr.
+8. Województwa: MAŁYMI literami (małopolskie, mazowieckie).
+9. Płeć: wykryj z polskiego imienia.
 
 Nie zgaduj danych — jeśli brak → null."""
 
@@ -373,6 +378,178 @@ Zwróć JSON:
         except Exception as e:
             logger.error("Błąd klasyfikacji firmy: %s", e)
             return {}
+    
+    async def extract_locations(
+        self,
+        company_name: str,
+        nip: str,
+        raw_data: dict,
+    ) -> dict:
+        """
+        Wyodrębnia listę placówek organizacji z surowych danych wyszukiwania.
+        Używa chunkingu dla dużych list adresów.
+        
+        Args:
+            company_name: Nazwa firmy/organizacji
+            nip: NIP organizacji
+            raw_data: Surowe dane z Brave Search (snippets, urls)
+        
+        Returns:
+            Dict z listą placówek i metadanymi
+        """
+        if not self._ensure_initialized():
+            logger.warning("Vertex AI niedostępne - brak ekstrakcji")
+            return {"error": "AI niedostępne", "locations": []}
+        
+        try:
+            import asyncio
+            from vertexai.generative_models import GenerativeModel
+            
+            # Zbierz pełny tekst ze scraped pages
+            scraped_pages = raw_data.get("scraped_pages", [])
+            all_locations = []
+            
+            if scraped_pages:
+                for page in scraped_pages:
+                    if page.get("success"):
+                        source_url = page.get("url", "")
+                        # Użyj pełnego tekstu - priorytet dla dłuższego
+                        text_content = page.get("text_content", "")
+                        full_text_sample = page.get("full_text_sample", "")
+                        full_text = text_content if len(text_content) > 500 else full_text_sample
+                        
+                        if not full_text or len(full_text) < 500:
+                            logger.warning("Skipping %s - text too short (%d chars)", source_url, len(full_text))
+                            continue
+                        
+                        # Podziel tekst na chunki (max 12k znaków per chunk)
+                        chunk_size = 12000
+                        text_chunks = [full_text[i:i+chunk_size] for i in range(0, len(full_text), chunk_size)]
+                        
+                        logger.info(
+                            "Extracting from %s: %d chars in %d chunks",
+                            source_url,
+                            len(full_text),
+                            len(text_chunks),
+                        )
+                        
+                        # Przetwórz każdy chunk tekstu
+                        for idx, text_chunk in enumerate(text_chunks, 1):
+                            prompt = f"""Extract ALL locations for: {company_name} (NIP: {nip})
+
+TEXT FROM PAGE (part {idx}):
+{text_chunk}
+
+Find all locations with addresses. Return valid JSON array:
+[
+  {{"name": "location name or null", "city": "city", "address": "full street address", "postal_code": "XX-XXX", "phone": "phone or null", "source_url": "{source_url}"}}
+]
+
+Return ONLY the JSON array, nothing else."""
+
+                            try:
+                                model = GenerativeModel(
+                                    self.settings.vertex_ai_model,
+                                    system_instruction="Extract structured location data from text. Return ONLY valid JSON arrays.",
+                                )
+                                
+                                # Większy token limit dla rozszerzonej struktury adresów
+                                # ~250 tokenów na lokalizację (więcej pól)
+                                estimated_locs = len(text_chunk) // 500  # Gruba estymacja
+                                max_tokens = min(8192, max(4096, estimated_locs * 300))
+                                
+                                response = model.generate_content(
+                                    prompt,
+                                    generation_config={
+                                        "temperature": 0.0,
+                                        "max_output_tokens": max_tokens,
+                                    },
+                                )
+                                
+                                response_text = response.text.strip()
+                                
+                                # Cleanup
+                                if response_text.startswith("```"):
+                                    lines = response_text.split("\n")
+                                    response_text = "\n".join(lines[1:-1] if lines[-1].strip() == "```" else lines[1:])
+                                
+                                # Znajdź JSON array
+                                start = response_text.find("[")
+                                end = response_text.rfind("]") + 1
+                                if start >= 0 and end > start:
+                                    response_text = response_text[start:end]
+                                
+                                chunk_locations = json.loads(response_text)
+                                if isinstance(chunk_locations, list):
+                                    all_locations.extend(chunk_locations)
+                                    logger.info("Chunk %d: extracted %d locations", idx, len(chunk_locations))
+                                
+                            except Exception as e:
+                                logger.warning("Chunk %d extraction error: %s", idx, str(e)[:100])
+                            
+                            # Rate limit
+                            if idx < len(text_chunks):
+                                await asyncio.sleep(1)
+            
+            # Deduplikacja po adresie
+            seen_addresses = set()
+            unique_locations = []
+            for loc in all_locations:
+                addr_key = f"{loc.get('city', '')}|{loc.get('address', '')}"
+                if addr_key not in seen_addresses:
+                    seen_addresses.add(addr_key)
+                    unique_locations.append(loc)
+            
+            # Multi-agent processing: Coordinator zarządza przepływem
+            from ..services.location_processor import CoordinatorAgent
+            from ..services.brave_search import get_brave_search_service
+            
+            brave = get_brave_search_service()
+            coordinator = CoordinatorAgent(brave)
+            
+            # Strategy z raw_data lub domyślnie "balanced"
+            strategy = raw_data.get("processing_strategy", "balanced")
+            
+            processed = await coordinator.process_locations(
+                raw_locations=unique_locations,
+                strategy=strategy
+            )
+            
+            unique_locations = processed["locations"]
+            processing_stats = processed["stats"]
+            
+            logger.info(
+                "Multi-agent processing completed: %d locations, %d complete (%.1f%%)",
+                processing_stats["total"],
+                processing_stats["complete"],
+                100 * processing_stats["complete"] / processing_stats["total"] if processing_stats["total"] > 0 else 0
+            )
+            
+            logger.info(
+                "Wyodrębniono %d unikalnych placówek dla '%s' (NIP: %s)",
+                len(unique_locations),
+                company_name,
+                nip,
+            )
+            
+            result = {
+                "organization_name": company_name,
+                "total_found": len(unique_locations),
+                "locations": unique_locations,
+                "notes": f"Multi-agent: {len(all_locations)} extracted, {len(unique_locations)} unique, {processing_stats['complete']} complete",
+                "processing_stats": processing_stats,
+            }
+            
+            return result
+            
+        except Exception as e:
+            logger.error("Błąd ekstrakcji lokalizacji: %s", e, exc_info=True)
+            return {
+                "error": str(e),
+                "organization_name": company_name,
+                "total_found": 0,
+                "locations": [],
+            }
 
 
 class VertexAIServiceMock:

@@ -18,6 +18,7 @@ from ..models.lead_output import (
     ProcessingRecommendation,
 )
 from ..utils.validators import (
+    capitalize_name,
     extract_email_domain,
     format_nip,
     format_phone,
@@ -193,11 +194,11 @@ class DataNormalizerService:
             elif len(parts) == 1:
                 last_name = last_name or parts[0]
         
-        # Popraw wielkość liter
+        # Popraw wielkość liter - pierwsza litera każdego słowa wielka, reszta małe
         if first_name:
-            first_name = first_name.strip().title()
+            first_name = capitalize_name(first_name)
         if last_name:
-            last_name = last_name.strip().title()
+            last_name = capitalize_name(last_name)
         
         return NormalizedData(
             first_name=first_name,
@@ -205,7 +206,7 @@ class DataNormalizerService:
             email=lead_input.email.lower().strip() if lead_input.email else None,
             phone=normalize_phone(lead_input.phone),
             nip=normalize_nip(lead_input.nip),
-            company_name=lead_input.company_name.strip().title() if lead_input.company_name else None,
+            company_name=capitalize_name(lead_input.company_name) if lead_input.company_name else None,
             street=lead_input.street,
             city=lead_input.city,
             zip_code=lead_input.zip_code,
@@ -242,9 +243,9 @@ class DataNormalizerService:
         
         # Uzupełnij brakujące pola
         if not normalized.first_name and lead_input.first_name:
-            normalized.first_name = lead_input.first_name.strip().title()
+            normalized.first_name = capitalize_name(lead_input.first_name)
         if not normalized.last_name and lead_input.last_name:
-            normalized.last_name = lead_input.last_name.strip().title()
+            normalized.last_name = capitalize_name(lead_input.last_name)
         if not normalized.company_name and lead_input.company_name:
             normalized.company_name = lead_input.company_name.strip()
         

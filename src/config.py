@@ -5,9 +5,9 @@ Używa pydantic-settings dla walidacji i typowania.
 
 import os
 from functools import lru_cache
-from typing import Literal
+from typing import Literal, Optional
 
-from pydantic import field_validator
+from pydantic import Field, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -26,80 +26,52 @@ class Settings(BaseSettings):
     gcp_region: str = "europe-central2"
     
     # Vertex AI
-    vertex_ai_model: str = "gemini-1.5-flash-001"
+    vertex_ai_model: str = "gemini-2.5-pro"
     
-    # GUS/REGON - proxy przez wfirma-api na Render
-    gus_api_key: str = ""  # Token do API na Render (REGON_API_KEY_TOKEN)
-    gus_api_url: str = "https://wfirma-api.onrender.com"  # URL API na Render
+    # GUS/REGON - różne nazwy zmiennych
+    gus_api_key: str = ""
+    regon_api_key_token: str = ""
+    bir1_gus_api_key: str = ""
+    gus_api_url: str = "https://wfirma-api.onrender.com"
     gus_use_test: bool = False
     
-    @field_validator("gus_api_key", mode="before")
-    @classmethod
-    def resolve_gus_api_key(cls, v):
-        """Sprawdź alternatywne nazwy zmiennej."""
-        # Priorytet: BIR1_GUS_API_KEY > REGON_API_KEY_TOKEN > GUS_API_KEY
-        alt = os.getenv("BIR1_GUS_API_KEY") or os.getenv("REGON_API_KEY_TOKEN")
-        if alt:
-            return alt
-        if v and not v.startswith("your-"):
-            return v
-        return alt or v or ""
-    
-    # Zoho CRM (obsługuje też ZOHO_MD_CRM_LEADY_CRUD_* z env)
+    # Zoho CRM - różne nazwy zmiennych
     zoho_client_id: str = ""
     zoho_client_secret: str = ""
     zoho_refresh_token: str = ""
+    zoho_md_crm_leady_crud_client_id: str = ""
+    zoho_md_crm_leady_crud_client_secret: str = ""
+    zoho_md_crm_leady_crud_refresh_token: str = ""
     zoho_region: Literal["eu", "com", "in", "jp", "au", "ca"] = "eu"
     
-    @field_validator("zoho_client_id", mode="before")
-    @classmethod
-    def resolve_zoho_client_id(cls, v):
-        """Sprawdź alternatywną nazwę zmiennej (priorytet dla ZOHO_MD_CRM_*)."""
-        alt = os.getenv("ZOHO_MD_CRM_LEADY_CRUD_CLIENT_ID")
-        if alt:
-            return alt
-        if v and not v.startswith("your-"):
-            return v
-        return alt or v or ""
-    
-    @field_validator("zoho_client_secret", mode="before")
-    @classmethod
-    def resolve_zoho_client_secret(cls, v):
-        """Sprawdź alternatywną nazwę zmiennej (priorytet dla ZOHO_MD_CRM_*)."""
-        alt = os.getenv("ZOHO_MD_CRM_LEADY_CRUD_CLIENT_SECRET")
-        if alt:
-            return alt
-        if v and not v.startswith("your-"):
-            return v
-        return alt or v or ""
-    
-    @field_validator("zoho_refresh_token", mode="before")
-    @classmethod
-    def resolve_zoho_refresh_token(cls, v):
-        """Sprawdź alternatywną nazwę zmiennej (priorytet dla ZOHO_MD_CRM_*)."""
-        alt = os.getenv("ZOHO_MD_CRM_LEADY_CRUD_REFRESH_TOKEN")
-        if alt:
-            return alt
-        if v and not v.startswith("your-"):
-            return v
-        return alt or v or ""
-    
-    # API Security (obsługuje też GCP_API_KEY_ID z env)
+    # API Security - różne nazwy zmiennych
     api_key: str = ""
-    
-    @field_validator("api_key", mode="before")
-    @classmethod
-    def resolve_api_key(cls, v):
-        """Sprawdź alternatywną nazwę zmiennej."""
-        alt = os.getenv("GCP_API_KEY_ID")
-        if alt:
-            return alt
-        if v and not v.startswith("your-"):
-            return v
-        return alt or v or ""
+    gcp_leads_api_key: str = ""
+    gcp_api_key_id: str = ""
     
     # Brave Search API
     brave_search_api_key: str = ""
+    
+    @model_validator(mode="after")
+    def resolve_aliases(self):
+        """Rozwiązuje aliasy zmiennych po załadowaniu wszystkich wartości."""
+        # GUS API Key: priorytet BIR1 > REGON > GUS
+        if not self.gus_api_key or self.gus_api_key.startswith("your-"):
+            self.gus_api_key = self.bir1_gus_api_key or self.regon_api_key_token or ""
+        
+        # API Key: priorytet GCP_LEADS > GCP_API_KEY_ID > API_KEY
+        if not self.api_key or self.api_key.startswith("your-"):
+            self.api_key = self.gcp_leads_api_key or self.gcp_api_key_id or ""
+        
+        # Zoho: priorytet ZOHO_MD_CRM_* > ZOHO_*
+        if not self.zoho_client_id or self.zoho_client_id.startswith("your-"):
+            self.zoho_client_id = self.zoho_md_crm_leady_crud_client_id or ""
+        if not self.zoho_client_secret or self.zoho_client_secret.startswith("your-"):
+            self.zoho_client_secret = self.zoho_md_crm_leady_crud_client_secret or ""
+        if not self.zoho_refresh_token or self.zoho_refresh_token.startswith("your-"):
+            self.zoho_refresh_token = self.zoho_md_crm_leady_crud_refresh_token or ""
+        
+        return self
     
     # Environment
     environment: Literal["development", "staging", "production"] = "development"
