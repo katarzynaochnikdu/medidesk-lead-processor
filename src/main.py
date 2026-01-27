@@ -348,6 +348,113 @@ async def validate_nip(
         )
 
 
+@app.post(
+    "/search-nip",
+    responses={
+        401: {"model": ErrorResponse, "description": "Unauthorized"},
+    },
+)
+async def search_nip(
+    company_name: str,
+    _authorized: bool = Depends(verify_api_key),
+):
+    """
+    Szuka NIP firmy po nazwie przez Brave Search.
+    Przeszukuje portale rejestrowe (rejestr.io, aleo.com, panoramafirm.pl, etc.)
+    
+    Query params:
+    - company_name: Nazwa firmy do wyszukania
+    
+    Returns:
+    - nip: Znaleziony NIP lub null
+    - sources: Źródła z których wyciągnięto NIP
+    """
+    try:
+        from .services.brave_search import get_brave_search_service
+        
+        if not company_name or len(company_name) < 3:
+            return JSONResponse(
+                status_code=400,
+                content={"error": "Nazwa firmy musi mieć min. 3 znaki"},
+            )
+        
+        brave = get_brave_search_service()
+        nip = await brave.find_nip(company_name)
+        
+        if nip:
+            # Waliduj przez GUS
+            from .utils.validators import is_valid_nip
+            normalizer = get_normalizer_service()
+            gus_data = await normalizer.gus_client.lookup_nip(nip)
+            
+            return {
+                "company_name": company_name,
+                "nip": nip,
+                "nip_valid": is_valid_nip(nip),
+                "gus_verified": gus_data.found,
+                "gus_data": gus_data.model_dump() if gus_data.found else None,
+            }
+        
+        return {
+            "company_name": company_name,
+            "nip": None,
+            "error": "Nie znaleziono NIP dla podanej nazwy firmy",
+        }
+        
+    except Exception as e:
+        logger.error("Error searching NIP: %s", e, exc_info=True)
+        raise HTTPException(
+            status_code=500,
+            detail=f"Internal server error: {str(e)}",
+        )
+
+
+@app.post(
+    "/search-company-info",
+    responses={
+        401: {"model": ErrorResponse, "description": "Unauthorized"},
+    },
+)
+async def search_company_info(
+    company_name: str,
+    _authorized: bool = Depends(verify_api_key),
+):
+    """
+    Zbiera informacje o firmie z internetu przez Brave Search.
+    
+    Query params:
+    - company_name: Nazwa firmy
+    
+    Returns:
+    - sources: Lista źródeł z informacjami
+    - snippets: Fragmenty tekstu ze źródeł
+    """
+    try:
+        from .services.brave_search import get_brave_search_service
+        
+        if not company_name or len(company_name) < 3:
+            return JSONResponse(
+                status_code=400,
+                content={"error": "Nazwa firmy musi mieć min. 3 znaki"},
+            )
+        
+        brave = get_brave_search_service()
+        info = await brave.get_company_info(company_name)
+        
+        return {
+            "company_name": company_name,
+            "sources_count": len(info.get("sources", [])),
+            "sources": info.get("sources", [])[:10],  # Max 10 źródeł
+        }
+        
+    except Exception as e:
+        logger.error("Error searching company info: %s", e, exc_info=True)
+        raise HTTPException(
+            status_code=500,
+            detail=f"Internal server error: {str(e)}",
+        )
+
+
 # === Error handlers ===
 
 @app.exception_handler(HTTPException)

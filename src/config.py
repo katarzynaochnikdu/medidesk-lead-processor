@@ -98,6 +98,9 @@ class Settings(BaseSettings):
             return v
         return alt or v or ""
     
+    # Brave Search API
+    brave_search_api_key: str = ""
+    
     # Environment
     environment: Literal["development", "staging", "production"] = "development"
     log_level: Literal["DEBUG", "INFO", "WARNING", "ERROR"] = "INFO"
