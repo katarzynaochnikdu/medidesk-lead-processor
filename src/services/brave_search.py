@@ -170,11 +170,10 @@ class BraveSearchService:
         if not company_name:
             return {}
         
-        # Różne zapytania żeby zebrać różne informacje
-        queries = [
-            f'"{company_name}" placówka medyczna',
-            f'"{company_name}" przychodnia kontakt adres',
-        ]
+        import asyncio
+        
+        # Jedno zapytanie żeby nie przekroczyć rate limit (1 req/s)
+        query = f'"{company_name}" placówka medyczna przychodnia'
         
         info = {
             "sources": [],
@@ -182,22 +181,21 @@ class BraveSearchService:
             "urls": [],
         }
         
-        for query in queries:
-            results = await self.search(query, count=5)
+        results = await self.search(query, count=10)
+        
+        for result in results:
+            url = result.get("url", "")
+            title = result.get("title", "")
+            description = result.get("description", "")
             
-            for result in results:
-                url = result.get("url", "")
-                title = result.get("title", "")
-                description = result.get("description", "")
-                
-                if url and url not in info["urls"]:
-                    info["urls"].append(url)
-                    info["sources"].append({
-                        "url": url,
-                        "title": title,
-                        "snippet": description,
-                    })
-                    info["snippets"].append(description)
+            if url and url not in info["urls"]:
+                info["urls"].append(url)
+                info["sources"].append({
+                    "url": url,
+                    "title": title,
+                    "snippet": description,
+                })
+                info["snippets"].append(description)
         
         return info
     
@@ -215,8 +213,11 @@ class BraveSearchService:
         if not company_name:
             return {}
         
-        # Zbierz informacje z internetu
+        import asyncio
+        
+        # Zbierz informacje z internetu (z opóźnieniem między zapytaniami - rate limit 1/s)
         info = await self.get_company_info(company_name)
+        await asyncio.sleep(1.5)  # Opóźnienie przed następnym zapytaniem
         nip = await self.find_nip(company_name)
         
         # Połącz snippety w tekst do analizy (krótsze, bez polskich znaków problematycznych)
