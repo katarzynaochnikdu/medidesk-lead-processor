@@ -3,7 +3,7 @@
 
 substitutions:
   _SERVICE_NAME: lead-processor
-  _REGION: europe-west1
+  _REGION: europe-central2
   _MEMORY: 512Mi
   _CPU: '1'
   _MIN_INSTANCES: '0'
