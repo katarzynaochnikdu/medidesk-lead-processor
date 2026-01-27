@@ -201,6 +201,35 @@ class BraveSearchService:
         
         return info
     
+    async def enrich_company(self, company_name: str, address: Optional[str] = None) -> dict:
+        """
+        Wzbogaca dane o firmie - szuka w internecie i klasyfikuje.
+        
+        Args:
+            company_name: Nazwa firmy
+            address: Opcjonalny adres do weryfikacji
+        
+        Returns:
+            Dict z danymi do Zoho CRM (Industry, Specjalizacja, Platnik_uslug, Adres_w_rekordzie)
+        """
+        if not company_name:
+            return {}
+        
+        # Zbierz informacje z internetu
+        info = await self.get_company_info(company_name)
+        nip = await self.find_nip(company_name)
+        
+        # Połącz snippety w tekst do analizy
+        snippets_text = "\n".join(info.get("snippets", []))[:3000]  # Max 3000 znaków
+        
+        return {
+            "company_name": company_name,
+            "nip": nip,
+            "web_snippets": snippets_text,
+            "sources": info.get("sources", [])[:5],
+            "address": address,
+        }
+    
     async def close(self):
         """Zamyka klienta HTTP."""
         if self._http_client:

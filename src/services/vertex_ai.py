@@ -66,6 +66,53 @@ Zwróć JSON:
 }}"""
 
 
+# Prompt do klasyfikacji firmy na podstawie danych z internetu
+CLASSIFICATION_SYSTEM_PROMPT = """Jesteś ekspertem od klasyfikacji firm w branży medycznej w Polsce.
+Na podstawie informacji z internetu klasyfikujesz firmy do odpowiednich kategorii CRM.
+Zwracasz wyłącznie jeden obiekt JSON bez markdown, bez komentarzy.
+
+WAŻNE: Analizuj TYLKO dostarczone informacje. Nie zgaduj - jeśli brak danych → null."""
+
+
+CLASSIFICATION_USER_PROMPT_TEMPLATE = """Sklasyfikuj firmę na podstawie poniższych informacji z internetu:
+
+NAZWA FIRMY: {company_name}
+NIP: {nip}
+ADRES: {address}
+
+INFORMACJE Z INTERNETU:
+{web_snippets}
+
+ŹRÓDŁA:
+{sources}
+
+Zwróć JSON z klasyfikacją:
+{{
+  "industry": "DOKŁADNIE jedna z wartości: Placówka medyczna | Konkurencja | Partner | Okołomedyczne inne | Poddostawca | Pozostałe | Szkolenia/Consulting | Edukacja medyczna | Usługi finansowe | Wdrożeniowiec systemów medycznych | Inne | Ratownictwo | Dystrybutor | null",
+  
+  "specjalizacja": ["LISTA wartości (może być wiele): POZ | Przychodnia Wielospecjalistyczna | Szpital | Poradnia Zdrowia Psychicznego | Rehabilitacja | Stomatologia | Diagnostyka | Medycyna Estetyczna | Diagnostyka Obrazowa | Laboratorium | Weterynaria | Usługi Niemedyczne | pusta lista jeśli brak"],
+  
+  "platnik_uslug": ["LISTA wartości: NFZ | Komercyjne | Ubezpieczenie | pusta lista jeśli brak info"],
+  
+  "is_medical_at_address": true/false/null,
+  "address_type": "DOKŁADNIE jedna z wartości: Siedziba i Filia | Siedziba | null",
+  
+  "confidence": 0.0-1.0,
+  "reasoning": "krótkie uzasadnienie klasyfikacji"
+}}
+
+ZASADY KLASYFIKACJI:
+1. industry = "Placówka medyczna" jeśli to przychodnia, szpital, gabinet lekarski, klinika, NZOZ, SPZOZ
+2. industry = "Konkurencja" jeśli to firma oferująca podobne usługi (rejestracja medyczna, call center med.)
+3. industry = "Partner" jeśli to kancelaria prawna, firma współpracująca
+4. specjalizacja - na podstawie usług medycznych (POZ = lekarz rodzinny/pierwszego kontaktu)
+5. platnik_uslug - NFZ jeśli ma kontrakt z NFZ, Komercyjne jeśli prywatna
+6. is_medical_at_address = true jeśli pod adresem rejestracyjnym jest placówka medyczna (gabinety, przyjmowanie pacjentów)
+7. address_type:
+   - "Siedziba i Filia" jeśli is_medical_at_address=true (siedziba firmy = lokalizacja placówki)
+   - "Siedziba" jeśli is_medical_at_address=false (tylko biuro/administracja, placówki gdzie indziej)"""
+
+
 class VertexAIService:
     """
     Serwis do komunikacji z Vertex AI (Gemini).
@@ -252,6 +299,90 @@ Zwróć JSON:
         except Exception as e:
             logger.error("Błąd standaryzacji nazwy firmy: %s", e)
             return {"name": company_name, "legal_form": None, "full_name": company_name}
+    
+    async def classify_company(
+        self,
+        company_name: str,
+        nip: Optional[str] = None,
+        address: Optional[str] = None,
+        web_snippets: Optional[str] = None,
+        sources: Optional[list] = None,
+    ) -> dict:
+        """
+        Klasyfikuje firmę na podstawie informacji z internetu.
+        
+        Args:
+            company_name: Nazwa firmy
+            nip: NIP firmy
+            address: Adres firmy
+            web_snippets: Fragmenty tekstu z internetu
+            sources: Lista źródeł
+        
+        Returns:
+            Dict z klasyfikacją (industry, specjalizacja, platnik_uslug, address_type)
+        """
+        if not self._ensure_initialized():
+            logger.warning("Vertex AI niedostępne - brak klasyfikacji")
+            return {}
+        
+        try:
+            # Przygotuj listę źródeł
+            sources_text = ""
+            if sources:
+                sources_text = "\n".join([
+                    f"- {s.get('title', 'brak tytułu')}: {s.get('url', '')}"
+                    for s in sources[:5]
+                ])
+            
+            prompt = CLASSIFICATION_USER_PROMPT_TEMPLATE.format(
+                company_name=company_name or "brak",
+                nip=nip or "brak",
+                address=address or "brak",
+                web_snippets=web_snippets or "brak informacji z internetu",
+                sources=sources_text or "brak źródeł",
+            )
+            
+            # Użyj osobnego modelu z innym system prompt
+            from vertexai.generative_models import GenerativeModel
+            
+            classification_model = GenerativeModel(
+                self.settings.vertex_ai_model,
+                system_instruction=CLASSIFICATION_SYSTEM_PROMPT,
+            )
+            
+            response = classification_model.generate_content(
+                prompt,
+                generation_config={
+                    "temperature": 0.2,
+                    "max_output_tokens": 1024,
+                    "response_mime_type": "application/json",
+                },
+            )
+            
+            response_text = response.text.strip()
+            
+            # Usuń ewentualne markdown code blocks
+            if response_text.startswith("```"):
+                lines = response_text.split("\n")
+                response_text = "\n".join(lines[1:-1])
+            
+            result = json.loads(response_text)
+            
+            logger.info(
+                "Sklasyfikowano firmę '%s': industry=%s, specjalizacja=%s",
+                company_name,
+                result.get("industry"),
+                result.get("specjalizacja"),
+            )
+            
+            return result
+            
+        except json.JSONDecodeError as e:
+            logger.error("Błąd parsowania klasyfikacji: %s", e)
+            return {}
+        except Exception as e:
+            logger.error("Błąd klasyfikacji firmy: %s", e)
+            return {}
 
 
 class VertexAIServiceMock:

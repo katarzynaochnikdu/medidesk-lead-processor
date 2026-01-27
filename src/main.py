@@ -455,6 +455,100 @@ async def search_company_info(
         )
 
 
+class EnrichCompanyRequest(BaseModel):
+    """Request do wzbogacania danych firmy."""
+    company_name: str
+    address: Optional[str] = None
+    nip: Optional[str] = None
+
+
+@app.post(
+    "/enrich-company",
+    responses={
+        401: {"model": ErrorResponse, "description": "Unauthorized"},
+    },
+)
+async def enrich_company(
+    request: EnrichCompanyRequest,
+    _authorized: bool = Depends(verify_api_key),
+    normalizer: DataNormalizerService = Depends(get_normalizer_service),
+):
+    """
+    Wzbogaca dane firmy - szuka w internecie i klasyfikuje przez AI.
+    
+    Zwraca pola do Zoho CRM:
+    - industry: Branża (Placówka medyczna, Konkurencja, Partner, etc.)
+    - specjalizacja: Lista specjalizacji (POZ, Stomatologia, Szpital, etc.)
+    - platnik_uslug: Lista płatników (NFZ, Komercyjne, Ubezpieczenie)
+    - address_type: Typ adresu (Siedziba i Filia / Siedziba)
+    - nip: NIP znaleziony lub podany
+    - gus_data: Dane z GUS jeśli znaleziono NIP
+    """
+    try:
+        from .services.brave_search import get_brave_search_service
+        from .services.vertex_ai import get_vertex_ai_service
+        
+        if not request.company_name or len(request.company_name) < 3:
+            return JSONResponse(
+                status_code=400,
+                content={"error": "Nazwa firmy musi mieć min. 3 znaki"},
+            )
+        
+        # 1. Zbierz dane z internetu
+        brave = get_brave_search_service()
+        enrichment_data = await brave.enrich_company(
+            company_name=request.company_name,
+            address=request.address,
+        )
+        
+        # Użyj podanego NIP jeśli jest, w przeciwnym razie użyj znalezionego
+        nip = request.nip or enrichment_data.get("nip")
+        
+        # 2. Jeśli mamy NIP - pobierz dane z GUS
+        gus_data = None
+        if nip:
+            gus_result = await normalizer.gus_client.lookup_nip(nip)
+            if gus_result.found:
+                gus_data = gus_result.model_dump()
+        
+        # 3. Klasyfikuj przez AI
+        ai_service = get_vertex_ai_service()
+        classification = await ai_service.classify_company(
+            company_name=request.company_name,
+            nip=nip,
+            address=request.address or (gus_data.get("street") if gus_data else None),
+            web_snippets=enrichment_data.get("web_snippets"),
+            sources=enrichment_data.get("sources"),
+        )
+        
+        # 4. Przygotuj odpowiedź w formacie Zoho CRM
+        return {
+            "company_name": request.company_name,
+            "nip": nip,
+            "gus_verified": gus_data is not None,
+            "gus_data": gus_data,
+            
+            # Klasyfikacja AI - pola do Zoho
+            "industry": classification.get("industry"),
+            "specjalizacja": classification.get("specjalizacja", []),
+            "platnik_uslug": classification.get("platnik_uslug", []),
+            "address_type": classification.get("address_type"),
+            "is_medical_at_address": classification.get("is_medical_at_address"),
+            
+            # Metadane
+            "confidence": classification.get("confidence"),
+            "reasoning": classification.get("reasoning"),
+            "sources_count": len(enrichment_data.get("sources", [])),
+        }
+        
+    except Exception as e:
+        logger.error("Error enriching company: %s", e, exc_info=True)
+        raise HTTPException(
+            status_code=500,
+            detail=f"Internal server error: {str(e)}",
+        )
+
+
 # === Error handlers ===
 
 @app.exception_handler(HTTPException)
