@@ -13,46 +13,54 @@ from ..models.lead_output import NormalizedData
 logger = logging.getLogger(__name__)
 
 
-# Prompt systemowy dla normalizacji danych
-NORMALIZATION_SYSTEM_PROMPT = """Jesteś ekspertem od normalizacji danych kontaktowych i firmowych w Polsce.
-Twoje zadanie to przyjąć chaotyczne dane i zwrócić je w ustrukturyzowanej formie.
+# Prompt systemowy dla normalizacji danych B2B
+NORMALIZATION_SYSTEM_PROMPT = """Jesteś ekspertem od ekstrakcji i normalizacji danych B2B w Polsce.
+Przetwarzasz chaotyczne dane (surowy tekst, HTML, forwarded, quoted, podpisy mailowe, stopki).
+Zwracasz wyłącznie jeden obiekt JSON w określonym formacie.
+Bez markdown, bez komentarzy, bez wyjaśnień, bez tekstu przed ani po JSON.
 
-ZASADY:
-1. Imiona i nazwiska: popraw wielkość liter (Jan Kowalski, nie JAN KOWALSKI)
-2. Rozdziel imię od nazwiska jeśli są razem
-3. Wykryj płeć na podstawie polskiego imienia (męskie/żeńskie)
-4. Nazwy firm: rozdziel nazwę od formy prawnej (sp. z o.o., S.A., etc.)
-5. Telefony: znormalizuj do formatu +48XXXXXXXXX
-6. Email: lowercase
-7. NIP: tylko 10 cyfr (bez myślników)
-8. Adresy: popraw wielkość liter w nazwach miast i ulic
+ZASADY EKSTRAKCJI:
+1. Wyodrębnij z treści dane osoby i firmy.
+2. Ignoruj: reklamy, social media, automatyczne podpisy (np. "Sent from iPhone"), bannery, klauzule/disclaimery.
+3. NIE ignoruj PODPISU SŁUŻBOWEGO - z niego wyciągaj dane (imię+nazwisko, stanowisko, firma, telefon/email).
 
-POLSKIE IMIONA MĘSKIE (przykłady): Jan, Piotr, Andrzej, Krzysztof, Tomasz, Michał, Marcin, Adam, Paweł, Marek
-POLSKIE IMIONA ŻEŃSKIE (przykłady): Anna, Maria, Katarzyna, Małgorzata, Agnieszka, Barbara, Ewa, Magdalena, Joanna, Monika
+ZASADY NORMALIZACJI:
+1. Imiona i nazwiska: popraw wielkość liter (Jan Kowalski, nie JAN KOWALSKI).
+2. title: wyciągnij tytuł naukowy/zawodowy jeśli jest (dr, dr n. med., dr hab., prof., lek., mgr, inż.) - NIE włączaj do first_name/last_name.
+3. Nazwy firm: rozdziel nazwę od formy prawnej (sp. z o.o., S.A., sp.k., sp.j., s.c.).
+4. company_keyword: 1-2 słowa kluczowe do wyszukiwania firmy (unikalny rdzeń nazwy, NIE ogólniki jak "MEDICAL", "CLINIC", "SP", "ZOO").
+5. Telefony: znormalizuj do formatu +48XXXXXXXXX, rozróżnij phone (stacjonarny/służbowy) od mobile (komórkowy).
+6. Email: lowercase.
+7. NIP: tylko 10 cyfr (bez myślników).
+8. Adresy: popraw wielkość liter.
+9. Wykryj płeć na podstawie polskiego imienia.
 
-FORMY PRAWNE FIRM: sp. z o.o., spółka z ograniczoną odpowiedzialnością, S.A., spółka akcyjna, sp.k., sp.j., s.c.
-
-Odpowiadaj TYLKO w formacie JSON bez dodatkowego tekstu."""
+Nie zgaduj danych — jeśli brak → null."""
 
 
-NORMALIZATION_USER_PROMPT_TEMPLATE = """Znormalizuj poniższe dane:
+NORMALIZATION_USER_PROMPT_TEMPLATE = """Przetwórz poniższe chaotyczne dane i zwróć ustrukturyzowany JSON:
 
 DANE WEJŚCIOWE:
 {input_data}
 
-Zwróć JSON z polami:
+Zwróć JSON:
 {{
   "first_name": "imię lub null",
-  "last_name": "nazwisko lub null", 
+  "last_name": "nazwisko lub null",
+  "title": "tytuł naukowy/zawodowy (dr, prof., lek., mgr) lub null",
   "gender": "male/female/unknown",
   "salutation": "Pan/Pani lub null",
+  "role": "stanowisko/funkcja lub null",
   "company_name": "nazwa firmy bez formy prawnej lub null",
-  "company_legal_form": "forma prawna lub null",
+  "company_legal_form": "forma prawna (sp. z o.o., S.A.) lub null",
   "company_full_name": "pełna nazwa z formą prawną lub null",
+  "company_keyword": "1-2 słowa kluczowe do wyszukiwania lub null",
+  "website": "domena firmowa lub null",
   "email": "email lowercase lub null",
-  "phone": "telefon +48XXXXXXXXX lub null",
+  "phone": "telefon służbowy +48XXXXXXXXX lub null",
+  "mobile": "telefon komórkowy +48XXXXXXXXX lub null",
   "nip": "10 cyfr lub null",
-  "street": "ulica lub null",
+  "street": "ulica z numerem lub null",
   "city": "miasto lub null",
   "zip_code": "kod pocztowy XX-XXX lub null"
 }}"""
@@ -150,13 +158,18 @@ class VertexAIService:
             return NormalizedData(
                 first_name=normalized_dict.get("first_name"),
                 last_name=normalized_dict.get("last_name"),
+                title=normalized_dict.get("title"),
                 gender=normalized_dict.get("gender"),
                 salutation=normalized_dict.get("salutation"),
+                role=normalized_dict.get("role"),
                 company_name=normalized_dict.get("company_name"),
                 company_legal_form=normalized_dict.get("company_legal_form"),
                 company_full_name=normalized_dict.get("company_full_name"),
+                company_keyword=normalized_dict.get("company_keyword"),
+                website=normalized_dict.get("website"),
                 email=normalized_dict.get("email"),
                 phone=normalized_dict.get("phone"),
+                mobile=normalized_dict.get("mobile"),
                 nip=normalized_dict.get("nip"),
                 street=normalized_dict.get("street"),
                 city=normalized_dict.get("city"),
@@ -322,13 +335,18 @@ class VertexAIServiceMock:
         return NormalizedData(
             first_name=first_name,
             last_name=last_name,
+            title=input_data.get("title"),
             gender=gender,
             salutation="Pan" if gender == "male" else ("Pani" if gender == "female" else None),
+            role=input_data.get("role") or input_data.get("stanowisko"),
             company_name=company_name,
             company_legal_form=legal_form,
             company_full_name=company_raw.strip().title() if company_raw else None,
+            company_keyword=company_name.split()[0] if company_name and " " in company_name else company_name,
+            website=input_data.get("website") or input_data.get("www"),
             email=email,
             phone=phone,
+            mobile=normalize_phone(input_data.get("mobile") or input_data.get("telefon_komorkowy")),
             nip=nip,
             street=input_data.get("street"),
             city=input_data.get("city"),

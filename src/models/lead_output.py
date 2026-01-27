@@ -13,10 +13,12 @@ class NormalizedData(BaseModel):
     # Dane osobowe
     first_name: Optional[str] = Field(None, description="Imię - poprawiona wielkość liter")
     last_name: Optional[str] = Field(None, description="Nazwisko - poprawiona wielkość liter")
+    title: Optional[str] = Field(None, description="Tytuł naukowy/zawodowy (dr, prof., lek., mgr)")
     gender: Optional[Literal["male", "female", "unknown"]] = Field(
         None, description="Płeć wykryta z imienia"
     )
     salutation: Optional[str] = Field(None, description="Zwrot grzecznościowy (Pan/Pani)")
+    role: Optional[str] = Field(None, description="Stanowisko/funkcja")
     
     # Dane firmowe
     company_name: Optional[str] = Field(None, description="Nazwa firmy bez formy prawnej")
@@ -24,10 +26,15 @@ class NormalizedData(BaseModel):
         None, description="Forma prawna (sp. z o.o., S.A., etc.)"
     )
     company_full_name: Optional[str] = Field(None, description="Pełna nazwa z formą prawną")
+    company_keyword: Optional[str] = Field(
+        None, description="1-2 słowa kluczowe do wyszukiwania firmy w CRM"
+    )
+    website: Optional[str] = Field(None, description="Domena firmowa")
     
     # Kontakt - znormalizowany format
     email: Optional[str] = Field(None, description="Email - lowercase")
-    phone: Optional[str] = Field(None, description="Telefon w formacie +48XXXXXXXXX")
+    phone: Optional[str] = Field(None, description="Telefon służbowy w formacie +48XXXXXXXXX")
+    mobile: Optional[str] = Field(None, description="Telefon komórkowy w formacie +48XXXXXXXXX")
     phone_formatted: Optional[str] = Field(
         None, description="Telefon sformatowany (+48 XXX XXX XXX)"
     )
