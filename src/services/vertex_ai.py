@@ -79,16 +79,8 @@ ADRES: {address}
 INFO Z INTERNETU:
 {web_snippets}
 
-Zwroc JSON:
-{{
-  "industry": "Placowka medyczna" lub "Konkurencja" lub "Partner" lub "Okolomedyczne inne" lub "Poddostawca" lub "Pozostale" lub "Szkolenia/Consulting" lub "Edukacja medyczna" lub "Uslugi finansowe" lub "Wdrozeniowiec systemow medycznych" lub "Inne" lub "Ratownictwo" lub "Dystrybutor" lub null,
-  "specjalizacja": ["POZ", "Przychodnia Wielospecjalistyczna", "Szpital", "Poradnia Zdrowia Psychicznego", "Rehabilitacja", "Stomatologia", "Diagnostyka", "Medycyna Estetyczna", "Diagnostyka Obrazowa", "Laboratorium", "Weterynaria", "Uslugi Niemedyczne"],
-  "platnik_uslug": ["NFZ", "Komercyjne", "Ubezpieczenie"],
-  "is_medical_at_address": true lub false lub null,
-  "address_type": "Siedziba i Filia" lub "Siedziba" lub null,
-  "confidence": 0.8,
-  "reasoning": "krotkie uzasadnienie"
-}}
+Zwroc JSON (KROTKI, bez polskich znakow):
+{{"industry":"Placowka medyczna","specjalizacja":["POZ"],"platnik_uslug":["NFZ","Komercyjne"],"is_medical_at_address":true,"address_type":"Siedziba i Filia","confidence":0.8,"reasoning":"przychodnia z kontraktem NFZ"}}
 
 ZASADY:
 - industry="Placowka medyczna" jesli przychodnia/szpital/klinika/NZOZ/SPZOZ
@@ -338,8 +330,8 @@ Zwróć JSON:
             response = classification_model.generate_content(
                 prompt,
                 generation_config={
-                    "temperature": 0.2,
-                    "max_output_tokens": 1024,
+                    "temperature": 0.1,
+                    "max_output_tokens": 512,
                     "response_mime_type": "application/json",
                 },
             )
