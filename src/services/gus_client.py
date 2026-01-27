@@ -111,11 +111,19 @@ class GUSClient:
                 return GUSData(found=False, error=f"Błąd API GUS: {response.status_code}")
             
             # Parsuj odpowiedź
-            data = response.json()
+            response_data = response.json()
             
-            # Sprawdź czy znaleziono
-            if not data.get("found") and not data.get("nazwa"):
-                return GUSData(found=False, error=None)
+            # API zwraca {"data": [...]} - wyciągnij pierwszy element
+            data_list = response_data.get("data", [])
+            if not data_list:
+                # Sprawdź czy to bezpośredni obiekt (stara wersja API)
+                if response_data.get("nazwa"):
+                    data = response_data
+                else:
+                    logger.info("GUS: NIP %s nie znaleziony", clean_nip)
+                    return GUSData(found=False, error=None)
+            else:
+                data = data_list[0]  # Weź pierwszy wynik
             
             logger.info(
                 "GUS: Znaleziono firmę: %s (REGON: %s)",
