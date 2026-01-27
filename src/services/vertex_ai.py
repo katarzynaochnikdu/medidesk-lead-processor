@@ -67,50 +67,35 @@ Zwróć JSON:
 
 
 # Prompt do klasyfikacji firmy na podstawie danych z internetu
-CLASSIFICATION_SYSTEM_PROMPT = """Jesteś ekspertem od klasyfikacji firm w branży medycznej w Polsce.
-Na podstawie informacji z internetu klasyfikujesz firmy do odpowiednich kategorii CRM.
-Zwracasz wyłącznie jeden obiekt JSON bez markdown, bez komentarzy.
-
-WAŻNE: Analizuj TYLKO dostarczone informacje. Nie zgaduj - jeśli brak danych → null."""
+CLASSIFICATION_SYSTEM_PROMPT = """Klasyfikujesz firmy medyczne w Polsce. Zwracasz TYLKO JSON, bez markdown."""
 
 
-CLASSIFICATION_USER_PROMPT_TEMPLATE = """Sklasyfikuj firmę na podstawie poniższych informacji z internetu:
+CLASSIFICATION_USER_PROMPT_TEMPLATE = """Sklasyfikuj firmę:
 
-NAZWA FIRMY: {company_name}
+NAZWA: {company_name}
 NIP: {nip}
 ADRES: {address}
 
-INFORMACJE Z INTERNETU:
+INFO Z INTERNETU:
 {web_snippets}
 
-ŹRÓDŁA:
-{sources}
-
-Zwróć JSON z klasyfikacją:
+Zwroc JSON:
 {{
-  "industry": "DOKŁADNIE jedna z wartości: Placówka medyczna | Konkurencja | Partner | Okołomedyczne inne | Poddostawca | Pozostałe | Szkolenia/Consulting | Edukacja medyczna | Usługi finansowe | Wdrożeniowiec systemów medycznych | Inne | Ratownictwo | Dystrybutor | null",
-  
-  "specjalizacja": ["LISTA wartości (może być wiele): POZ | Przychodnia Wielospecjalistyczna | Szpital | Poradnia Zdrowia Psychicznego | Rehabilitacja | Stomatologia | Diagnostyka | Medycyna Estetyczna | Diagnostyka Obrazowa | Laboratorium | Weterynaria | Usługi Niemedyczne | pusta lista jeśli brak"],
-  
-  "platnik_uslug": ["LISTA wartości: NFZ | Komercyjne | Ubezpieczenie | pusta lista jeśli brak info"],
-  
-  "is_medical_at_address": true/false/null,
-  "address_type": "DOKŁADNIE jedna z wartości: Siedziba i Filia | Siedziba | null",
-  
-  "confidence": 0.0-1.0,
-  "reasoning": "krótkie uzasadnienie klasyfikacji"
+  "industry": "Placowka medyczna" lub "Konkurencja" lub "Partner" lub "Okolomedyczne inne" lub "Poddostawca" lub "Pozostale" lub "Szkolenia/Consulting" lub "Edukacja medyczna" lub "Uslugi finansowe" lub "Wdrozeniowiec systemow medycznych" lub "Inne" lub "Ratownictwo" lub "Dystrybutor" lub null,
+  "specjalizacja": ["POZ", "Przychodnia Wielospecjalistyczna", "Szpital", "Poradnia Zdrowia Psychicznego", "Rehabilitacja", "Stomatologia", "Diagnostyka", "Medycyna Estetyczna", "Diagnostyka Obrazowa", "Laboratorium", "Weterynaria", "Uslugi Niemedyczne"],
+  "platnik_uslug": ["NFZ", "Komercyjne", "Ubezpieczenie"],
+  "is_medical_at_address": true lub false lub null,
+  "address_type": "Siedziba i Filia" lub "Siedziba" lub null,
+  "confidence": 0.8,
+  "reasoning": "krotkie uzasadnienie"
 }}
 
-ZASADY KLASYFIKACJI:
-1. industry = "Placówka medyczna" jeśli to przychodnia, szpital, gabinet lekarski, klinika, NZOZ, SPZOZ
-2. industry = "Konkurencja" jeśli to firma oferująca podobne usługi (rejestracja medyczna, call center med.)
-3. industry = "Partner" jeśli to kancelaria prawna, firma współpracująca
-4. specjalizacja - na podstawie usług medycznych (POZ = lekarz rodzinny/pierwszego kontaktu)
-5. platnik_uslug - NFZ jeśli ma kontrakt z NFZ, Komercyjne jeśli prywatna
-6. is_medical_at_address = true jeśli pod adresem rejestracyjnym jest placówka medyczna (gabinety, przyjmowanie pacjentów)
-7. address_type:
-   - "Siedziba i Filia" jeśli is_medical_at_address=true (siedziba firmy = lokalizacja placówki)
-   - "Siedziba" jeśli is_medical_at_address=false (tylko biuro/administracja, placówki gdzie indziej)"""
+ZASADY:
+- industry="Placowka medyczna" jesli przychodnia/szpital/klinika/NZOZ/SPZOZ
+- specjalizacja - lista pasujacych (moze byc pusta [])
+- platnik_uslug - NFZ jesli kontrakt, Komercyjne jesli prywatna (moze byc pusta [])
+- is_medical_at_address=true jesli pod adresem sa gabinety/pacjenci
+- address_type="Siedziba i Filia" jesli is_medical_at_address=true"""
 
 
 class VertexAIService:
@@ -366,6 +351,11 @@ Zwróć JSON:
                 lines = response_text.split("\n")
                 response_text = "\n".join(lines[1:-1])
             
+            # Próba naprawy JSON - usuń trailing content po ostatnim }
+            last_brace = response_text.rfind("}")
+            if last_brace > 0:
+                response_text = response_text[:last_brace + 1]
+            
             result = json.loads(response_text)
             
             logger.info(
@@ -378,8 +368,17 @@ Zwróć JSON:
             return result
             
         except json.JSONDecodeError as e:
-            logger.error("Błąd parsowania klasyfikacji: %s", e)
-            return {}
+            logger.error("Błąd parsowania klasyfikacji: %s | response: %s", e, response_text[:200] if response_text else "empty")
+            # Zwróć domyślne wartości zamiast pustego dict
+            return {
+                "industry": None,
+                "specjalizacja": [],
+                "platnik_uslug": [],
+                "is_medical_at_address": None,
+                "address_type": None,
+                "confidence": 0.0,
+                "reasoning": f"Błąd parsowania AI: {str(e)[:50]}",
+            }
         except Exception as e:
             logger.error("Błąd klasyfikacji firmy: %s", e)
             return {}

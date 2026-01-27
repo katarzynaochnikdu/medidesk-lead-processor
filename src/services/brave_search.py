@@ -219,8 +219,9 @@ class BraveSearchService:
         info = await self.get_company_info(company_name)
         nip = await self.find_nip(company_name)
         
-        # Połącz snippety w tekst do analizy
-        snippets_text = "\n".join(info.get("snippets", []))[:3000]  # Max 3000 znaków
+        # Połącz snippety w tekst do analizy (krótsze, bez polskich znaków problematycznych)
+        snippets = info.get("snippets", [])[:5]  # Max 5 snippetów
+        snippets_text = "\n".join(s[:300] for s in snippets)[:1500]  # Max 1500 znaków
         
         return {
             "company_name": company_name,
