@@ -319,12 +319,11 @@ Zwróć JSON:
                 sources=sources_text or "brak źródeł",
             )
             
-            # Użyj Flash modelu dla szybszej klasyfikacji
+            # Użyj Pro modelu do klasyfikacji (ten sam co do normalizacji)
             from vertexai.generative_models import GenerativeModel
             
-            # Flash jest szybszy i mniej obcina odpowiedzi
             classification_model = GenerativeModel(
-                "gemini-2.0-flash",
+                self.settings.vertex_ai_model,  # gemini-2.5-pro
                 system_instruction=CLASSIFICATION_SYSTEM_PROMPT,
             )
             
@@ -332,7 +331,7 @@ Zwróć JSON:
                 prompt,
                 generation_config={
                     "temperature": 0.1,
-                    "max_output_tokens": 1024,
+                    "max_output_tokens": 2048,
                 },
             )
             
