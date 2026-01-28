@@ -9,6 +9,132 @@ from typing import Optional, Tuple
 # Wagi dla sumy kontrolnej NIP
 NIP_WEIGHTS = (6, 5, 7, 2, 3, 4, 5, 6, 7)
 
+# Slownik zdrobnien polskich imion -> pelna forma
+# Uzywany do normalizacji imion przed wyszukiwaniem duplikatow
+POLISH_DIMINUTIVES = {
+    # Zenskie
+    "gosia": "Malgorzata",
+    "malgonia": "Malgorzata",
+    "malgosia": "Malgorzata",
+    "kasia": "Katarzyna",
+    "kasienka": "Katarzyna",
+    "basia": "Barbara",
+    "basenka": "Barbara",
+    "ania": "Anna",
+    "anka": "Anna",
+    "hania": "Anna",
+    "joasia": "Joanna",
+    "asia": "Joanna",
+    "aśka": "Joanna",
+    "magda": "Magdalena",
+    "madzia": "Magdalena",
+    "ewa": "Ewa",  # nie zdrobnienie ale czeste
+    "ewka": "Ewa",
+    "ola": "Aleksandra",
+    "olka": "Aleksandra",
+    "krysia": "Krystyna",
+    "krystyna": "Krystyna",
+    "danka": "Danuta",
+    "danusia": "Danuta",
+    "zosia": "Zofia",
+    "zosienka": "Zofia",
+    "terenia": "Teresa",
+    "tereska": "Teresa",
+    "hala": "Halina",
+    "halinka": "Halina",
+    "irenka": "Irena",
+    "elzunia": "Elzbieta",
+    "ela": "Elzbieta",
+    "betka": "Elzbieta",
+    "karolinka": "Karolina",
+    "karolcia": "Karolina",
+    "natalka": "Natalia",
+    "monia": "Monika",
+    "moniczka": "Monika",
+    "agniesia": "Agnieszka",
+    "agnisia": "Agnieszka",
+    "weroniczka": "Weronika",
+    "weronka": "Weronika",
+    "sylwia": "Sylwia",  # nie zdrobnienie
+    "sylwunia": "Sylwia",
+    
+    # Meskie
+    "janek": "Jan",
+    "jasiek": "Jan",
+    "jasio": "Jan",
+    "piotrek": "Piotr",
+    "piotrus": "Piotr",
+    "andrzejek": "Andrzej",
+    "jędrek": "Andrzej",
+    "krzysiek": "Krzysztof",
+    "krzys": "Krzysztof",
+    "tomek": "Tomasz",
+    "tomuś": "Tomasz",
+    "michal": "Michal",  # nie zdrobnienie
+    "michalek": "Michal",
+    "misiek": "Michal",
+    "marcinek": "Marcin",
+    "adaś": "Adam",
+    "adamek": "Adam",
+    "pawel": "Pawel",  # nie zdrobnienie
+    "pawełek": "Pawel",
+    "marek": "Marek",  # nie zdrobnienie
+    "mareczek": "Marek",
+    "staszek": "Stanislaw",
+    "stasio": "Stanislaw",
+    "wojtek": "Wojciech",
+    "wojtuś": "Wojciech",
+    "jacuś": "Jacek",
+    "jacek": "Jacek",  # nie zdrobnienie
+    "robek": "Robert",
+    "rafałek": "Rafal",
+    "rafal": "Rafal",  # nie zdrobnienie
+    "kuba": "Jakub",
+    "kubuś": "Jakub",
+    "sebastianek": "Sebastian",
+    "łukaszek": "Lukasz",
+    "maciek": "Maciej",
+    "maciuś": "Maciej",
+    "darek": "Dariusz",
+    "dariuszek": "Dariusz",
+    "arturek": "Artur",
+    "grzesiek": "Grzegorz",
+    "grześ": "Grzegorz",
+    "bartek": "Bartosz",
+    "bartus": "Bartosz",
+    "patryk": "Patryk",  # nie zdrobnienie
+    "patryczek": "Patryk",
+}
+
+
+def expand_diminutive(name: Optional[str]) -> Optional[str]:
+    """
+    Rozwija zdrobnienie imienia do pelnej formy.
+    Jesli imie nie jest zdrobnieniem, zwraca je bez zmian (skapitalizowane).
+    
+    Args:
+        name: Imie (moze byc zdrobnieniem)
+    
+    Returns:
+        Pelna forma imienia lub oryginalne imie
+    
+    Examples:
+        "Gosia" -> "Malgorzata"
+        "gosia" -> "Malgorzata"
+        "Jan" -> "Jan"
+        "KASIA" -> "Katarzyna"
+    """
+    if not name:
+        return None
+    
+    name_lower = name.strip().lower()
+    
+    if name_lower in POLISH_DIMINUTIVES:
+        return POLISH_DIMINUTIVES[name_lower]
+    
+    # Nie znaleziono - zwroc skapitalizowane
+    return capitalize_name(name)
+
 
 def normalize_nip(nip: Optional[str]) -> Optional[str]:
     """

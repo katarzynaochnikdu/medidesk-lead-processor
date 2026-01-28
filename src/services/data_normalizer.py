@@ -19,6 +19,7 @@ from ..models.lead_output import (
 )
 from ..utils.validators import (
     capitalize_name,
+    expand_diminutive,
     extract_email_domain,
     format_nip,
     format_phone,
@@ -29,6 +30,7 @@ from ..utils.validators import (
 from .gus_client import GUSClient, get_gus_client
 from .vertex_ai import VertexAIService, get_vertex_ai_service
 from .zoho_search import ZohoSearchService, get_zoho_search_service
+from .brave_search import BraveSearchService, get_brave_search_service
 
 logger = logging.getLogger(__name__)
 
@@ -50,6 +52,7 @@ class DataNormalizerService:
         vertex_ai_service: Optional[VertexAIService] = None,
         gus_client: Optional[GUSClient] = None,
         zoho_service: Optional[ZohoSearchService] = None,
+        brave_service: Optional[BraveSearchService] = None,
         use_mocks: bool = False,
     ):
         self.settings = settings or get_settings()
@@ -64,11 +67,16 @@ class DataNormalizerService:
         self.zoho_service = zoho_service or get_zoho_search_service(
             self.settings, use_mock=use_mocks
         )
+        self.brave_service = brave_service if not use_mocks else None
+        if not use_mocks and not brave_service:
+            self.brave_service = get_brave_search_service(self.settings)
     
     async def close(self):
         """Zamknij wszystkie połączenia."""
         await self.gus_client.close()
         await self.zoho_service.close()
+        if self.brave_service:
+            await self.brave_service.close()
     
     async def process_lead(
         self,
@@ -109,6 +117,23 @@ class DataNormalizerService:
             
             # 3. Uzupełnij dane z walidatorów
             normalized = self._enhance_normalized_data(normalized, lead_input)
+            
+            # 3.5. Brave Search - szukaj NIP jeśli nie mamy
+            if not normalized.nip and normalized.company_name and self.brave_service:
+                logger.info("Brak NIP - szukam przez Brave Search dla: %s", normalized.company_name)
+                try:
+                    found_nip = await self.brave_service.find_nip(normalized.company_name)
+                    if found_nip:
+                        normalized.nip = found_nip
+                        normalized.nip_formatted = format_nip(found_nip)
+                        normalized.nip_valid = is_valid_nip(found_nip)
+                        warnings.append(f"NIP znaleziony przez Brave Search: {format_nip(found_nip)}")
+                        logger.info("Brave Search znalazł NIP: %s", found_nip)
+                    else:
+                        logger.info("Brave Search nie znalazł NIP dla: %s", normalized.company_name)
+                except Exception as e:
+                    logger.warning("Błąd wyszukiwania NIP przez Brave: %s", e)
+                    warnings.append(f"Nie udało się znaleźć NIP przez Brave Search")
             
             # 4. GUS lookup
             gus_data = GUSData(found=False)
@@ -171,10 +196,47 @@ class DataNormalizerService:
                 ),
             )
     
+    def _prepare_hybrid_data(self, raw_data: dict[str, Any]) -> dict[str, Any]:
+        """
+        Przygotowuje dane hybrydowe dla AI.
+        Laczy strukturalne pola z pelnym kontekstem z raw_name.
+        Dzieki temu AI ma wszystkie informacje w jednym miejscu.
+        """
+        hybrid = raw_data.copy()
+        
+        # Zbierz pelny kontekst do raw_name
+        context_parts = []
+        
+        # Oryginalny raw_name
+        if raw_data.get("raw_name"):
+            context_parts.append(f"Marketing Lead - nazwa: {raw_data['raw_name']}")
+        
+        # Dodaj strukturalne pola jesli istnieja (dla kontekstu)
+        if raw_data.get("company"):
+            context_parts.append(f"Firma: {raw_data['company']}")
+        if raw_data.get("first_name"):
+            context_parts.append(f"Imie: {raw_data['first_name']}")
+        if raw_data.get("last_name"):
+            context_parts.append(f"Nazwisko: {raw_data['last_name']}")
+        if raw_data.get("email"):
+            context_parts.append(f"Email: {raw_data['email']}")
+        if raw_data.get("phone"):
+            context_parts.append(f"Telefon: {raw_data['phone']}")
+        if raw_data.get("description"):
+            context_parts.append(f"Tresc: {raw_data['description']}")
+        
+        # Zlacz w jeden kontekst
+        if context_parts:
+            hybrid["_full_context"] = "\n".join(context_parts)
+        
+        return hybrid
+    
     async def _ai_normalization(self, raw_data: dict[str, Any]) -> NormalizedData:
-        """Normalizacja przez Vertex AI."""
+        """Normalizacja przez Vertex AI z hybrydowym kontekstem."""
         try:
-            return await self.vertex_ai.normalize_data(raw_data)
+            # Przygotuj dane hybrydowe - AI dostaje pelny kontekst
+            hybrid_data = self._prepare_hybrid_data(raw_data)
+            return await self.vertex_ai.normalize_data(hybrid_data)
         except Exception as e:
             logger.warning("AI normalization failed, using fallback: %s", e)
             lead_input = LeadInput.from_raw(LeadInputRaw(**raw_data))
@@ -200,13 +262,17 @@ class DataNormalizerService:
         if last_name:
             last_name = capitalize_name(last_name)
         
+        # Firma
+        company_name = capitalize_name(lead_input.company_name) if lead_input.company_name else None
+        
+        # Zwróć dane - walidacja firmy będzie w _enhance_normalized_data
         return NormalizedData(
             first_name=first_name,
             last_name=last_name,
             email=lead_input.email.lower().strip() if lead_input.email else None,
             phone=normalize_phone(lead_input.phone),
             nip=normalize_nip(lead_input.nip),
-            company_name=capitalize_name(lead_input.company_name) if lead_input.company_name else None,
+            company_name=company_name,
             street=lead_input.street,
             city=lead_input.city,
             zip_code=lead_input.zip_code,
@@ -246,8 +312,65 @@ class DataNormalizerService:
             normalized.first_name = capitalize_name(lead_input.first_name)
         if not normalized.last_name and lead_input.last_name:
             normalized.last_name = capitalize_name(lead_input.last_name)
+        
+        # Rozwin zdrobnienia imion (Gosia -> Malgorzata) dla lepszego matchingu
+        if normalized.first_name:
+            expanded = expand_diminutive(normalized.first_name)
+            if expanded and expanded != normalized.first_name:
+                logger.info("Rozszerzono zdrobnienie: %s -> %s", normalized.first_name, expanded)
+                normalized.first_name = expanded
         if not normalized.company_name and lead_input.company_name:
             normalized.company_name = lead_input.company_name.strip()
+        
+        # === WALIDACJA FIRMY - odrzuć nierelewantne ===
+        if normalized.company_name:
+            company_lower = normalized.company_name.lower()
+            original_company = normalized.company_name  # Zachowaj oryginalną nazwę
+            
+            # Firmy zagraniczne tech (nierelewantne dla Medidesk)
+            irrelevant = ["amazon", "google", "microsoft", "apple", "facebook", "meta", "linkedin", "twitter"]
+            # Placeholdery
+            placeholders = ["właściciel", "firma osoby", "prywatna", "brak", "nie dotyczy"]
+            
+            should_remove = False
+            reject_reason = None
+            
+            if any(irr in company_lower for irr in irrelevant):
+                should_remove = True
+                reject_reason = f"nierelewantna firma zagraniczna: {original_company}"
+                logger.info("Firma odrzucona (nierelewantna): %s", normalized.company_name)
+            elif any(ph in company_lower for ph in placeholders):
+                should_remove = True
+                reject_reason = f"placeholder: {original_company}"
+                logger.info("Firma odrzucona (placeholder): %s", normalized.company_name)
+            # Facebook/LinkedIn ID (długie cyfry)
+            elif normalized.company_name.isdigit() and len(normalized.company_name) > 10:
+                should_remove = True
+                reject_reason = f"social media ID: {original_company}"
+                logger.info("Firma odrzucona (social ID): %s", normalized.company_name)
+            # Pojedyncze typowe imię w polu Firma
+            elif (len(normalized.company_name.split()) == 1 and 
+                  normalized.company_name[0].isupper() and 
+                  len(normalized.company_name) < 15 and
+                  not normalized.company_name.isupper()):  # Nie skrót (NZOZ, POZ)
+                # Prawdopodobnie imię - przepisz jeśli brak first_name
+                if not normalized.first_name:
+                    normalized.first_name = capitalize_name(normalized.company_name)
+                    logger.info("Firma to imię - przepisano do first_name: %s", normalized.company_name)
+                should_remove = True
+                reject_reason = f"imie zamiast firmy: {original_company}"
+            
+            if should_remove:
+                # Ustaw flagi odrzucenia
+                normalized.company_rejected = True
+                normalized.company_rejected_reason = reject_reason
+                normalized.company_name = None
+                # Jeśli nie ma firmy, usuń też NIP (prawdopodobnie błędny)
+                if normalized.nip:
+                    logger.info("Usuwam NIP (brak relewantnej firmy): %s", normalized.nip)
+                    normalized.nip = None
+                    normalized.nip_formatted = None
+                    normalized.nip_valid = None
         
         return normalized
     
@@ -299,28 +422,50 @@ class DataNormalizerService:
         best_contact = duplicates.best_contact_match
         best_account = duplicates.best_account_match
         
+        # === Modyfikator confidence gdy firma odrzucona ===
+        # Jesli firma byla nierelewantna (Amazon, placeholder), obniz pewnosc dopasowania
+        # bo kontakt moze byc inna osoba o tym samym imieniu/nazwisku
+        confidence_penalty = 0.0
+        if normalized.company_rejected:
+            confidence_penalty = 0.25  # Obniz o 25%
+            suggestions.append(f"Firma odrzucona ({normalized.company_rejected_reason}) - obnizono pewnosc")
+        
         # === Kontakt istnieje (Tier >= 3) ===
         if contact_result.exists:
+            base_confidence = best_contact.tier / 4.0 if best_contact else 0.75
+            adjusted_confidence = max(0.3, base_confidence - confidence_penalty)
+            
+            # Jesli firma odrzucona i nie ma potwierdzenia firmy, wymagaj przegladu
+            if normalized.company_rejected and not account_result.exists:
+                return ProcessingRecommendation(
+                    action="review_required",
+                    confidence=adjusted_confidence,
+                    reason=f"Znaleziono kontakt {best_contact.name}, ale firma odrzucona jako nierelewantna - moze to inna osoba" if best_contact else "Kontakt znaleziony ale firma nierelewantna",
+                    contact_id=contact_result.primary_id,
+                    account_id=account_result.parent_id,
+                    suggestions=suggestions + ["Zweryfikuj czy to ta sama osoba - firma nie pasuje"],
+                )
+            
             # Jednoznaczne dopasowanie
             if contact_result.primary_id:
                 return ProcessingRecommendation(
                     action="link_to_existing",
-                    confidence=best_contact.tier / 4.0 if best_contact else 0.75,
+                    confidence=adjusted_confidence,
                     reason=f"Znaleziono istniejący kontakt: {best_contact.name} ({best_contact.match_reason})" if best_contact else "Kontakt istnieje",
                     contact_id=contact_result.primary_id,
                     account_id=account_result.parent_id,
-                    suggestions=["Sprawdź czy dane kontaktu są aktualne"],
+                    suggestions=suggestions + ["Sprawdź czy dane kontaktu są aktualne"],
                 )
             
             # Wymaga przeglądu (remis na top1)
             if contact_result.needs_review:
                 return ProcessingRecommendation(
                     action="review_required",
-                    confidence=best_contact.tier / 4.0 if best_contact else 0.5,
+                    confidence=adjusted_confidence,
                     reason=f"Kilku kandydatów z tym samym tier: {len(contact_result.candidates)} kontaktów",
                     contact_id=best_contact.id if best_contact else None,
                     account_id=account_result.parent_id,
-                    suggestions=["Zweryfikuj ręcznie który kontakt jest właściwy"],
+                    suggestions=suggestions + ["Zweryfikuj ręcznie który kontakt jest właściwy"],
                 )
         
         # === Tylko kandydaci (Tier 2) - wymaga przeglądu ===

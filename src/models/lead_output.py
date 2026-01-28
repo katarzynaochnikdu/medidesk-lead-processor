@@ -30,6 +30,12 @@ class NormalizedData(BaseModel):
         None, description="1-2 słowa kluczowe do wyszukiwania firmy w CRM"
     )
     website: Optional[str] = Field(None, description="Domena firmowa")
+    company_rejected: bool = Field(
+        False, description="Czy firma zostala odrzucona jako nierelewantna (Amazon, placeholder)"
+    )
+    company_rejected_reason: Optional[str] = Field(
+        None, description="Powod odrzucenia firmy"
+    )
     
     # Kontakt - znormalizowany format
     email: Optional[str] = Field(None, description="Email - lowercase")

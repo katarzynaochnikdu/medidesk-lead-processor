@@ -55,9 +55,14 @@ class Settings(BaseSettings):
     @model_validator(mode="after")
     def resolve_aliases(self):
         """Rozwiązuje aliasy zmiennych po załadowaniu wszystkich wartości."""
-        # GUS API Key: priorytet BIR1 > REGON > GUS
-        if not self.gus_api_key or self.gus_api_key.startswith("your-"):
-            self.gus_api_key = self.bir1_gus_api_key or self.regon_api_key_token or ""
+        # GUS API Key: priorytet REGON > BIR1 > GUS (REGON jest aktualny)
+        # Zawsze używaj specyficznych zmiennych jeśli są dostępne
+        if self.regon_api_key_token and not self.regon_api_key_token.startswith("your-"):
+            self.gus_api_key = self.regon_api_key_token
+        elif self.bir1_gus_api_key and not self.bir1_gus_api_key.startswith("your-"):
+            self.gus_api_key = self.bir1_gus_api_key
+        elif not self.gus_api_key or self.gus_api_key.startswith("your-"):
+            self.gus_api_key = ""
         
         # API Key: priorytet GCP_LEADS > GCP_API_KEY_ID > API_KEY
         if not self.api_key or self.api_key.startswith("your-"):

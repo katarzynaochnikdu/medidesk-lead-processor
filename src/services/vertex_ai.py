@@ -14,10 +14,15 @@ logger = logging.getLogger(__name__)
 
 
 # Prompt systemowy dla normalizacji danych B2B
-NORMALIZATION_SYSTEM_PROMPT = """Jesteś ekspertem od ekstrakcji i normalizacji danych B2B w Polsce.
+NORMALIZATION_SYSTEM_PROMPT = """Jesteś ekspertem od ekstrakcji i normalizacji danych B2B w Polsce - dla systemu Medidesk (rozwiązania IT dla placówek medycznych).
 Przetwarzasz chaotyczne dane (surowy tekst, HTML, forwarded, quoted, podpisy mailowe, stopki).
 Zwracasz wyłącznie jeden obiekt JSON w określonym formacie.
 Bez markdown, bez komentarzy, bez wyjaśnień, bez tekstu przed ani po JSON.
+
+KONTEKST BIZNESOWY:
+Medidesk dostarcza rozwiązania dla placówek medycznych do komunikacji z pacjentem.
+Relewantne firmy: placówki medyczne (przychodnie, kliniki, szpitale, NZOZ, gabinety), integratorzy systemów medycznych (HIS, EDM, HMS).
+NIErelewantne firmy: technologiczne zagraniczn (Amazon, Google, Microsoft), budowlane, produkcyjne, handel (chyba że hurtownie medyczne).
 
 ZASADY EKSTRAKCJI:
 1. Wyodrębnij z treści dane osoby i firmy.
@@ -29,8 +34,13 @@ ZASADY NORMALIZACJI:
    - Pierwsza litera każdego słowa WIELKA, reszta małe (Jan Kowalski, Maria Nowak-Kowalska)
    - Dozwolone spacje i myślniki (nazwiska dwuczłonowe)
    - Sprawdź literówki, ALE nie zmieniaj na siłę imion obcych (ukraińskie, angielskie - George zostaje George, nie Grzegorz)
+   - Jeśli w polu "Firma" jest imię osoby - przepisz do first_name/last_name, a company_name ustaw na null
 2. title: wyciągnij tytuł naukowy/zawodowy (dr, prof., lek., mgr, inż.) - NIE włączaj do first_name/last_name.
-3. Nazwy firm: rozdziel nazwę od formy prawnej (sp. z o.o., S.A., sp.k.).
+3. Nazwy firm: 
+   - Rozdziel nazwę od formy prawnej (sp. z o.o., S.A., sp.k.)
+   - WAŻNE: Jeśli firma to wielka zagraniczna tech (Amazon, Google, Microsoft, Apple, Facebook/Meta) lub firma budowlana/produkcyjna - ustaw company_name na null (nierelewantna)
+   - Jeśli to placeholder ("Właściciel firmy", "Firma osoby prywatnej") - ustaw null
+   - Jeśli to Facebook/LinkedIn ID (długie cyfry) - ustaw null
 4. company_keyword: 1-2 unikalne słowa (NIE ogólniki jak MEDICAL, CLINIC).
 5. Telefony:
    - Polskie: +48 XXX XXX XXX
@@ -40,13 +50,19 @@ ZASADY NORMALIZACJI:
 8. Województwa: MAŁYMI literami (małopolskie, mazowieckie).
 9. Płeć: wykryj z polskiego imienia.
 
-Nie zgaduj danych — jeśli brak → null."""
+Nie zgaduj danych — jeśli brak lub nierelewantne → null."""
 
 
 NORMALIZATION_USER_PROMPT_TEMPLATE = """Przetwórz poniższe chaotyczne dane i zwróć ustrukturyzowany JSON:
 
 DANE WEJŚCIOWE:
 {input_data}
+
+PRZYKŁADY WALIDACJI FIRM:
+- "Amazon", "Google", "Microsoft" → company_name: null (nierelewantne, zagraniczne tech)
+- "Właściciel firmy", "2016610662466100" → company_name: null (placeholder/Facebook ID)
+- "Waldemar" w polu Firma → first_name: "Waldemar", company_name: null (to imię osoby)
+- "NZOZ Przychodnia Centrum", "Kamsoft" (integrator HIS) → company_name: OK (relewantne)
 
 Zwróć JSON:
 {{
@@ -56,7 +72,7 @@ Zwróć JSON:
   "gender": "male/female/unknown",
   "salutation": "Pan/Pani lub null",
   "role": "stanowisko/funkcja lub null",
-  "company_name": "nazwa firmy bez formy prawnej lub null",
+  "company_name": "nazwa firmy bez formy prawnej lub null (null jeśli nierelewantna)",
   "company_legal_form": "forma prawna (sp. z o.o., S.A.) lub null",
   "company_full_name": "pełna nazwa z formą prawną lub null",
   "company_keyword": "1-2 słowa kluczowe do wyszukiwania lub null",
@@ -163,25 +179,84 @@ class VertexAIService:
             input_json = json.dumps(input_data, ensure_ascii=False, indent=2)
             prompt = NORMALIZATION_USER_PROMPT_TEMPLATE.format(input_data=input_json)
             
-            # Wywołaj model
-            response = self._model.generate_content(
-                prompt,
-                generation_config={
-                    "temperature": 0.1,  # Niska temperatura = bardziej deterministyczne
-                    "max_output_tokens": 1024,
-                    "response_mime_type": "application/json",
-                },
-            )
+            # Wywołaj model z retry
+            max_retries = 2
+            last_error = None
+            
+            for attempt in range(max_retries + 1):
+                try:
+                    response = self._model.generate_content(
+                        prompt,
+                        generation_config={
+                            "temperature": 0.1 + (attempt * 0.1),  # Zwiększ temperaturę przy retry
+                            "max_output_tokens": 4096,  # Duży limit - płacimy tylko za użyte
+                            "response_mime_type": "application/json",
+                        },
+                    )
+                    break
+                except Exception as e:
+                    last_error = e
+                    if attempt < max_retries:
+                        logger.warning("AI attempt %d failed: %s, retrying...", attempt + 1, str(e)[:50])
+                        import asyncio
+                        await asyncio.sleep(1)
+                    else:
+                        raise last_error
             
             # Parsuj odpowiedź
             response_text = response.text.strip()
             
-            # Usuń ewentualne markdown code blocks
+            # Cleanup - usuń markdown code blocks i trailing content
             if response_text.startswith("```"):
-                lines = response_text.split("\n")
-                response_text = "\n".join(lines[1:-1])
+                # Usuń ```json lub ```
+                response_text = response_text.split("\n", 1)[1] if "\n" in response_text else response_text[3:]
+                # Usuń końcowe ```
+                if response_text.endswith("```"):
+                    response_text = response_text.rsplit("```", 1)[0]
             
-            normalized_dict = json.loads(response_text)
+            # Znajdź JSON object { ... }
+            start = response_text.find("{")
+            end = response_text.rfind("}") + 1
+            if start >= 0 and end > start:
+                response_text = response_text[start:end]
+            
+            # Próba naprawy częstych błędów JSON
+            try:
+                normalized_dict = json.loads(response_text)
+            except json.JSONDecodeError as e:
+                # Próba naprawy - dodaj brakujące zamknięcia
+                logger.warning("Próba naprawy JSON: %s", str(e)[:50])
+                
+                # Napraw niekompletne stringi - zamknij ostatni string i obiekt
+                fixed_text = response_text
+                
+                # Policz niezamknięte cudzysłowy
+                in_string = False
+                escape_next = False
+                for i, c in enumerate(fixed_text):
+                    if escape_next:
+                        escape_next = False
+                        continue
+                    if c == '\\':
+                        escape_next = True
+                        continue
+                    if c == '"':
+                        in_string = not in_string
+                
+                # Jeśli w środku stringa, zamknij go
+                if in_string:
+                    fixed_text += '"'
+                
+                # Zamknij brakujące nawiasy
+                open_braces = fixed_text.count('{') - fixed_text.count('}')
+                fixed_text += '}' * open_braces
+                
+                try:
+                    normalized_dict = json.loads(fixed_text)
+                    logger.info("JSON naprawiony pomyślnie")
+                except json.JSONDecodeError:
+                    # Ostatnia próba - weź tylko to co się da sparsować
+                    raise e  # Rzuć oryginalny błąd
             
             # Konwertuj na model
             return NormalizedData(
@@ -618,9 +693,28 @@ class VertexAIServiceMock:
             elif name_lower in self.FEMALE_NAMES:
                 gender = "female"
         
-        # Firma
+        # Firma - waliduj czy relewantna
         company_raw = input_data.get("company") or input_data.get("firma") or ""
         company_name, legal_form = self._extract_legal_form(company_raw)
+        
+        # Walidacja: odrzuć nierelewantne firmy
+        if company_name:
+            company_lower = company_name.lower()
+            # Firmy zagraniczne tech (nierelewantne)
+            irrelevant_companies = ["amazon", "google", "microsoft", "apple", "facebook", "meta", "linkedin"]
+            # Placeholdery
+            placeholders = ["właściciel", "firma osoby", "prywatna", "brak"]
+            
+            if any(irr in company_lower for irr in irrelevant_companies):
+                company_name = None
+                legal_form = None
+            elif any(ph in company_lower for ph in placeholders):
+                company_name = None
+                legal_form = None
+            # Facebook/LinkedIn ID (długie cyfry)
+            elif company_raw.isdigit() and len(company_raw) > 10:
+                company_name = None
+                legal_form = None
         
         # Kontakt
         email = input_data.get("email")
