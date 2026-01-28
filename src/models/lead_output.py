@@ -121,28 +121,76 @@ class GUSData(BaseModel):
         }
 
 
+class MatchSignals(BaseModel):
+    """Sygnały dopasowania dla tier-based matching."""
+    
+    E: bool = Field(False, description="Email match")
+    P: bool = Field(False, description="Phone match")
+    L: bool = Field(False, description="Last name match")
+    F: bool = Field(False, description="First name match")
+    A: bool = Field(False, description="Account match")
+
+
 class DuplicateMatch(BaseModel):
-    """Pojedynczy potencjalny duplikat."""
+    """Pojedynczy potencjalny duplikat z tier-based matching."""
     
     id: str = Field(..., description="ID rekordu w Zoho")
     name: str = Field(..., description="Nazwa/imię i nazwisko")
     score: float = Field(..., ge=0.0, le=1.0, description="Pewność dopasowania (0-1)")
-    match_reason: str = Field(..., description="Powód dopasowania")
+    match_reason: str = Field(..., description="Powód dopasowania (np. E+L+A)")
+    
+    # Tier-based matching
+    tier: int = Field(0, ge=0, le=4, description="Tier dopasowania (4=najsilniejszy, 2=kandydat)")
+    signals: MatchSignals = Field(default_factory=MatchSignals, description="Sygnały dopasowania")
+    conflict_first_name: bool = Field(False, description="Czy jest konflikt imienia (Adam vs Jan)")
+    record_quality_score: float = Field(0.0, description="Jakość rekordu (kompletność)")
     
     # Dodatkowe dane dla kontekstu
     email: Optional[str] = None
     phone: Optional[str] = None
     company: Optional[str] = None
+    account_id: Optional[str] = Field(None, description="ID powiązanego Account")
+
+
+class ContactExistsResult(BaseModel):
+    """Wynik sprawdzenia 'czy kontakt istnieje' (tier-based)."""
+    
+    exists: bool = Field(False, description="Czy kontakt istnieje (Tier >= 3)")
+    primary_id: Optional[str] = Field(None, description="ID jednoznacznie dopasowanego kontaktu")
+    candidates: list[DuplicateMatch] = Field(
+        default_factory=list, description="Kandydaci (max 2 poziomy, wszystkie z remisu)"
+    )
+    needs_review: bool = Field(False, description="Czy wymaga ręcznego przeglądu (remis top1)")
+
+
+class AccountExistsResult(BaseModel):
+    """Wynik sprawdzenia 'czy firma istnieje' (po NIP/domenie)."""
+    
+    exists: bool = Field(False, description="Czy firma istnieje")
+    parent_id: Optional[str] = Field(None, description="ID siedziby (parent Account)")
+    child_id: Optional[str] = Field(None, description="ID placówki podległej (child Account)")
+    candidates: list[DuplicateMatch] = Field(
+        default_factory=list, description="Znalezione firmy"
+    )
 
 
 class DuplicatesResult(BaseModel):
-    """Wyniki wyszukiwania duplikatów."""
+    """Wyniki wyszukiwania duplikatów z tier-based matching."""
     
+    # Nowy format - tier-based
+    contact: ContactExistsResult = Field(
+        default_factory=ContactExistsResult, description="Wynik szukania kontaktu"
+    )
+    account: AccountExistsResult = Field(
+        default_factory=AccountExistsResult, description="Wynik szukania firmy"
+    )
+    
+    # Legacy - dla kompatybilności wstecznej
     contacts: list[DuplicateMatch] = Field(
-        default_factory=list, description="Znalezione duplikaty w Contacts"
+        default_factory=list, description="[Legacy] Znalezione duplikaty w Contacts"
     )
     accounts: list[DuplicateMatch] = Field(
-        default_factory=list, description="Znalezione duplikaty w Accounts"
+        default_factory=list, description="[Legacy] Znalezione duplikaty w Accounts"
     )
     leads: list[DuplicateMatch] = Field(
         default_factory=list, description="Znalezione duplikaty w Leads"
@@ -150,11 +198,13 @@ class DuplicatesResult(BaseModel):
     
     @property
     def has_duplicates(self) -> bool:
-        return bool(self.contacts or self.accounts or self.leads)
+        return self.contact.exists or self.account.exists or bool(self.leads)
     
     @property
     def best_contact_match(self) -> Optional[DuplicateMatch]:
         """Zwraca najlepsze dopasowanie w Contacts."""
+        if self.contact.candidates:
+            return self.contact.candidates[0]
         if not self.contacts:
             return None
         return max(self.contacts, key=lambda x: x.score)
@@ -162,6 +212,8 @@ class DuplicatesResult(BaseModel):
     @property
     def best_account_match(self) -> Optional[DuplicateMatch]:
         """Zwraca najlepsze dopasowanie w Accounts."""
+        if self.account.candidates:
+            return self.account.candidates[0]
         if not self.accounts:
             return None
         return max(self.accounts, key=lambda x: x.score)

@@ -5,7 +5,7 @@
 set -e
 
 PROJECT_ID=${1:-$(gcloud config get-value project)}
-REGION="europe-west1"
+REGION="europe-central2"
 SERVICE_NAME="lead-processor"
 IMAGE_NAME="${REGION}-docker.pkg.dev/${PROJECT_ID}/lead-processor/${SERVICE_NAME}"
 
@@ -47,7 +47,7 @@ gcloud run deploy ${SERVICE_NAME} \
     --timeout 300s \
     --allow-unauthenticated \
     --set-env-vars "ENVIRONMENT=production,GCP_REGION=${REGION},GCP_PROJECT_ID=${PROJECT_ID}" \
-    --set-secrets "GUS_API_KEY=BIR1_GUS_API_KEY:latest,API_KEY=GCP_API_KEY_ID:latest,ZOHO_CLIENT_ID=ZOHO_MD_CRM_LEADY_CRUD_CLIENT_ID:latest,ZOHO_CLIENT_SECRET=ZOHO_MD_CRM_LEADY_CRUD_CLIENT_SECRET:latest,ZOHO_REFRESH_TOKEN=ZOHO_MD_CRM_LEADY_CRUD_REFRESH_TOKEN:latest"
+    --set-secrets "GUS_API_KEY=REGON_API_KEY_TOKEN:latest,API_KEY=GCP_API_KEY_ID:latest,ZOHO_CLIENT_ID=ZOHO_MD_CRM_LEADY_CRUD_CLIENT_ID:latest,ZOHO_CLIENT_SECRET=ZOHO_MD_CRM_LEADY_CRUD_CLIENT_SECRET:latest,ZOHO_REFRESH_TOKEN=ZOHO_MD_CRM_LEADY_CRUD_REFRESH_TOKEN:latest,BRAVE_SEARCH_API_KEY=BRAVE_SEARCH_API_KEY:latest"
 
 # 6. Pobierz URL serwisu
 SERVICE_URL=$(gcloud run services describe ${SERVICE_NAME} --region ${REGION} --format 'value(status.url)')

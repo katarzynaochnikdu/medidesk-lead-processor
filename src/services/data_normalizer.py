@@ -289,51 +289,69 @@ class DataNormalizerService:
         gus_data: GUSData,
         duplicates: DuplicatesResult,
     ) -> ProcessingRecommendation:
-        """Generuje rekomendację działania."""
+        """Generuje rekomendację działania na podstawie tier-based matching."""
         suggestions = []
         
-        # Sprawdź duplikaty
+        # Pobierz wyniki tier-based
+        contact_result = duplicates.contact
+        account_result = duplicates.account
+        
         best_contact = duplicates.best_contact_match
         best_account = duplicates.best_account_match
         
-        # Wysoki score duplikatu kontaktu
-        if best_contact and best_contact.score >= 0.8:
-            return ProcessingRecommendation(
-                action="link_to_existing",
-                confidence=best_contact.score,
-                reason=f"Znaleziono istniejący kontakt: {best_contact.name} ({best_contact.match_reason})",
-                contact_id=best_contact.id,
-                account_id=best_account.id if best_account else None,
-                suggestions=["Sprawdź czy dane kontaktu są aktualne"],
-            )
+        # === Kontakt istnieje (Tier >= 3) ===
+        if contact_result.exists:
+            # Jednoznaczne dopasowanie
+            if contact_result.primary_id:
+                return ProcessingRecommendation(
+                    action="link_to_existing",
+                    confidence=best_contact.tier / 4.0 if best_contact else 0.75,
+                    reason=f"Znaleziono istniejący kontakt: {best_contact.name} ({best_contact.match_reason})" if best_contact else "Kontakt istnieje",
+                    contact_id=contact_result.primary_id,
+                    account_id=account_result.parent_id,
+                    suggestions=["Sprawdź czy dane kontaktu są aktualne"],
+                )
+            
+            # Wymaga przeglądu (remis na top1)
+            if contact_result.needs_review:
+                return ProcessingRecommendation(
+                    action="review_required",
+                    confidence=best_contact.tier / 4.0 if best_contact else 0.5,
+                    reason=f"Kilku kandydatów z tym samym tier: {len(contact_result.candidates)} kontaktów",
+                    contact_id=best_contact.id if best_contact else None,
+                    account_id=account_result.parent_id,
+                    suggestions=["Zweryfikuj ręcznie który kontakt jest właściwy"],
+                )
         
-        # Średni score - wymaga przeglądu
-        if best_contact and best_contact.score >= 0.5:
+        # === Tylko kandydaci (Tier 2) - wymaga przeglądu ===
+        if best_contact and best_contact.tier == 2:
             return ProcessingRecommendation(
                 action="review_required",
-                confidence=best_contact.score,
-                reason=f"Potencjalny duplikat: {best_contact.name} ({best_contact.match_reason})",
+                confidence=0.5,
+                reason=f"Potencjalny duplikat (słaby): {best_contact.name} ({best_contact.match_reason})",
                 contact_id=best_contact.id,
-                account_id=best_account.id if best_account else None,
-                suggestions=["Zweryfikuj ręcznie czy to ten sam kontakt"],
+                account_id=account_result.parent_id,
+                suggestions=["Słabe dopasowanie - zweryfikuj ręcznie"],
             )
         
-        # Znaleziono firmę ale nie kontakt
-        if best_account and best_account.score >= 0.8:
-            suggestions.append(f"Powiąż z istniejącą firmą: {best_account.name}")
+        # === Firma istnieje ale nie kontakt ===
+        if account_result.exists and not contact_result.exists:
+            suggestions.append(f"Powiąż z istniejącą firmą: {best_account.name}" if best_account else "Firma istnieje")
             return ProcessingRecommendation(
                 action="create_new",
                 confidence=0.8,
                 reason="Nowy kontakt w istniejącej firmie",
-                account_id=best_account.id,
+                account_id=account_result.parent_id,
                 suggestions=suggestions,
             )
+        
+        # === Brak dopasowań - utwórz nowe ===
         
         # GUS potwierdził firmę
         if gus_data.found:
             suggestions.append("Dane firmy potwierdzone w GUS")
-            if not best_account:
-                suggestions.append("Rozważ utworzenie nowego Account")
+            if not account_result.exists:
+                suggestions.append("Utwórz nowy Account z danymi z GUS")
         
         # NIP niepoprawny
         if normalized.nip and not normalized.nip_valid:
@@ -347,6 +365,7 @@ class DataNormalizerService:
             action="create_new",
             confidence=0.7 if gus_data.found else 0.5,
             reason="Nowy lead - brak duplikatów",
+            account_id=account_result.parent_id if account_result.exists else None,
             suggestions=suggestions,
         )
     
