@@ -1,0 +1,26 @@
+{
+    "title": "NIP Finder Web Scraper Input",
+    "type": "object",
+    "schemaVersion": 1,
+    "properties": {
+        "urls": {
+            "title": "URLs to scrape",
+            "type": "array",
+            "description": "Lista URL do scrapowania",
+            "editor": "stringList"
+        },
+        "maxTextLength": {
+            "title": "Max text length",
+            "type": "integer",
+            "description": "Maksymalna dlugosc tekstu (domyslnie 10000)",
+            "default": 10000
+        },
+        "timeout": {
+            "title": "Timeout (ms)",
+            "type": "integer",
+            "description": "Timeout w milisekundach (domyslnie 30000)",
+            "default": 30000
+        }
+    },
+    "required": ["urls"]
+}

@@ -49,6 +49,22 @@ ZASADY NORMALIZACJI:
 7. NIP: tylko 10 cyfr.
 8. Województwa: MAŁYMI literami (małopolskie, mazowieckie).
 9. Płeć: wykryj z polskiego imienia.
+10. Polskie znaki diakrytyczne - KORYGUJ brakujące:
+   - POPRAWIAJ imiona/nazwiska do poprawnej polskiej pisowni
+   - Michal → Michał, Malgorzata → Małgorzata, Lukasz → Łukasz
+   - Grazyna → Grażyna, Zolnierz → Żołnierz, Slawomir → Sławomir
+   - Dab → Dąb, Zak → Żak, Sniezko → Śnieżko
+   - Zawsze używaj poprawnych polskich znaków: ą, ć, ę, ł, ń, ó, ś, ź, ż
+   - Przykład: "Michal Dab" → first_name: "Michał", last_name: "Dąb"
+11. Adresy w surowym tekście:
+   - Rozpoznaj wzorce adresów: ul./al./pl. + Nazwa + Numer, kody pocztowe XX-XXX
+   - Jeśli raw_name zawiera "Ulica Numer Nazwisko" → wydziel adres do street, zachowaj nazwisko
+   - Przykład: "Nowowiejska 11 Jasiewicz" → last_name: "Jasiewicz", street: "Nowowiejska 11"
+   - Ulica/numer NIE są częścią nazwiska osoby
+   - Jeśli brak imienia ale jest nazwisko → first_name: null, last_name: wypełnij
+12. Zdrobnienia polskich imion (rozpoznaj ale NIE zamieniaj):
+   - Rozpoznaj: Asia (=Joanna), Kasia (=Katarzyna), Gosia (=Małgorzata), Basia (=Barbara)
+   - Zachowaj zdrobnienie w danych (Asia pozostaje Asia) - system rozwiąże je osobno
 
 Nie zgaduj danych — jeśli brak lub nierelewantne → null."""
 
@@ -63,6 +79,11 @@ PRZYKŁADY WALIDACJI FIRM:
 - "Właściciel firmy", "2016610662466100" → company_name: null (placeholder/Facebook ID)
 - "Waldemar" w polu Firma → first_name: "Waldemar", company_name: null (to imię osoby)
 - "NZOZ Przychodnia Centrum", "Kamsoft" (integrator HIS) → company_name: OK (relewantne)
+
+PRZYKŁADY PARSOWANIA ADRESÓW:
+- "Nowowiejska 11 Katarzyna Jasiewicz" → first_name: "Katarzyna", last_name: "Jasiewicz", street: "Nowowiejska 11"
+- "ul. Kowalskiego 5 Jan Nowak" → first_name: "Jan", last_name: "Nowak", street: "ul. Kowalskiego 5"
+- "Consensus sp z o.o. Nowowiejska 11 Jasiewicz" → last_name: "Jasiewicz", company_name: "Consensus", street: "Nowowiejska 11"
 
 Zwróć JSON:
 {{

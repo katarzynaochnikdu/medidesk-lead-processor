@@ -1,0 +1,38 @@
+{
+  "title": "NIP Finder Web Scraper Input",
+  "type": "object",
+  "schemaVersion": 1,
+  "properties": {
+    "urls": {
+      "title": "URLs to scrape",
+      "type": "array",
+      "description": "List of URLs to scrape for NIP",
+      "editor": "stringList",
+      "items": {
+        "type": "string",
+        "format": "uri"
+      },
+      "example": [
+        "https://przychodnia-abc.pl/polityka-prywatnosci",
+        "https://centrum-medyczne.pl/kontakt"
+      ]
+    },
+    "maxTextLength": {
+      "title": "Max text length per page",
+      "type": "integer",
+      "description": "Maximum length of extracted text per page (characters)",
+      "default": 10000,
+      "minimum": 1000,
+      "maximum": 50000
+    },
+    "timeout": {
+      "title": "Page load timeout",
+      "type": "integer",
+      "description": "Timeout for page loading (milliseconds)",
+      "default": 30000,
+      "minimum": 5000,
+      "maximum": 120000
+    }
+  },
+  "required": ["urls"]
+}

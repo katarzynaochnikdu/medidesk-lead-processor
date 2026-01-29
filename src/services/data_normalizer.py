@@ -120,15 +120,44 @@ class DataNormalizerService:
             
             # 3.5. Brave Search - szukaj NIP jeśli nie mamy
             if not normalized.nip and normalized.company_name and self.brave_service:
-                logger.info("Brak NIP - szukam przez Brave Search dla: %s", normalized.company_name)
+                # Wyciągnij domenę z emaila (jeśli nie jest publiczna)
+                email_domain = None
+                if normalized.email:
+                    from ..utils.validators import extract_email_domain, is_public_email_domain
+                    email_domain = extract_email_domain(normalized.email)
+                    if email_domain and is_public_email_domain(email_domain):
+                        email_domain = None  # Ignoruj domeny publiczne (gmail, outlook)
+                
+                logger.info("Brak NIP - szukam przez Brave Search dla: %s (domena: %s)", 
+                           normalized.company_name, email_domain or "brak")
                 try:
-                    found_nip = await self.brave_service.find_nip(normalized.company_name)
+                    found_nip = await self.brave_service.find_nip(
+                        normalized.company_name,
+                        email_domain=email_domain
+                    )
                     if found_nip:
+                        # Waliduj NIP z domeną (jeśli mamy domenę)
+                        validated = True
+                        if email_domain:
+                            try:
+                                validated = await self.brave_service.validate_nip_domain(
+                                    found_nip, 
+                                    email_domain
+                                )
+                                if not validated:
+                                    warnings.append(f"⚠️ NIP {format_nip(found_nip)} nie pasuje do domeny {email_domain} - wymaga weryfikacji")
+                                    logger.warning("NIP nie pasuje do domeny - obniżam pewność")
+                            except Exception as e:
+                                logger.warning("Błąd walidacji NIP vs domena: %s", e)
+                        
                         normalized.nip = found_nip
                         normalized.nip_formatted = format_nip(found_nip)
                         normalized.nip_valid = is_valid_nip(found_nip)
-                        warnings.append(f"NIP znaleziony przez Brave Search: {format_nip(found_nip)}")
-                        logger.info("Brave Search znalazł NIP: %s", found_nip)
+                        
+                        if validated:
+                            warnings.append(f"NIP znaleziony przez Brave Search: {format_nip(found_nip)}")
+                        
+                        logger.info("Brave Search znalazł NIP: %s (zwalidowany: %s)", found_nip, validated)
                     else:
                         logger.info("Brave Search nie znalazł NIP dla: %s", normalized.company_name)
                 except Exception as e:

@@ -1,0 +1,26 @@
+# NIP Finder - dodatkowe dependencies
+# (główne dependencies są w requirements.txt)
+
+# Apify SDK
+apify-client>=1.7.0
+
+# Fuzzy string matching
+python-Levenshtein>=0.21.0
+fuzzywuzzy>=0.18.0
+
+# Database (async SQLite)
+aiosqlite>=0.19.0
+
+# CLI
+click>=8.1.0
+
+# Markdown generation
+markdown>=3.5.0
+
+# Już masz w requirements.txt (nie duplikuj):
+# - fastapi, uvicorn (API)
+# - httpx (HTTP client)
+# - google-cloud-aiplatform (Vertex AI)
+# - pandas, openpyxl (CSV/Excel)
+# - pydantic, pydantic-settings
+# - beautifulsoup4, lxml (scraping)

@@ -13,18 +13,18 @@ NIP_WEIGHTS = (6, 5, 7, 2, 3, 4, 5, 6, 7)
 # Uzywany do normalizacji imion przed wyszukiwaniem duplikatow
 POLISH_DIMINUTIVES = {
     # Zenskie
-    "gosia": "Malgorzata",
-    "malgonia": "Malgorzata",
-    "malgosia": "Malgorzata",
+    "gosia": "Małgorzata",
+    "malgonia": "Małgorzata",
+    "malgosia": "Małgorzata",
     "kasia": "Katarzyna",
     "kasienka": "Katarzyna",
     "basia": "Barbara",
     "basenka": "Barbara",
     "ania": "Anna",
     "anka": "Anna",
-    "hania": "Anna",
+    "hania": "Hanna",
+    "asia": "Joanna",  # Asia -> Joanna
     "joasia": "Joanna",
-    "asia": "Joanna",
     "aśka": "Joanna",
     "magda": "Magdalena",
     "madzia": "Magdalena",
@@ -43,18 +43,20 @@ POLISH_DIMINUTIVES = {
     "hala": "Halina",
     "halinka": "Halina",
     "irenka": "Irena",
-    "elzunia": "Elzbieta",
-    "ela": "Elzbieta",
-    "betka": "Elzbieta",
+    "elzunia": "Elżbieta",
+    "ela": "Elżbieta",
+    "betka": "Elżbieta",
     "karolinka": "Karolina",
     "karolcia": "Karolina",
     "natalka": "Natalia",
     "monia": "Monika",
     "moniczka": "Monika",
+    "aga": "Agnieszka",
     "agniesia": "Agnieszka",
     "agnisia": "Agnieszka",
     "weroniczka": "Weronika",
     "weronka": "Weronika",
+    "werka": "Weronika",
     "sylwia": "Sylwia",  # nie zdrobnienie
     "sylwunia": "Sylwia",
     
@@ -70,29 +72,29 @@ POLISH_DIMINUTIVES = {
     "krzys": "Krzysztof",
     "tomek": "Tomasz",
     "tomuś": "Tomasz",
-    "michal": "Michal",  # nie zdrobnienie
-    "michalek": "Michal",
-    "misiek": "Michal",
+    "michal": "Michał",  # nie zdrobnienie
+    "michalek": "Michał",
+    "misiek": "Michał",
     "marcinek": "Marcin",
     "adaś": "Adam",
     "adamek": "Adam",
-    "pawel": "Pawel",  # nie zdrobnienie
-    "pawełek": "Pawel",
+    "pawel": "Paweł",  # nie zdrobnienie
+    "pawełek": "Paweł",
     "marek": "Marek",  # nie zdrobnienie
     "mareczek": "Marek",
-    "staszek": "Stanislaw",
-    "stasio": "Stanislaw",
+    "staszek": "Stanisław",
+    "stasio": "Stanisław",
     "wojtek": "Wojciech",
     "wojtuś": "Wojciech",
     "jacuś": "Jacek",
     "jacek": "Jacek",  # nie zdrobnienie
     "robek": "Robert",
-    "rafałek": "Rafal",
-    "rafal": "Rafal",  # nie zdrobnienie
+    "rafałek": "Rafał",
+    "rafal": "Rafał",  # nie zdrobnienie
     "kuba": "Jakub",
     "kubuś": "Jakub",
     "sebastianek": "Sebastian",
-    "łukaszek": "Lukasz",
+    "łukaszek": "Łukasz",
     "maciek": "Maciej",
     "maciuś": "Maciej",
     "darek": "Dariusz",
@@ -119,8 +121,8 @@ def expand_diminutive(name: Optional[str]) -> Optional[str]:
         Pelna forma imienia lub oryginalne imie
     
     Examples:
-        "Gosia" -> "Malgorzata"
-        "gosia" -> "Malgorzata"
+        "Gosia" -> "Małgorzata"
+        "gosia" -> "Małgorzata"
         "Jan" -> "Jan"
         "KASIA" -> "Katarzyna"
     """

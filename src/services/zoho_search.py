@@ -24,6 +24,24 @@ from ..utils.phone_formatter import PhoneFormatter
 
 logger = logging.getLogger(__name__)
 
+
+def normalize_polish_chars(text: str) -> str:
+    """Normalizuje polskie znaki diakrytyczne dla lepszego matchingu."""
+    if not text:
+        return text
+    
+    replacements = {
+        'ą': 'a', 'ć': 'c', 'ę': 'e', 'ł': 'l', 'ń': 'n',
+        'ó': 'o', 'ś': 's', 'ź': 'z', 'ż': 'z',
+        'Ą': 'A', 'Ć': 'C', 'Ę': 'E', 'Ł': 'L', 'Ń': 'N',
+        'Ó': 'O', 'Ś': 'S', 'Ź': 'Z', 'Ż': 'Z'
+    }
+    
+    for polish, latin in replacements.items():
+        text = text.replace(polish, latin)
+    
+    return text
+
 # Pola telefonów w Zoho CRM
 PHONE_FIELDS = [
     "Home_Phone", "Mobile", "Telefon_komorkowy_3",
@@ -274,13 +292,14 @@ class ZohoSearchService:
         record_phones = [p for p in record_phones if p]
         P = bool(incoming_phone_clean and incoming_phone_clean in record_phones)
         
-        # L - Last name match (case-insensitive)
-        record_last = (record.get("Last_Name") or "").lower().strip()
-        L = bool(last_name and last_name.lower().strip() == record_last)
+        # L - Last name match (case-insensitive, normalizacja polskich znaków)
+        record_last = normalize_polish_chars((record.get("Last_Name") or "").lower().strip())
+        incoming_last = normalize_polish_chars((last_name or "").lower().strip()) if last_name else ""
+        L = bool(incoming_last and incoming_last == record_last)
         
-        # F - First name match (case-insensitive, tylko jeśli obie strony mają)
-        record_first = (record.get("First_Name") or "").lower().strip()
-        incoming_first = (first_name or "").lower().strip() if first_name else ""
+        # F - First name match (case-insensitive, normalizacja polskich znaków)
+        record_first = normalize_polish_chars((record.get("First_Name") or "").lower().strip())
+        incoming_first = normalize_polish_chars((first_name or "").lower().strip()) if first_name else ""
         
         # F jest True tylko jeśli obie strony mają imię i się zgadzają
         F = bool(incoming_first and record_first and incoming_first == record_first)

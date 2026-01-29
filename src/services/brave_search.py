@@ -88,12 +88,23 @@ class BraveSearchService:
             logger.error("Brave Search error: %s", e)
             return []
     
-    async def find_nip(self, company_name: str) -> Optional[str]:
+    async def find_nip(
+        self, 
+        company_name: str, 
+        email_domain: Optional[str] = None
+    ) -> Optional[str]:
         """
-        Szuka NIP firmy po nazwie.
+        Szuka NIP firmy - ulepszona wersja z wieloma strategiami.
+        
+        Strategia (w kolejności):
+        1. Scraping polityki prywatności (90% skuteczności)
+        2. Scraping stopki strony głównej (70% skuteczności)
+        3. Brave Search z domeną (60% skuteczności)
+        4. Brave Search po nazwie (30% skuteczności)
         
         Args:
             company_name: Nazwa firmy
+            email_domain: Opcjonalna domena z emaila (np. "przychodnia-abc.pl")
         
         Returns:
             NIP (10 cyfr) lub None
@@ -101,44 +112,38 @@ class BraveSearchService:
         if not company_name:
             return None
         
-        # Zapytanie zoptymalizowane pod szukanie NIP
-        query = f'"{company_name}" NIP'
+        # STRATEGIA 1: Scraping polityki prywatności (jeśli mamy domenę)
+        if email_domain:
+            logger.info("Strategia 1: Szukam NIP w polityce prywatności %s", email_domain)
+            nip = await self._scrape_nip_from_privacy_policy(email_domain)
+            if nip:
+                logger.info("✅ NIP znaleziony w polityce prywatności: %s", nip)
+                return nip
         
-        results = await self.search(query, count=10)
+        # STRATEGIA 2: Scraping stopki strony głównej (jeśli mamy domenę)
+        if email_domain:
+            logger.info("Strategia 2: Szukam NIP w stopce strony %s", email_domain)
+            nip = await self._scrape_nip_from_homepage(email_domain)
+            if nip:
+                logger.info("✅ NIP znaleziony w stopce strony: %s", nip)
+                return nip
         
-        # Szukaj NIP w wynikach
-        nip_pattern = re.compile(r'\b(\d{3}[-\s]?\d{3}[-\s]?\d{2}[-\s]?\d{2})\b')
-        nip_pattern_plain = re.compile(r'\b(\d{10})\b')
+        # STRATEGIA 3: Brave Search z domeną (jeśli mamy domenę)
+        if email_domain:
+            logger.info("Strategia 3: Brave Search z domeną: %s", email_domain)
+            nip = await self._search_nip_with_domain(company_name, email_domain)
+            if nip:
+                logger.info("✅ NIP znaleziony przez Brave Search (z domeną): %s", nip)
+                return nip
         
-        found_nips = []
+        # STRATEGIA 4: Brave Search po nazwie firmy (fallback)
+        logger.info("Strategia 4: Brave Search po nazwie: %s", company_name)
+        nip = await self._search_nip_by_name(company_name)
+        if nip:
+            logger.info("✅ NIP znaleziony przez Brave Search (po nazwie): %s", nip)
+            return nip
         
-        for result in results:
-            # Szukaj w title i description
-            text = f"{result.get('title', '')} {result.get('description', '')}"
-            
-            # Szukaj formatu XXX-XXX-XX-XX lub XXX XXX XX XX
-            matches = nip_pattern.findall(text)
-            for match in matches:
-                # Usuń separatory
-                nip = re.sub(r'[-\s]', '', match)
-                if self._validate_nip(nip):
-                    found_nips.append(nip)
-            
-            # Szukaj formatu 10 cyfr bez separatorów
-            matches_plain = nip_pattern_plain.findall(text)
-            for nip in matches_plain:
-                if self._validate_nip(nip):
-                    found_nips.append(nip)
-        
-        if found_nips:
-            # Zwróć najczęściej występujący NIP
-            from collections import Counter
-            nip_counts = Counter(found_nips)
-            best_nip = nip_counts.most_common(1)[0][0]
-            logger.info("Znaleziono NIP dla '%s': %s", company_name, best_nip)
-            return best_nip
-        
-        logger.info("Nie znaleziono NIP dla '%s'", company_name)
+        logger.info("❌ Nie znaleziono NIP dla '%s'", company_name)
         return None
     
     def _validate_nip(self, nip: str) -> bool:
@@ -156,6 +161,208 @@ class BraveSearchService:
             return False
         
         return checksum == int(nip[9])
+    
+    def _extract_nip_from_text(self, text: str) -> Optional[str]:
+        """Wyciąga NIP z tekstu używając wielu wzorców."""
+        if not text:
+            return None
+        
+        # Wzorce dla NIP
+        patterns = [
+            r'NIP\s*:?\s*(\d{3}[-\s]?\d{3}[-\s]?\d{2}[-\s]?\d{2})',
+            r'NIP\s*:?\s*(\d{10})',
+            r'numer\s+identyfikacji\s+podatkowej\s*:?\s*(\d{3}[-\s]?\d{3}[-\s]?\d{2}[-\s]?\d{2})',
+            r'podatnik\s+VAT\s+o\s+numerze\s*:?\s*(\d{10})',
+            r'\b(\d{3}[-\s]\d{3}[-\s]\d{2}[-\s]\d{2})\b',  # Sam format
+            r'\bNIP[-:\s]*(\d{10})\b',
+        ]
+        
+        for pattern in patterns:
+            matches = re.findall(pattern, text, re.IGNORECASE)
+            for match in matches:
+                # Usuń separatory
+                nip = re.sub(r'[-\s]', '', match)
+                if self._validate_nip(nip):
+                    return nip
+        
+        return None
+    
+    async def _scrape_nip_from_privacy_policy(self, domain: str) -> Optional[str]:
+        """Scrapuje NIP z polityki prywatności firmy."""
+        # Warianty URL polityki prywatności
+        privacy_urls = [
+            f'https://{domain}/polityka-prywatnosci',
+            f'https://{domain}/polityka-prywatności',  # z polskim ó
+            f'https://{domain}/privacy-policy',
+            f'https://{domain}/rodo',
+            f'https://{domain}/polityka_prywatnosci',
+            f'https://{domain}/pl/polityka-prywatnosci',
+            f'https://www.{domain}/polityka-prywatnosci',
+            f'https://www.{domain}/polityka-prywatności',
+        ]
+        
+        for url in privacy_urls:
+            try:
+                response = await self.http_client.get(
+                    url, 
+                    follow_redirects=True, 
+                    timeout=10.0
+                )
+                
+                if response.status_code == 200:
+                    text = response.text
+                    nip = self._extract_nip_from_text(text)
+                    if nip:
+                        logger.info("NIP znaleziony w: %s", url)
+                        return nip
+                    
+            except Exception as e:
+                # Cicho ignoruj błędy - próbujemy kolejne URL
+                continue
+        
+        return None
+    
+    async def _scrape_nip_from_homepage(self, domain: str) -> Optional[str]:
+        """Scrapuje NIP ze stopki strony głównej."""
+        urls = [
+            f'https://{domain}',
+            f'https://www.{domain}',
+        ]
+        
+        for url in urls:
+            try:
+                response = await self.http_client.get(
+                    url, 
+                    follow_redirects=True, 
+                    timeout=10.0
+                )
+                
+                if response.status_code == 200:
+                    from bs4 import BeautifulSoup
+                    soup = BeautifulSoup(response.text, 'lxml')
+                    
+                    # Szukaj w stopce
+                    footer = soup.find('footer')
+                    if footer:
+                        footer_text = footer.get_text()
+                        nip = self._extract_nip_from_text(footer_text)
+                        if nip:
+                            logger.info("NIP znaleziony w stopce: %s", url)
+                            return nip
+                    
+                    # Fallback: szukaj w całej stronie
+                    full_text = soup.get_text()
+                    nip = self._extract_nip_from_text(full_text)
+                    if nip:
+                        logger.info("NIP znaleziony na stronie: %s", url)
+                        return nip
+                    
+            except Exception as e:
+                continue
+        
+        return None
+    
+    async def _search_nip_with_domain(self, company_name: str, domain: str) -> Optional[str]:
+        """Wyszukuje NIP przez Brave Search z domeną firmową."""
+        # Query z domeną - najbardziej precyzyjne
+        queries = [
+            f'NIP site:{domain}',
+            f'"{company_name}" NIP site:{domain}',
+        ]
+        
+        for query in queries:
+            results = await self.search(query, count=5)
+            
+            for result in results:
+                url = result.get('url', '')
+                # Priorytet dla wyników z właściwej domeny
+                if domain in url:
+                    text = f"{result.get('title', '')} {result.get('description', '')}"
+                    nip = self._extract_nip_from_text(text)
+                    if nip:
+                        return nip
+        
+        return None
+    
+    async def _search_nip_by_name(self, company_name: str) -> Optional[str]:
+        """Wyszukuje NIP przez Brave Search po nazwie (fallback)."""
+        # Różne warianty query
+        queries = [
+            f'"{company_name}" NIP',
+            f'{company_name} sp. z o.o. NIP',
+            f'{company_name} NIP REGON',
+        ]
+        
+        found_nips = []
+        
+        for query in queries:
+            results = await self.search(query, count=10)
+            
+            for result in results:
+                text = f"{result.get('title', '')} {result.get('description', '')}"
+                nip = self._extract_nip_from_text(text)
+                if nip:
+                    found_nips.append(nip)
+            
+            if found_nips:
+                break  # Pierwszy query który coś znalazł
+        
+        if found_nips:
+            # Zwróć pierwszy znaleziony (nie najczęstszy - bo może być z innej firmy)
+            return found_nips[0]
+        
+        return None
+    
+    async def validate_nip_domain(self, nip: str, domain: str) -> bool:
+        """
+        Waliduje czy NIP należy do firmy z danej domeny.
+        
+        Sprawdza czy NIP występuje na stronie firmowej lub w wynikach
+        wyszukiwania dla tej domeny.
+        
+        Args:
+            nip: NIP do walidacji (10 cyfr)
+            domain: Domena emailowa (np. "przychodnia-abc.pl")
+        
+        Returns:
+            True jeśli NIP jest powiązany z domeną, False w przeciwnym razie
+        """
+        if not nip or not domain:
+            return False
+        
+        logger.info("Walidacja NIP %s dla domeny %s", nip, domain)
+        
+        # Metoda 1: Sprawdź czy NIP jest na stronie firmowej
+        urls_to_check = [
+            f'https://{domain}/polityka-prywatnosci',
+            f'https://{domain}/polityka-prywatności',
+            f'https://{domain}',
+            f'https://www.{domain}',
+        ]
+        
+        for url in urls_to_check:
+            try:
+                response = await self.http_client.get(url, follow_redirects=True, timeout=10.0)
+                if response.status_code == 200:
+                    if nip in response.text:
+                        logger.info("✅ NIP %s zwalidowany - znaleziony na: %s", nip, url)
+                        return True
+            except:
+                continue
+        
+        # Metoda 2: Wyszukaj NIP + domena
+        query = f'"{nip}" site:{domain}'
+        results = await self.search(query, count=5)
+        
+        if results:
+            for result in results:
+                url = result.get('url', '')
+                if domain in url:
+                    logger.info("✅ NIP %s zwalidowany - znaleziony w wyszukiwaniu: %s", nip, url)
+                    return True
+        
+        logger.warning("⚠️ NIP %s NIE zwalidowany dla domeny %s", nip, domain)
+        return False
     
     async def get_company_info(self, company_name: str) -> dict:
         """

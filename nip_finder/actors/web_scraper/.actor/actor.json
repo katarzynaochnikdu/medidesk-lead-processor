@@ -1,0 +1,10 @@
+{
+    "actorSpecification": 1,
+    "name": "nip-finder-web-scraper",
+    "title": "NIP Finder Web Scraper",
+    "description": "Web scraper z Playwright dla NIP Finder - scrapuje strony i wyciaga tekst",
+    "version": "1.0",
+    "buildTag": "latest",
+    "input": "./input_schema.json",
+    "dockerfile": "./Dockerfile"
+}

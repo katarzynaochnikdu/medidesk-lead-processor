@@ -1,0 +1,14 @@
+{
+    "name": "nip-finder-web-scraper",
+    "version": "1.0.0",
+    "description": "Web scraper z Playwright dla NIP Finder",
+    "main": "main.js",
+    "scripts": {
+        "start": "node main.js"
+    },
+    "dependencies": {
+        "apify": "^3.1.0",
+        "playwright": "^1.40.0"
+    },
+    "author": "Medidesk"
+}

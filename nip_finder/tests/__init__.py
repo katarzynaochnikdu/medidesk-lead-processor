@@ -1,0 +1,1 @@
+"""Tests dla NIP Finder."""

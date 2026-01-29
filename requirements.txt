@@ -25,6 +25,9 @@ phonenumbers>=8.13.0
 # Utilities
 python-dotenv>=1.0.0
 
+# SOAP client (for GUS API)
+zeep>=4.2.0
+
 # Excel processing
 pandas>=2.0.0
 openpyxl>=3.1.0
