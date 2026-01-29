@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python:*)",
+      "Bash(gcloud auth application-default login:*)",
+      "Bash(pip install:*)",
+      "Bash(.venv/Scripts/python.exe:*)",
+      "Bash(LOG_LEVEL=DEBUG .venv/Scripts/python.exe:*)"
+    ]
+  }
+}

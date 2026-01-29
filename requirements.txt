@@ -28,6 +28,19 @@ python-dotenv>=1.0.0
 # SOAP client (for GUS API)
 zeep>=4.2.0
 
+# Async SQLite (for NIP Finder V3 cache)
+aiosqlite>=0.19.0
+
 # Excel processing
 pandas>=2.0.0
 openpyxl>=3.1.0
+
+# NIP Finder V3 Ultimate - Additional dependencies
+# Apify for Google Search
+apify-client>=1.6.0
+
+# Fuzzy string matching for company name similarity
+rapidfuzz>=3.5.0
+
+# Google Custom Search JSON API (optional alternative to Apify)
+google-api-python-client>=2.100.0
