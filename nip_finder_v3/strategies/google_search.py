@@ -205,6 +205,68 @@ class GoogleSearchStrategy(BaseStrategy):
             logger.error("Google Search (JSON API): error: %s", e)
             return []
 
+    def _extract_short_name(self, company_name: str) -> Optional[str]:
+        """
+        Extract short company name from full name.
+        
+        Examples:
+        - "SPA ProBody - masaż Gdańsk, Gdynia, Sopot" -> "ProBody"
+        - "Klinika Ambroziak Sp. z o.o." -> "Ambroziak"
+        - "ALDENT Wrocław - stomatologia" -> "ALDENT"
+        - "Centrum Medyczne ABC" -> "ABC"
+        
+        Returns the most distinctive word (usually brand name).
+        """
+        import re
+        
+        # Remove common suffixes and prefixes
+        text = company_name
+        
+        # Remove legal forms
+        text = re.sub(r'\b(sp\.?\s*z\.?\s*o\.?\s*o\.?|spółka|s\.?a\.?|sp\.?\s*j\.?)\b', '', text, flags=re.IGNORECASE)
+        
+        # Remove common generic words
+        generic_words = [
+            'centrum', 'medyczne', 'klinika', 'przychodnia', 'gabinet', 'spa', 'salon',
+            'stomatologia', 'stomatologiczna', 'stomatologiczny', 'dental', 'dent',
+            'masaż', 'masaze', 'massage', 'beauty', 'wellness',
+            'poland', 'polska', 'pl', 'com', 'eu',
+        ]
+        
+        # Split by common separators
+        parts = re.split(r'[-–—|,;/\\()]|\s+', text)
+        
+        # Find the most distinctive word (capitalized, not generic, not a city)
+        cities = ['warszawa', 'kraków', 'krakow', 'wrocław', 'wroclaw', 'gdańsk', 'gdansk', 
+                  'poznań', 'poznan', 'łódź', 'lodz', 'szczecin', 'lublin', 'katowice',
+                  'gdynia', 'sopot', 'bydgoszcz', 'białystok', 'bialystok', 'mielec']
+        
+        candidates = []
+        for part in parts:
+            part = part.strip()
+            if not part or len(part) < 3:
+                continue
+            
+            part_lower = part.lower()
+            
+            # Skip generic words and cities
+            if part_lower in generic_words or part_lower in cities:
+                continue
+            
+            # Skip if all lowercase and short (likely a common word)
+            if part.islower() and len(part) < 5:
+                continue
+            
+            # Prefer words that start with uppercase or are all uppercase
+            if part[0].isupper() or part.isupper():
+                candidates.append(part)
+        
+        # Return the first candidate (usually the brand name)
+        if candidates:
+            return candidates[0]
+        
+        return None
+
     async def find_nip(
         self,
         company_name: str,
@@ -233,6 +295,11 @@ class GoogleSearchStrategy(BaseStrategy):
         # Extract base name (remove generic words like "centrum medyczne")
         base_name = extract_company_base_name(company_name)
         logger.info("Google Search: base name extracted: '%s' (from '%s')", base_name, company_name)
+        
+        # Extract short name (first word that looks like company name)
+        # "SPA ProBody - masaż Gdańsk" -> "ProBody"
+        short_name = self._extract_short_name(company_name)
+        logger.info("Google Search: short name extracted: '%s'", short_name)
 
         # Prepare query list
         queries: list[str] = []
@@ -241,6 +308,17 @@ class GoogleSearchStrategy(BaseStrategy):
             cleaned = query.strip()
             if cleaned and cleaned not in queries:
                 queries.append(cleaned)
+
+        # === STEP 0: Short name + NIP (FASTEST - try first!) ===
+        # Simple queries like "ProBody nip" often work best
+        if short_name:
+            add_query(f'{short_name} nip')
+            if city:
+                add_query(f'{short_name} {city} nip')
+        
+        # Also try base_name + NIP early (not just at the end)
+        if base_name and base_name != company_name.lower():
+            add_query(f'{base_name} nip')
 
         # === STEP 1: AI-Generated Queries (PRIMARY) ===
         if self._ai_validator:
@@ -322,8 +400,33 @@ class GoogleSearchStrategy(BaseStrategy):
                 logger.info("Google Search: variant %d returned no results (both APIs)", i)
                 continue
 
+            # Blacklisted domains - aggregators that show NIP of OTHER companies (not the searched one)
+            # UWAGA: NIE blacklistuj rejestrów firm (aleo.com, rejestr.io) - one mają poprawne NIP!
+            BLACKLISTED_DOMAINS = [
+                # Portale z prezentami/voucherami - pokazują NIP sklepu, nie firmy
+                'wyjatkowyprezent.pl', 'prezentmarzen.pl', 'groupon.pl', 'groupon.com',
+                # Marketplace - pokazują NIP sprzedawcy, nie firmy
+                'allegro.pl', 'olx.pl', 'ceneo.pl',
+                # Social media - nie mają NIP w snippetach
+                'facebook.com', 'instagram.com', 'linkedin.com', 'twitter.com',
+                'youtube.com', 'tiktok.com',
+                # Turystyka/opinie - nie mają NIP lub pokazują inny
+                'tripadvisor.pl', 'tripadvisor.com', 'booking.com', 'yelp.com',
+                # Wikipedia/mapy - nie mają NIP
+                'wikipedia.org', 'maps.google.com', 'google.com/maps',
+            ]
+            # DOBRE źródła NIP (NIE na blackliście):
+            # aleo.com, rejestr.io, krs-online.com.pl, infoveriti.pl, panoramafirm.pl
+            # - pobierają dane z KRS/GUS więc NIP jest poprawny
+
             # Extract NIP from snippets
             for result in results:
+                # Skip blacklisted domains (aggregators, directories)
+                result_url = result.get('url', '').lower()
+                if any(bl in result_url for bl in BLACKLISTED_DOMAINS):
+                    logger.debug("Google Search: SKIP blacklisted domain: %s", result_url[:50])
+                    continue
+
                 # Combine title + description
                 text = f"{result['title']} {result['description']}"
                 nip = extract_nip_from_text(text)
@@ -347,12 +450,25 @@ class GoogleSearchStrategy(BaseStrategy):
                 # PRE-FILTER: Fuzzy matching to avoid expensive AI calls
                 title = result.get("title", "")
                 text_for_match = f"{title} {result.get('description', '')}"
-                name_match_score = calculate_name_match_score(company_name, text_for_match)
-                logger.info("Google Search: Fuzzy match score for '%s': %.2f", title, name_match_score)
+                
+                # Use short_name for matching if available (more accurate for brand searches)
+                # "ProBody" matches "Probody Clinic" better than full name "SPA ProBody - masaż Gdańsk..."
+                name_for_match = short_name if short_name else company_name
+                name_match_score = calculate_name_match_score(name_for_match, text_for_match)
+                
+                # Also check base_name if short_name didn't match well
+                if name_match_score < 0.3 and base_name and base_name != name_for_match:
+                    base_score = calculate_name_match_score(base_name, text_for_match)
+                    if base_score > name_match_score:
+                        name_match_score = base_score
+                        logger.info("Google Search: Using base_name score: %.2f", base_score)
+                
+                logger.info("Google Search: Fuzzy match score for '%s' vs '%s': %.2f", 
+                           title[:40], name_for_match, name_match_score)
 
-                if name_match_score < 0.5:
+                if name_match_score < 0.15:
                     logger.warning(
-                        "Google Search: PRE-FILTER REJECT - name match score %.2f < 0.5 for '%s'",
+                        "Google Search: PRE-FILTER REJECT - name match score %.2f < 0.15 for '%s'",
                         name_match_score,
                         title
                     )
@@ -369,8 +485,12 @@ class GoogleSearchStrategy(BaseStrategy):
                         logger.info("Google Search: discovered domain from URL: %s", discovered_domain)
 
                 # AI SEMANTIC VALIDATION: Verify company identity match
+                # SKIP AI if fuzzy match score is very high (obvious match)
                 ai_validation_result = None
-                if self._ai_validator and self.settings.enable_ai_semantic_validation:
+                if name_match_score >= 0.7:
+                    logger.info("Google Search: SKIP AI validation - high match score %.2f (>= 0.7)", name_match_score)
+                    ai_validation_result = {"valid": True, "confidence": name_match_score, "reasoning": "High fuzzy match"}
+                elif self._ai_validator and self.settings.enable_ai_semantic_validation:
                     logger.info("Google Search: AI validating company identity for NIP %s", nip)
 
                     source_data = {

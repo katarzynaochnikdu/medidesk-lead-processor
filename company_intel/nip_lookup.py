@@ -52,15 +52,38 @@ class GUSCompanyData:
 
 
 @dataclass
+class WebsiteCandidate:
+    """Kandydat na stronę WWW firmy."""
+    url: str
+    confidence: float = 0.0  # 0.0-1.0
+    validated_nip: bool = False  # Czy NIP znaleziony na stronie
+    source: str = "google"  # google, gus, manual
+    title: Optional[str] = None
+    reasoning: Optional[str] = None
+
+
+@dataclass
 class NIPLookupResult:
     """Wynik wyszukiwania po NIP."""
     nip: str
     gus_data: Optional[GUSCompanyData] = None
     company_name: Optional[str] = None
-    website: Optional[str] = None
+    website: Optional[str] = None  # Best website (validated or highest confidence)
     city: Optional[str] = None
     found: bool = False
     error: Optional[str] = None
+    
+    # WIELOKROTNE DOPASOWANIA
+    website_candidates: List[WebsiteCandidate] = None  # Wszystkie kandydatki (max 5)
+    website_confidence: float = 1.0  # Pewność wybranego website (0.0-1.0)
+    website_validated: bool = False  # Czy wybrany website zawiera NIP
+    warnings: List[str] = None  # Ostrzeżenia (np. "Wiele firm o tej nazwie")
+    
+    def __post_init__(self):
+        if self.website_candidates is None:
+            self.website_candidates = []
+        if self.warnings is None:
+            self.warnings = []
 
 
 def normalize_nip(nip: str) -> Optional[str]:
@@ -262,20 +285,33 @@ class NIPLookup:
             logger.error("NIPLookup: GUS error dla NIP=%s: %s", clean_nip, e)
             return GUSCompanyData(nip=clean_nip, found=False, error=str(e))
     
-    async def find_website_google(self, company_name: str, city: Optional[str] = None) -> Optional[str]:
+    async def find_website_google(
+        self, 
+        company_name: str, 
+        city: Optional[str] = None,
+        nip_for_validation: Optional[str] = None,
+    ) -> tuple[Optional[str], List[WebsiteCandidate], float, bool]:
         """
         Wyszukuje stronę WWW firmy przez Google Search.
+        
+        DWUSTRONNA WALIDACJA: Jeśli podano nip_for_validation, sprawdza czy
+        znaleziona strona faktycznie zawiera ten NIP. Jeśli nie - szuka dalej.
         
         Args:
             company_name: Nazwa firmy
             city: Miasto (opcjonalne)
+            nip_for_validation: NIP do walidacji krzyżowej (opcjonalne)
         
         Returns:
-            URL strony WWW lub None
+            (best_url, candidates, confidence, validated)
+            - best_url: URL najlepszej strony (zwalidowanej lub pierwszej)
+            - candidates: Lista wszystkich kandydatów
+            - confidence: Poziom pewności (0.0-1.0)
+            - validated: Czy best_url przeszedł walidację NIP
         """
         if not self._init_apify():
             logger.warning("NIPLookup: Apify niedostępne - nie można szukać strony")
-            return None
+            return (None, [], 0.0, False)
         
         # Przygotuj query
         query = company_name
@@ -320,16 +356,29 @@ class NIPLookup:
             
             # Filtruj wyniki - szukamy strony firmy, nie katalogów
             blacklist_domains = [
+                # Social media
                 "facebook.com", "linkedin.com", "instagram.com", "twitter.com",
-                "youtube.com", "tiktok.com", "znany lekarz", "znanylekarz.pl",
-                "google.com", "google.pl", "gov.pl", "wikipedia.org",
-                "krs-online.com.pl", "rejestr.io", "panoramafirm.pl",
-                "pkt.pl", "aleo.com", "firmy.net", "gowork.pl",
-                "krs-pobierz.pl", "krs.pl", "infoveriti.pl", "emis.com",
-                "opencorporates.com", "companywall.pl", "baza-firm.com.pl",
-                "biznes.gov.pl", "ceidg.gov.pl", "prod.ceidg.gov.pl",
+                "youtube.com", "tiktok.com",
+                # Wyszukiwarki
+                "google.com", "google.pl", "bing.com",
+                # Portale informacyjne
+                "wikipedia.org", "gov.pl",
+                # Rejestry firm
+                "krs-online.com.pl", "rejestr.io", "krs-pobierz.pl", "krs.pl",
+                "infoveriti.pl", "emis.com", "opencorporates.com", "companywall.pl",
+                "baza-firm.com.pl", "biznes.gov.pl", "ceidg.gov.pl", "prod.ceidg.gov.pl",
                 "regon.stat.gov.pl", "stat.gov.pl", "bip.",
+                # Katalogi firm
+                "panoramafirm.pl", "pkt.pl", "aleo.com", "firmy.net", "gowork.pl",
+                # Katalogi medyczne (WAŻNE!)
+                "znanylekarz.pl", "docplanner.", "rankinglekarzy.pl",
+                "dentysta-stomatolog.com", "stomatolog.pl", "lekarze.pl",
+                "medigo.pl", "ktomalek.pl", "lek.pl", "lekarzebezkolejki.pl",
+                "terminy.pl", "umlub.pl", "medigo.com",
             ]
+            
+            # Zbierz kandydatów do walidacji
+            candidate_urls = []
             
             for result in organic_results[:5]:
                 url = result.get("url", "")
@@ -350,23 +399,164 @@ class NIPLookup:
                 
                 # Czy tytuł lub domena zawiera słowa kluczowe?
                 if any(kw in title or kw in domain for kw in keywords):
-                    logger.info("NIPLookup: Znaleziono stronę: %s", url)
-                    return url
+                    candidate_urls.append(url)
             
             # Fallback - weź pierwszy nieblacklisted wynik
             for result in organic_results[:3]:
                 url = result.get("url", "")
                 domain = urlparse(url).netloc.lower()
                 if not any(bl in domain for bl in blacklist_domains):
-                    logger.info("NIPLookup: Fallback strona: %s", url)
-                    return url
+                    if url not in candidate_urls:
+                        candidate_urls.append(url)
             
-            logger.info("NIPLookup: Nie znaleziono pasującej strony")
-            return None
+            if not candidate_urls:
+                logger.info("NIPLookup: Nie znaleziono pasującej strony")
+                return (None, [], 0.0, False)
+            
+            # === BUDUJ LISTĘ KANDYDATÓW Z WALIDACJĄ ===
+            candidates: List[WebsiteCandidate] = []
+            validated_url = None
+            
+            if nip_for_validation:
+                logger.info("NIPLookup: Walidacja krzyżowa %d kandydatów dla NIP %s", 
+                           len(candidate_urls), nip_for_validation)
+                
+                for i, url in enumerate(candidate_urls[:5]):  # Max 5 kandydatów
+                    is_valid = await self._validate_website_has_nip(url, nip_for_validation)
+                    
+                    # Confidence spada z pozycją w wynikach, ale walidacja daje bonus
+                    base_confidence = 0.9 - (i * 0.15)  # 0.9, 0.75, 0.6, 0.45, 0.3
+                    confidence = min(1.0, base_confidence + (0.3 if is_valid else 0))
+                    
+                    candidate = WebsiteCandidate(
+                        url=url,
+                        confidence=confidence,
+                        validated_nip=is_valid,
+                        source="google",
+                        reasoning="NIP zwalidowany na stronie" if is_valid else "NIP nie znaleziony"
+                    )
+                    candidates.append(candidate)
+                    
+                    if is_valid and not validated_url:
+                        validated_url = url
+                        logger.info("NIPLookup: ZWALIDOWANO stronę: %s (confidence=%.2f)", url, confidence)
+                
+                # Sortuj kandydatów: najpierw zwalidowani, potem po confidence
+                candidates.sort(key=lambda c: (c.validated_nip, c.confidence), reverse=True)
+                
+                if validated_url:
+                    # Normalizuj URL do strony głównej (usuń ścieżkę jak /polityka-prywatnosci/)
+                    parsed = urlparse(validated_url)
+                    normalized_url = f"{parsed.scheme}://{parsed.netloc}/"
+                    if normalized_url != validated_url:
+                        logger.info("NIPLookup: Normalizacja URL: %s -> %s", validated_url, normalized_url)
+                    return (normalized_url, candidates, candidates[0].confidence, True)
+                else:
+                    # Żadna nie przeszła - zwróć pierwszą z ostrzeżeniem
+                    logger.warning("NIPLookup: UWAGA - żadna strona nie zawiera NIP %s!", nip_for_validation)
+                    logger.warning("NIPLookup: %d kandydatów bez walidacji: %s", 
+                                  len(candidates), [c.url for c in candidates[:3]])
+                    best = candidates[0] if candidates else None
+                    return (best.url if best else None, candidates, 0.3, False)
+            
+            # Bez walidacji - zwróć pierwszego kandydata z średnim confidence
+            for i, url in enumerate(candidate_urls[:3]):
+                candidates.append(WebsiteCandidate(
+                    url=url,
+                    confidence=0.7 - (i * 0.1),
+                    validated_nip=False,
+                    source="google",
+                    reasoning="Bez walidacji NIP"
+                ))
+            
+            logger.info("NIPLookup: Znaleziono stronę (bez walidacji): %s", candidate_urls[0])
+            return (candidate_urls[0], candidates, 0.7, False)
             
         except Exception as e:
             logger.error("NIPLookup: Google Search error: %s", e)
-            return None
+            return (None, [], 0.0, False)
+    
+    async def _validate_website_has_nip(self, url: str, expected_nip: str) -> bool:
+        """
+        WALIDACJA KRZYŻOWA: Sprawdza czy strona WWW zawiera oczekiwany NIP.
+        
+        Scrapuje stronę główną i podstrony (polityka prywatności, kontakt, regulamin)
+        szukając NIP. Jeśli NIP się zgadza - strona jest zwalidowana.
+        
+        Args:
+            url: URL strony do sprawdzenia
+            expected_nip: NIP który powinien być na stronie
+            
+        Returns:
+            True jeśli strona zawiera NIP, False w przeciwnym razie
+        """
+        if not url or not expected_nip:
+            return False
+        
+        # Normalizuj NIP do porównania (usuń myślniki, spacje)
+        clean_expected = re.sub(r'[\s\-]', '', expected_nip)
+        
+        # Lista stron do sprawdzenia
+        pages_to_check = [
+            "",  # Strona główna
+            "/kontakt",
+            "/contact", 
+            "/o-nas",
+            "/about",
+            "/polityka-prywatnosci",
+            "/privacy-policy",
+            "/regulamin",
+            "/terms",
+            "/rodo",
+            "/dane-firmy",
+            "/impressum",
+        ]
+        
+        # Normalizuj base URL
+        if not url.startswith("http"):
+            url = f"https://{url}"
+        parsed = urlparse(url)
+        base_url = f"{parsed.scheme}://{parsed.netloc}"
+        
+        try:
+            async with httpx.AsyncClient(timeout=15.0, follow_redirects=True) as client:
+                for page in pages_to_check:
+                    try:
+                        full_url = f"{base_url}{page}"
+                        response = await client.get(full_url, headers={
+                            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+                        })
+                        
+                        if response.status_code != 200:
+                            continue
+                        
+                        text = response.text
+                        
+                        # Szukaj NIP w różnych formatach
+                        # Format: NIP: 894 186 49 49 lub NIP 8941864949 lub NIP: 894-186-49-49
+                        nip_patterns = [
+                            rf'NIP[:\s]*{clean_expected[:3]}[\s\-]?{clean_expected[3:6]}[\s\-]?{clean_expected[6:8]}[\s\-]?{clean_expected[8:]}',
+                            rf'NIP[:\s]*{clean_expected}',
+                            clean_expected,  # Sam NIP bez formatowania
+                        ]
+                        
+                        for pattern in nip_patterns:
+                            if re.search(pattern, text, re.IGNORECASE):
+                                logger.info("NIPLookup: WALIDACJA OK - NIP %s znaleziony na %s", 
+                                           expected_nip, full_url)
+                                return True
+                        
+                    except Exception as e:
+                        logger.debug("NIPLookup: Błąd sprawdzania %s: %s", page, e)
+                        continue
+                
+                logger.warning("NIPLookup: WALIDACJA FAILED - NIP %s NIE znaleziony na %s", 
+                              expected_nip, base_url)
+                return False
+                
+        except Exception as e:
+            logger.error("NIPLookup: Błąd walidacji strony %s: %s", url, e)
+            return False
     
     async def search_by_nip_google(self, nip: str) -> tuple[Optional[str], Optional[str], Optional[str]]:
         """
@@ -504,11 +694,23 @@ class NIPLookup:
             company_name = gus_data.short_name or gus_data.full_name
             city = gus_data.city
             
-            website = await self.find_website_google(company_name, city)
+            # DWUSTRONNA WALIDACJA: przekaż NIP żeby zwalidować że znaleziona strona go zawiera
+            website, candidates, confidence, validated = await self.find_website_google(
+                company_name, 
+                city, 
+                nip_for_validation=clean_nip
+            )
+            
+            # Przygotuj ostrzeżenia
+            warnings = []
+            if candidates and len(candidates) > 1 and not validated:
+                warnings.append(f"Wiele firm o podobnej nazwie ({len(candidates)} kandydatów)")
+            if not validated and website:
+                warnings.append("Strona nie zawiera NIP - niepewne dopasowanie")
             
             logger.info(
-                "NIPLookup: GUS + Google: nazwa='%s', miasto='%s', www='%s'",
-                company_name[:50] if company_name else None, city, website
+                "NIPLookup: GUS + Google: nazwa='%s', miasto='%s', www='%s' (conf=%.2f, valid=%s)",
+                company_name[:50] if company_name else None, city, website, confidence, validated
             )
             
             return NIPLookupResult(
@@ -518,6 +720,10 @@ class NIPLookup:
                 website=website,
                 city=city,
                 found=True,
+                website_candidates=candidates,
+                website_confidence=confidence,
+                website_validated=validated,
+                warnings=warnings,
             )
         
         # Step 2: GUS nie zadziałał - szukamy wszystkiego przez Google

@@ -1,5 +1,6 @@
 {
-  "generated_at": "2026-01-31T09:29:46.189891",
+  "generated_at": "2026-01-31T09:46:11.818836",
+  "output_dir": "analysis_runs\\run_20260131_094241",
   "comparison": {
     "nip": {
       "label": "OT.CO NIP",
@@ -10,12 +11,12 @@
         "google_maps",
         "ai_categorization"
       ],
-      "placowki_count": 1,
+      "placowki_count": 2,
       "activity_score_total": 30,
       "activity_recommendation": "COLD",
       "signals": [
         "Google Maps 4.6/5",
-        "Google 85 recenzji",
+        "Google 878 recenzji",
         "SSL aktywny"
       ],
       "social_profiles": [],
@@ -23,6 +24,12 @@
         {
           "ulica": "ul. Bartycka 24B/U1",
           "kod": "00-716",
+          "miasto": "Warszawa",
+          "wojewodztwo": null
+        },
+        {
+          "ulica": "Zgrupowania AK \"Żmija\" 12",
+          "kod": "01-864",
           "miasto": "Warszawa",
           "wojewodztwo": null
         }
@@ -62,7 +69,7 @@
     }
   },
   "differences": {
-    "placowki_nip": 1,
+    "placowki_nip": 2,
     "placowki_website": 2,
     "activity_nip": 30,
     "activity_website": 30

@@ -24,6 +24,7 @@ class Settings(BaseSettings):
     # Google Cloud
     gcp_project_id: str = ""
     gcp_region: str = "europe-central2"
+    google_application_credentials: str = ""
     
     # Vertex AI
     vertex_ai_model: str = "gemini-2.5-pro"

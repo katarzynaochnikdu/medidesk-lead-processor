@@ -1,0 +1,453 @@
+{
+  "company": {
+    "nip": "5213873364",
+    "regon": "384091580",
+    "krs": null,
+    "nazwa_pelna": "KLINIKA OSIPOWICZ & TURKOWSKI SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ",
+    "nazwa_zwyczajowa": "KLINIKA OT.CO → KLINIKA MEDYCYNY ESTETYCZNEJ W WARSZAWIE",
+    "adres_siedziby": {
+      "ulica": "ul. Bartycka 24B/U1",
+      "kod": "00-716",
+      "miasto": "Warszawa",
+      "wojewodztwo": "mazowieckie"
+    },
+    "kategoryzacja_ai": {
+      "platnik_uslug": [
+        "Komercyjne"
+      ],
+      "specjalizacja": [
+        "Medycyna Estetyczna"
+      ],
+      "wielospecjalistyczne": [
+        "chirurgia plastyczna",
+        "dermatologia",
+        "laryngologia",
+        "okulistyka"
+      ],
+      "typ_wlasnosci": "Prywatny (Private)",
+      "kategoria_konta": null,
+      "branza": null,
+      "ai_confidence": 0.95,
+      "ai_reasoning": null
+    },
+    "social_media": {
+      "website": "https://klinikaotco.pl",
+      "facebook": "https://www.facebook.com/ot.co.clinic/",
+      "instagram": "https://www.instagram.com/otcoclinic/",
+      "linkedin": null,
+      "tiktok": "https://www.tiktok.com/@klinikaotco?",
+      "x": null
+    },
+    "social_profiles": [
+      {
+        "platform": "facebook",
+        "url": "https://www.facebook.com/ot.co.clinic/",
+        "followers": 10370,
+        "posts_count": null,
+        "avg_engagement": null,
+        "last_post_date": null,
+        "is_verified": false,
+        "is_ads_active": null
+      },
+      {
+        "platform": "instagram",
+        "url": "https://www.instagram.com/otcoclinic/",
+        "followers": 15849,
+        "posts_count": 853,
+        "avg_engagement": 0.04,
+        "last_post_date": "2026-01-28T08:30:00+00:00",
+        "is_verified": false,
+        "is_ads_active": null
+      },
+      {
+        "platform": "tiktok",
+        "url": "https://www.tiktok.com/@klinikaotco",
+        "followers": 49000,
+        "posts_count": 333,
+        "avg_engagement": null,
+        "last_post_date": null,
+        "is_verified": false,
+        "is_ads_active": null
+      }
+    ],
+    "activity_score": {
+      "total": 65,
+      "recommendation": "LUKEWARM",
+      "breakdown": {
+        "google_maps": 25,
+        "facebook": 10,
+        "instagram": 20,
+        "tiktok": 5,
+        "website": 5
+      },
+      "signals": [
+        "Google Maps 4.6/5",
+        "Google 878 recenzji",
+        "Facebook 10.4K followers",
+        "Instagram 15.8K followers",
+        "IG aktywny < 14 dni",
+        "TikTok 49.0K",
+        "SSL aktywny"
+      ]
+    },
+    "placowki": [
+      {
+        "nazwa_placowki": "KLINIKA WARSZAWA BARTYCKA",
+        "is_siedziba": true,
+        "typ_adresu": "-None-",
+        "adres": {
+          "ulica": "ul. Bartycka 24B/U1",
+          "kod": "00-716",
+          "miasto": "Warszawa",
+          "wojewodztwo": null
+        },
+        "kontakty": [
+          {
+            "typ": "telefon",
+            "wartosc": "+48 221 230 333",
+            "opis": null
+          },
+          {
+            "typ": "email",
+            "wartosc": "kontakt@klinikaotco.pl",
+            "opis": null
+          },
+          {
+            "typ": "email",
+            "wartosc": "pr@klinikaotco.pl",
+            "opis": null
+          },
+          {
+            "typ": "email",
+            "wartosc": "media@klinikaotco.pl",
+            "opis": null
+          }
+        ],
+        "godziny_otwarcia": "sob: 09:00 to 16:00; nie: ZAMknięte; pon: 09:00 to 21:00; wto: 09:00 to 21:00; śro: 09:00 to 21:00; czw: 09:00 to 21:00; pią: 09:00 to 21:00",
+        "coordinates": {
+          "lat": 52.2127075,
+          "lng": 21.0603572
+        },
+        "google_maps_place_id": "ChIJi03vuWHNHkcRw8QPwLYMYqM",
+        "google_rating": 4.6,
+        "google_reviews_count": 731,
+        "reviews_insights": {
+          "total_reviews_analyzed": 46,
+          "avg_rating": 4.58,
+          "top_complaints": [
+            {
+              "insight": "Powierzchowne konsultacje, brak diagnozy lub propozycji.",
+              "count": 2,
+              "citations": [
+                {
+                  "text": "No cóż niestety nie mogę napisać nic dobrego moja wizyta przebiegła szybko około 2min.miałem nadzieje na diagnozę myślałem ze będzie jakieś  badanie czy co cos w tym rodzaju niestety pani dermatolog n...",
+                  "date": "2026-01-27 15:25",
+                  "author": "Paweł Miłoszewski",
+                  "rating": 1,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2poMk0xQTRXR3czVmtsdFZVZFRPV1kxZDJzMlFWRRAB!2m1!1s0x0:0xa3620cb6c00fc4c3!3m1!1s2@1:CAIQACodChtycF9oOjh2M1A4WGw3VkltVUdTOWY1d2s2QVE%7C0dTCYZCceKw%7C?hl=pl"
+                },
+                {
+                  "text": "Skusiłem się na dobre opinie i postanowiłem wybrać tę klinikę. Niestety, na ten moment doświadczenie jest negatywne. Dość droga konsultacja okazała się niczym szczególnym – lekarz pokazał zdjęcia, któ...",
+                  "date": "2025-09-24 10:32",
+                  "author": "Dzianis",
+                  "rating": 1,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT205RVgzWlFTekk1VEVKbU9EQnpZV0pXTFU1WlZWRRAB!2m1!1s0x0:0xa3620cb6c00fc4c3!3m1!1s2@1:CAIQACodChtycF9oOm9EX3ZQSzI5TEJmODBzYWJWLU5ZVVE%7C0cowY0pnjEI%7C?hl=pl"
+                }
+              ]
+            },
+            {
+              "insight": "Recepcja nie wysyła obiecanych informacji mailowo.",
+              "count": 1,
+              "citations": [
+                {
+                  "text": "Wizyta i zabiegi w porządku.\nPani lekarz wzbudzila we mnie zaufanie. Odniosłam wrażenie że rozumie moje potrzeby i jest w stanie zaproponowac właściwe zabiegi stosowanie do potrzeby,  przygotowala dla...",
+                  "date": "2025-10-16 13:30",
+                  "author": "Magda JANUSZKA",
+                  "rating": 4,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT21OQ1NXeFhObkJFTVhKelkyUkljMlpsZWt0bVdXYxAB!2m1!1s0x0:0xa3620cb6c00fc4c3!3m1!1s2@1:CAIQACodChtycF9oOmNCSWxXNnBEMXJzY2RIc2ZlektmWWc%7C0cwED3d34vi%7C?hl=pl"
+                }
+              ]
+            }
+          ],
+          "top_praises": [
+            {
+              "insight": "Lekarze szczegółowo wszystko wyjaśniają i tłumaczą.",
+              "count": 9,
+              "citations": [
+                {
+                  "text": "Polecam Klinikę Osipowicz oraz panią doktor Katarzynę Osiewicz. Dzięki profesjonalnemu podejściu i świetnie dobranemu zabiegowi udało mi się skutecznie pozbyć naczyniek na twarzy. Pani Doktor wszystko...",
+                  "date": "2026-01-19 11:36",
+                  "author": "Beata Machniewska",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2xSNU1GRnZabGQyVEd4Mk4xOTNhR2RPWldNelpuYxAB!2m1!1s0x0:0xa3620cb6c00fc4c3!3m1!1s2@1:CAIQACodChtycF9oOlR5MFFvZld2TGx2N193aGdOZWMzZnc%7C0dQWRZtOD1-%7C?hl=pl"
+                },
+                {
+                  "text": "Bardzo wyczerpujaca konsultacja i mile podejscie do pacjenta.",
+                  "date": "2025-12-12 14:13",
+                  "author": "ania szerszen",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2tacFkwMTZWMFJFVVRKeE1IUnJVVjlxYXpWM2JXYxAB!2m1!1s0x0:0xa3620cb6c00fc4c3!3m1!1s2@1:CAIQACodChtycF9oOkZpY016V0REUTJxMHRrUV9qazV3bWc%7C0dE1BUL2wJn%7C?hl=pl"
+                },
+                {
+                  "text": "Byłam na konsultacji kosmetologicznej u pani Karoliny, która swoją wiedzę łączy z wyjątkowym podejściem do klienta. Potrafi nie tylko doradzić, ale też szczerze odradzić zabieg, jeśli w danym momencie...",
+                  "date": "2025-12-12 07:35",
+                  "author": "Magdalena P",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2xCR09GSnRkMDl6ZUMxUVdpMHRTWFk0YkhKWGNHYxAB!2m1!1s0x0:0xa3620cb6c00fc4c3!3m1!1s2@1:CAIQACodChtycF9oOlBGOFJtd09zeC1QWi0tSXY4bHJXcGc%7C0dDwMAIJvHi%7C?hl=pl"
+                }
+              ]
+            },
+            {
+              "insight": "Bardzo miła i profesjonalna obsługa recepcji.",
+              "count": 8,
+              "citations": [
+                {
+                  "text": "Zgłosiłem się do OT.CO Clinic z problemem laryngologicznym. Sprawa została załatwiona szybko, profesjonalnie i w bardzo uprzejmej atmosferze. Wysoka jakość usługi, duża kultura osobista i realna trosk...",
+                  "date": "2025-12-21 14:53",
+                  "author": "Marcin Jabłoński",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2pkbmRWWkhYelk0Y0RCMlpucFliMUV4T0hkS1ZXYxAB!2m1!1s0x0:0xa3620cb6c00fc4c3!3m1!1s2@1:CAIQACodChtycF9oOjdndVZHXzY4cDB2ZnpYb1ExOHdKVWc%7C0dH-bB4jVjC%7C?hl=pl"
+                },
+                {
+                  "text": "Profesjonalna kadra i bardzo mila obsluga. Polecam!",
+                  "date": "2025-12-20 09:54",
+                  "author": "Beata Czyzewska",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2s4eWJYTjVMVlZmWVV0TE9YbE5UWEpIYVhoWE1tYxAB!2m1!1s0x0:0xa3620cb6c00fc4c3!3m1!1s2@1:CAIQACodChtycF9oOk8ybXN5LVVfYUtLOXlNTXJHaXhXMmc%7C0dGb8OqfvMo%7C?hl=pl"
+                },
+                {
+                  "text": "Jako staly klient od wielu lat, polecam. Obsluga na najwyzszym poziomie :)",
+                  "date": "2025-11-26 19:31",
+                  "author": "Daniel Glowka",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2xoS1QweElWMVYzTFZoMFJESlJaVVptY1RGSVJIYxAB!2m1!1s0x0:0xa3620cb6c00fc4c3!3m1!1s2@1:CAIQACodChtycF9oOlhKT0xIV1V3LVh0RDJRZUZmcTFIRHc%7C0d8pLMqkNXd%7C?hl=pl"
+                }
+              ]
+            }
+          ],
+          "common_themes": [
+            "Komunikacja i podejście do pacjenta (empatia, wyjaśnienia)",
+            "Profesjonalizm i wiedza personelu medycznego",
+            "Miła atmosfera i wysoka kultura obsługi"
+          ],
+          "summary": "Komunikacja bezpośrednia w placówce jest oceniana bardzo wysoko – pacjenci chwalą szczegółowe wyjaśnienia lekarzy, empatię i profesjonalną, miłą obsługę recepcji. Pojedyncze recenzje wskazują jednak na problemy z komunikacją administracyjną, jak brak odpowiedzi mailowej. Brak jest danych na temat kontaktu telefonicznego (dodzwanianie, oddzwanianie).",
+          "confidence": 0.87
+        },
+        "zoho_match": {
+          "found": true,
+          "zoho_id": "751364000002312073",
+          "zoho_name": "OT.CO WARSZAWA ZGRUPOWANIA AK \"ŻMIJA\"",
+          "status_klienta": "nie jest/nie był",
+          "adres_w_rekordzie": "Filia",
+          "is_siedziba": false,
+          "is_filia": true,
+          "parent_id": "751364000002274524",
+          "parent_name": "KLINIKA OSIPOWICZ & TURKOWSKI SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ",
+          "match_reason": "NIP"
+        }
+      },
+      {
+        "nazwa_placowki": "KLINIKA WARSZAWA ZGRUPOWANIA AK \"ŻMIJA\"",
+        "is_siedziba": false,
+        "typ_adresu": "-None-",
+        "adres": {
+          "ulica": "Zgrupowania AK \"Żmija\" 12",
+          "kod": "01-864",
+          "miasto": "Warszawa",
+          "wojewodztwo": null
+        },
+        "kontakty": [
+          {
+            "typ": "telefon",
+            "wartosc": "+48 221 230 333",
+            "opis": null
+          },
+          {
+            "typ": "email",
+            "wartosc": "kontakt@klinikaotco.pl",
+            "opis": null
+          },
+          {
+            "typ": "email",
+            "wartosc": "pr@klinikaotco.pl",
+            "opis": null
+          },
+          {
+            "typ": "email",
+            "wartosc": "media@klinikaotco.pl",
+            "opis": null
+          }
+        ],
+        "godziny_otwarcia": "sob: ZAMknięte; nie: ZAMknięte; pon: 08:00 to 20:00; wto: 08:00 to 20:00; śro: 08:00 to 20:00; czw: 08:00 to 20:00; pią: 08:00 to 20:00",
+        "coordinates": {
+          "lat": 52.269791,
+          "lng": 20.9365135
+        },
+        "google_maps_place_id": "ChIJ16Q70aHLHkcRXzA5ePgMaZ8",
+        "google_rating": 4.3,
+        "google_reviews_count": 147,
+        "reviews_insights": {
+          "total_reviews_analyzed": 48,
+          "avg_rating": 3.92,
+          "top_complaints": [
+            {
+              "insight": "Nieuprzejma, niekompetentna i niepomocna obsługa recepcji.",
+              "count": 3,
+              "citations": [
+                {
+                  "text": "Bardzo nieuprzejme podejście ze strony recepcji!!! Niekompetentni i bardzo niepoważnie podchodzą do swojej pracy, nie wystawiają L4, wyrażają się w sposób bardzo niemiły, jest tu chamstwo, nieuprzejmo...",
+                  "date": "2025-11-06 11:33",
+                  "author": "Ola Lalala",
+                  "rating": 2,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2swMlZUTldPUzFzTjFwbFZqZHhVM05VWTNoM1owRRAB!2m1!1s0x0:0x9f690cf87839305f!3m1!1s2@1:CAIQACodChtycF9oOk02VTNWOS1sN1plVjdxU3NUY3h3Z0E%7C0d27TEmqRrY%7C?hl=pl"
+                },
+                {
+                  "text": "Zapis na konsultacje z zabiegiem. Lekarz nie przygotowany, tylko konsultacja - brak zarezerwowania czasu na zabieg mimo rekomendacji do jego wykonania. Wymiana mailowa z sekretariatem, mimo wielokrotn...",
+                  "date": "2025-01-25 22:18",
+                  "author": "Marcin G.",
+                  "rating": 1,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChZDSUhNMG9nS0VJQ0FnSURfMVlMekl3EAE!2m1!1s0x0:0x9f690cf87839305f!3m1!1s2@1:CIHM0ogKEICAgID_1YLzIw%7CCgwIssbVvAYQkLCwmgE%7C?hl=pl"
+                },
+                {
+                  "text": "Klinikę ocenić muszę sumarycznie negatywnie, niestety.\nPomimo zapłaty bardzo dużej kwoty za operację, zespół pielęgniarski bardzo słaby, żona wyszła z kliniki zdegustowana słaba opieka, niemiłymi i op...",
+                  "date": "2024-11-19 17:59",
+                  "author": "Wiktor Bzdęga",
+                  "rating": 2,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChZDSUhNMG9nS0VJQ0FnSUQzNTRXTkRREAE!2m1!1s0x0:0x9f690cf87839305f!3m1!1s2@1:CIHM0ogKEICAgID354WNDQ%7CCgwI7aPzuQYQ6Mj91AI%7C?hl=pl"
+                }
+              ]
+            },
+            {
+              "insight": "Brak odbierania telefonów i chaos organizacyjny.",
+              "count": 3,
+              "citations": [
+                {
+                  "text": "Bardzo nieuprzejme podejście ze strony recepcji!!! Niekompetentni i bardzo niepoważnie podchodzą do swojej pracy, nie wystawiają L4, wyrażają się w sposób bardzo niemiły, jest tu chamstwo, nieuprzejmo...",
+                  "date": "2025-11-06 11:33",
+                  "author": "Ola Lalala",
+                  "rating": 2,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2swMlZUTldPUzFzTjFwbFZqZHhVM05VWTNoM1owRRAB!2m1!1s0x0:0x9f690cf87839305f!3m1!1s2@1:CAIQACodChtycF9oOk02VTNWOS1sN1plVjdxU3NUY3h3Z0E%7C0d27TEmqRrY%7C?hl=pl"
+                },
+                {
+                  "text": "Konsultacja u lekarza laryngologa całkiem pozytywna, Pani Doktor zaleciła operację, poleciła szpital w którym pracuje, wystawiła skierowanie, mówi że podrzuci do rejestracji, że ja się nie muszę fatyg...",
+                  "date": "2025-09-08 19:59",
+                  "author": "Łukasz",
+                  "rating": 1,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT25VMVowbHNPWFpIZWpoRk0xVktTa3hVYWtWWmMyYxAB!2m1!1s0x0:0x9f690cf87839305f!3m1!1s2@1:CAIQACodChtycF9oOnU1Z0lsOXZHejhFM1VKSkxUakVZc2c%7C0cjnLjAOy8P%7C?hl=pl"
+                },
+                {
+                  "text": "Zapis na konsultacje z zabiegiem. Lekarz nie przygotowany, tylko konsultacja - brak zarezerwowania czasu na zabieg mimo rekomendacji do jego wykonania. Wymiana mailowa z sekretariatem, mimo wielokrotn...",
+                  "date": "2025-01-25 22:18",
+                  "author": "Marcin G.",
+                  "rating": 1,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChZDSUhNMG9nS0VJQ0FnSURfMVlMekl3EAE!2m1!1s0x0:0x9f690cf87839305f!3m1!1s2@1:CIHM0ogKEICAgID_1YLzIw%7CCgwIssbVvAYQkLCwmgE%7C?hl=pl"
+                }
+              ]
+            }
+          ],
+          "top_praises": [
+            {
+              "insight": "Proaktywny kontakt i szczere zainteresowanie ze strony personelu.",
+              "count": 3,
+              "citations": [
+                {
+                  "text": "Nie wiem co z tego będzie, ponieważ to mój trzeci dzień po przeszczepie, ale i tak daje 5, bo po pierwsze mam same pozytywne wrażenia i już wierzę, że bedzie dobrze, po drugie, bo czułem że nie jestem...",
+                  "date": "2025-12-25 01:50",
+                  "author": "gnvn fmvn",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2w4MmRubDVVa3QyVEVoRFQxWXllRzFLWlZGWlVuYxAB!2m1!1s0x0:0x9f690cf87839305f!3m1!1s2@1:CAIQACodChtycF9oOl82dnl5Ukt2TEhDT1YyeG1KZVFZUnc%7C0dI8WsROMta%7C?hl=pl"
+                },
+                {
+                  "text": "Jako kobieta miałam sporo obaw, bo bałam się, że efekt będzie sztuczny. Już na konsultacji doktor Turkowski wszystko dokładnie wyjaśnił i uspokoił mnie. Podczas zabiegu panowała świetna atmosfera, a p...",
+                  "date": "2025-10-21 18:20",
+                  "author": "Klaudia Nowak",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2pOaVRrWjZZMWRHVkdaRVJUZEVURGcwWVVoVmVXYxAB!2m1!1s0x0:0x9f690cf87839305f!3m1!1s2@1:CAIQACodChtycF9oOjNiTkZ6Y1dGVGZERTdETDg0YUhVeWc%7C0cxwvVnyxI5%7C?hl=pl"
+                },
+                {
+                  "text": "W środę poddałam się operacji powiększenia biustu. Moje pierwsze spostrzeżenia są naprawdę pozytywne. Zacznę od wspaniałej Pani, która była moim opiekunem pacjenta. Pani Agnieszka była wsparciem i dob...",
+                  "date": "2025-09-27 14:39",
+                  "author": "Ela „.”",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT21GYWNtdHhjWFkzV2pkMWJIbzBSR0ZOU2tkb1ZWRRAB!2m1!1s0x0:0x9f690cf87839305f!3m1!1s2@1:CAIQACodChtycF9oOmFacmtxcXY3Wjd1bHo0RGFNSkdoVVE%7C0cpzRkLLLy1%7C?hl=pl"
+                }
+              ]
+            },
+            {
+              "insight": "Miła, pomocna i dobrze zorganizowana obsługa.",
+              "count": 3,
+              "citations": [
+                {
+                  "text": "Na operację powiększenia piersi zdecydowałam się celowo u Oleksii Zhuravel, ponieważ od dawna śledziłam jego pracę w mediach społecznościowych i bardzo podobały mi się jego efekty. Nie interesowałam s...",
+                  "date": "2026-01-30 00:08",
+                  "author": "Viktoria F",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT210TExUbGpiSE5LTFRVM01YcE5RbTR4Tm5Vd1JuYxAB!2m1!1s0x0:0x9f690cf87839305f!3m1!1s2@1:CAIQACodChtycF9oOmtLLTljbHNKLTU3MXpNQm4xNnUwRnc%7C0dTzP1j7vQW%7C?hl=pl"
+                },
+                {
+                  "text": "Jakiś czas temu byłam na konsultacjach u doktora Piotra Turkowskiego w szpitalu OT.CO . Do doktora trafiłam poprzez znaną osobę, którą zapytałam gdzie miała wykonany zabieg liposukcji. Trosze mnie zdz...",
+                  "date": "2025-11-27 22:22",
+                  "author": "Beata K",
+                  "rating": 2,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChdDSUhNMG9nS0VJQ0FnSURPXzlPLW9RRRAB!2m1!1s0x0:0x9f690cf87839305f!3m1!1s2@1:CIHM0ogKEICAgIDO_9O-oQE%7CCgsIwL_howYQ8PjjOA%7C?hl=pl"
+                },
+                {
+                  "text": "Chciałabym podziękować Pani Patrycji za profesjonalne podejście do pracy. Jest miła, uprzejma, uważna. Przechodzę u niej zabiegi kosmetyczne po liftingu okrężnym. Pomimo tego, że jestem Ukrainką, Pani...",
+                  "date": "2025-06-25 15:56",
+                  "author": "Lesedi",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2pGNVdFeHBMVUpHTTFSa1EyTmFhalphWkZsRExVRRAB!2m1!1s0x0:0x9f690cf87839305f!3m1!1s2@1:CAIQACodChtycF9oOjF5WExpLUJGM1RkQ2NaajZaZFlDLUE%7C0cM0kcCU_d_%7C?hl=pl"
+                }
+              ]
+            }
+          ],
+          "common_themes": [
+            "Skrajnie różne opinie o personelu pomocniczym (recepcja/pielęgniarki)",
+            "Duże znaczenie indywidualnego opiekuna pacjenta",
+            "Rozbieżność między profesjonalizmem lekarzy a obsługą administracyjną"
+          ],
+          "summary": "Komunikacja z pacjentami w placówce jest skrajnie niespójna. Z jednej strony pacjenci chwalą proaktywny kontakt, oddzwanianie i osobistych opiekunów, z drugiej strony często skarżą się na nieuprzejmą i niekompetentną recepcję, problemy z dodzwonieniem się i chaosem organizacyjnym. Doświadczenie pacjenta w dużej mierze zależy od tego, na którego pracownika trafi.",
+          "confidence": 0.5
+        },
+        "zoho_match": {
+          "found": true,
+          "zoho_id": "751364000002312073",
+          "zoho_name": "OT.CO WARSZAWA ZGRUPOWANIA AK \"ŻMIJA\"",
+          "status_klienta": "nie jest/nie był",
+          "adres_w_rekordzie": "Filia",
+          "is_siedziba": false,
+          "is_filia": true,
+          "parent_id": "751364000002274524",
+          "parent_name": "KLINIKA OSIPOWICZ & TURKOWSKI SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ",
+          "match_reason": "NIP"
+        }
+      }
+    ],
+    "metadata": {
+      "scraped_at": "2026-01-31T10:08:31.354659",
+      "sources_used": [
+        "website",
+        "gus",
+        "google_maps",
+        "google_reviews_analysis",
+        "facebook",
+        "instagram",
+        "tiktok",
+        "ai_categorization",
+        "zoho_crm"
+      ],
+      "processing_time_ms": 279505,
+      "cost_usd": 0.035,
+      "errors": [],
+      "warnings": [],
+      "data_validation": {
+        "contacts_match": true,
+        "contacts_discrepancies": [],
+        "address_match": true,
+        "address_discrepancies": []
+      }
+    }
+  },
+  "_label": "OT.CO Website",
+  "_generated_at": "2026-01-31T11:08:31.356928"
+}

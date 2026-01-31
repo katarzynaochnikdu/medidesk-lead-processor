@@ -1,11 +1,16 @@
 {
   "company": {
-    "nip": null,
-    "regon": null,
+    "nip": "5213873364",
+    "regon": "384091580",
     "krs": null,
-    "nazwa_pelna": "Klinika OT.CO",
+    "nazwa_pelna": "KLINIKA OSIPOWICZ & TURKOWSKI SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ",
     "nazwa_zwyczajowa": "Klinika OT.CO → Klinika medycyny estetycznej w Warszawie",
-    "adres_siedziby": null,
+    "adres_siedziby": {
+      "ulica": "ul. Bartycka 24B/U1",
+      "kod": "00-716",
+      "miasto": "Warszawa",
+      "wojewodztwo": "mazowieckie"
+    },
     "kategoryzacja_ai": {
       "platnik_uslug": [],
       "specjalizacja": [],
@@ -14,7 +19,7 @@
       "kategoria_konta": null,
       "branza": null,
       "ai_confidence": 0.0,
-      "ai_reasoning": null
+      "ai_reasoning": "Error: 503 Getting metadata from plugin failed with error: Reauthentication is needed. Please run `gcloud auth application-default login` to reauthenticate."
     },
     "social_media": {
       "website": "https://klinikaotco.pl",
@@ -24,22 +29,21 @@
       "tiktok": "https://www.tiktok.com/@klinikaotco?",
       "x": null
     },
+    "social_profiles": [],
     "activity_score": {
-      "total": 35,
+      "total": 30,
       "recommendation": "COLD",
       "breakdown": {
         "google_maps": 25,
         "facebook": 0,
         "instagram": 0,
         "tiktok": 0,
-        "website": 5,
-        "network": 5
+        "website": 5
       },
       "signals": [
-        "Google Maps 4.7/5",
-        "Google 915 recenzji",
-        "SSL aktywny",
-        "Sieć 5 placówek"
+        "Google Maps 4.6/5",
+        "Google 878 recenzji",
+        "SSL aktywny"
       ]
     },
     "placowki": [
@@ -73,7 +77,7 @@
             "opis": null
           }
         ],
-        "godziny_otwarcia": "pią: 09:00 to 21:00; sob: 09:00 to 16:00; nie: ZAMknięte; pon: 09:00 to 21:00; wto: 09:00 to 21:00; śro: 09:00 to 21:00; czw: 09:00 to 21:00",
+        "godziny_otwarcia": "sob: 09:00 to 16:00; nie: ZAMknięte; pon: 09:00 to 21:00; wto: 09:00 to 21:00; śro: 09:00 to 21:00; czw: 09:00 to 21:00; pią: 09:00 to 21:00",
         "coordinates": {
           "lat": 52.2127075,
           "lng": 21.0603572
@@ -113,7 +117,7 @@
             "opis": null
           }
         ],
-        "godziny_otwarcia": "pią: 08:00 to 20:00; sob: ZAMknięte; nie: ZAMknięte; pon: 08:00 to 20:00; wto: 08:00 to 20:00; śro: 08:00 to 20:00; czw: 08:00 to 20:00",
+        "godziny_otwarcia": "sob: ZAMknięte; nie: ZAMknięte; pon: 08:00 to 20:00; wto: 08:00 to 20:00; śro: 08:00 to 20:00; czw: 08:00 to 20:00; pią: 08:00 to 20:00",
         "coordinates": {
           "lat": 52.269791,
           "lng": 20.9365135
@@ -125,16 +129,25 @@
       }
     ],
     "metadata": {
-      "scraped_at": "2026-01-30T19:44:32.608340",
+      "scraped_at": "2026-01-31T08:46:11.816222",
       "sources_used": [
         "website",
+        "gus",
         "google_maps",
-        "reviews_analysis"
+        "ai_categorization"
       ],
-      "processing_time_ms": 131674,
-      "cost_usd": 0.019,
+      "processing_time_ms": 107920,
+      "cost_usd": 0.035,
       "errors": [],
-      "warnings": []
+      "warnings": [],
+      "data_validation": {
+        "contacts_match": true,
+        "contacts_discrepancies": [],
+        "address_match": true,
+        "address_discrepancies": []
+      }
     }
-  }
+  },
+  "_label": "OT.CO Website",
+  "_generated_at": "2026-01-31T09:46:11.817824"
 }

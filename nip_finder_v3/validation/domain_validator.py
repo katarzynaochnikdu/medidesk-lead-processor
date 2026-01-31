@@ -16,6 +16,54 @@ from ..utils import extract_nip_from_text
 logger = logging.getLogger(__name__)
 
 
+# Registry/portal domains - walidacja domeny nie ma sensu, NIP musi być walidowany przez GUS
+REGISTRY_DOMAINS = {
+    # Portale z opiniami/danymi firm
+    "gowork.pl",
+    "oferteo.pl",
+    "aleo.com",
+    "panoramafirm.pl",
+    "pkt.pl",
+    "firmy.net",
+    "baza-firm.com.pl",
+    "branżowiec.pl",
+    "owg.pl",  # Ogólnopolski Wykaz Gabinetów
+    "hipokrates.org",
+    "medigo.pl",
+    # Rejestry KRS/NIP
+    "krs-online.com.pl",
+    "rejestr.io",
+    "infoveriti.pl",
+    "krs.pl",
+    "ceidg.gov.pl",
+    "mojepanstwo.pl",
+    "biznes-polska.pl",
+    "companywall.pl",
+    "regon.stat.gov.pl",
+    "prod.ceidg.gov.pl",
+    # Portale biznesowe
+    "businessinsight.pl",
+    "okredo.com",
+    "dun.com",
+    "bisnode.pl",
+    "emis.com",
+    "firmypolskie.pl",
+    # Social / mapy / opinie
+    "facebook.com",
+    "linkedin.com",
+    "google.com",
+    "google.pl",
+    "znany.pl",
+    "znanylekarz.pl",
+    "znamylekarza.pl",
+    "trustpilot.com",
+    "yelp.com",
+    # Portale gov
+    "gov.pl",
+    "stat.gov.pl",
+}
+
+
 class DomainValidator:
     """
     Walidator NIP względem domeny firmowej.
@@ -44,6 +92,41 @@ class DomainValidator:
             await self._http_client.aclose()
             self._http_client = None
 
+    def is_registry_domain(self, domain: str, company_name: str = None) -> bool:
+        """
+        Sprawdza czy domena to portal/rejestr (nie oficjalna strona firmy).
+        
+        Dla takich domen walidacja NIP na stronie nie ma sensu,
+        bo portale nie publikują NIPów firm w standardowy sposób.
+        
+        Heurystyka:
+        1. Sprawdź czy domena jest na liście znanych rejestrów
+        2. Jeśli podano company_name, sprawdź czy domena "pasuje" do nazwy firmy
+           (np. awodent -> awodent.pl pasuje, owg.pl nie pasuje)
+        """
+        domain_lower = domain.lower().strip()
+        
+        # Sprawdź czy domena jest na liście znanych rejestrów
+        for registry in REGISTRY_DOMAINS:
+            if domain_lower == registry or domain_lower.endswith("." + registry):
+                return True
+        
+        # Heurystyka: sprawdź czy domena pasuje do nazwy firmy
+        if company_name:
+            company_lower = company_name.lower().strip()
+            # Wyciągnij główną część domeny (bez TLD)
+            domain_base = domain_lower.split('.')[0].replace('-', '').replace('_', '')
+            company_base = company_lower.split()[0].replace('-', '').replace('_', '')
+            
+            # Jeśli domena NIE zawiera nazwy firmy -> prawdopodobnie portal
+            if company_base and len(company_base) >= 3:
+                if company_base not in domain_base and domain_base not in company_base:
+                    logger.debug("Registry heuristic: '%s' doesn't match company '%s' -> treating as registry", 
+                               domain, company_name)
+                    return True
+        
+        return False
+
     async def validate(self, nip: str, domain: str) -> bool:
         """
         Sprawdza czy NIP występuje na domenie firmy.
@@ -58,8 +141,13 @@ class DomainValidator:
             domain: Domena firmowa
 
         Returns:
-            True jeśli NIP znaleziony na domenie
+            True jeśli NIP znaleziony na domenie, lub None jeśli registry domain
         """
+        # Dla registry domen (portale, rejestry) - skip walidacji
+        if self.is_registry_domain(domain):
+            logger.info("⏭️ Domain validator: %s to registry/portal - pomijam walidację domeny", domain)
+            return None  # None = nie sprawdzono (nie False!)
+        
         logger.info("Domain validator: sprawdzam NIP %s na domenie %s", nip, domain)
 
         # URLs do sprawdzenia

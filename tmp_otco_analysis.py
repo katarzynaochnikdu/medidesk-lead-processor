@@ -8,6 +8,11 @@ import time
 import warnings
 from datetime import datetime
 from contextlib import contextmanager, redirect_stdout, redirect_stderr
+from pathlib import Path
+
+# Zaladuj zmienne srodowiskowe z .env PRZED wszystkim
+from dotenv import load_dotenv
+load_dotenv()
 
 # Wycisz warningi przed importami
 warnings.filterwarnings("ignore")
@@ -18,10 +23,14 @@ from company_intel.orchestrator import CompanyIntelOrchestrator
 
 
 # =============================================================================
-# LOGGING SETUP - logi do pliku, progress na terminal
+# OUTPUT FOLDER - kazde uruchomienie w oddzielnym folderze
 # =============================================================================
 
-LOG_FILE = f"analysis_log_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log"
+TIMESTAMP = datetime.now().strftime('%Y%m%d_%H%M%S')
+OUTPUT_DIR = Path(f"analysis_runs/run_{TIMESTAMP}")
+OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+
+LOG_FILE = OUTPUT_DIR / "analysis.log"
 
 # Otwieramy plik na logi (stdout/stderr z bibliotek tez tu pojda)
 log_file_handle = open(LOG_FILE, "w", encoding="utf-8")
@@ -102,7 +111,7 @@ class ProgressBar:
         total_elapsed = time.time() - self.total_start_time
         _real_stdout.write(f"\n{'='*70}\n")
         _real_stdout.write(f"[DONE] ZAKONCZONO | Calkowity czas: {total_elapsed:.2f}s\n")
-        _real_stdout.write(f"[LOG]  Logi zapisane do: {LOG_FILE}\n")
+        _real_stdout.write(f"[OUT]  Wyniki: {OUTPUT_DIR}\n")
         _real_stdout.write(f"{'='*70}\n")
         _real_stdout.flush()
         logger.info(f"[TOTAL] Calkowity czas: {total_elapsed:.2f}s")
@@ -136,7 +145,7 @@ async def main():
     pout(f"\n{'='*70}")
     pout(f"[*] ANALIZA POROWNAWCZA: Klinika OT.CO")
     pout(f"    NIP: 5213873364 | Website: https://klinikaotco.pl")
-    pout(f"    Logi: {LOG_FILE}")
+    pout(f"    Output: {OUTPUT_DIR}")
     pout(f"{'='*70}\n")
     
     # 6 głównych etapów
@@ -155,9 +164,9 @@ async def main():
         with timed_step(progress, "Analiza po NIP (5213873364)"):
             nip_result = await orchestrator.analyze_by_nip(
                 "5213873364",
-                skip_social=True,
+                skip_social=False,  # Pelna analiza social media
                 skip_ai=False,
-                skip_reviews=True,
+                skip_reviews=False,  # Pelna analiza recenzji
                 core_only=False,
             )
             logger.info(f"  → Znaleziono {len(nip_result.placowki)} placówek")
@@ -183,9 +192,9 @@ async def main():
             website_result = await orchestrator.analyze(
                 company_name="Klinika OT.CO",
                 website="https://klinikaotco.pl",
-                skip_social=True,
+                skip_social=False,  # Pelna analiza social media
                 skip_ai=False,
-                skip_reviews=True,
+                skip_reviews=False,  # Pelna analiza recenzji
                 core_only=False,
             )
             logger.info(f"  → Znaleziono {len(website_result.placowki)} placówek")
@@ -206,10 +215,30 @@ async def main():
             }
             logger.debug(f"Website summary prepared: {len(website_summary['addresses'])} addresses")
         
-        # --- ETAP 6: Zapis wyników ---
-        with timed_step(progress, "Zapis wyników do JSON"):
-            output = {
+        # --- ETAP 6: Zapis wynikow ---
+        with timed_step(progress, "Zapis wynikow do JSON"):
+            # Pelne wyniki NIP
+            nip_full = nip_result.to_dict()
+            nip_full["_label"] = "OT.CO NIP"
+            nip_full["_generated_at"] = datetime.now().isoformat()
+            nip_file = OUTPUT_DIR / "results_NIP.json"
+            with open(nip_file, "w", encoding="utf-8") as out:
+                json.dump(nip_full, out, ensure_ascii=False, indent=2)
+            logger.info(f"Pelne wyniki NIP zapisane do {nip_file}")
+            
+            # Pelne wyniki Website
+            website_full = website_result.to_dict()
+            website_full["_label"] = "OT.CO Website"
+            website_full["_generated_at"] = datetime.now().isoformat()
+            website_file = OUTPUT_DIR / "results_Website.json"
+            with open(website_file, "w", encoding="utf-8") as out:
+                json.dump(website_full, out, ensure_ascii=False, indent=2)
+            logger.info(f"Pelne wyniki Website zapisane do {website_file}")
+            
+            # Podsumowanie porownawcze
+            comparison = {
                 "generated_at": datetime.now().isoformat(),
+                "output_dir": str(OUTPUT_DIR),
                 "comparison": {
                     "nip": nip_summary,
                     "website": website_summary,
@@ -221,9 +250,10 @@ async def main():
                     "activity_website": website_summary["activity_score_total"],
                 }
             }
-            with open("otco_analysis_results.json", "w", encoding="utf-8") as out:
-                json.dump(output, out, ensure_ascii=False, indent=2)
-            logger.info("Wyniki zapisane do otco_analysis_results.json")
+            comparison_file = OUTPUT_DIR / "comparison.json"
+            with open(comparison_file, "w", encoding="utf-8") as out:
+                json.dump(comparison, out, ensure_ascii=False, indent=2)
+            logger.info(f"Porownanie zapisane do {comparison_file}")
         
         progress.finish_all()
         
@@ -234,7 +264,11 @@ async def main():
         pout(f"   {'Liczba placowek':<25} | {nip_summary['placowki_count']:>10} | {website_summary['placowki_count']:>10}")
         pout(f"   {'Activity Score':<25} | {nip_summary['activity_score_total']:>10} | {website_summary['activity_score_total']:>10}")
         pout(f"   {'Liczba zrodel':<25} | {len(nip_summary['sources']):>10} | {len(website_summary['sources']):>10}")
-        pout(f"\n[FILE] Pelne wyniki: otco_analysis_results.json")
+        pout(f"\n[OUTPUT] Folder: {OUTPUT_DIR}")
+        pout(f"   - results_NIP.json     (pelna analiza po NIP)")
+        pout(f"   - results_Website.json (pelna analiza po Website)")
+        pout(f"   - comparison.json      (porownanie)")
+        pout(f"   - analysis.log         (szczegolowe logi)")
         
     finally:
         await orchestrator.close()

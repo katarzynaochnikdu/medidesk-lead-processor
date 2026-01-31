@@ -133,6 +133,56 @@ ZASADY:
 - address_type="Siedziba i Filia" jesli is_medical_at_address=true"""
 
 
+# Prompt do parsowania chaotycznych danych wejściowych
+CHAOTIC_PARSE_SYSTEM_PROMPT = """Jesteś ekspertem od ekstrakcji danych firmowych z chaotycznego tekstu.
+Wydobywasz strukturyzowane informacje o firmie z dowolnego formatu wejściowego.
+Zwracasz TYLKO JSON, bez markdown, bez komentarzy.
+
+GRADACJA SYGNAŁÓW (od najsilniejszych):
+S1: NIP, REGON, KRS (twarde identyfikatory)
+S2: Strona WWW, email (domena), telefon (twarde łączniki)
+S3: Miasto, ulica (lokalizacja)
+S4: Nazwa firmy, nazwa skrócona (identyfikacja)
+S5: Branża, słowa kluczowe (pomocnicze)
+
+ZASADY EKSTRAKCJI:
+1. NIP: 10 cyfr, ignoruj myślniki i spacje (np. 894-186-49-49 -> 8941864949)
+2. Telefon: normalizuj do +48XXXXXXXXX
+3. Email: wyciągnij domenę jako potencjalną stronę WWW
+4. Nazwa: rozdziel nazwę marketingową (krótką) od pełnej
+5. Miasto: rozpoznaj polskie miasta
+6. Ulica: rozpoznaj wzorce ul./al./pl. + nazwa
+7. Branża: wykryj słowa kluczowe medyczne (klinika, przychodnia, stomatolog, etc.)"""
+
+
+CHAOTIC_PARSE_USER_PROMPT = """Przeanalizuj poniższy chaotyczny tekst i wydobądź informacje o firmie:
+
+TEKST:
+{raw_text}
+
+Zwróć JSON:
+{{
+  "nip": "10 cyfr lub null",
+  "regon": "9 lub 14 cyfr lub null",
+  "krs": "10 cyfr lub null",
+  "website": "domena www lub null",
+  "email": "email lub null",
+  "phone": "+48XXXXXXXXX lub null",
+  "city": "miasto lub null",
+  "street": "ulica z numerem lub null",
+  "name": "pełna nazwa firmy lub null",
+  "short_name": "krótka nazwa marketingowa (1-2 słowa) lub null",
+  "keywords": ["słowa kluczowe branżowe"],
+  "confidence": 0.0-1.0,
+  "strongest_signal": "S1_HARD_ID/S2_HARD_LINK/S3_LOCATION/S4_NAME/S5_KEYWORD"
+}}
+
+PRZYKŁADY:
+- "Aldent Wrocław 8941864949" -> name="Aldent", city="Wrocław", nip="8941864949", strongest_signal="S1_HARD_ID"
+- "klinikaambroziak.pl" -> website="klinikaambroziak.pl", short_name="Ambroziak", strongest_signal="S2_HARD_LINK"
+- "Medyczna Gdynia stomatolog" -> name="Medyczna Gdynia", city="Gdynia", keywords=["stomatolog"], strongest_signal="S4_NAME\""""
+
+
 class VertexAIService:
     """
     Serwis do komunikacji z Vertex AI (Gemini).
@@ -151,13 +201,29 @@ class VertexAIService:
             return True
         
         try:
+            import os
             import vertexai
             from vertexai.generative_models import GenerativeModel
+            from google.oauth2 import service_account
+            
+            # Załaduj credentials z pliku jeśli istnieje
+            credentials = None
+            creds_path = os.environ.get("GOOGLE_APPLICATION_CREDENTIALS")
+            if not creds_path:
+                creds_path = getattr(self.settings, 'google_application_credentials', None)
+            
+            if creds_path and os.path.exists(creds_path):
+                credentials = service_account.Credentials.from_service_account_file(
+                    creds_path,
+                    scopes=["https://www.googleapis.com/auth/cloud-platform"],
+                )
+                logger.info("Załadowano credentials z pliku: %s", creds_path)
             
             # Inicjalizacja Vertex AI
             vertexai.init(
                 project=self.settings.gcp_project_id,
                 location=self.settings.gcp_region,
+                credentials=credentials,
             )
             
             # Załaduj model
@@ -455,6 +521,86 @@ Odpowiedz TYLKO jednym słowem: male, female lub unknown"""
             
         except Exception as e:
             logger.error("Błąd wykrywania płci: %s", e)
+            return None
+    
+    async def parse_chaotic_lead(self, raw_text: str) -> Optional[dict]:
+        """
+        Parsuje chaotyczny tekst wejściowy i wydobywa informacje o firmie.
+        
+        Używa AI do rozpoznania:
+        - NIP, REGON, KRS (twarde identyfikatory)
+        - Website, email, telefon (twarde łączniki)
+        - Miasto, ulica (lokalizacja)
+        - Nazwa firmy (identyfikacja)
+        - Słowa kluczowe branżowe
+        
+        Args:
+            raw_text: Surowy tekst wejściowy (np. "Aldent Wrocław 8941864949")
+        
+        Returns:
+            Dict z wyekstrahowanymi danymi lub None przy błędzie
+        """
+        if not self._ensure_initialized():
+            logger.warning("Vertex AI niedostępne - parse_chaotic_lead")
+            return None
+        
+        if not raw_text or not raw_text.strip():
+            logger.warning("Pusty tekst wejściowy dla parse_chaotic_lead")
+            return None
+        
+        try:
+            from vertexai.generative_models import GenerativeModel
+            
+            # Użyj dedykowanego modelu z system promptem do parsowania
+            parse_model = GenerativeModel(
+                self.settings.vertex_ai_model,
+                system_instruction=CHAOTIC_PARSE_SYSTEM_PROMPT,
+            )
+            
+            prompt = CHAOTIC_PARSE_USER_PROMPT.format(raw_text=raw_text)
+            
+            logger.info("[CHAOTIC_PARSE] Parsing: '%s'", raw_text[:100])
+            
+            response = parse_model.generate_content(
+                prompt,
+                generation_config={
+                    "temperature": 0.1,
+                    "max_output_tokens": 1024,
+                    "response_mime_type": "application/json",
+                },
+            )
+            
+            response_text = response.text.strip()
+            
+            # Cleanup - usuń markdown code blocks
+            if response_text.startswith("```"):
+                lines = response_text.split("\n")
+                response_text = "\n".join(lines[1:-1] if lines[-1].strip() == "```" else lines[1:])
+            
+            # Znajdź JSON object
+            start = response_text.find("{")
+            end = response_text.rfind("}") + 1
+            if start >= 0 and end > start:
+                response_text = response_text[start:end]
+            
+            parsed = json.loads(response_text)
+            
+            logger.info(
+                "[CHAOTIC_PARSE] Result: nip=%s, website=%s, name=%s, city=%s, strongest=%s",
+                parsed.get("nip"),
+                parsed.get("website"),
+                parsed.get("name"),
+                parsed.get("city"),
+                parsed.get("strongest_signal"),
+            )
+            
+            return parsed
+            
+        except json.JSONDecodeError as e:
+            logger.error("Błąd parsowania JSON z AI: %s", e)
+            return None
+        except Exception as e:
+            logger.error("Błąd parse_chaotic_lead: %s", e)
             return None
     
     async def standardize_company_name(self, company_name: str) -> dict[str, Optional[str]]:
@@ -918,6 +1064,126 @@ class VertexAIServiceMock:
             "legal_form": legal_form,
             "full_name": company_name.strip().title() if company_name else None,
         }
+    
+    async def parse_chaotic_lead(self, raw_text: str) -> Optional[dict]:
+        """
+        Prosta wersja parsowania chaotycznego tekstu (bez AI).
+        Używa regexów do wydobycia podstawowych danych.
+        """
+        import re
+        
+        if not raw_text or not raw_text.strip():
+            return None
+        
+        result = {
+            "nip": None,
+            "regon": None,
+            "krs": None,
+            "website": None,
+            "email": None,
+            "phone": None,
+            "city": None,
+            "street": None,
+            "name": None,
+            "short_name": None,
+            "keywords": [],
+            "confidence": 0.5,
+            "strongest_signal": None,
+        }
+        
+        text = raw_text.strip()
+        
+        # NIP: 10 cyfr (z lub bez myślników)
+        nip_match = re.search(r'\b(\d{3}[-\s]?\d{3}[-\s]?\d{2}[-\s]?\d{2})\b', text)
+        if nip_match:
+            result["nip"] = re.sub(r'[-\s]', '', nip_match.group(1))
+            result["strongest_signal"] = "S1_HARD_ID"
+        
+        # Website: domena
+        website_match = re.search(r'((?:https?://)?(?:www\.)?([a-zA-Z0-9-]+\.[a-zA-Z]{2,}))', text, re.IGNORECASE)
+        if website_match:
+            result["website"] = website_match.group(2).lower()
+            if not result["strongest_signal"]:
+                result["strongest_signal"] = "S2_HARD_LINK"
+        
+        # Email
+        email_match = re.search(r'([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})', text)
+        if email_match:
+            result["email"] = email_match.group(1).lower()
+            if not result["strongest_signal"]:
+                result["strongest_signal"] = "S2_HARD_LINK"
+        
+        # Telefon: +48 lub 9 cyfr
+        phone_match = re.search(r'(\+48\s?\d{3}\s?\d{3}\s?\d{3}|\b\d{3}[-\s]?\d{3}[-\s]?\d{3}\b)', text)
+        if phone_match:
+            digits = re.sub(r'[-\s+]', '', phone_match.group(1))
+            if len(digits) >= 9:
+                result["phone"] = f"+48{digits[-9:]}"
+        
+        # Polskie miasta (lista najczęstszych)
+        cities = [
+            "warszawa", "kraków", "krakow", "łódź", "lodz", "wrocław", "wroclaw",
+            "poznań", "poznan", "gdańsk", "gdansk", "szczecin", "bydgoszcz",
+            "lublin", "białystok", "bialystok", "katowice", "gdynia", "częstochowa",
+            "radom", "sosnowiec", "toruń", "torun", "kielce", "rzeszów", "rzeszow",
+            "gliwice", "zabrze", "olsztyn", "bielsko-biała", "bytom", "zielona góra",
+        ]
+        text_lower = text.lower()
+        for city in cities:
+            if city in text_lower:
+                # Znajdź oryginalną formę (z dużej litery)
+                city_pattern = re.compile(re.escape(city), re.IGNORECASE)
+                city_match = city_pattern.search(text)
+                if city_match:
+                    result["city"] = city_match.group().title()
+                    if not result["strongest_signal"]:
+                        result["strongest_signal"] = "S3_LOCATION"
+                break
+        
+        # Ulica: ul./al./pl. + nazwa
+        street_match = re.search(r'((?:ul\.?|al\.?|pl\.?)\s*[A-Za-zżźćńółęąśŻŹĆĄŚĘÓŁŃ\s\-]+\s*\d+[A-Za-z]*(?:/\d+)?)', text, re.IGNORECASE)
+        if street_match:
+            result["street"] = street_match.group(1).strip()
+        
+        # Słowa kluczowe branżowe
+        medical_keywords = [
+            "stomatolog", "dentysta", "klinika", "przychodnia", "szpital",
+            "lekarz", "medycyna", "rehabilitacja", "fizjoterapia", "ortopedia",
+            "estetyczna", "dermatolog", "okulista", "ginekolog", "pediatra",
+        ]
+        for kw in medical_keywords:
+            if kw in text_lower:
+                result["keywords"].append(kw)
+        
+        # Nazwa: pozostały tekst po usunięciu rozpoznanych elementów
+        remaining = text
+        # Usuń NIP
+        if result["nip"]:
+            remaining = re.sub(r'\b\d{3}[-\s]?\d{3}[-\s]?\d{2}[-\s]?\d{2}\b', '', remaining)
+        # Usuń website
+        if result["website"]:
+            remaining = re.sub(r'(?:https?://)?(?:www\.)?[a-zA-Z0-9-]+\.[a-zA-Z]{2,}', '', remaining, flags=re.IGNORECASE)
+        # Usuń miasto
+        if result["city"]:
+            remaining = re.sub(re.escape(result["city"]), '', remaining, flags=re.IGNORECASE)
+        # Usuń słowa kluczowe
+        for kw in result["keywords"]:
+            remaining = re.sub(re.escape(kw), '', remaining, flags=re.IGNORECASE)
+        
+        remaining = remaining.strip()
+        if remaining:
+            result["name"] = remaining.title()
+            # Krótka nazwa: pierwsze słowo
+            words = remaining.split()
+            if words:
+                result["short_name"] = words[0].title()
+            if not result["strongest_signal"]:
+                result["strongest_signal"] = "S4_NAME"
+        
+        if not result["strongest_signal"]:
+            result["strongest_signal"] = "S5_KEYWORD" if result["keywords"] else None
+        
+        return result
 
 
 def get_vertex_ai_service(settings: Optional[Settings] = None, use_mock: bool = False):

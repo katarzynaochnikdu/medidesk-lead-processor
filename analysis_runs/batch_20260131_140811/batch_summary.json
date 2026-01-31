@@ -1,0 +1,1321 @@
+[
+  {
+    "name": "ProBody Clinic",
+    "input_nip": "5842809779",
+    "input_website": "https://spaprobody.pl/",
+    "nip_analysis": {
+      "company": {
+        "nip": "5842809779",
+        "regon": "520249636",
+        "krs": null,
+        "nazwa_pelna": "PROBODY CLINIC SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ",
+        "nazwa_zwyczajowa": "SPA PROBODY",
+        "adres_siedziby": {
+          "ulica": "ul. Cypriana Kamila Norwida 2/10",
+          "kod": "80-280",
+          "miasto": "Gdańsk",
+          "wojewodztwo": "pomorskie"
+        },
+        "kategoryzacja_ai": {
+          "platnik_uslug": [
+            "Komercyjne"
+          ],
+          "specjalizacja": [
+            "Medycyna Estetyczna"
+          ],
+          "wielospecjalistyczne": [],
+          "typ_wlasnosci": "Prywatny (Private)",
+          "kategoria_konta": null,
+          "branza": null,
+          "ai_confidence": 0.95,
+          "ai_reasoning": null
+        },
+        "social_media": {
+          "website": "https://spaprobody.pl/",
+          "facebook": "https://www.facebook.com/spa.probody",
+          "instagram": "https://www.instagram.com/spa_pro_body/",
+          "linkedin": null,
+          "tiktok": null,
+          "x": null
+        },
+        "social_profiles": [
+          {
+            "platform": "facebook",
+            "url": "https://www.facebook.com/spa.probody",
+            "followers": 89,
+            "posts_count": null,
+            "avg_engagement": null,
+            "last_post_date": null,
+            "is_verified": false,
+            "is_ads_active": null
+          },
+          {
+            "platform": "instagram",
+            "url": "https://www.instagram.com/spa_pro_body/",
+            "followers": 2015,
+            "posts_count": 333,
+            "avg_engagement": 0.72,
+            "last_post_date": "2025-07-15T12:47:01+00:00",
+            "is_verified": false,
+            "is_ads_active": null
+          }
+        ],
+        "activity_score": {
+          "total": 40,
+          "recommendation": "LUKEWARM",
+          "breakdown": {
+            "google_maps": 25,
+            "facebook": 0,
+            "instagram": 10,
+            "tiktok": 0,
+            "website": 5
+          },
+          "signals": [
+            "Google Maps 4.9/5",
+            "Google 66 recenzji",
+            "Instagram 2.0K followers",
+            "SSL aktywny"
+          ]
+        },
+        "placowki": [
+          {
+            "nazwa_placowki": "SPA PROBODY GDAŃSK ALEJA GRUNWALDZKA",
+            "is_siedziba": true,
+            "typ_adresu": "-None-",
+            "adres": {
+              "ulica": "aleja Grunwaldzka 99/101",
+              "kod": "80-244",
+              "miasto": "Gdańsk",
+              "wojewodztwo": null
+            },
+            "kontakty": [
+              {
+                "typ": "telefon",
+                "wartosc": "+48 731 927 231",
+                "opis": null
+              },
+              {
+                "typ": "telefon",
+                "wartosc": "+48 578 038 185",
+                "opis": null
+              }
+            ],
+            "godziny_otwarcia": "sob: 10:00 to 22:30; nie: 10:00 to 22:30; pon: 10:00 to 22:30; wto: 10:00 to 22:30; śro: 10:00 to 22:30; czw: 10:00 to 22:30; pią: 10:00 to 22:30",
+            "coordinates": {
+              "lat": 54.3788653,
+              "lng": 18.606074
+            },
+            "google_maps_place_id": "ChIJW8QgDA5z_UYRnTXo0ayWtis",
+            "google_rating": 4.9,
+            "google_reviews_count": 66,
+            "reviews_insights": null,
+            "zoho_match": {
+              "found": true,
+              "zoho_id": "751364000002283210",
+              "zoho_name": "PROBODY CLINIC SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ",
+              "status_klienta": "jest",
+              "adres_w_rekordzie": "Siedziba i Filia",
+              "is_siedziba": true,
+              "is_filia": true,
+              "parent_id": null,
+              "parent_name": null,
+              "match_reason": "NIP"
+            }
+          }
+        ],
+        "metadata": {
+          "scraped_at": "2026-01-31T13:10:42.296030",
+          "sources_used": [
+            "nip_lookup",
+            "gus",
+            "website",
+            "google_maps",
+            "facebook",
+            "instagram",
+            "ai_categorization",
+            "zoho_crm"
+          ],
+          "processing_time_ms": 132716,
+          "cost_usd": 0.008,
+          "errors": [],
+          "warnings": [],
+          "data_validation": {
+            "contacts_match": true,
+            "contacts_discrepancies": [],
+            "address_match": true,
+            "address_discrepancies": []
+          }
+        }
+      }
+    },
+    "website_analysis": {
+      "company": {
+        "nip": null,
+        "regon": null,
+        "krs": null,
+        "nazwa_pelna": null,
+        "nazwa_zwyczajowa": "PRO",
+        "adres_siedziby": null,
+        "kategoryzacja_ai": {
+          "platnik_uslug": [],
+          "specjalizacja": [],
+          "wielospecjalistyczne": [],
+          "typ_wlasnosci": null,
+          "kategoria_konta": null,
+          "branza": null,
+          "ai_confidence": 0.0,
+          "ai_reasoning": null
+        },
+        "social_media": {
+          "website": "https://spaprobody.pl/",
+          "facebook": "https://www.facebook.com/spa.probody",
+          "instagram": "https://www.instagram.com/spa_pro_body/",
+          "linkedin": null,
+          "tiktok": null,
+          "x": null
+        },
+        "social_profiles": [],
+        "activity_score": {
+          "total": 5,
+          "recommendation": "COLD",
+          "breakdown": {
+            "google_maps": 0,
+            "facebook": 0,
+            "instagram": 0,
+            "tiktok": 0,
+            "website": 5
+          },
+          "signals": [
+            "SSL aktywny"
+          ]
+        },
+        "placowki": [
+          {
+            "nazwa_placowki": "PRO",
+            "is_siedziba": true,
+            "typ_adresu": "-None-",
+            "adres": {
+              "ulica": null,
+              "kod": null,
+              "miasto": null,
+              "wojewodztwo": null
+            },
+            "kontakty": [
+              {
+                "typ": "telefon",
+                "wartosc": "+48 731 927 231",
+                "opis": null
+              },
+              {
+                "typ": "telefon",
+                "wartosc": "+48 578 038 185",
+                "opis": null
+              }
+            ],
+            "godziny_otwarcia": null,
+            "coordinates": null,
+            "google_maps_place_id": null,
+            "google_rating": null,
+            "google_reviews_count": null,
+            "reviews_insights": null,
+            "zoho_match": null
+          }
+        ],
+        "metadata": {
+          "scraped_at": "2026-01-31T13:10:43.701126",
+          "sources_used": [
+            "website"
+          ],
+          "processing_time_ms": 1403,
+          "cost_usd": 0.0,
+          "errors": [
+            "Analysis error: 'Kontakt' object has no attribute 'telefon'"
+          ],
+          "warnings": [],
+          "data_validation": null
+        }
+      }
+    }
+  },
+  {
+    "name": "Klinika Ambroziak",
+    "input_nip": "1231243387",
+    "input_website": "https://klinikaambroziak.pl",
+    "nip_analysis": {
+      "company": {
+        "nip": "1231243387",
+        "regon": "142784425",
+        "krs": null,
+        "nazwa_pelna": "KLINIKA AMBROZIAK SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ",
+        "nazwa_zwyczajowa": "KLIN",
+        "adres_siedziby": {
+          "ulica": "Aleja gen. Władysława Sikorskiego 13/1U",
+          "kod": "02-758",
+          "miasto": "Warszawa",
+          "wojewodztwo": "mazowieckie"
+        },
+        "kategoryzacja_ai": {
+          "platnik_uslug": [
+            "Komercyjne"
+          ],
+          "specjalizacja": [
+            "Medycyna Estetyczna"
+          ],
+          "wielospecjalistyczne": [
+            "chirurgia plastyczna",
+            "dermatologia",
+            "laryngologia"
+          ],
+          "typ_wlasnosci": "Prywatny (Private)",
+          "kategoria_konta": null,
+          "branza": null,
+          "ai_confidence": 0.99,
+          "ai_reasoning": null
+        },
+        "social_media": {
+          "website": "https://www.klinikaambroziak.com/",
+          "facebook": "https://www.facebook.com/KlinikaAmbroziak",
+          "instagram": "https://www.instagram.com/klinika_ambroziak/",
+          "linkedin": null,
+          "tiktok": null,
+          "x": null
+        },
+        "social_profiles": [
+          {
+            "platform": "facebook",
+            "url": "https://www.facebook.com/KlinikaAmbroziak",
+            "followers": 78194,
+            "posts_count": null,
+            "avg_engagement": null,
+            "last_post_date": null,
+            "is_verified": false,
+            "is_ads_active": null
+          },
+          {
+            "platform": "instagram",
+            "url": "https://www.instagram.com/klinika_ambroziak/",
+            "followers": 64370,
+            "posts_count": 919,
+            "avg_engagement": 0.3,
+            "last_post_date": "2026-01-30T16:19:42+00:00",
+            "is_verified": false,
+            "is_ads_active": null
+          }
+        ],
+        "activity_score": {
+          "total": 65,
+          "recommendation": "LUKEWARM",
+          "breakdown": {
+            "google_maps": 25,
+            "facebook": 10,
+            "instagram": 20,
+            "tiktok": 0,
+            "website": 5,
+            "network": 5
+          },
+          "signals": [
+            "Google Maps 5.0/5",
+            "Google 851 recenzji",
+            "Facebook 78.2K followers",
+            "Instagram 64.4K followers",
+            "IG aktywny < 14 dni",
+            "SSL aktywny",
+            "Sieć 5 placówek"
+          ]
+        },
+        "placowki": [
+          {
+            "nazwa_placowki": "KLIN WARSZAWA MIKOŁAJA KOPERNIKA",
+            "is_siedziba": true,
+            "typ_adresu": "-None-",
+            "adres": {
+              "ulica": "ul. Mikołaja Kopernika 15/lok. 3",
+              "kod": "00-367",
+              "miasto": "Warszawa",
+              "wojewodztwo": null
+            },
+            "kontakty": [
+              {
+                "typ": "telefon",
+                "wartosc": "+48 221 115 005",
+                "opis": null
+              },
+              {
+                "typ": "telefon",
+                "wartosc": "+48 726 101 000",
+                "opis": null
+              },
+              {
+                "typ": "telefon",
+                "wartosc": "+48 607 474 800",
+                "opis": "Google Maps"
+              }
+            ],
+            "godziny_otwarcia": "sob: ZAMknięte; nie: ZAMknięte; pon: 10:00 to 20:00; wto: 10:00 to 20:00; śro: 10:00 to 20:00; czw: 10:00 to 20:00; pią: 10:00 to 20:00",
+            "coordinates": {
+              "lat": 52.2353625,
+              "lng": 21.0204919
+            },
+            "google_maps_place_id": "ChIJic2fXM_NHkcRzRnOevwHtbI",
+            "google_rating": 4.7,
+            "google_reviews_count": 37,
+            "reviews_insights": null,
+            "zoho_match": {
+              "found": true,
+              "zoho_id": "751364000002389523",
+              "zoho_name": "KLINIKA AMBROZIAK SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ",
+              "status_klienta": "jest",
+              "adres_w_rekordzie": "Siedziba i Filia",
+              "is_siedziba": true,
+              "is_filia": true,
+              "parent_id": null,
+              "parent_name": null,
+              "match_reason": "NIP"
+            }
+          },
+          {
+            "nazwa_placowki": "KLIN WARSZAWA KOSIARZY",
+            "is_siedziba": false,
+            "typ_adresu": "-None-",
+            "adres": {
+              "ulica": "ul. Kosiarzy 9A",
+              "kod": "02-953",
+              "miasto": "Warszawa",
+              "wojewodztwo": null
+            },
+            "kontakty": [
+              {
+                "typ": "telefon",
+                "wartosc": "+48 221 115 005",
+                "opis": null
+              },
+              {
+                "typ": "telefon",
+                "wartosc": "+48 726 101 000",
+                "opis": null
+              }
+            ],
+            "godziny_otwarcia": "sob: ZAMknięte; nie: ZAMknięte; pon: 10:00 to 20:00; wto: 10:00 to 20:00; śro: 10:00 to 20:00; czw: 10:00 to 20:00; pią: 10:00 to 20:00",
+            "coordinates": {
+              "lat": 52.1715942,
+              "lng": 21.0822052
+            },
+            "google_maps_place_id": "ChIJd-WL7OQtGUcRi6trm4SO5iw",
+            "google_rating": 4.8,
+            "google_reviews_count": 189,
+            "reviews_insights": null,
+            "zoho_match": {
+              "found": true,
+              "zoho_id": "751364000002389523",
+              "zoho_name": "KLINIKA AMBROZIAK SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ",
+              "status_klienta": "jest",
+              "adres_w_rekordzie": "Siedziba i Filia",
+              "is_siedziba": true,
+              "is_filia": true,
+              "parent_id": null,
+              "parent_name": null,
+              "match_reason": "NIP"
+            }
+          },
+          {
+            "nazwa_placowki": "KLIN WARSZAWA ALEJA GEN",
+            "is_siedziba": false,
+            "typ_adresu": "-None-",
+            "adres": {
+              "ulica": "Aleja Gen. Władysława Sikorskiego 13/U1",
+              "kod": "02-758",
+              "miasto": "Warszawa",
+              "wojewodztwo": null
+            },
+            "kontakty": [
+              {
+                "typ": "telefon",
+                "wartosc": "+48 221 115 005",
+                "opis": null
+              },
+              {
+                "typ": "telefon",
+                "wartosc": "+48 726 101 000",
+                "opis": null
+              }
+            ],
+            "godziny_otwarcia": "sob: 10:00 to 18:00; nie: ZAMknięte; pon: 10:00 to 20:00; wto: 10:00 to 20:00; śro: 10:00 to 20:00; czw: 10:00 to 20:00; pią: 10:00 to 20:00",
+            "coordinates": {
+              "lat": 52.1853092,
+              "lng": 21.0447412
+            },
+            "google_maps_place_id": "ChIJ1a0bFbUyGUcR0kJtQFIX--4",
+            "google_rating": 4.3,
+            "google_reviews_count": 597,
+            "reviews_insights": null,
+            "zoho_match": {
+              "found": true,
+              "zoho_id": "751364000002389523",
+              "zoho_name": "KLINIKA AMBROZIAK SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ",
+              "status_klienta": "jest",
+              "adres_w_rekordzie": "Siedziba i Filia",
+              "is_siedziba": true,
+              "is_filia": true,
+              "parent_id": null,
+              "parent_name": null,
+              "match_reason": "NIP"
+            }
+          },
+          {
+            "nazwa_placowki": "KLIN WARSZAWA ALEJA KOMISJI EDUKACJI NARODOWEJ",
+            "is_siedziba": false,
+            "typ_adresu": "-None-",
+            "adres": {
+              "ulica": "Aleja Komisji Edukacji Narodowej 98",
+              "kod": "02-777",
+              "miasto": "Warszawa",
+              "wojewodztwo": null
+            },
+            "kontakty": [
+              {
+                "typ": "telefon",
+                "wartosc": "+48 221 115 005",
+                "opis": null
+              },
+              {
+                "typ": "telefon",
+                "wartosc": "+48 726 101 000",
+                "opis": null
+              },
+              {
+                "typ": "telefon",
+                "wartosc": "+48 502 656 806",
+                "opis": "Google Maps"
+              }
+            ],
+            "godziny_otwarcia": "sob: ZAMknięte; nie: ZAMknięte; pon: 12:00 to 20:00; wto: 12:00 to 18:00; śro: 12:00 to 18:00; czw: 12:00 to 20:00; pią: 12:00 to 18:00",
+            "coordinates": {
+              "lat": 52.1612621,
+              "lng": 21.0298384
+            },
+            "google_maps_place_id": "ChIJxa0NwJMyGUcRK_5wqWZsxHk",
+            "google_rating": 4.4,
+            "google_reviews_count": 27,
+            "reviews_insights": null,
+            "zoho_match": {
+              "found": true,
+              "zoho_id": "751364000002389523",
+              "zoho_name": "KLINIKA AMBROZIAK SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ",
+              "status_klienta": "jest",
+              "adres_w_rekordzie": "Siedziba i Filia",
+              "is_siedziba": true,
+              "is_filia": true,
+              "parent_id": null,
+              "parent_name": null,
+              "match_reason": "NIP"
+            }
+          },
+          {
+            "nazwa_placowki": "KLIN WARSZAWA WŁADYSŁAWA BRONIEWSKIEGO",
+            "is_siedziba": false,
+            "typ_adresu": "-None-",
+            "adres": {
+              "ulica": "ul. Władysława Broniewskiego 3/lok. 2.1",
+              "kod": "01-785",
+              "miasto": "Warszawa",
+              "wojewodztwo": null
+            },
+            "kontakty": [
+              {
+                "typ": "telefon",
+                "wartosc": "+48 221 115 005",
+                "opis": null
+              },
+              {
+                "typ": "telefon",
+                "wartosc": "+48 726 101 000",
+                "opis": null
+              },
+              {
+                "typ": "telefon",
+                "wartosc": "+48 226 669 595",
+                "opis": "Google Maps"
+              }
+            ],
+            "godziny_otwarcia": "sob: ZAMknięte; nie: ZAMknięte; pon: 08:00 to 20:00; wto: 08:00 to 20:00; śro: 08:00 to 20:00; czw: 08:00 to 20:00; pią: 08:00 to 20:00",
+            "coordinates": {
+              "lat": 52.2623764,
+              "lng": 20.9771454
+            },
+            "google_maps_place_id": "ChIJg1g262zLHkcRbm6YIrvSrYI",
+            "google_rating": 5.0,
+            "google_reviews_count": 1,
+            "reviews_insights": null,
+            "zoho_match": {
+              "found": true,
+              "zoho_id": "751364000002389523",
+              "zoho_name": "KLINIKA AMBROZIAK SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ",
+              "status_klienta": "jest",
+              "adres_w_rekordzie": "Siedziba i Filia",
+              "is_siedziba": true,
+              "is_filia": true,
+              "parent_id": null,
+              "parent_name": null,
+              "match_reason": "NIP"
+            }
+          }
+        ],
+        "metadata": {
+          "scraped_at": "2026-01-31T13:17:39.339772",
+          "sources_used": [
+            "nip_lookup",
+            "gus",
+            "website",
+            "google_maps",
+            "facebook",
+            "instagram",
+            "ai_categorization",
+            "zoho_crm"
+          ],
+          "processing_time_ms": 152198,
+          "cost_usd": 0.039,
+          "errors": [],
+          "warnings": [],
+          "data_validation": {
+            "contacts_match": true,
+            "contacts_discrepancies": [],
+            "address_match": true,
+            "address_discrepancies": []
+          }
+        }
+      }
+    },
+    "website_analysis": {
+      "company": {
+        "nip": null,
+        "regon": null,
+        "krs": null,
+        "nazwa_pelna": null,
+        "nazwa_zwyczajowa": "MEDYCYNY ESTETYCZNEJ",
+        "adres_siedziby": null,
+        "kategoryzacja_ai": {
+          "platnik_uslug": [],
+          "specjalizacja": [],
+          "wielospecjalistyczne": [],
+          "typ_wlasnosci": null,
+          "kategoria_konta": null,
+          "branza": null,
+          "ai_confidence": 0.0,
+          "ai_reasoning": null
+        },
+        "social_media": {
+          "website": "https://klinikaambroziak.pl",
+          "facebook": "https://www.facebook.com/KlinikaAmbroziak",
+          "instagram": "https://www.instagram.com/klinika_ambroziak/",
+          "linkedin": null,
+          "tiktok": null,
+          "x": null
+        },
+        "social_profiles": [],
+        "activity_score": {
+          "total": 5,
+          "recommendation": "COLD",
+          "breakdown": {
+            "google_maps": 0,
+            "facebook": 0,
+            "instagram": 0,
+            "tiktok": 0,
+            "website": 5
+          },
+          "signals": [
+            "SSL aktywny"
+          ]
+        },
+        "placowki": [
+          {
+            "nazwa_placowki": "MEDYCYNY ESTETYCZNEJ",
+            "is_siedziba": true,
+            "typ_adresu": "-None-",
+            "adres": {
+              "ulica": null,
+              "kod": null,
+              "miasto": null,
+              "wojewodztwo": null
+            },
+            "kontakty": [
+              {
+                "typ": "telefon",
+                "wartosc": "+48 221 115 005",
+                "opis": null
+              },
+              {
+                "typ": "telefon",
+                "wartosc": "+48 726 101 000",
+                "opis": null
+              }
+            ],
+            "godziny_otwarcia": null,
+            "coordinates": null,
+            "google_maps_place_id": null,
+            "google_rating": null,
+            "google_reviews_count": null,
+            "reviews_insights": null,
+            "zoho_match": null
+          }
+        ],
+        "metadata": {
+          "scraped_at": "2026-01-31T13:17:47.701568",
+          "sources_used": [
+            "website"
+          ],
+          "processing_time_ms": 8359,
+          "cost_usd": 0.0,
+          "errors": [
+            "Analysis error: 'Kontakt' object has no attribute 'telefon'"
+          ],
+          "warnings": [],
+          "data_validation": null
+        }
+      }
+    }
+  },
+  {
+    "name": "Aldent Wroclaw",
+    "input_nip": "8941864949",
+    "input_website": "https://aldent.wroclaw.pl",
+    "nip_analysis": {
+      "company": {
+        "nip": "8941864949",
+        "regon": "930081820",
+        "krs": null,
+        "nazwa_pelna": "USŁUGI MEDYCZNE ALICJA KAŹMIERCZAK-OCHROMBEL",
+        "nazwa_zwyczajowa": "ALDENT",
+        "adres_siedziby": {
+          "ulica": "ul. Arbuzowa 13/1",
+          "kod": "54-054",
+          "miasto": "Wrocław",
+          "wojewodztwo": "dolnośląskie"
+        },
+        "kategoryzacja_ai": {
+          "platnik_uslug": [
+            "NFZ",
+            "Komercyjne"
+          ],
+          "specjalizacja": [
+            "Stomatologia"
+          ],
+          "wielospecjalistyczne": [],
+          "typ_wlasnosci": "Prywatny (Private)",
+          "kategoria_konta": null,
+          "branza": null,
+          "ai_confidence": 0.99,
+          "ai_reasoning": null
+        },
+        "social_media": {
+          "website": "https://www.aldent.wroclaw.pl/",
+          "facebook": "https://www.facebook.com/aldentwroclaw/",
+          "instagram": null,
+          "linkedin": null,
+          "tiktok": null,
+          "x": null
+        },
+        "social_profiles": [
+          {
+            "platform": "facebook",
+            "url": "https://www.facebook.com/aldentwroclaw/",
+            "followers": 512,
+            "posts_count": null,
+            "avg_engagement": null,
+            "last_post_date": null,
+            "is_verified": false,
+            "is_ads_active": null
+          }
+        ],
+        "activity_score": {
+          "total": 35,
+          "recommendation": "COLD",
+          "breakdown": {
+            "google_maps": 25,
+            "facebook": 0,
+            "instagram": 0,
+            "tiktok": 0,
+            "website": 5,
+            "network": 5
+          },
+          "signals": [
+            "Google Maps 5.0/5",
+            "Google 502 recenzji",
+            "SSL aktywny",
+            "Sieć 6 placówek"
+          ]
+        },
+        "placowki": [
+          {
+            "nazwa_placowki": "ALDENT WROCŁAW MARKA HŁASKI",
+            "is_siedziba": true,
+            "typ_adresu": "-None-",
+            "adres": {
+              "ulica": "ul. Marka Hłaski 67A",
+              "kod": "54-608",
+              "miasto": "Wrocław",
+              "wojewodztwo": null
+            },
+            "kontakty": [
+              {
+                "typ": "telefon",
+                "wartosc": "+48 732 470 211",
+                "opis": null
+              },
+              {
+                "typ": "telefon",
+                "wartosc": "+48 717 500 937",
+                "opis": null
+              },
+              {
+                "typ": "telefon",
+                "wartosc": "+48 607 343 124",
+                "opis": null
+              },
+              {
+                "typ": "telefon",
+                "wartosc": "+48 713 508 615",
+                "opis": null
+              },
+              {
+                "typ": "email",
+                "wartosc": "rejestracja-arbuzowa@aldent.wroclaw.pl",
+                "opis": null
+              },
+              {
+                "typ": "email",
+                "wartosc": "rejestracja@aldent.wroclaw.pl",
+                "opis": null
+              },
+              {
+                "typ": "email",
+                "wartosc": "aldent@aldent.wroclaw.pl",
+                "opis": null
+              },
+              {
+                "typ": "telefon",
+                "wartosc": "+48 795 411 346",
+                "opis": "Google Maps"
+              }
+            ],
+            "godziny_otwarcia": "sob: 10:00 to 15:00; nie: ZAMknięte; pon: 10:00 to 20:00; wto: 10:00 to 20:00; śro: 10:00 to 20:00; czw: 10:00 to 20:00; pią: 10:00 to 20:00",
+            "coordinates": {
+              "lat": 51.1000534,
+              "lng": 16.9504039
+            },
+            "google_maps_place_id": "ChIJs5GmLL_BD0cRWZbMwrTI9_0",
+            "google_rating": 4.8,
+            "google_reviews_count": 90,
+            "reviews_insights": null,
+            "zoho_match": {
+              "found": true,
+              "zoho_id": "751364000002291762",
+              "zoho_name": "USŁUGI MEDYCZNE ALICJA KAŹMIERCZAK-OCHROMBEL",
+              "status_klienta": "nie jest/nie był",
+              "adres_w_rekordzie": "Siedziba i Filia",
+              "is_siedziba": true,
+              "is_filia": true,
+              "parent_id": null,
+              "parent_name": null,
+              "match_reason": "NIP"
+            }
+          },
+          {
+            "nazwa_placowki": "ALDENT WROCŁAW WRÓBLA",
+            "is_siedziba": false,
+            "typ_adresu": "-None-",
+            "adres": {
+              "ulica": "ul. Wróbla 1",
+              "kod": "53-407",
+              "miasto": "Wrocław",
+              "wojewodztwo": null
+            },
+            "kontakty": [
+              {
+                "typ": "telefon",
+                "wartosc": "+48 732 470 211",
+                "opis": null
+              },
+              {
+                "typ": "telefon",
+                "wartosc": "+48 717 500 937",
+                "opis": null
+              },
+              {
+                "typ": "telefon",
+                "wartosc": "+48 607 343 124",
+                "opis": null
+              },
+              {
+                "typ": "telefon",
+                "wartosc": "+48 713 508 615",
+                "opis": null
+              },
+              {
+                "typ": "email",
+                "wartosc": "rejestracja-arbuzowa@aldent.wroclaw.pl",
+                "opis": null
+              },
+              {
+                "typ": "email",
+                "wartosc": "rejestracja@aldent.wroclaw.pl",
+                "opis": null
+              },
+              {
+                "typ": "email",
+                "wartosc": "aldent@aldent.wroclaw.pl",
+                "opis": null
+              },
+              {
+                "typ": "telefon",
+                "wartosc": "+48 451 022 688",
+                "opis": "Google Maps"
+              }
+            ],
+            "godziny_otwarcia": "sob: 09:00 to 14:00; nie: ZAMknięte; pon: 09:00 to 20:00; wto: 09:00 to 20:00; śro: 09:00 to 20:00; czw: 09:00 to 20:00; pią: 09:00 to 20:00",
+            "coordinates": {
+              "lat": 51.0931833,
+              "lng": 17.006883
+            },
+            "google_maps_place_id": "ChIJQXCsTOPDD0cR26ksQiH0Z7w",
+            "google_rating": 4.7,
+            "google_reviews_count": 62,
+            "reviews_insights": null,
+            "zoho_match": {
+              "found": true,
+              "zoho_id": "751364000002291762",
+              "zoho_name": "USŁUGI MEDYCZNE ALICJA KAŹMIERCZAK-OCHROMBEL",
+              "status_klienta": "nie jest/nie był",
+              "adres_w_rekordzie": "Siedziba i Filia",
+              "is_siedziba": true,
+              "is_filia": true,
+              "parent_id": null,
+              "parent_name": null,
+              "match_reason": "NIP"
+            }
+          },
+          {
+            "nazwa_placowki": "ALDENT WROCŁAW ŚREDZKA",
+            "is_siedziba": false,
+            "typ_adresu": "-None-",
+            "adres": {
+              "ulica": "ul. Średzka 39/u27",
+              "kod": "54-001",
+              "miasto": "Wrocław",
+              "wojewodztwo": null
+            },
+            "kontakty": [
+              {
+                "typ": "telefon",
+                "wartosc": "+48 732 470 211",
+                "opis": null
+              },
+              {
+                "typ": "telefon",
+                "wartosc": "+48 717 500 937",
+                "opis": null
+              },
+              {
+                "typ": "telefon",
+                "wartosc": "+48 607 343 124",
+                "opis": null
+              },
+              {
+                "typ": "telefon",
+                "wartosc": "+48 713 508 615",
+                "opis": null
+              },
+              {
+                "typ": "email",
+                "wartosc": "rejestracja-arbuzowa@aldent.wroclaw.pl",
+                "opis": null
+              },
+              {
+                "typ": "email",
+                "wartosc": "rejestracja@aldent.wroclaw.pl",
+                "opis": null
+              },
+              {
+                "typ": "email",
+                "wartosc": "aldent@aldent.wroclaw.pl",
+                "opis": null
+              },
+              {
+                "typ": "telefon",
+                "wartosc": "+48 692 271 671",
+                "opis": "Google Maps"
+              }
+            ],
+            "godziny_otwarcia": "sob: ZAMknięte; nie: ZAMknięte; pon: 12:30 to 19:00; wto: 09:00 to 17:00; śro: 09:00 to 17:00; czw: 09:00 to 17:00; pią: 09:00 to 17:00",
+            "coordinates": {
+              "lat": 51.1457147,
+              "lng": 16.8670978
+            },
+            "google_maps_place_id": "ChIJJ9wBNr2VD0cRvrdDnAYuelc",
+            "google_rating": 5.0,
+            "google_reviews_count": 1,
+            "reviews_insights": null,
+            "zoho_match": {
+              "found": true,
+              "zoho_id": "751364000002291762",
+              "zoho_name": "USŁUGI MEDYCZNE ALICJA KAŹMIERCZAK-OCHROMBEL",
+              "status_klienta": "nie jest/nie był",
+              "adres_w_rekordzie": "Siedziba i Filia",
+              "is_siedziba": true,
+              "is_filia": true,
+              "parent_id": null,
+              "parent_name": null,
+              "match_reason": "NIP"
+            }
+          },
+          {
+            "nazwa_placowki": "ALDENT WROCŁAW LUCJANA SIEMIEŃSKIEGO",
+            "is_siedziba": false,
+            "typ_adresu": "-None-",
+            "adres": {
+              "ulica": "ul. Lucjana Siemieńskiego 4A",
+              "kod": "50-228",
+              "miasto": "Wrocław",
+              "wojewodztwo": null
+            },
+            "kontakty": [
+              {
+                "typ": "telefon",
+                "wartosc": "+48 732 470 211",
+                "opis": null
+              },
+              {
+                "typ": "telefon",
+                "wartosc": "+48 717 500 937",
+                "opis": null
+              },
+              {
+                "typ": "telefon",
+                "wartosc": "+48 607 343 124",
+                "opis": null
+              },
+              {
+                "typ": "telefon",
+                "wartosc": "+48 713 508 615",
+                "opis": null
+              },
+              {
+                "typ": "email",
+                "wartosc": "rejestracja-arbuzowa@aldent.wroclaw.pl",
+                "opis": null
+              },
+              {
+                "typ": "email",
+                "wartosc": "rejestracja@aldent.wroclaw.pl",
+                "opis": null
+              },
+              {
+                "typ": "email",
+                "wartosc": "aldent@aldent.wroclaw.pl",
+                "opis": null
+              },
+              {
+                "typ": "telefon",
+                "wartosc": "+48 784 244 144",
+                "opis": "Google Maps"
+              }
+            ],
+            "godziny_otwarcia": "sob: 08:30 to 14:30; nie: ZAMknięte; pon: 08:00 to 20:00; wto: 08:00 to 20:00; śro: 08:00 to 20:00; czw: 08:00 to 20:00; pią: 08:00 to 20:00",
+            "coordinates": {
+              "lat": 51.1271442,
+              "lng": 17.033936
+            },
+            "google_maps_place_id": "ChIJsU5hnenpD0cR2wpHfux4cvg",
+            "google_rating": 4.7,
+            "google_reviews_count": 192,
+            "reviews_insights": null,
+            "zoho_match": {
+              "found": true,
+              "zoho_id": "751364000002291762",
+              "zoho_name": "USŁUGI MEDYCZNE ALICJA KAŹMIERCZAK-OCHROMBEL",
+              "status_klienta": "nie jest/nie był",
+              "adres_w_rekordzie": "Siedziba i Filia",
+              "is_siedziba": true,
+              "is_filia": true,
+              "parent_id": null,
+              "parent_name": null,
+              "match_reason": "NIP"
+            }
+          },
+          {
+            "nazwa_placowki": "ALDENT WROCŁAW ARBUZOWA",
+            "is_siedziba": false,
+            "typ_adresu": "-None-",
+            "adres": {
+              "ulica": "ul. Arbuzowa 13/1",
+              "kod": "54-054",
+              "miasto": "Wrocław",
+              "wojewodztwo": null
+            },
+            "kontakty": [
+              {
+                "typ": "telefon",
+                "wartosc": "+48 732 470 211",
+                "opis": null
+              },
+              {
+                "typ": "telefon",
+                "wartosc": "+48 717 500 937",
+                "opis": null
+              },
+              {
+                "typ": "telefon",
+                "wartosc": "+48 607 343 124",
+                "opis": null
+              },
+              {
+                "typ": "telefon",
+                "wartosc": "+48 713 508 615",
+                "opis": null
+              },
+              {
+                "typ": "email",
+                "wartosc": "rejestracja-arbuzowa@aldent.wroclaw.pl",
+                "opis": null
+              },
+              {
+                "typ": "email",
+                "wartosc": "rejestracja@aldent.wroclaw.pl",
+                "opis": null
+              },
+              {
+                "typ": "email",
+                "wartosc": "aldent@aldent.wroclaw.pl",
+                "opis": null
+              }
+            ],
+            "godziny_otwarcia": "sob: ZAMknięte; nie: ZAMknięte; pon: 09:00 to 19:00; wto: 09:00 to 19:00; śro: 09:00 to 19:00; czw: 09:00 to 19:00; pią: 09:00 to 19:00",
+            "coordinates": {
+              "lat": 51.1552754,
+              "lng": 16.8994842
+            },
+            "google_maps_place_id": "ChIJIRsV58rqD0cRlgyYCO8oFHs",
+            "google_rating": 4.2,
+            "google_reviews_count": 77,
+            "reviews_insights": null,
+            "zoho_match": {
+              "found": true,
+              "zoho_id": "751364000002291762",
+              "zoho_name": "USŁUGI MEDYCZNE ALICJA KAŹMIERCZAK-OCHROMBEL",
+              "status_klienta": "nie jest/nie był",
+              "adres_w_rekordzie": "Siedziba i Filia",
+              "is_siedziba": true,
+              "is_filia": true,
+              "parent_id": null,
+              "parent_name": null,
+              "match_reason": "NIP"
+            }
+          },
+          {
+            "nazwa_placowki": "ALDENT WROCŁAW RYSIA",
+            "is_siedziba": false,
+            "typ_adresu": "-None-",
+            "adres": {
+              "ulica": "ul. Rysia 1",
+              "kod": "54-203",
+              "miasto": "Wrocław",
+              "wojewodztwo": null
+            },
+            "kontakty": [
+              {
+                "typ": "telefon",
+                "wartosc": "+48 732 470 211",
+                "opis": null
+              },
+              {
+                "typ": "telefon",
+                "wartosc": "+48 717 500 937",
+                "opis": null
+              },
+              {
+                "typ": "telefon",
+                "wartosc": "+48 607 343 124",
+                "opis": null
+              },
+              {
+                "typ": "telefon",
+                "wartosc": "+48 713 508 615",
+                "opis": null
+              },
+              {
+                "typ": "email",
+                "wartosc": "rejestracja-arbuzowa@aldent.wroclaw.pl",
+                "opis": null
+              },
+              {
+                "typ": "email",
+                "wartosc": "rejestracja@aldent.wroclaw.pl",
+                "opis": null
+              },
+              {
+                "typ": "email",
+                "wartosc": "aldent@aldent.wroclaw.pl",
+                "opis": null
+              }
+            ],
+            "godziny_otwarcia": "sob: 08:00 to 14:00; nie: ZAMknięte; pon: 09:00 to 19:00; wto: 09:00 to 19:00; śro: 09:00 to 19:00; czw: 09:00 to 19:00; pią: 09:00 to 19:00",
+            "coordinates": {
+              "lat": 51.1240461,
+              "lng": 16.9889392
+            },
+            "google_maps_place_id": "ChIJc0l0AAbqD0cR9991ei5Xg9A",
+            "google_rating": 4.1,
+            "google_reviews_count": 80,
+            "reviews_insights": null,
+            "zoho_match": {
+              "found": true,
+              "zoho_id": "751364000002291762",
+              "zoho_name": "USŁUGI MEDYCZNE ALICJA KAŹMIERCZAK-OCHROMBEL",
+              "status_klienta": "nie jest/nie był",
+              "adres_w_rekordzie": "Siedziba i Filia",
+              "is_siedziba": true,
+              "is_filia": true,
+              "parent_id": null,
+              "parent_name": null,
+              "match_reason": "NIP"
+            }
+          }
+        ],
+        "metadata": {
+          "scraped_at": "2026-01-31T13:20:16.327299",
+          "sources_used": [
+            "nip_lookup",
+            "gus",
+            "website",
+            "google_maps",
+            "facebook",
+            "ai_categorization",
+            "zoho_crm"
+          ],
+          "processing_time_ms": 129042,
+          "cost_usd": 0.024,
+          "errors": [],
+          "warnings": [],
+          "data_validation": {
+            "contacts_match": true,
+            "contacts_discrepancies": [],
+            "address_match": true,
+            "address_discrepancies": []
+          }
+        }
+      }
+    },
+    "website_analysis": {
+      "company": {
+        "nip": null,
+        "regon": null,
+        "krs": null,
+        "nazwa_pelna": null,
+        "nazwa_zwyczajowa": "ALDENT",
+        "adres_siedziby": null,
+        "kategoryzacja_ai": {
+          "platnik_uslug": [],
+          "specjalizacja": [],
+          "wielospecjalistyczne": [],
+          "typ_wlasnosci": null,
+          "kategoria_konta": null,
+          "branza": null,
+          "ai_confidence": 0.0,
+          "ai_reasoning": null
+        },
+        "social_media": {
+          "website": "https://aldent.wroclaw.pl",
+          "facebook": "https://www.facebook.com/aldentwroclaw/",
+          "instagram": null,
+          "linkedin": null,
+          "tiktok": null,
+          "x": null
+        },
+        "social_profiles": [],
+        "activity_score": {
+          "total": 5,
+          "recommendation": "COLD",
+          "breakdown": {
+            "google_maps": 0,
+            "facebook": 0,
+            "instagram": 0,
+            "tiktok": 0,
+            "website": 5
+          },
+          "signals": [
+            "SSL aktywny"
+          ]
+        },
+        "placowki": [
+          {
+            "nazwa_placowki": "ALDENT",
+            "is_siedziba": true,
+            "typ_adresu": "-None-",
+            "adres": {
+              "ulica": null,
+              "kod": null,
+              "miasto": null,
+              "wojewodztwo": null
+            },
+            "kontakty": [
+              {
+                "typ": "telefon",
+                "wartosc": "+48 732 470 211",
+                "opis": null
+              },
+              {
+                "typ": "telefon",
+                "wartosc": "+48 717 500 937",
+                "opis": null
+              },
+              {
+                "typ": "telefon",
+                "wartosc": "+48 607 343 124",
+                "opis": null
+              },
+              {
+                "typ": "telefon",
+                "wartosc": "+48 713 508 615",
+                "opis": null
+              },
+              {
+                "typ": "email",
+                "wartosc": "rejestracja-arbuzowa@aldent.wroclaw.pl",
+                "opis": null
+              },
+              {
+                "typ": "email",
+                "wartosc": "rejestracja@aldent.wroclaw.pl",
+                "opis": null
+              },
+              {
+                "typ": "email",
+                "wartosc": "aldent@aldent.wroclaw.pl",
+                "opis": null
+              }
+            ],
+            "godziny_otwarcia": null,
+            "coordinates": null,
+            "google_maps_place_id": null,
+            "google_rating": null,
+            "google_reviews_count": null,
+            "reviews_insights": null,
+            "zoho_match": null
+          }
+        ],
+        "metadata": {
+          "scraped_at": "2026-01-31T13:20:18.205307",
+          "sources_used": [
+            "website"
+          ],
+          "processing_time_ms": 1875,
+          "cost_usd": 0.0,
+          "errors": [
+            "Analysis error: 'Kontakt' object has no attribute 'telefon'"
+          ],
+          "warnings": [],
+          "data_validation": null
+        }
+      }
+    }
+  }
+]

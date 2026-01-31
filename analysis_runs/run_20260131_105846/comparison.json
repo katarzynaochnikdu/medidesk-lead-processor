@@ -1,0 +1,157 @@
+{
+  "generated_at": "2026-01-31T11:08:31.365496",
+  "output_dir": "analysis_runs\\run_20260131_105846",
+  "comparison": {
+    "nip": {
+      "label": "OT.CO NIP",
+      "sources": [
+        "nip_lookup",
+        "gus",
+        "website",
+        "google_maps",
+        "google_reviews_analysis",
+        "facebook",
+        "instagram",
+        "tiktok",
+        "ai_categorization",
+        "zoho_crm"
+      ],
+      "placowki_count": 2,
+      "activity_score_total": 65,
+      "activity_recommendation": "LUKEWARM",
+      "signals": [
+        "Google Maps 4.6/5",
+        "Google 878 recenzji",
+        "Facebook 10.4K followers",
+        "Instagram 15.8K followers",
+        "IG aktywny < 14 dni",
+        "TikTok 49.0K",
+        "SSL aktywny"
+      ],
+      "social_profiles": [
+        {
+          "platform": "facebook",
+          "url": "https://www.facebook.com/ot.co.clinic/",
+          "followers": 10370,
+          "posts_count": null,
+          "avg_engagement": null,
+          "last_post_date": null,
+          "is_verified": false,
+          "is_ads_active": null
+        },
+        {
+          "platform": "instagram",
+          "url": "https://www.instagram.com/otcoclinic/",
+          "followers": 15850,
+          "posts_count": 853,
+          "avg_engagement": 0.04,
+          "last_post_date": "2026-01-28T08:30:00+00:00",
+          "is_verified": false,
+          "is_ads_active": null
+        },
+        {
+          "platform": "tiktok",
+          "url": "https://www.tiktok.com/@klinikaotco",
+          "followers": 49000,
+          "posts_count": 333,
+          "avg_engagement": null,
+          "last_post_date": null,
+          "is_verified": false,
+          "is_ads_active": null
+        }
+      ],
+      "addresses": [
+        {
+          "ulica": "ul. Bartycka 24B/U1",
+          "kod": "00-716",
+          "miasto": "Warszawa",
+          "wojewodztwo": null
+        },
+        {
+          "ulica": "Zgrupowania AK \"Żmija\" 12",
+          "kod": "01-864",
+          "miasto": "Warszawa",
+          "wojewodztwo": null
+        }
+      ]
+    },
+    "website": {
+      "label": "OT.CO Website",
+      "sources": [
+        "website",
+        "gus",
+        "google_maps",
+        "google_reviews_analysis",
+        "facebook",
+        "instagram",
+        "tiktok",
+        "ai_categorization",
+        "zoho_crm"
+      ],
+      "placowki_count": 2,
+      "activity_score_total": 65,
+      "activity_recommendation": "LUKEWARM",
+      "signals": [
+        "Google Maps 4.6/5",
+        "Google 878 recenzji",
+        "Facebook 10.4K followers",
+        "Instagram 15.8K followers",
+        "IG aktywny < 14 dni",
+        "TikTok 49.0K",
+        "SSL aktywny"
+      ],
+      "social_profiles": [
+        {
+          "platform": "facebook",
+          "url": "https://www.facebook.com/ot.co.clinic/",
+          "followers": 10370,
+          "posts_count": null,
+          "avg_engagement": null,
+          "last_post_date": null,
+          "is_verified": false,
+          "is_ads_active": null
+        },
+        {
+          "platform": "instagram",
+          "url": "https://www.instagram.com/otcoclinic/",
+          "followers": 15849,
+          "posts_count": 853,
+          "avg_engagement": 0.04,
+          "last_post_date": "2026-01-28T08:30:00+00:00",
+          "is_verified": false,
+          "is_ads_active": null
+        },
+        {
+          "platform": "tiktok",
+          "url": "https://www.tiktok.com/@klinikaotco",
+          "followers": 49000,
+          "posts_count": 333,
+          "avg_engagement": null,
+          "last_post_date": null,
+          "is_verified": false,
+          "is_ads_active": null
+        }
+      ],
+      "addresses": [
+        {
+          "ulica": "ul. Bartycka 24B/U1",
+          "kod": "00-716",
+          "miasto": "Warszawa",
+          "wojewodztwo": null
+        },
+        {
+          "ulica": "Zgrupowania AK \"Żmija\" 12",
+          "kod": "01-864",
+          "miasto": "Warszawa",
+          "wojewodztwo": null
+        }
+      ]
+    }
+  },
+  "differences": {
+    "placowki_nip": 2,
+    "placowki_website": 2,
+    "activity_nip": 65,
+    "activity_website": 65
+  }
+}

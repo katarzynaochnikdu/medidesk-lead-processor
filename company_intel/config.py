@@ -41,6 +41,15 @@ class CompanyIntelSettings(BaseSettings):
     # === GUS API ===
     gus_api_key: Optional[str] = Field(None, alias="REGON_API_KEY_TOKEN")
     
+    # === ZOHO CRM ===
+    zoho_client_id: str = Field("", alias="ZOHO_CLIENT_ID")
+    zoho_client_secret: str = Field("", alias="ZOHO_CLIENT_SECRET")
+    zoho_refresh_token: str = Field("", alias="ZOHO_REFRESH_TOKEN")
+    zoho_md_crm_leady_crud_client_id: str = Field("", alias="ZOHO_MD_CRM_LEADY_CRUD_CLIENT_ID")
+    zoho_md_crm_leady_crud_client_secret: str = Field("", alias="ZOHO_MD_CRM_LEADY_CRUD_CLIENT_SECRET")
+    zoho_md_crm_leady_crud_refresh_token: str = Field("", alias="ZOHO_MD_CRM_LEADY_CRUD_REFRESH_TOKEN")
+    zoho_region: str = Field("eu", alias="ZOHO_REGION")
+    
     # === TIMEOUTS ===
     request_timeout_sec: int = Field(30, alias="REQUEST_TIMEOUT_SEC")
     scraper_timeout_sec: int = Field(60, alias="SCRAPER_TIMEOUT_SEC")
@@ -61,6 +70,16 @@ class CompanyIntelSettings(BaseSettings):
     score_facebook_followers_threshold: int = Field(1000)
     score_instagram_followers_threshold: int = Field(500)
     
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        # Zoho: priorytet ZOHO_MD_CRM_* > ZOHO_*
+        if not self.zoho_client_id or self.zoho_client_id.startswith("your-"):
+            self.zoho_client_id = self.zoho_md_crm_leady_crud_client_id or ""
+        if not self.zoho_client_secret or self.zoho_client_secret.startswith("your-"):
+            self.zoho_client_secret = self.zoho_md_crm_leady_crud_client_secret or ""
+        if not self.zoho_refresh_token or self.zoho_refresh_token.startswith("your-"):
+            self.zoho_refresh_token = self.zoho_md_crm_leady_crud_refresh_token or ""
+    
     @property
     def has_apify_credentials(self) -> bool:
         """Sprawdza czy mamy credentials do Apify."""
@@ -70,6 +89,43 @@ class CompanyIntelSettings(BaseSettings):
     def has_vertex_ai_credentials(self) -> bool:
         """Sprawdza czy mamy credentials do Vertex AI."""
         return bool(self.gcp_project_id)
+    
+    @property
+    def has_zoho_credentials(self) -> bool:
+        """Sprawdza czy mamy credentials do Zoho CRM."""
+        if not self.zoho_refresh_token:
+            return False
+        placeholders = ["your-", "xxx", "placeholder", "changeme"]
+        for val in [self.zoho_client_id, self.zoho_client_secret, self.zoho_refresh_token]:
+            if any(p in val.lower() for p in placeholders):
+                return False
+        return True
+    
+    @property
+    def zoho_api_base(self) -> str:
+        """Zwraca bazowy URL API Zoho dla danego regionu."""
+        region_map = {
+            "eu": "https://www.zohoapis.eu",
+            "com": "https://www.zohoapis.com",
+            "in": "https://www.zohoapis.in",
+            "jp": "https://www.zohoapis.jp",
+            "au": "https://www.zohoapis.com.au",
+            "ca": "https://www.zohoapis.ca",
+        }
+        return region_map.get(self.zoho_region, region_map["eu"])
+    
+    @property
+    def zoho_oauth_base(self) -> str:
+        """Zwraca bazowy URL OAuth Zoho dla danego regionu."""
+        region_map = {
+            "eu": "https://accounts.zoho.eu",
+            "com": "https://accounts.zoho.com",
+            "in": "https://accounts.zoho.in",
+            "jp": "https://accounts.zoho.jp",
+            "au": "https://accounts.zoho.com.au",
+            "ca": "https://accounts.zoho.ca",
+        }
+        return region_map.get(self.zoho_region, region_map["eu"])
     
     class Config:
         env_file = ".env"

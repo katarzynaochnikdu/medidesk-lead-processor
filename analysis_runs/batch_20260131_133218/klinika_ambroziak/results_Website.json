@@ -1,0 +1,356 @@
+{
+  "company": {
+    "nip": "1231243387",
+    "regon": "142784425",
+    "krs": null,
+    "nazwa_pelna": "KLINIKA AMBROZIAK SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ",
+    "nazwa_zwyczajowa": "MEDYCYNY ESTETYCZNEJ",
+    "adres_siedziby": {
+      "ulica": "Aleja gen. Władysława Sikorskiego",
+      "kod": "02-758",
+      "miasto": "Warszawa",
+      "wojewodztwo": "mazowieckie"
+    },
+    "kategoryzacja_ai": {
+      "platnik_uslug": [
+        "Komercyjne"
+      ],
+      "specjalizacja": [
+        "Medycyna Estetyczna"
+      ],
+      "wielospecjalistyczne": [
+        "chirurgia plastyczna",
+        "dermatologia",
+        "laryngologia"
+      ],
+      "typ_wlasnosci": "Prywatny (Private)",
+      "kategoria_konta": null,
+      "branza": null,
+      "ai_confidence": 0.99,
+      "ai_reasoning": null
+    },
+    "social_media": {
+      "website": "https://klinikaambroziak.pl",
+      "facebook": "https://www.facebook.com/KlinikaAmbroziak",
+      "instagram": "https://www.instagram.com/klinika_ambroziak/",
+      "linkedin": null,
+      "tiktok": null,
+      "x": null
+    },
+    "social_profiles": [
+      {
+        "platform": "facebook",
+        "url": "https://www.facebook.com/KlinikaAmbroziak",
+        "followers": 78190,
+        "posts_count": null,
+        "avg_engagement": null,
+        "last_post_date": null,
+        "is_verified": false,
+        "is_ads_active": null
+      },
+      {
+        "platform": "instagram",
+        "url": "https://www.instagram.com/klinika_ambroziak/",
+        "followers": 64360,
+        "posts_count": 919,
+        "avg_engagement": 0.3,
+        "last_post_date": "2026-01-30T16:19:42+00:00",
+        "is_verified": false,
+        "is_ads_active": null
+      }
+    ],
+    "activity_score": {
+      "total": 65,
+      "recommendation": "LUKEWARM",
+      "breakdown": {
+        "google_maps": 25,
+        "facebook": 10,
+        "instagram": 20,
+        "tiktok": 0,
+        "website": 5,
+        "network": 5
+      },
+      "signals": [
+        "Google Maps 4.9/5",
+        "Google 312 recenzji",
+        "Facebook 78.2K followers",
+        "Instagram 64.4K followers",
+        "IG aktywny < 14 dni",
+        "SSL aktywny",
+        "Sieć 5 placówek"
+      ]
+    },
+    "placowki": [
+      {
+        "nazwa_placowki": "MEDYCYNY ESTETYCZNEJ OSTROŁĘKA GENERALA AUGUSTA EMILA FIELDORFA \"NILA\"",
+        "is_siedziba": true,
+        "typ_adresu": "-None-",
+        "adres": {
+          "ulica": "ul. Generala Augusta Emila Fieldorfa \"Nila\" 13",
+          "kod": "07-410",
+          "miasto": "Ostrołęka",
+          "wojewodztwo": null
+        },
+        "kontakty": [
+          {
+            "typ": "telefon",
+            "wartosc": "+48 221 115 005",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 726 101 000",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 574 960 620",
+            "opis": "Google Maps"
+          }
+        ],
+        "godziny_otwarcia": null,
+        "coordinates": {
+          "lat": 53.0784321,
+          "lng": 21.5768925
+        },
+        "google_maps_place_id": "ChIJ2x60QkxBHkcR4-OdlvvfEsU",
+        "google_rating": 4.8,
+        "google_reviews_count": 18,
+        "reviews_insights": null,
+        "zoho_match": {
+          "found": true,
+          "zoho_id": "751364000002389523",
+          "zoho_name": "KLINIKA AMBROZIAK SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ",
+          "status_klienta": "jest",
+          "adres_w_rekordzie": "Siedziba i Filia",
+          "is_siedziba": true,
+          "is_filia": true,
+          "parent_id": null,
+          "parent_name": null,
+          "match_reason": "NIP"
+        }
+      },
+      {
+        "nazwa_placowki": "MEDYCYNY ESTETYCZNEJ PUŁTUSK IGNACEGO DASZYŃSKIEGO",
+        "is_siedziba": false,
+        "typ_adresu": "-None-",
+        "adres": {
+          "ulica": "ul. Ignacego Daszyńskiego 28/30",
+          "kod": "06-100",
+          "miasto": "Pułtusk",
+          "wojewodztwo": null
+        },
+        "kontakty": [
+          {
+            "typ": "telefon",
+            "wartosc": "+48 221 115 005",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 726 101 000",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 504 634 002",
+            "opis": "Google Maps"
+          }
+        ],
+        "godziny_otwarcia": "sob: 10:00 to 15:00; nie: ZAMknięte; pon: ZAMknięte; wto: 15:00 to 20:00; śro: ZAMknięte; czw: 10:00 to 18:00; pią: ZAMknięte",
+        "coordinates": {
+          "lat": 52.7007882,
+          "lng": 21.0852239
+        },
+        "google_maps_place_id": "ChIJJ6_dEz3NHkcRXnB9ij_B2ks",
+        "google_rating": 4.4,
+        "google_reviews_count": 20,
+        "reviews_insights": null,
+        "zoho_match": {
+          "found": true,
+          "zoho_id": "751364000002389523",
+          "zoho_name": "KLINIKA AMBROZIAK SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ",
+          "status_klienta": "jest",
+          "adres_w_rekordzie": "Siedziba i Filia",
+          "is_siedziba": true,
+          "is_filia": true,
+          "parent_id": null,
+          "parent_name": null,
+          "match_reason": "NIP"
+        }
+      },
+      {
+        "nazwa_placowki": "MEDYCYNY ESTETYCZNEJ OSTROŁĘKA PPŁK",
+        "is_siedziba": false,
+        "typ_adresu": "-None-",
+        "adres": {
+          "ulica": "ul. ppłk. Łukasza Cieplińskiego Pługa 4/5",
+          "kod": "07-410",
+          "miasto": "Ostrołęka",
+          "wojewodztwo": null
+        },
+        "kontakty": [
+          {
+            "typ": "telefon",
+            "wartosc": "+48 221 115 005",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 726 101 000",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 602 631 337",
+            "opis": "Google Maps"
+          }
+        ],
+        "godziny_otwarcia": "sob: 09:00 to 14:00; nie: ZAMknięte; pon: 12:00 to 20:00; wto: 08:00 to 20:00; śro: 12:00 to 20:00; czw: 08:00 to 20:00; pią: 08:00 to 20:00",
+        "coordinates": {
+          "lat": 53.0676789,
+          "lng": 21.5942872
+        },
+        "google_maps_place_id": "ChIJSQk1hLdDHkcRThTRNH-u330",
+        "google_rating": 4.9,
+        "google_reviews_count": 127,
+        "reviews_insights": null,
+        "zoho_match": {
+          "found": true,
+          "zoho_id": "751364000002389523",
+          "zoho_name": "KLINIKA AMBROZIAK SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ",
+          "status_klienta": "jest",
+          "adres_w_rekordzie": "Siedziba i Filia",
+          "is_siedziba": true,
+          "is_filia": true,
+          "parent_id": null,
+          "parent_name": null,
+          "match_reason": "NIP"
+        }
+      },
+      {
+        "nazwa_placowki": "MEDYCYNY ESTETYCZNEJ OSTROŁĘKA RTM",
+        "is_siedziba": false,
+        "typ_adresu": "-None-",
+        "adres": {
+          "ulica": "ul. rtm. Witolda Pileckiego 12",
+          "kod": "07-400",
+          "miasto": "Ostrołęka",
+          "wojewodztwo": null
+        },
+        "kontakty": [
+          {
+            "typ": "telefon",
+            "wartosc": "+48 221 115 005",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 726 101 000",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 609 609 607",
+            "opis": "Google Maps"
+          }
+        ],
+        "godziny_otwarcia": "sob: ZAMknięte; nie: ZAMknięte; pon: 08:00 to 20:00; wto: 08:00 to 20:00; śro: 08:00 to 20:00; czw: 08:00 to 20:00; pią: 08:00 to 20:00",
+        "coordinates": {
+          "lat": 53.0722237,
+          "lng": 21.5841946
+        },
+        "google_maps_place_id": "ChIJda0WAXdBHkcR7LOmLkbprSM",
+        "google_rating": 4.8,
+        "google_reviews_count": 64,
+        "reviews_insights": null,
+        "zoho_match": {
+          "found": true,
+          "zoho_id": "751364000002389523",
+          "zoho_name": "KLINIKA AMBROZIAK SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ",
+          "status_klienta": "jest",
+          "adres_w_rekordzie": "Siedziba i Filia",
+          "is_siedziba": true,
+          "is_filia": true,
+          "parent_id": null,
+          "parent_name": null,
+          "match_reason": "NIP"
+        }
+      },
+      {
+        "nazwa_placowki": "MEDYCYNY ESTETYCZNEJ OSTROŁĘKA OSTROWSKA",
+        "is_siedziba": false,
+        "typ_adresu": "-None-",
+        "adres": {
+          "ulica": "ul. Ostrowska 6",
+          "kod": "07-410",
+          "miasto": "Ostrołęka",
+          "wojewodztwo": null
+        },
+        "kontakty": [
+          {
+            "typ": "telefon",
+            "wartosc": "+48 221 115 005",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 726 101 000",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 697 471 100",
+            "opis": "Google Maps"
+          }
+        ],
+        "godziny_otwarcia": "sob: 08:00 to 14:00; nie: ZAMknięte; pon: 08:00 to 20:00; wto: 08:00 to 20:00; śro: 08:00 to 20:00; czw: 08:00 to 20:00; pią: 08:00 to 20:00",
+        "coordinates": {
+          "lat": 53.0752546,
+          "lng": 21.5993088
+        },
+        "google_maps_place_id": "ChIJG5o6sTbRIUcRNzCaCWGRe5Q",
+        "google_rating": 4.8,
+        "google_reviews_count": 83,
+        "reviews_insights": null,
+        "zoho_match": {
+          "found": true,
+          "zoho_id": "751364000002389523",
+          "zoho_name": "KLINIKA AMBROZIAK SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ",
+          "status_klienta": "jest",
+          "adres_w_rekordzie": "Siedziba i Filia",
+          "is_siedziba": true,
+          "is_filia": true,
+          "parent_id": null,
+          "parent_name": null,
+          "match_reason": "NIP"
+        }
+      }
+    ],
+    "metadata": {
+      "scraped_at": "2026-01-31T12:47:59.771292",
+      "sources_used": [
+        "website",
+        "gus",
+        "google_nip_search",
+        "google_maps",
+        "facebook",
+        "instagram",
+        "ai_categorization",
+        "zoho_crm"
+      ],
+      "processing_time_ms": 288517,
+      "cost_usd": 0.02,
+      "errors": [],
+      "warnings": [],
+      "data_validation": {
+        "contacts_match": false,
+        "contacts_discrepancies": [
+          "Brak wspólnego telefonu: WWW ma 2, Google Maps ma 5"
+        ],
+        "address_match": true,
+        "address_discrepancies": []
+      }
+    }
+  }
+}

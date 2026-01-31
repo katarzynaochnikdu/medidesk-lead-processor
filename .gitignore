@@ -28,6 +28,10 @@ htmlcov/
 *.log
 *.pkl
 
+# GCP Service Account Keys (NEVER commit!)
+gcp-*.json
+*-key.json
+
 # Exports/temp
 md_crm_export_only_*/
 

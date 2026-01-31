@@ -237,8 +237,47 @@ class ReviewsInsights(BaseModel):
         }
 
 
+class StatusKlienta(str, Enum):
+    """Status klienta w Zoho CRM."""
+    NONE = "-None-"
+    NIE_JEST_NIE_BYL = "nie jest/nie był"
+    NIE_JEST_BYL = "nie jest/był"
+    JEST = "jest"
+
+
+class ZohoMatch(BaseModel):
+    """Dopasowanie lokalizacji do rekordu w Zoho CRM."""
+    found: bool = Field(False, description="Czy znaleziono w Zoho")
+    zoho_id: Optional[str] = Field(None, description="ID rekordu w Zoho (Accounts)")
+    zoho_name: Optional[str] = Field(None, description="Nazwa rekordu w Zoho")
+    nip: Optional[str] = Field(None, description="NIP firmy z Zoho (Firma_NIP)")
+    status_klienta: Optional[str] = Field(None, description="Status klienta: jest, nie jest/był, nie jest/nie był")
+    adres_w_rekordzie: Optional[str] = Field(None, description="Typ adresu: Siedziba, Filia, Siedziba i Filia")
+    is_siedziba: bool = Field(False, description="Czy to siedziba")
+    is_filia: bool = Field(False, description="Czy to filia")
+    parent_id: Optional[str] = Field(None, description="ID rodzica (dla filii)")
+    parent_name: Optional[str] = Field(None, description="Nazwa rodzica")
+    match_reason: Optional[str] = Field(None, description="Powód dopasowania (NIP, adres, domena)")
+    
+    def to_dict(self) -> dict:
+        return {
+            "found": self.found,
+            "zoho_id": self.zoho_id,
+            "zoho_name": self.zoho_name,
+            "status_klienta": self.status_klienta,
+            "adres_w_rekordzie": self.adres_w_rekordzie,
+            "is_siedziba": self.is_siedziba,
+            "is_filia": self.is_filia,
+            "parent_id": self.parent_id,
+            "parent_name": self.parent_name,
+            "match_reason": self.match_reason,
+        }
+
+
 class Placowka(BaseModel):
     """Pojedyncza placówka/filia."""
+    nazwa_placowki: Optional[str] = Field(None, description="Nazwa placówki: SIEDZIBA/FILIA NAZWA MIASTO ULICA")
+    is_siedziba: bool = Field(False, description="Czy to siedziba firmy (z GUS)")
     typ_adresu: TypAdresu = Field(TypAdresu.NONE, description="Typ adresu")
     adres: Adres = Field(default_factory=Adres, description="Adres placówki")
     kontakty: list[Kontakt] = Field(default_factory=list, description="Lista kontaktów")
@@ -248,9 +287,12 @@ class Placowka(BaseModel):
     google_rating: Optional[float] = Field(None, description="Ocena Google Maps")
     google_reviews_count: Optional[int] = Field(None, description="Liczba recenzji Google")
     reviews_insights: Optional[ReviewsInsights] = Field(None, description="Insights z recenzji")
+    zoho_match: Optional[ZohoMatch] = Field(None, description="Dopasowanie w Zoho CRM")
     
     def to_dict(self) -> dict:
         return {
+            "nazwa_placowki": self.nazwa_placowki,
+            "is_siedziba": self.is_siedziba,
             "typ_adresu": self.typ_adresu.value if self.typ_adresu else None,
             "adres": self.adres.to_dict(),
             "kontakty": [k.to_dict() for k in self.kontakty],
@@ -260,6 +302,7 @@ class Placowka(BaseModel):
             "google_rating": self.google_rating,
             "google_reviews_count": self.google_reviews_count,
             "reviews_insights": self.reviews_insights.to_dict() if self.reviews_insights else None,
+            "zoho_match": self.zoho_match.to_dict() if self.zoho_match else None,
         }
 
 
@@ -499,3 +542,289 @@ class CompanyIntelRequest(BaseModel):
             "website": self.website,
             "social_links": self.social_links.to_dict() if self.social_links else None,
         }
+
+
+# === CHAOTIC DATA PROCESSING MODELS ===
+
+class SignalStrength(str, Enum):
+    """Siła sygnału danych wejściowych (gradacja)."""
+    S1_HARD_ID = "S1_HARD_ID"  # NIP, REGON, KRS
+    S2_HARD_LINK = "S2_HARD_LINK"  # Website, Email (domena), Telefon
+    S3_LOCATION = "S3_LOCATION"  # Miasto, Ulica
+    S4_NAME = "S4_NAME"  # Nazwa firmy
+    S5_KEYWORD = "S5_KEYWORD"  # Branża, słowa kluczowe
+
+
+class CandidateDecision(str, Enum):
+    """Decyzja o kandydacie NIP/WWW."""
+    ACCEPT = "ACCEPT"  # Checksum OK + twarde potwierdzenie
+    SUSPECT = "SUSPECT"  # Checksum OK, ale konflikt lub brak potwierdzenia
+    REJECT = "REJECT"  # Checksum fail / blacklist / nie pasuje
+
+
+class ChaoticLeadParsed(BaseModel):
+    """Wynik parsowania chaotycznego tekstu przez AI."""
+    raw_text: str = Field(..., description="Oryginalny surowy tekst wejściowy")
+    
+    # Twarde identyfikatory (S1)
+    nip: Optional[str] = Field(None, description="Wykryty NIP (10 cyfr)")
+    regon: Optional[str] = Field(None, description="Wykryty REGON")
+    krs: Optional[str] = Field(None, description="Wykryty KRS")
+    
+    # Twarde łączniki (S2)
+    website: Optional[str] = Field(None, description="Wykryta strona WWW")
+    email: Optional[str] = Field(None, description="Wykryty email (domena)")
+    phone: Optional[str] = Field(None, description="Wykryty telefon")
+    
+    # Lokalizacja (S3)
+    city: Optional[str] = Field(None, description="Wykryte miasto")
+    street: Optional[str] = Field(None, description="Wykryta ulica")
+    
+    # Nazwa (S4)
+    name: Optional[str] = Field(None, description="Wykryta nazwa firmy")
+    short_name: Optional[str] = Field(None, description="Krótka nazwa marketingowa")
+    
+    # Słowa kluczowe (S5)
+    keywords: list[str] = Field(default_factory=list, description="Słowa kluczowe (branża)")
+    
+    # Metadane
+    confidence: float = Field(0.0, ge=0.0, le=1.0, description="Pewność parsowania")
+    strongest_signal: Optional[SignalStrength] = Field(None, description="Najsilniejszy sygnał")
+    
+    def to_dict(self) -> dict:
+        return {
+            "raw_text": self.raw_text,
+            "nip": self.nip,
+            "regon": self.regon,
+            "krs": self.krs,
+            "website": self.website,
+            "email": self.email,
+            "phone": self.phone,
+            "city": self.city,
+            "street": self.street,
+            "name": self.name,
+            "short_name": self.short_name,
+            "keywords": self.keywords,
+            "confidence": self.confidence,
+            "strongest_signal": self.strongest_signal.value if self.strongest_signal else None,
+        }
+    
+    def has_hard_id(self) -> bool:
+        """Czy ma twarde identyfikatory (NIP/REGON/KRS)."""
+        return bool(self.nip or self.regon or self.krs)
+    
+    def has_hard_link(self) -> bool:
+        """Czy ma twarde łączniki (website/email/phone)."""
+        return bool(self.website or self.email or self.phone)
+    
+    def has_location(self) -> bool:
+        """Czy ma dane lokalizacyjne."""
+        return bool(self.city or self.street)
+    
+    def has_name(self) -> bool:
+        """Czy ma nazwę firmy."""
+        return bool(self.name or self.short_name)
+
+
+class EvidenceType(str, Enum):
+    """Typ dowodu potwierdzającego kandydata."""
+    CHECKSUM_OK = "CHECKSUM_OK"
+    GUS_HIT = "GUS_HIT"
+    GUS_NAME_MATCH = "GUS_NAME_MATCH"
+    GUS_NAME_MISMATCH = "GUS_NAME_MISMATCH"
+    NIP_ON_DOMAIN = "NIP_ON_DOMAIN"
+    ZOHO_HIT = "ZOHO_HIT"
+    DOMAIN_MATCH = "DOMAIN_MATCH"
+    FUZZY_NAME_MATCH = "FUZZY_NAME_MATCH"
+    SOURCE_REGISTRY = "SOURCE_REGISTRY"
+    SOURCE_OFFICIAL = "SOURCE_OFFICIAL"
+    SOURCE_AGGREGATOR = "SOURCE_AGGREGATOR"
+    SOURCE_BLACKLIST = "SOURCE_BLACKLIST"
+
+
+class CandidateEvidence(BaseModel):
+    """Pojedynczy dowód dla kandydata NIP/WWW."""
+    evidence_type: EvidenceType = Field(..., description="Typ dowodu")
+    source: str = Field(..., description="Źródło dowodu")
+    value: Optional[str] = Field(None, description="Wartość (np. nazwa z GUS)")
+    score: int = Field(0, description="Punkty za ten dowód")
+    details: Optional[str] = Field(None, description="Szczegóły")
+    
+    def to_dict(self) -> dict:
+        return {
+            "evidence_type": self.evidence_type.value,
+            "source": self.source,
+            "value": self.value,
+            "score": self.score,
+            "details": self.details,
+        }
+
+
+class NIPCandidate(BaseModel):
+    """Kandydat na NIP z dowodami i scoringiem."""
+    nip: str = Field(..., description="Kandydat NIP")
+    
+    # Scoring
+    score_id: int = Field(0, description="Punkty za twarde potwierdzenia")
+    score_match: int = Field(0, description="Punkty za miękkie dopasowania")
+    score_source: int = Field(0, description="Punkty za wiarygodność źródła")
+    total_score: int = Field(0, description="Łączny score")
+    
+    # Dowody
+    evidences: list[CandidateEvidence] = Field(default_factory=list, description="Lista dowodów")
+    
+    # Decyzja
+    decision: CandidateDecision = Field(CandidateDecision.SUSPECT, description="Decyzja")
+    decision_reason: str = Field("", description="Powód decyzji")
+    
+    # Dane z GUS (jeśli dostępne)
+    gus_name: Optional[str] = Field(None, description="Nazwa z GUS")
+    gus_city: Optional[str] = Field(None, description="Miasto z GUS")
+    gus_street: Optional[str] = Field(None, description="Ulica z GUS")
+    
+    def to_dict(self) -> dict:
+        return {
+            "nip": self.nip,
+            "score_id": self.score_id,
+            "score_match": self.score_match,
+            "score_source": self.score_source,
+            "total_score": self.total_score,
+            "evidences": [e.to_dict() for e in self.evidences],
+            "decision": self.decision.value,
+            "decision_reason": self.decision_reason,
+            "gus_name": self.gus_name,
+            "gus_city": self.gus_city,
+            "gus_street": self.gus_street,
+        }
+    
+    def add_evidence(self, evidence: CandidateEvidence) -> None:
+        """Dodaje dowód i aktualizuje scoring."""
+        self.evidences.append(evidence)
+        
+        # Aktualizuj score na podstawie typu dowodu
+        if evidence.evidence_type in [
+            EvidenceType.CHECKSUM_OK,
+            EvidenceType.GUS_HIT,
+            EvidenceType.NIP_ON_DOMAIN,
+            EvidenceType.ZOHO_HIT,
+        ]:
+            self.score_id += evidence.score
+        elif evidence.evidence_type in [
+            EvidenceType.GUS_NAME_MATCH,
+            EvidenceType.FUZZY_NAME_MATCH,
+            EvidenceType.DOMAIN_MATCH,
+        ]:
+            self.score_match += evidence.score
+        elif evidence.evidence_type in [
+            EvidenceType.SOURCE_REGISTRY,
+            EvidenceType.SOURCE_OFFICIAL,
+            EvidenceType.SOURCE_AGGREGATOR,
+            EvidenceType.SOURCE_BLACKLIST,
+        ]:
+            self.score_source += evidence.score
+        
+        self.total_score = self.score_id + self.score_match + self.score_source
+
+
+class WebsiteCandidate(BaseModel):
+    """Kandydat na stronę WWW."""
+    url: str = Field(..., description="URL strony")
+    domain: str = Field(..., description="Domena")
+    
+    # Scoring
+    total_score: int = Field(0, description="Łączny score")
+    
+    # Dowody
+    evidences: list[CandidateEvidence] = Field(default_factory=list, description="Lista dowodów")
+    
+    # NIP znaleziony na stronie
+    nip_on_page: Optional[str] = Field(None, description="NIP znaleziony na stronie")
+    
+    def to_dict(self) -> dict:
+        return {
+            "url": self.url,
+            "domain": self.domain,
+            "total_score": self.total_score,
+            "evidences": [e.to_dict() for e in self.evidences],
+            "nip_on_page": self.nip_on_page,
+        }
+
+
+class StrategyStep(BaseModel):
+    """Pojedynczy krok w strategii wyszukiwania."""
+    step_name: str = Field(..., description="Nazwa kroku")
+    method: str = Field(..., description="Użyta metoda")
+    query: Optional[str] = Field(None, description="Wygenerowane zapytanie")
+    results_count: int = Field(0, description="Liczba wyników")
+    candidates_found: int = Field(0, description="Liczba kandydatów")
+    best_candidate: Optional[str] = Field(None, description="Najlepszy kandydat")
+    duration_ms: int = Field(0, description="Czas wykonania")
+    cost_usd: float = Field(0.0, description="Koszt")
+    skipped: bool = Field(False, description="Czy pominięty")
+    skip_reason: Optional[str] = Field(None, description="Powód pominięcia")
+    
+    def to_dict(self) -> dict:
+        return {
+            "step_name": self.step_name,
+            "method": self.method,
+            "query": self.query,
+            "results_count": self.results_count,
+            "candidates_found": self.candidates_found,
+            "best_candidate": self.best_candidate,
+            "duration_ms": self.duration_ms,
+            "cost_usd": self.cost_usd,
+            "skipped": self.skipped,
+            "skip_reason": self.skip_reason,
+        }
+
+
+class DecisionTrace(BaseModel):
+    """Pełny ślad decyzji - od inputu do wyniku."""
+    # Input
+    input_raw: str = Field(..., description="Surowy input")
+    input_parsed: Optional[ChaoticLeadParsed] = Field(None, description="Sparsowany input")
+    
+    # Kroki strategii
+    steps: list[StrategyStep] = Field(default_factory=list, description="Wykonane kroki")
+    
+    # Kandydaci NIP
+    nip_candidates: list[NIPCandidate] = Field(default_factory=list, description="Kandydaci NIP")
+    
+    # Kandydaci WWW
+    website_candidates: list[WebsiteCandidate] = Field(default_factory=list, description="Kandydaci WWW")
+    
+    # Wynik końcowy
+    final_nip: Optional[str] = Field(None, description="Wybrany NIP")
+    final_nip_decision: Optional[CandidateDecision] = Field(None, description="Decyzja o NIP")
+    final_website: Optional[str] = Field(None, description="Wybrana strona WWW")
+    
+    # Metadane
+    total_duration_ms: int = Field(0, description="Całkowity czas")
+    total_cost_usd: float = Field(0.0, description="Całkowity koszt")
+    
+    def to_dict(self) -> dict:
+        return {
+            "input_raw": self.input_raw,
+            "input_parsed": self.input_parsed.to_dict() if self.input_parsed else None,
+            "steps": [s.to_dict() for s in self.steps],
+            "nip_candidates": [c.to_dict() for c in self.nip_candidates],
+            "website_candidates": [w.to_dict() for w in self.website_candidates],
+            "final_nip": self.final_nip,
+            "final_nip_decision": self.final_nip_decision.value if self.final_nip_decision else None,
+            "final_website": self.final_website,
+            "total_duration_ms": self.total_duration_ms,
+            "total_cost_usd": self.total_cost_usd,
+        }
+    
+    def add_step(self, step: StrategyStep) -> None:
+        """Dodaje krok i aktualizuje metadane."""
+        self.steps.append(step)
+        self.total_duration_ms += step.duration_ms
+        self.total_cost_usd += step.cost_usd
+    
+    def get_accepted_nip(self) -> Optional[NIPCandidate]:
+        """Zwraca zaakceptowanego kandydata NIP."""
+        for candidate in self.nip_candidates:
+            if candidate.decision == CandidateDecision.ACCEPT:
+                return candidate
+        return None

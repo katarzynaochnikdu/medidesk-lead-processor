@@ -1,0 +1,113 @@
+{
+  "company": {
+    "nip": null,
+    "regon": null,
+    "krs": null,
+    "nazwa_pelna": null,
+    "nazwa_zwyczajowa": "ALDENT",
+    "adres_siedziby": null,
+    "kategoryzacja_ai": {
+      "platnik_uslug": [],
+      "specjalizacja": [],
+      "wielospecjalistyczne": [],
+      "typ_wlasnosci": null,
+      "kategoria_konta": null,
+      "branza": null,
+      "ai_confidence": 0.0,
+      "ai_reasoning": null
+    },
+    "social_media": {
+      "website": "https://aldent.wroclaw.pl",
+      "facebook": "https://www.facebook.com/aldentwroclaw/",
+      "instagram": null,
+      "linkedin": null,
+      "tiktok": null,
+      "x": null
+    },
+    "social_profiles": [],
+    "activity_score": {
+      "total": 5,
+      "recommendation": "COLD",
+      "breakdown": {
+        "google_maps": 0,
+        "facebook": 0,
+        "instagram": 0,
+        "tiktok": 0,
+        "website": 5
+      },
+      "signals": [
+        "SSL aktywny"
+      ]
+    },
+    "placowki": [
+      {
+        "nazwa_placowki": "ALDENT",
+        "is_siedziba": true,
+        "typ_adresu": "-None-",
+        "adres": {
+          "ulica": null,
+          "kod": null,
+          "miasto": null,
+          "wojewodztwo": null
+        },
+        "kontakty": [
+          {
+            "typ": "telefon",
+            "wartosc": "+48 732 470 211",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 717 500 937",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 607 343 124",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 713 508 615",
+            "opis": null
+          },
+          {
+            "typ": "email",
+            "wartosc": "rejestracja-arbuzowa@aldent.wroclaw.pl",
+            "opis": null
+          },
+          {
+            "typ": "email",
+            "wartosc": "rejestracja@aldent.wroclaw.pl",
+            "opis": null
+          },
+          {
+            "typ": "email",
+            "wartosc": "aldent@aldent.wroclaw.pl",
+            "opis": null
+          }
+        ],
+        "godziny_otwarcia": null,
+        "coordinates": null,
+        "google_maps_place_id": null,
+        "google_rating": null,
+        "google_reviews_count": null,
+        "reviews_insights": null,
+        "zoho_match": null
+      }
+    ],
+    "metadata": {
+      "scraped_at": "2026-01-31T13:20:18.205307",
+      "sources_used": [
+        "website"
+      ],
+      "processing_time_ms": 1875,
+      "cost_usd": 0.0,
+      "errors": [
+        "Analysis error: 'Kontakt' object has no attribute 'telefon'"
+      ],
+      "warnings": [],
+      "data_validation": null
+    }
+  }
+}

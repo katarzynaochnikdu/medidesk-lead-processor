@@ -1,0 +1,491 @@
+{
+  "company": {
+    "nip": "1231243387",
+    "regon": "142784425",
+    "krs": null,
+    "nazwa_pelna": "KLINIKA AMBROZIAK SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ",
+    "nazwa_zwyczajowa": "MEDYCYNY ESTETYCZNEJ",
+    "adres_siedziby": {
+      "ulica": "Aleja gen. Władysława Sikorskiego 13/1U",
+      "kod": "02-758",
+      "miasto": "Warszawa",
+      "wojewodztwo": "mazowieckie"
+    },
+    "kategoryzacja_ai": {
+      "platnik_uslug": [
+        "Komercyjne"
+      ],
+      "specjalizacja": [
+        "Medycyna Estetyczna"
+      ],
+      "wielospecjalistyczne": [
+        "chirurgia plastyczna",
+        "dermatologia",
+        "laryngologia"
+      ],
+      "typ_wlasnosci": "Prywatny (Private)",
+      "kategoria_konta": null,
+      "branza": null,
+      "ai_confidence": 0.99,
+      "ai_reasoning": null
+    },
+    "social_media": {
+      "website": "https://klinikaambroziak.pl/",
+      "facebook": "https://www.facebook.com/KlinikaAmbroziak",
+      "instagram": "https://www.instagram.com/klinika_ambroziak/",
+      "linkedin": null,
+      "tiktok": null,
+      "x": null
+    },
+    "social_profiles": [
+      {
+        "platform": "facebook",
+        "url": "https://www.facebook.com/KlinikaAmbroziak",
+        "followers": 78196,
+        "posts_count": null,
+        "avg_engagement": null,
+        "last_post_date": null,
+        "is_verified": false,
+        "is_ads_active": null
+      },
+      {
+        "platform": "instagram",
+        "url": "https://www.instagram.com/klinika_ambroziak/",
+        "followers": 64371,
+        "posts_count": 919,
+        "avg_engagement": 0.3,
+        "last_post_date": "2026-01-30T16:19:42+00:00",
+        "is_verified": false,
+        "is_ads_active": null
+      }
+    ],
+    "activity_score": {
+      "total": 65,
+      "recommendation": "LUKEWARM",
+      "breakdown": {
+        "google_maps": 25,
+        "facebook": 10,
+        "instagram": 20,
+        "tiktok": 0,
+        "website": 5,
+        "network": 5
+      },
+      "signals": [
+        "Google Maps 4.9/5",
+        "Google 1573 recenzji",
+        "Facebook 78.2K followers",
+        "Instagram 64.4K followers",
+        "IG aktywny < 14 dni",
+        "SSL aktywny",
+        "Sieć 8 placówek"
+      ]
+    },
+    "placowki": [
+      {
+        "nazwa_placowki": "MEDYCYNY ESTETYCZNEJ WARSZAWA MIKOŁAJA KOPERNIKA",
+        "is_siedziba": true,
+        "typ_adresu": "-None-",
+        "adres": {
+          "ulica": "ul. Mikołaja Kopernika 15/lok. 3",
+          "kod": "00-367",
+          "miasto": "Warszawa",
+          "wojewodztwo": null
+        },
+        "kontakty": [
+          {
+            "typ": "telefon",
+            "wartosc": "+48 221 115 005",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 726 101 000",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 607 474 800",
+            "opis": "Google Maps"
+          }
+        ],
+        "godziny_otwarcia": "sob: ZAMknięte; nie: ZAMknięte; pon: 10:00 to 20:00; wto: 10:00 to 20:00; śro: 10:00 to 20:00; czw: 10:00 to 20:00; pią: 10:00 to 20:00",
+        "coordinates": {
+          "lat": 52.2353625,
+          "lng": 21.0204919
+        },
+        "google_maps_place_id": "ChIJic2fXM_NHkcRzRnOevwHtbI",
+        "google_rating": 4.7,
+        "google_reviews_count": 37,
+        "reviews_insights": null,
+        "zoho_match": {
+          "found": true,
+          "zoho_id": "751364000002389523",
+          "zoho_name": "KLINIKA AMBROZIAK SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ",
+          "status_klienta": "jest",
+          "adres_w_rekordzie": "Siedziba i Filia",
+          "is_siedziba": true,
+          "is_filia": true,
+          "parent_id": null,
+          "parent_name": null,
+          "match_reason": "NIP"
+        }
+      },
+      {
+        "nazwa_placowki": "MEDYCYNY ESTETYCZNEJ WARSZAWA KOSIARZY",
+        "is_siedziba": false,
+        "typ_adresu": "-None-",
+        "adres": {
+          "ulica": "ul. Kosiarzy 9A",
+          "kod": "02-953",
+          "miasto": "Warszawa",
+          "wojewodztwo": null
+        },
+        "kontakty": [
+          {
+            "typ": "telefon",
+            "wartosc": "+48 221 115 005",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 726 101 000",
+            "opis": null
+          }
+        ],
+        "godziny_otwarcia": "sob: ZAMknięte; nie: ZAMknięte; pon: 10:00 to 20:00; wto: 10:00 to 20:00; śro: 10:00 to 20:00; czw: 10:00 to 20:00; pią: 10:00 to 20:00",
+        "coordinates": {
+          "lat": 52.1715942,
+          "lng": 21.0822052
+        },
+        "google_maps_place_id": "ChIJd-WL7OQtGUcRi6trm4SO5iw",
+        "google_rating": 4.8,
+        "google_reviews_count": 189,
+        "reviews_insights": null,
+        "zoho_match": {
+          "found": true,
+          "zoho_id": "751364000002389523",
+          "zoho_name": "KLINIKA AMBROZIAK SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ",
+          "status_klienta": "jest",
+          "adres_w_rekordzie": "Siedziba i Filia",
+          "is_siedziba": true,
+          "is_filia": true,
+          "parent_id": null,
+          "parent_name": null,
+          "match_reason": "NIP"
+        }
+      },
+      {
+        "nazwa_placowki": "MEDYCYNY ESTETYCZNEJ WARSZAWA ALEJA GEN",
+        "is_siedziba": false,
+        "typ_adresu": "-None-",
+        "adres": {
+          "ulica": "Aleja Gen. Władysława Sikorskiego 13/U1",
+          "kod": "02-758",
+          "miasto": "Warszawa",
+          "wojewodztwo": null
+        },
+        "kontakty": [
+          {
+            "typ": "telefon",
+            "wartosc": "+48 221 115 005",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 726 101 000",
+            "opis": null
+          }
+        ],
+        "godziny_otwarcia": "sob: 10:00 to 18:00; nie: ZAMknięte; pon: 10:00 to 20:00; wto: 10:00 to 20:00; śro: 10:00 to 20:00; czw: 10:00 to 20:00; pią: 10:00 to 20:00",
+        "coordinates": {
+          "lat": 52.1853092,
+          "lng": 21.0447412
+        },
+        "google_maps_place_id": "ChIJ1a0bFbUyGUcR0kJtQFIX--4",
+        "google_rating": 4.3,
+        "google_reviews_count": 597,
+        "reviews_insights": null,
+        "zoho_match": {
+          "found": true,
+          "zoho_id": "751364000002389523",
+          "zoho_name": "KLINIKA AMBROZIAK SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ",
+          "status_klienta": "jest",
+          "adres_w_rekordzie": "Siedziba i Filia",
+          "is_siedziba": true,
+          "is_filia": true,
+          "parent_id": null,
+          "parent_name": null,
+          "match_reason": "NIP"
+        }
+      },
+      {
+        "nazwa_placowki": "MEDYCYNY ESTETYCZNEJ WARSZAWA KAZIMIERZA WÓYCICKIEGO",
+        "is_siedziba": false,
+        "typ_adresu": "-None-",
+        "adres": {
+          "ulica": "ul. Kazimierza Wóycickiego 4",
+          "kod": "01-938",
+          "miasto": "Warszawa",
+          "wojewodztwo": null
+        },
+        "kontakty": [
+          {
+            "typ": "telefon",
+            "wartosc": "+48 221 115 005",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 726 101 000",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 222 921 422",
+            "opis": "Google Maps"
+          }
+        ],
+        "godziny_otwarcia": "sob: 09:00 to 14:00; nie: ZAMknięte; pon: 08:00 to 19:00; wto: 08:00 to 19:00; śro: 08:00 to 19:00; czw: 08:00 to 19:00; pią: 08:00 to 19:00",
+        "coordinates": {
+          "lat": 52.3117544,
+          "lng": 20.9145487
+        },
+        "google_maps_place_id": "ChIJlaEmVuXJHkcRwvVKueMB1Yc",
+        "google_rating": 4.3,
+        "google_reviews_count": 56,
+        "reviews_insights": null,
+        "zoho_match": {
+          "found": true,
+          "zoho_id": "751364000002389523",
+          "zoho_name": "KLINIKA AMBROZIAK SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ",
+          "status_klienta": "jest",
+          "adres_w_rekordzie": "Siedziba i Filia",
+          "is_siedziba": true,
+          "is_filia": true,
+          "parent_id": null,
+          "parent_name": null,
+          "match_reason": "NIP"
+        }
+      },
+      {
+        "nazwa_placowki": "MEDYCYNY ESTETYCZNEJ WARSZAWA LEKKA",
+        "is_siedziba": false,
+        "typ_adresu": "-None-",
+        "adres": {
+          "ulica": "ul. Lekka 3",
+          "kod": "01-910",
+          "miasto": "Warszawa",
+          "wojewodztwo": null
+        },
+        "kontakty": [
+          {
+            "typ": "telefon",
+            "wartosc": "+48 221 115 005",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 726 101 000",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 698 894 925",
+            "opis": "Google Maps"
+          }
+        ],
+        "godziny_otwarcia": "sob: 10:00 to 16:00; nie: 10:00 to 16:00; pon: 10:00 to 20:00; wto: 10:00 to 20:00; śro: 10:00 to 20:00; czw: 10:00 to 20:00; pią: 10:00 to 20:00",
+        "coordinates": {
+          "lat": 52.2857648,
+          "lng": 20.9270773
+        },
+        "google_maps_place_id": "ChIJr1sUKcHLHkcRUiK-I6LT9oY",
+        "google_rating": 4.8,
+        "google_reviews_count": 51,
+        "reviews_insights": null,
+        "zoho_match": {
+          "found": true,
+          "zoho_id": "751364000002389523",
+          "zoho_name": "KLINIKA AMBROZIAK SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ",
+          "status_klienta": "jest",
+          "adres_w_rekordzie": "Siedziba i Filia",
+          "is_siedziba": true,
+          "is_filia": true,
+          "parent_id": null,
+          "parent_name": null,
+          "match_reason": "NIP"
+        }
+      },
+      {
+        "nazwa_placowki": "MEDYCYNY ESTETYCZNEJ WARSZAWA ŻUBROWA",
+        "is_siedziba": false,
+        "typ_adresu": "-None-",
+        "adres": {
+          "ulica": "ul. Żubrowa 2",
+          "kod": "01-978",
+          "miasto": "Warszawa",
+          "wojewodztwo": null
+        },
+        "kontakty": [
+          {
+            "typ": "telefon",
+            "wartosc": "+48 221 115 005",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 726 101 000",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 533 272 337",
+            "opis": "Google Maps"
+          }
+        ],
+        "godziny_otwarcia": "sob: 10:00 to 20:00; nie: ZAMknięte; pon: 10:00 to 20:00; wto: 10:00 to 20:00; śro: 10:00 to 20:00; czw: 10:00 to 20:00; pią: 10:00 to 20:00",
+        "coordinates": {
+          "lat": 52.3091516,
+          "lng": 20.9199552
+        },
+        "google_maps_place_id": "ChIJIw8LyxnJHkcR9E_7excfKug",
+        "google_rating": 4.9,
+        "google_reviews_count": 45,
+        "reviews_insights": null,
+        "zoho_match": {
+          "found": true,
+          "zoho_id": "751364000002389523",
+          "zoho_name": "KLINIKA AMBROZIAK SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ",
+          "status_klienta": "jest",
+          "adres_w_rekordzie": "Siedziba i Filia",
+          "is_siedziba": true,
+          "is_filia": true,
+          "parent_id": null,
+          "parent_name": null,
+          "match_reason": "NIP"
+        }
+      },
+      {
+        "nazwa_placowki": "MEDYCYNY ESTETYCZNEJ WARSZAWA MROCZNA",
+        "is_siedziba": false,
+        "typ_adresu": "-None-",
+        "adres": {
+          "ulica": "ul. Mroczna 5A",
+          "kod": "01-456",
+          "miasto": "Warszawa",
+          "wojewodztwo": null
+        },
+        "kontakty": [
+          {
+            "typ": "telefon",
+            "wartosc": "+48 221 115 005",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 726 101 000",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 513 513 000",
+            "opis": "Google Maps"
+          }
+        ],
+        "godziny_otwarcia": "sob: ZAMknięte; nie: ZAMknięte; pon: 09:00 to 21:00; wto: 09:00 to 21:00; śro: 09:00 to 21:00; czw: 09:00 to 21:00; pią: 09:00 to 21:00",
+        "coordinates": {
+          "lat": 52.2387901,
+          "lng": 20.9340175
+        },
+        "google_maps_place_id": "ChIJoVGslRHLHkcRBQouaThJQn8",
+        "google_rating": 4.9,
+        "google_reviews_count": 223,
+        "reviews_insights": null,
+        "zoho_match": {
+          "found": true,
+          "zoho_id": "751364000002389523",
+          "zoho_name": "KLINIKA AMBROZIAK SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ",
+          "status_klienta": "jest",
+          "adres_w_rekordzie": "Siedziba i Filia",
+          "is_siedziba": true,
+          "is_filia": true,
+          "parent_id": null,
+          "parent_name": null,
+          "match_reason": "NIP"
+        }
+      },
+      {
+        "nazwa_placowki": "MEDYCYNY ESTETYCZNEJ WARSZAWA LAZUROWA",
+        "is_siedziba": false,
+        "typ_adresu": "-None-",
+        "adres": {
+          "ulica": "ul. Lazurowa 183/86",
+          "kod": "01-479",
+          "miasto": "Warszawa",
+          "wojewodztwo": null
+        },
+        "kontakty": [
+          {
+            "typ": "telefon",
+            "wartosc": "+48 221 115 005",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 726 101 000",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 221 268 008",
+            "opis": "Google Maps"
+          }
+        ],
+        "godziny_otwarcia": "sob: 09:00 to 15:00; nie: ZAMknięte; pon: 09:00 to 21:00; wto: 09:00 to 21:00; śro: 09:00 to 21:00; czw: 09:00 to 21:00; pią: 09:00 to 21:00",
+        "coordinates": {
+          "lat": 52.2471634,
+          "lng": 20.8970685
+        },
+        "google_maps_place_id": "ChIJKbHHv-PKHkcRd1vAwFnB6fI",
+        "google_rating": 4.6,
+        "google_reviews_count": 375,
+        "reviews_insights": null,
+        "zoho_match": {
+          "found": true,
+          "zoho_id": "751364000002389523",
+          "zoho_name": "KLINIKA AMBROZIAK SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ",
+          "status_klienta": "jest",
+          "adres_w_rekordzie": "Siedziba i Filia",
+          "is_siedziba": true,
+          "is_filia": true,
+          "parent_id": null,
+          "parent_name": null,
+          "match_reason": "NIP"
+        }
+      }
+    ],
+    "metadata": {
+      "scraped_at": "2026-01-31T13:20:31.605728",
+      "sources_used": [
+        "nip_lookup",
+        "gus",
+        "website",
+        "google_maps",
+        "facebook",
+        "instagram",
+        "ai_categorization",
+        "zoho_crm"
+      ],
+      "processing_time_ms": 148206,
+      "cost_usd": 0.032,
+      "errors": [],
+      "warnings": [],
+      "data_validation": {
+        "contacts_match": true,
+        "contacts_discrepancies": [],
+        "address_match": true,
+        "address_discrepancies": []
+      }
+    }
+  }
+}

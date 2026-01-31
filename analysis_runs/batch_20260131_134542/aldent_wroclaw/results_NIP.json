@@ -1,0 +1,531 @@
+{
+  "company": {
+    "nip": "8941864949",
+    "regon": "930081820",
+    "krs": null,
+    "nazwa_pelna": "USŁUGI MEDYCZNE ALICJA KAŹMIERCZAK-OCHROMBEL",
+    "nazwa_zwyczajowa": "ALDENT",
+    "adres_siedziby": {
+      "ulica": "ul. Arbuzowa 13/1",
+      "kod": "54-054",
+      "miasto": "Wrocław",
+      "wojewodztwo": "dolnośląskie"
+    },
+    "kategoryzacja_ai": {
+      "platnik_uslug": [
+        "NFZ",
+        "Komercyjne"
+      ],
+      "specjalizacja": [
+        "Stomatologia"
+      ],
+      "wielospecjalistyczne": [],
+      "typ_wlasnosci": "Prywatny (Private)",
+      "kategoria_konta": null,
+      "branza": null,
+      "ai_confidence": 1.0,
+      "ai_reasoning": null
+    },
+    "social_media": {
+      "website": "https://www.aldent.wroclaw.pl/",
+      "facebook": "https://www.facebook.com/aldentwroclaw/",
+      "instagram": null,
+      "linkedin": null,
+      "tiktok": null,
+      "x": null
+    },
+    "social_profiles": [
+      {
+        "platform": "facebook",
+        "url": "https://www.facebook.com/aldentwroclaw/",
+        "followers": 512,
+        "posts_count": null,
+        "avg_engagement": null,
+        "last_post_date": null,
+        "is_verified": false,
+        "is_ads_active": null
+      }
+    ],
+    "activity_score": {
+      "total": 35,
+      "recommendation": "COLD",
+      "breakdown": {
+        "google_maps": 25,
+        "facebook": 0,
+        "instagram": 0,
+        "tiktok": 0,
+        "website": 5,
+        "network": 5
+      },
+      "signals": [
+        "Google Maps 5.0/5",
+        "Google 531 recenzji",
+        "SSL aktywny",
+        "Sieć 6 placówek"
+      ]
+    },
+    "placowki": [
+      {
+        "nazwa_placowki": "ALDENT WROCŁAW LUCJANA SIEMIEŃSKIEGO",
+        "is_siedziba": true,
+        "typ_adresu": "-None-",
+        "adres": {
+          "ulica": "ul. Lucjana Siemieńskiego 4A",
+          "kod": "50-228",
+          "miasto": "Wrocław",
+          "wojewodztwo": null
+        },
+        "kontakty": [
+          {
+            "typ": "telefon",
+            "wartosc": "+48 713 508 615",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 607 343 124",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 732 470 211",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 717 500 937",
+            "opis": null
+          },
+          {
+            "typ": "email",
+            "wartosc": "rejestracja-arbuzowa@aldent.wroclaw.pl",
+            "opis": null
+          },
+          {
+            "typ": "email",
+            "wartosc": "rejestracja@aldent.wroclaw.pl",
+            "opis": null
+          },
+          {
+            "typ": "email",
+            "wartosc": "aldent@aldent.wroclaw.pl",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 784 244 144",
+            "opis": "Google Maps"
+          }
+        ],
+        "godziny_otwarcia": "sob: 08:30 to 14:30; nie: ZAMknięte; pon: 08:00 to 20:00; wto: 08:00 to 20:00; śro: 08:00 to 20:00; czw: 08:00 to 20:00; pią: 08:00 to 20:00",
+        "coordinates": {
+          "lat": 51.1271442,
+          "lng": 17.033936
+        },
+        "google_maps_place_id": "ChIJsU5hnenpD0cR2wpHfux4cvg",
+        "google_rating": 4.7,
+        "google_reviews_count": 192,
+        "reviews_insights": null,
+        "zoho_match": {
+          "found": true,
+          "zoho_id": "751364000002291762",
+          "zoho_name": "USŁUGI MEDYCZNE ALICJA KAŹMIERCZAK-OCHROMBEL",
+          "status_klienta": "nie jest/nie był",
+          "adres_w_rekordzie": "Siedziba i Filia",
+          "is_siedziba": true,
+          "is_filia": true,
+          "parent_id": null,
+          "parent_name": null,
+          "match_reason": "NIP"
+        }
+      },
+      {
+        "nazwa_placowki": "ALDENT WROCŁAW WRÓBLA",
+        "is_siedziba": false,
+        "typ_adresu": "-None-",
+        "adres": {
+          "ulica": "ul. Wróbla 1",
+          "kod": "53-407",
+          "miasto": "Wrocław",
+          "wojewodztwo": null
+        },
+        "kontakty": [
+          {
+            "typ": "telefon",
+            "wartosc": "+48 713 508 615",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 607 343 124",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 732 470 211",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 717 500 937",
+            "opis": null
+          },
+          {
+            "typ": "email",
+            "wartosc": "rejestracja-arbuzowa@aldent.wroclaw.pl",
+            "opis": null
+          },
+          {
+            "typ": "email",
+            "wartosc": "rejestracja@aldent.wroclaw.pl",
+            "opis": null
+          },
+          {
+            "typ": "email",
+            "wartosc": "aldent@aldent.wroclaw.pl",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 451 022 688",
+            "opis": "Google Maps"
+          }
+        ],
+        "godziny_otwarcia": "sob: 09:00 to 14:00; nie: ZAMknięte; pon: 09:00 to 20:00; wto: 09:00 to 20:00; śro: 09:00 to 20:00; czw: 09:00 to 20:00; pią: 09:00 to 20:00",
+        "coordinates": {
+          "lat": 51.0931833,
+          "lng": 17.006883
+        },
+        "google_maps_place_id": "ChIJQXCsTOPDD0cR26ksQiH0Z7w",
+        "google_rating": 4.7,
+        "google_reviews_count": 62,
+        "reviews_insights": null,
+        "zoho_match": {
+          "found": true,
+          "zoho_id": "751364000002291762",
+          "zoho_name": "USŁUGI MEDYCZNE ALICJA KAŹMIERCZAK-OCHROMBEL",
+          "status_klienta": "nie jest/nie był",
+          "adres_w_rekordzie": "Siedziba i Filia",
+          "is_siedziba": true,
+          "is_filia": true,
+          "parent_id": null,
+          "parent_name": null,
+          "match_reason": "NIP"
+        }
+      },
+      {
+        "nazwa_placowki": "ALDENT WROCŁAW GAJOWICKA",
+        "is_siedziba": false,
+        "typ_adresu": "-None-",
+        "adres": {
+          "ulica": "ul. Gajowicka 166/1A",
+          "kod": "53-150",
+          "miasto": "Wrocław",
+          "wojewodztwo": null
+        },
+        "kontakty": [
+          {
+            "typ": "telefon",
+            "wartosc": "+48 713 508 615",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 607 343 124",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 732 470 211",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 717 500 937",
+            "opis": null
+          },
+          {
+            "typ": "email",
+            "wartosc": "rejestracja-arbuzowa@aldent.wroclaw.pl",
+            "opis": null
+          },
+          {
+            "typ": "email",
+            "wartosc": "rejestracja@aldent.wroclaw.pl",
+            "opis": null
+          },
+          {
+            "typ": "email",
+            "wartosc": "aldent@aldent.wroclaw.pl",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 505 044 818",
+            "opis": "Google Maps"
+          }
+        ],
+        "godziny_otwarcia": null,
+        "coordinates": {
+          "lat": 51.086681,
+          "lng": 17.0053764
+        },
+        "google_maps_place_id": "ChIJz8uJeTnCD0cRvsk2J8zxroQ",
+        "google_rating": 5.0,
+        "google_reviews_count": 21,
+        "reviews_insights": null,
+        "zoho_match": {
+          "found": true,
+          "zoho_id": "751364000002291762",
+          "zoho_name": "USŁUGI MEDYCZNE ALICJA KAŹMIERCZAK-OCHROMBEL",
+          "status_klienta": "nie jest/nie był",
+          "adres_w_rekordzie": "Siedziba i Filia",
+          "is_siedziba": true,
+          "is_filia": true,
+          "parent_id": null,
+          "parent_name": null,
+          "match_reason": "NIP"
+        }
+      },
+      {
+        "nazwa_placowki": "ALDENT WROCŁAW ŚLĘŻNA",
+        "is_siedziba": false,
+        "typ_adresu": "-None-",
+        "adres": {
+          "ulica": "ul. Ślężna 112/U4",
+          "kod": "53-111",
+          "miasto": "Wrocław",
+          "wojewodztwo": null
+        },
+        "kontakty": [
+          {
+            "typ": "telefon",
+            "wartosc": "+48 713 508 615",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 607 343 124",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 732 470 211",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 717 500 937",
+            "opis": null
+          },
+          {
+            "typ": "email",
+            "wartosc": "rejestracja-arbuzowa@aldent.wroclaw.pl",
+            "opis": null
+          },
+          {
+            "typ": "email",
+            "wartosc": "rejestracja@aldent.wroclaw.pl",
+            "opis": null
+          },
+          {
+            "typ": "email",
+            "wartosc": "aldent@aldent.wroclaw.pl",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 713 074 141",
+            "opis": "Google Maps"
+          }
+        ],
+        "godziny_otwarcia": "sob: 09:00 to 15:00; nie: ZAMknięte; pon: 09:00 to 21:00; wto: 09:00 to 21:00; śro: 09:00 to 21:00; czw: 09:00 to 21:00; pią: 09:00 to 21:00",
+        "coordinates": {
+          "lat": 51.0818407,
+          "lng": 17.025125
+        },
+        "google_maps_place_id": "ChIJp0AdS0XCD0cRyGqnfQ_YpXk",
+        "google_rating": 4.0,
+        "google_reviews_count": 103,
+        "reviews_insights": null,
+        "zoho_match": {
+          "found": true,
+          "zoho_id": "751364000002291762",
+          "zoho_name": "USŁUGI MEDYCZNE ALICJA KAŹMIERCZAK-OCHROMBEL",
+          "status_klienta": "nie jest/nie był",
+          "adres_w_rekordzie": "Siedziba i Filia",
+          "is_siedziba": true,
+          "is_filia": true,
+          "parent_id": null,
+          "parent_name": null,
+          "match_reason": "NIP"
+        }
+      },
+      {
+        "nazwa_placowki": "ALDENT WROCŁAW PARTYNICKA",
+        "is_siedziba": false,
+        "typ_adresu": "-None-",
+        "adres": {
+          "ulica": "ul. Partynicka 32E/LU1",
+          "kod": "53-031",
+          "miasto": "Wrocław",
+          "wojewodztwo": null
+        },
+        "kontakty": [
+          {
+            "typ": "telefon",
+            "wartosc": "+48 713 508 615",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 607 343 124",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 732 470 211",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 717 500 937",
+            "opis": null
+          },
+          {
+            "typ": "email",
+            "wartosc": "rejestracja-arbuzowa@aldent.wroclaw.pl",
+            "opis": null
+          },
+          {
+            "typ": "email",
+            "wartosc": "rejestracja@aldent.wroclaw.pl",
+            "opis": null
+          },
+          {
+            "typ": "email",
+            "wartosc": "aldent@aldent.wroclaw.pl",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 717 828 111",
+            "opis": "Google Maps"
+          }
+        ],
+        "godziny_otwarcia": "sob: ZAMknięte; nie: ZAMknięte; pon: 09:00 to 20:00; wto: 09:00 to 20:00; śro: 09:00 to 20:00; czw: 09:00 to 20:00; pią: 09:00 to 20:00",
+        "coordinates": {
+          "lat": 51.065339,
+          "lng": 16.994539
+        },
+        "google_maps_place_id": "ChIJjbL6hMjDD0cRyM66E8K6L8A",
+        "google_rating": 4.2,
+        "google_reviews_count": 73,
+        "reviews_insights": null,
+        "zoho_match": {
+          "found": true,
+          "zoho_id": "751364000002291762",
+          "zoho_name": "USŁUGI MEDYCZNE ALICJA KAŹMIERCZAK-OCHROMBEL",
+          "status_klienta": "nie jest/nie był",
+          "adres_w_rekordzie": "Siedziba i Filia",
+          "is_siedziba": true,
+          "is_filia": true,
+          "parent_id": null,
+          "parent_name": null,
+          "match_reason": "NIP"
+        }
+      },
+      {
+        "nazwa_placowki": "ALDENT WROCŁAW RYSIA",
+        "is_siedziba": false,
+        "typ_adresu": "-None-",
+        "adres": {
+          "ulica": "ul. Rysia 1",
+          "kod": "54-203",
+          "miasto": "Wrocław",
+          "wojewodztwo": null
+        },
+        "kontakty": [
+          {
+            "typ": "telefon",
+            "wartosc": "+48 713 508 615",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 607 343 124",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 732 470 211",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 717 500 937",
+            "opis": null
+          },
+          {
+            "typ": "email",
+            "wartosc": "rejestracja-arbuzowa@aldent.wroclaw.pl",
+            "opis": null
+          },
+          {
+            "typ": "email",
+            "wartosc": "rejestracja@aldent.wroclaw.pl",
+            "opis": null
+          },
+          {
+            "typ": "email",
+            "wartosc": "aldent@aldent.wroclaw.pl",
+            "opis": null
+          }
+        ],
+        "godziny_otwarcia": "sob: 08:00 to 14:00; nie: ZAMknięte; pon: 09:00 to 19:00; wto: 09:00 to 19:00; śro: 09:00 to 19:00; czw: 09:00 to 19:00; pią: 09:00 to 19:00",
+        "coordinates": {
+          "lat": 51.1240461,
+          "lng": 16.9889392
+        },
+        "google_maps_place_id": "ChIJc0l0AAbqD0cR9991ei5Xg9A",
+        "google_rating": 4.1,
+        "google_reviews_count": 80,
+        "reviews_insights": null,
+        "zoho_match": {
+          "found": true,
+          "zoho_id": "751364000002291762",
+          "zoho_name": "USŁUGI MEDYCZNE ALICJA KAŹMIERCZAK-OCHROMBEL",
+          "status_klienta": "nie jest/nie był",
+          "adres_w_rekordzie": "Siedziba i Filia",
+          "is_siedziba": true,
+          "is_filia": true,
+          "parent_id": null,
+          "parent_name": null,
+          "match_reason": "NIP"
+        }
+      }
+    ],
+    "metadata": {
+      "scraped_at": "2026-01-31T13:04:35.567046",
+      "sources_used": [
+        "nip_lookup",
+        "gus",
+        "website",
+        "google_maps",
+        "facebook",
+        "ai_categorization",
+        "zoho_crm"
+      ],
+      "processing_time_ms": 132421,
+      "cost_usd": 0.024,
+      "errors": [],
+      "warnings": [],
+      "data_validation": {
+        "contacts_match": true,
+        "contacts_discrepancies": [],
+        "address_match": true,
+        "address_discrepancies": []
+      }
+    }
+  }
+}

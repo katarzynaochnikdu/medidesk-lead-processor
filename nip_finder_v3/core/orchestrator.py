@@ -245,25 +245,42 @@ class NIPFinderV3:
                 validation = await self.validator.validate(result.nip, company_name, domain or predicted_domain)
                 result.validation = validation
 
-                # STRICT MODE: Reject if domain validation failed (but allow high AI confidence)
+                # STRICT MODE: Reject if domain validation failed
                 if self.settings.require_domain_for_acceptance:
-                    # Check if AI validation gave high confidence
                     ai_confidence = result.metadata.get("ai_validation", {}).get("confidence", 0.0) if result.metadata else 0.0
                     
-                    if not validation.domain_valid and (domain or predicted_domain):
-                        # HIGH AI CONFIDENCE OVERRIDE: Accept if AI is very confident (≥0.90)
-                        if ai_confidence >= 0.90:
-                            logger.info("✅ HIGH AI CONFIDENCE (%.2f) - accepting despite domain validation failure", ai_confidence)
-                            result.warnings = result.warnings or []
-                            result.warnings.append(f"Domain validation failed but AI confidence high ({ai_confidence:.2f})")
-                            await self._cache_result(result)
-                            result.processing_time_ms = int((time.time() - start_time) * 1000)
-                            logger.info("✅ LEVEL 3: Google Search SUCCESS (NIP=%s, cost=$%.4f)",
-                                      result.nip, result.cost_usd)
-                            return result
-                        else:
-                            logger.warning("⚠️ STRICT MODE: Rejecting NIP - domain validation FAILED and AI confidence too low (%.2f)", ai_confidence)
-                            # Don't return, continue to next strategy
+                    # domain_valid: True=OK, False=FAIL, None=skipped (registry domain)
+                    # Only reject when domain_valid is explicitly False, not when skipped (None)
+                    if validation.domain_valid is False and (domain or predicted_domain):
+                        # Gdy mamy domenę jako INPUT - walidacja domenowa jest WYMAGANA
+                        # AI confidence nie może nadpisać faktu że NIP nie jest na podanej domenie
+                        logger.warning("⚠️ STRICT MODE: NIP %s nie znaleziony na domenie %s - sprawdzam alternatywy...",
+                                      result.nip, domain or predicted_domain)
+                        
+                        # Spróbuj alternatywnych kandydatów
+                        if result.alternatives:
+                            logger.info("Checking %d alternative candidates...", len(result.alternatives))
+                            for alt in result.alternatives:
+                                alt_validation = await self.validator.validate(alt.nip, company_name, domain or predicted_domain)
+                                # domain_valid: True=OK, False=FAIL, None=skipped -> treat None as OK
+                                if alt_validation.domain_valid is not False:
+                                    logger.info("✅ Alternative NIP %s passed domain validation!", alt.nip)
+                                    # Użyj alternatywnego kandydata
+                                    result.nip = alt.nip
+                                    result.nip_formatted = alt.nip_formatted
+                                    result.confidence = alt.confidence
+                                    result.validation = alt_validation
+                                    result.warnings = result.warnings or []
+                                    result.warnings.append(f"Used alternative candidate (original {result.nip} failed domain validation)")
+                                    await self._cache_result(result)
+                                    result.processing_time_ms = int((time.time() - start_time) * 1000)
+                                    logger.info("✅ LEVEL 3: Google Search SUCCESS (alternative NIP=%s, cost=$%.4f)",
+                                              result.nip, result.cost_usd)
+                                    return result
+                        
+                        # Żaden kandydat nie przeszedł walidacji domenowej - odrzuć
+                        logger.warning("⚠️ All candidates failed domain validation - rejecting")
+                        # Don't return, continue to next strategy
                     else:
                         # Domain validated OR no domain to validate against
                         await self._cache_result(result)
@@ -408,11 +425,12 @@ class NIPFinderV3:
                 result.validation = validation
 
                 # STRICT MODE: Reject if no domain OR domain validation failed
+                # domain_valid: True=OK, False=FAIL, None=skipped (registry domain)
                 if self.settings.require_domain_for_acceptance:
                     if not domain:
                         logger.warning("⚠️ STRICT MODE: Rejecting Brave NIP - no domain available for validation")
                         # Continue to next strategy (or NOT FOUND)
-                    elif not validation.domain_valid:
+                    elif validation.domain_valid is False:
                         logger.warning("⚠️ STRICT MODE: Rejecting Brave NIP - domain validation FAILED")
                         # Continue to next strategy
                     else:

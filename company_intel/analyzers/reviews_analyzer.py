@@ -272,7 +272,7 @@ Zwróć TYLKO JSON, bez dodatkowych komentarzy."""
         return result
     
     def _format_date(self, date_str: Optional[str]) -> Optional[str]:
-        """Formatuje datę do czytelnego formatu."""
+        """Formatuje datę do czytelnego formatu z godziną."""
         if not date_str:
             return None
         
@@ -281,7 +281,7 @@ Zwróć TYLKO JSON, bez dodatkowych komentarzy."""
             if "T" in date_str:
                 from datetime import datetime
                 dt = datetime.fromisoformat(date_str.replace("Z", "+00:00"))
-                return dt.strftime("%Y-%m-%d")
+                return dt.strftime("%Y-%m-%d %H:%M")
             return date_str
         except Exception:
             return date_str

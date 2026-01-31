@@ -1,0 +1,224 @@
+{
+  "WITH_NIP": [
+    {
+      "scenario": "WITH_NIP",
+      "input": "SPA ProBody Gdansk NIP: 5842809779",
+      "expected_nip": "5842809779",
+      "found_nip": "5842809779",
+      "nip_match": true,
+      "expected_website": "spaprobody.pl",
+      "found_website": null,
+      "decision": "SUSPECT",
+      "duration_ms": 277377,
+      "cost_usd": 0.012
+    },
+    {
+      "scenario": "WITH_NIP",
+      "input": "Perspecteeth Warszawa NIP: 5214104768",
+      "expected_nip": "5214104768",
+      "found_nip": "5214104768",
+      "nip_match": true,
+      "expected_website": "perspecteeth.pl",
+      "found_website": null,
+      "decision": "SUSPECT",
+      "duration_ms": 110167,
+      "cost_usd": 0.012
+    },
+    {
+      "scenario": "WITH_NIP",
+      "input": "Voltamed Warszawa NIP: 5213691717",
+      "expected_nip": "5213691717",
+      "found_nip": "5213691717",
+      "nip_match": true,
+      "expected_website": "voltamed.pl",
+      "found_website": null,
+      "decision": "SUSPECT",
+      "duration_ms": 200604,
+      "cost_usd": 0.007
+    },
+    {
+      "scenario": "WITH_NIP",
+      "input": "Aldent Wroclaw NIP: 8941864949",
+      "expected_nip": "8941864949",
+      "found_nip": "8941864949",
+      "nip_match": true,
+      "expected_website": "aldent.wroclaw.pl",
+      "found_website": null,
+      "decision": "SUSPECT",
+      "duration_ms": 68806,
+      "cost_usd": 0.012
+    },
+    {
+      "scenario": "WITH_NIP",
+      "input": "Fabskin Warszawa NIP: 5223210470",
+      "expected_nip": "5223210470",
+      "found_nip": "5223210470",
+      "nip_match": true,
+      "expected_website": "fabskin.pl",
+      "found_website": null,
+      "decision": "SUSPECT",
+      "duration_ms": 256057,
+      "cost_usd": 0.007
+    },
+    {
+      "scenario": "WITH_NIP",
+      "input": "Klinika Ambroziak Warszawa NIP: 1231243387",
+      "expected_nip": "1231243387",
+      "found_nip": "1231243387",
+      "nip_match": true,
+      "expected_website": "klinikaambroziak.pl",
+      "found_website": null,
+      "decision": "ACCEPT",
+      "duration_ms": 63318,
+      "cost_usd": 0.002
+    }
+  ],
+  "WITH_WEBSITE": [
+    {
+      "scenario": "WITH_WEBSITE",
+      "input": "SPA ProBody Gdansk www.spaprobody.pl",
+      "expected_nip": "5842809779",
+      "found_nip": "5842798656",
+      "nip_match": false,
+      "expected_website": "spaprobody.pl",
+      "found_website": null,
+      "decision": "SUSPECT",
+      "duration_ms": 477695,
+      "cost_usd": 0.013000000000000001
+    },
+    {
+      "scenario": "WITH_WEBSITE",
+      "input": "Perspecteeth Warszawa www.perspecteeth.pl",
+      "expected_nip": "5214104768",
+      "found_nip": "5214104768",
+      "nip_match": true,
+      "expected_website": "perspecteeth.pl",
+      "found_website": null,
+      "decision": "ACCEPT",
+      "duration_ms": 339977,
+      "cost_usd": 0.013000000000000001
+    },
+    {
+      "scenario": "WITH_WEBSITE",
+      "input": "Voltamed Warszawa www.voltamed.pl",
+      "expected_nip": "5213691717",
+      "found_nip": "5213691717",
+      "nip_match": true,
+      "expected_website": "voltamed.pl",
+      "found_website": null,
+      "decision": "SUSPECT",
+      "duration_ms": 435743,
+      "cost_usd": 0.013000000000000001
+    },
+    {
+      "scenario": "WITH_WEBSITE",
+      "input": "Aldent Wroclaw www.aldent.wroclaw.pl",
+      "expected_nip": "8941864949",
+      "found_nip": "8941864949",
+      "nip_match": true,
+      "expected_website": "aldent.wroclaw.pl",
+      "found_website": null,
+      "decision": "SUSPECT",
+      "duration_ms": 276041,
+      "cost_usd": 0.013000000000000001
+    },
+    {
+      "scenario": "WITH_WEBSITE",
+      "input": "Fabskin Warszawa www.fabskin.pl",
+      "expected_nip": "5223210470",
+      "found_nip": "5691752715",
+      "nip_match": false,
+      "expected_website": "fabskin.pl",
+      "found_website": null,
+      "decision": "SUSPECT",
+      "duration_ms": 211012,
+      "cost_usd": 0.017
+    },
+    {
+      "scenario": "WITH_WEBSITE",
+      "input": "Klinika Ambroziak Warszawa www.klinikaambroziak.pl",
+      "expected_nip": "1231243387",
+      "found_nip": "1231243387",
+      "nip_match": true,
+      "expected_website": "klinikaambroziak.pl",
+      "found_website": "klinikaambroziak.pl",
+      "decision": "ACCEPT",
+      "duration_ms": 78048,
+      "cost_usd": 0.007
+    }
+  ],
+  "CHAOTIC": [
+    {
+      "scenario": "CHAOTIC",
+      "input": "SPA ProBody Gdansk",
+      "expected_nip": "5842809779",
+      "found_nip": "5842798656",
+      "nip_match": false,
+      "expected_website": "spaprobody.pl",
+      "found_website": null,
+      "decision": "SUSPECT",
+      "duration_ms": 209718,
+      "cost_usd": 0.011
+    },
+    {
+      "scenario": "CHAOTIC",
+      "input": "Perspecteeth Warszawa",
+      "expected_nip": "5214104768",
+      "found_nip": "5214104768",
+      "nip_match": true,
+      "expected_website": "perspecteeth.pl",
+      "found_website": null,
+      "decision": "SUSPECT",
+      "duration_ms": 156517,
+      "cost_usd": 0.011
+    },
+    {
+      "scenario": "CHAOTIC",
+      "input": "Voltamed Warszawa",
+      "expected_nip": "5213691717",
+      "found_nip": "5213691717",
+      "nip_match": true,
+      "expected_website": "voltamed.pl",
+      "found_website": null,
+      "decision": "SUSPECT",
+      "duration_ms": 207321,
+      "cost_usd": 0.011
+    },
+    {
+      "scenario": "CHAOTIC",
+      "input": "Aldent Wroclaw",
+      "expected_nip": "8941864949",
+      "found_nip": "8941864949",
+      "nip_match": true,
+      "expected_website": "aldent.wroclaw.pl",
+      "found_website": null,
+      "decision": "SUSPECT",
+      "duration_ms": 51645,
+      "cost_usd": 0.011
+    },
+    {
+      "scenario": "CHAOTIC",
+      "input": "Fabskin Warszawa",
+      "expected_nip": "5223210470",
+      "found_nip": null,
+      "nip_match": false,
+      "expected_website": "fabskin.pl",
+      "found_website": null,
+      "decision": "NONE",
+      "duration_ms": 124134,
+      "cost_usd": 0.006
+    },
+    {
+      "scenario": "CHAOTIC",
+      "input": "Klinika Ambroziak Warszawa",
+      "expected_nip": "1231243387",
+      "found_nip": "1231243387",
+      "nip_match": true,
+      "expected_website": "klinikaambroziak.pl",
+      "found_website": null,
+      "decision": "ACCEPT",
+      "duration_ms": 252578,
+      "cost_usd": 0.011
+    }
+  ]
+}

@@ -1,0 +1,351 @@
+{
+  "company": {
+    "nip": "1231243387",
+    "regon": "142784425",
+    "krs": null,
+    "nazwa_pelna": "KLINIKA AMBROZIAK SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ",
+    "nazwa_zwyczajowa": "MEDYCYNY ESTETYCZNEJ",
+    "adres_siedziby": {
+      "ulica": "Aleja gen. Władysława Sikorskiego",
+      "kod": "02-758",
+      "miasto": "Warszawa",
+      "wojewodztwo": "mazowieckie"
+    },
+    "kategoryzacja_ai": {
+      "platnik_uslug": [
+        "Komercyjne"
+      ],
+      "specjalizacja": [
+        "Medycyna Estetyczna"
+      ],
+      "wielospecjalistyczne": [
+        "chirurgia plastyczna",
+        "dermatologia",
+        "laryngologia"
+      ],
+      "typ_wlasnosci": "Prywatny (Private)",
+      "kategoria_konta": null,
+      "branza": null,
+      "ai_confidence": 0.98,
+      "ai_reasoning": null
+    },
+    "social_media": {
+      "website": "https://klinikaambroziak.pl",
+      "facebook": "https://www.facebook.com/KlinikaAmbroziak",
+      "instagram": "https://www.instagram.com/klinika_ambroziak/",
+      "linkedin": null,
+      "tiktok": null,
+      "x": null
+    },
+    "social_profiles": [
+      {
+        "platform": "facebook",
+        "url": "https://www.facebook.com/KlinikaAmbroziak",
+        "followers": 78206,
+        "posts_count": null,
+        "avg_engagement": null,
+        "last_post_date": null,
+        "is_verified": false,
+        "is_ads_active": null
+      },
+      {
+        "platform": "instagram",
+        "url": "https://www.instagram.com/klinika_ambroziak/",
+        "followers": 64395,
+        "posts_count": 919,
+        "avg_engagement": 0.3,
+        "last_post_date": "2026-01-30T16:19:42+00:00",
+        "is_verified": false,
+        "is_ads_active": null
+      }
+    ],
+    "activity_score": {
+      "total": 65,
+      "recommendation": "LUKEWARM",
+      "breakdown": {
+        "google_maps": 25,
+        "facebook": 10,
+        "instagram": 20,
+        "tiktok": 0,
+        "website": 5,
+        "network": 5
+      },
+      "signals": [
+        "Google Maps 5.0/5",
+        "Google 214 recenzji",
+        "Facebook 78.2K followers",
+        "Instagram 64.4K followers",
+        "IG aktywny < 14 dni",
+        "SSL aktywny",
+        "Sieć 5 placówek"
+      ]
+    },
+    "placowki": [
+      {
+        "nazwa_placowki": "MEDYCYNY ESTETYCZNEJ BUSKO-ZDRÓJ PLAC ZWYCIĘSTWA",
+        "is_siedziba": true,
+        "typ_adresu": "-None-",
+        "adres": {
+          "ulica": "Plac Zwycięstwa 10",
+          "kod": "28-100",
+          "miasto": "Busko-Zdrój",
+          "wojewodztwo": null
+        },
+        "kontakty": [
+          {
+            "typ": "telefon",
+            "wartosc": "+48 221 115 005",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 726 101 000",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 663 595 777",
+            "opis": "Google Maps"
+          }
+        ],
+        "godziny_otwarcia": "sob: ZAMknięte; nie: ZAMknięte; pon: 09:00 to 17:00; wto: 09:00 to 17:00; śro: 09:00 to 17:00; czw: 09:00 to 17:00; pią: 09:00 to 17:00",
+        "coordinates": {
+          "lat": 50.4697262,
+          "lng": 20.718483
+        },
+        "google_maps_place_id": "ChIJYz1rrd3DF0cRSghsPxyqQho",
+        "google_rating": 5.0,
+        "google_reviews_count": 4,
+        "reviews_insights": null,
+        "zoho_match": {
+          "found": true,
+          "zoho_id": "751364000002389523",
+          "zoho_name": "KLINIKA AMBROZIAK SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ",
+          "status_klienta": "jest",
+          "adres_w_rekordzie": "Siedziba i Filia",
+          "is_siedziba": true,
+          "is_filia": true,
+          "parent_id": null,
+          "parent_name": null,
+          "match_reason": "NIP"
+        }
+      },
+      {
+        "nazwa_placowki": "MEDYCYNY ESTETYCZNEJ BUSKO-ZDRÓJ MEDYCYNA ESTETYCZNA MAJA SULECKA - KORCZAK",
+        "is_siedziba": false,
+        "typ_adresu": "-None-",
+        "adres": {
+          "ulica": "ul. Medycyna Estetyczna Maja Sulecka - Korczak, Profesora Józefa Wacława Grotta 35",
+          "kod": "28-100",
+          "miasto": "Busko-Zdrój",
+          "wojewodztwo": null
+        },
+        "kontakty": [
+          {
+            "typ": "telefon",
+            "wartosc": "+48 221 115 005",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 726 101 000",
+            "opis": null
+          }
+        ],
+        "godziny_otwarcia": "sob: ZAMknięte; nie: ZAMknięte; pon: 10:00 to 17:00; wto: 10:00 to 17:00; śro: 10:00 to 17:00; czw: 10:00 to 17:00; pią: 10:00 to 16:00",
+        "coordinates": {
+          "lat": 50.4576172,
+          "lng": 20.7254442
+        },
+        "google_maps_place_id": "ChIJVxxY7vvDF0cRWhjKwlYWel0",
+        "google_rating": 4.9,
+        "google_reviews_count": 41,
+        "reviews_insights": null,
+        "zoho_match": {
+          "found": true,
+          "zoho_id": "751364000002389523",
+          "zoho_name": "KLINIKA AMBROZIAK SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ",
+          "status_klienta": "jest",
+          "adres_w_rekordzie": "Siedziba i Filia",
+          "is_siedziba": true,
+          "is_filia": true,
+          "parent_id": null,
+          "parent_name": null,
+          "match_reason": "NIP"
+        }
+      },
+      {
+        "nazwa_placowki": "MEDYCYNY ESTETYCZNEJ MIELEC JULIUSZA SŁOWACKIEGO",
+        "is_siedziba": false,
+        "typ_adresu": "-None-",
+        "adres": {
+          "ulica": "ul. Juliusza Słowackiego 3",
+          "kod": "39-300",
+          "miasto": "Mielec",
+          "wojewodztwo": null
+        },
+        "kontakty": [
+          {
+            "typ": "telefon",
+            "wartosc": "+48 221 115 005",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 726 101 000",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 600 812 386",
+            "opis": "Google Maps"
+          }
+        ],
+        "godziny_otwarcia": "sob: 12:00 to 17:00; nie: ZAMknięte; pon: 12:00 to 20:00; wto: ZAMknięte; śro: ZAMknięte; czw: 12:00 to 20:00; pią: 12:00 to 20:00",
+        "coordinates": {
+          "lat": 50.2891537,
+          "lng": 21.4240854
+        },
+        "google_maps_place_id": "ChIJP_fuJA1rPUcRcx20xVnD43Q",
+        "google_rating": 4.4,
+        "google_reviews_count": 13,
+        "reviews_insights": null,
+        "zoho_match": {
+          "found": true,
+          "zoho_id": "751364000002389523",
+          "zoho_name": "KLINIKA AMBROZIAK SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ",
+          "status_klienta": "jest",
+          "adres_w_rekordzie": "Siedziba i Filia",
+          "is_siedziba": true,
+          "is_filia": true,
+          "parent_id": null,
+          "parent_name": null,
+          "match_reason": "NIP"
+        }
+      },
+      {
+        "nazwa_placowki": "MEDYCYNY ESTETYCZNEJ MIELEC BIERNACKIEGO",
+        "is_siedziba": false,
+        "typ_adresu": "-None-",
+        "adres": {
+          "ulica": "ul. Biernackiego 4B",
+          "kod": "39-300",
+          "miasto": "Mielec",
+          "wojewodztwo": null
+        },
+        "kontakty": [
+          {
+            "typ": "telefon",
+            "wartosc": "+48 221 115 005",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 726 101 000",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 791 709 709",
+            "opis": "Google Maps"
+          }
+        ],
+        "godziny_otwarcia": "sob: ZAMknięte; nie: ZAMknięte; pon: 10:00 to 19:00; wto: 10:00 to 19:00; śro: 10:00 to 19:00; czw: 10:00 to 19:00; pią: 10:00 to 19:00",
+        "coordinates": {
+          "lat": 50.2976984,
+          "lng": 21.4419673
+        },
+        "google_maps_place_id": "ChIJPcN-BkxrPUcRR-Zy8SVqdDo",
+        "google_rating": 4.9,
+        "google_reviews_count": 64,
+        "reviews_insights": null,
+        "zoho_match": {
+          "found": true,
+          "zoho_id": "751364000002389523",
+          "zoho_name": "KLINIKA AMBROZIAK SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ",
+          "status_klienta": "jest",
+          "adres_w_rekordzie": "Siedziba i Filia",
+          "is_siedziba": true,
+          "is_filia": true,
+          "parent_id": null,
+          "parent_name": null,
+          "match_reason": "NIP"
+        }
+      },
+      {
+        "nazwa_placowki": "MEDYCYNY ESTETYCZNEJ BOGORIA OKOLICE STASZÓW PL",
+        "is_siedziba": false,
+        "typ_adresu": "-None-",
+        "adres": {
+          "ulica": "ul. okolice Staszów PL, Opatowska 9",
+          "kod": "28-210",
+          "miasto": "Bogoria",
+          "wojewodztwo": null
+        },
+        "kontakty": [
+          {
+            "typ": "telefon",
+            "wartosc": "+48 221 115 005",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 726 101 000",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 604 496 509",
+            "opis": "Google Maps"
+          }
+        ],
+        "godziny_otwarcia": "sob: 08:00 to 15:00; nie: ZAMknięte; pon: 09:00 to 19:00; wto: 09:00 to 19:00; śro: 09:00 to 19:00; czw: 09:00 to 19:00; pią: 09:00 to 19:00",
+        "coordinates": {
+          "lat": 50.6536432,
+          "lng": 21.2577136
+        },
+        "google_maps_place_id": "ChIJ0-5cw-FVPUcRcf3DJKSmCKs",
+        "google_rating": 4.8,
+        "google_reviews_count": 92,
+        "reviews_insights": null,
+        "zoho_match": {
+          "found": true,
+          "zoho_id": "751364000002389523",
+          "zoho_name": "KLINIKA AMBROZIAK SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ",
+          "status_klienta": "jest",
+          "adres_w_rekordzie": "Siedziba i Filia",
+          "is_siedziba": true,
+          "is_filia": true,
+          "parent_id": null,
+          "parent_name": null,
+          "match_reason": "NIP"
+        }
+      }
+    ],
+    "metadata": {
+      "scraped_at": "2026-01-31T13:50:03.154489",
+      "sources_used": [
+        "website",
+        "gus",
+        "zoho_nip_lookup",
+        "google_maps",
+        "facebook",
+        "instagram",
+        "ai_categorization",
+        "zoho_crm"
+      ],
+      "processing_time_ms": 144470,
+      "cost_usd": 0.02,
+      "errors": [],
+      "warnings": [],
+      "data_validation": {
+        "contacts_match": false,
+        "contacts_discrepancies": [
+          "Brak wspólnego telefonu: WWW ma 2, Google Maps ma 4"
+        ],
+        "address_match": true,
+        "address_discrepancies": []
+      }
+    }
+  }
+}

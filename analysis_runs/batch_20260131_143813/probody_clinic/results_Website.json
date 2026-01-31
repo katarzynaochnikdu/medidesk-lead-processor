@@ -1,0 +1,126 @@
+{
+  "company": {
+    "nip": null,
+    "regon": null,
+    "krs": null,
+    "nazwa_pelna": null,
+    "nazwa_zwyczajowa": "PRO",
+    "adres_siedziby": null,
+    "kategoryzacja_ai": {
+      "platnik_uslug": [
+        "Komercyjne"
+      ],
+      "specjalizacja": [
+        "Medycyna Estetyczna"
+      ],
+      "wielospecjalistyczne": [],
+      "typ_wlasnosci": "Prywatny (Private)",
+      "kategoria_konta": null,
+      "branza": null,
+      "ai_confidence": 0.95,
+      "ai_reasoning": null
+    },
+    "social_media": {
+      "website": "https://spaprobody.pl/",
+      "facebook": "https://www.facebook.com/spa.probody",
+      "instagram": "https://www.instagram.com/spa_pro_body/",
+      "linkedin": null,
+      "tiktok": null,
+      "x": null
+    },
+    "social_profiles": [
+      {
+        "platform": "facebook",
+        "url": "https://www.facebook.com/spa.probody",
+        "followers": 89,
+        "posts_count": null,
+        "avg_engagement": null,
+        "last_post_date": null,
+        "is_verified": false,
+        "is_ads_active": null
+      },
+      {
+        "platform": "instagram",
+        "url": "https://www.instagram.com/spa_pro_body/",
+        "followers": 2015,
+        "posts_count": 333,
+        "avg_engagement": 0.72,
+        "last_post_date": "2025-07-15T12:47:01+00:00",
+        "is_verified": false,
+        "is_ads_active": null
+      }
+    ],
+    "activity_score": {
+      "total": 40,
+      "recommendation": "LUKEWARM",
+      "breakdown": {
+        "google_maps": 25,
+        "facebook": 0,
+        "instagram": 10,
+        "tiktok": 0,
+        "website": 5
+      },
+      "signals": [
+        "Google Maps 4.9/5",
+        "Google 66 recenzji",
+        "Instagram 2.0K followers",
+        "SSL aktywny"
+      ]
+    },
+    "placowki": [
+      {
+        "nazwa_placowki": "PRO GDAŃSK ALEJA GRUNWALDZKA",
+        "is_siedziba": true,
+        "typ_adresu": "-None-",
+        "adres": {
+          "ulica": "aleja Grunwaldzka 99/101",
+          "kod": "80-244",
+          "miasto": "Gdańsk",
+          "wojewodztwo": null
+        },
+        "kontakty": [
+          {
+            "typ": "telefon",
+            "wartosc": "+48 731 927 231",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 578 038 185",
+            "opis": null
+          }
+        ],
+        "godziny_otwarcia": "sob: 10:00 to 22:30; nie: 10:00 to 22:30; pon: 10:00 to 22:30; wto: 10:00 to 22:30; śro: 10:00 to 22:30; czw: 10:00 to 22:30; pią: 10:00 to 22:30",
+        "coordinates": {
+          "lat": 54.3788653,
+          "lng": 18.606074
+        },
+        "google_maps_place_id": "ChIJW8QgDA5z_UYRnTXo0ayWtis",
+        "google_rating": 4.9,
+        "google_reviews_count": 66,
+        "reviews_insights": null,
+        "zoho_match": null
+      }
+    ],
+    "metadata": {
+      "scraped_at": "2026-01-31T13:44:27.186400",
+      "sources_used": [
+        "website",
+        "google_maps",
+        "facebook",
+        "instagram",
+        "ai_categorization"
+      ],
+      "processing_time_ms": 236182,
+      "cost_usd": 0.004,
+      "errors": [],
+      "warnings": [],
+      "data_validation": {
+        "contacts_match": true,
+        "contacts_discrepancies": [],
+        "address_match": true,
+        "address_discrepancies": []
+      }
+    }
+  }
+}

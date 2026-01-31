@@ -188,12 +188,27 @@ def calculate_name_match_score(expected: str, found: str) -> float:
     # Normalizuj
     expected_norm = normalize_company_name(expected)
     found_norm = normalize_company_name(found)
+    
+    # Usuń spacje do porównania zawierania (probody vs pro body)
+    expected_nospace = expected_norm.replace(" ", "")
+    found_nospace = found_norm.replace(" ", "")
 
     # Exact match bonus
     if expected_norm == found_norm:
         return 1.0
     if expected_norm in found_norm or found_norm in expected_norm:
         return 0.95
+    
+    # NOWE: Sprawdź zawieranie bez spacji (probody in "probody" lub "pro body")
+    # To pozwala na match "ProBody" z "SPA PRO BODY"
+    if expected_nospace in found_nospace or found_nospace in expected_nospace:
+        return 0.90
+    
+    # NOWE: Sprawdź czy krótka nazwa (bez spacji) jest zawarta
+    # np. "probody" powinno matchować "probodyclinic"
+    if len(expected_nospace) >= 4:
+        if expected_nospace in found_nospace:
+            return 0.85
 
     # Podziel na słowa
     expected_words = set(expected_norm.split())

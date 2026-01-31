@@ -83,14 +83,22 @@ class NIPValidator:
         # TIER 2: Domain validation (jeśli domena)
         # ============================================
         domain_valid: Optional[bool] = None
+        domain_skipped = False
 
         if domain and self.settings.require_domain_validation:
-            logger.info("Validator: sprawdzam domenę %s", domain)
-            domain_valid = await self.domain_validator.validate(nip, domain)
+            # Sprawdź czy to registry domain (portal, rejestr) lub domena nie pasuje do firmy
+            if self.domain_validator.is_registry_domain(domain, company_name):
+                logger.info("⏭️ Validator: %s to registry/portal (lub nie pasuje do '%s') - pomijam walidację domeny", 
+                          domain, company_name)
+                domain_skipped = True
+                domain_valid = None  # Nie sprawdzano
+            else:
+                logger.info("Validator: sprawdzam domenę %s", domain)
+                domain_valid = await self.domain_validator.validate(nip, domain)
 
-            if not domain_valid:
-                errors.append(f"NIP nie znaleziony na domenie {domain}")
-                logger.warning("⚠️ Validator: NIP nie zwalidowany z domeną")
+                if domain_valid is False:
+                    errors.append(f"NIP nie znaleziony na domenie {domain}")
+                    logger.warning("⚠️ Validator: NIP nie zwalidowany z domeną")
 
         # ============================================
         # TIER 3: GUS cross-reference (opcjonalna)
@@ -116,9 +124,18 @@ class NIPValidator:
         # ============================================
         # Całościowa walidacja
         # ============================================
+        # domain_valid: True=OK, False=FAIL, None=skipped (registry domain)
+        # Dla registry domains: domain_skipped=True, domain_valid=None -> traktuj jako OK
+        domain_ok = (
+            domain_skipped  # Registry domain - pomiń
+            or domain_valid is True  # Zwalidowano pomyślnie
+            or domain_valid is None  # Nie sprawdzano
+            or not self.settings.require_domain_validation  # Walidacja wyłączona
+        )
+        
         validated = (
             checksum_valid  # Checksum musi być OK
-            and (not self.settings.require_domain_validation or domain_valid is not False)
+            and domain_ok  # Domena OK lub pominięta
             and (not self.settings.require_gus_validation or
                  (gus_found and (name_match_score or 0.0) >= self.settings.fuzzy_match_threshold))
         )
