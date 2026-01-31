@@ -19,7 +19,7 @@ import httpx
 
 from ..ai.validator import AIValidator
 from ..config import NIPFinderV3Settings, get_settings
-from ..models import NIPResult, SearchStrategy
+from ..models import NIPResult, NIPCandidate, SearchStrategy
 from ..utils import (
     calculate_name_match_score,
     extract_company_base_name,
@@ -234,35 +234,71 @@ class GoogleSearchStrategy(BaseStrategy):
         base_name = extract_company_base_name(company_name)
         logger.info("Google Search: base name extracted: '%s' (from '%s')", base_name, company_name)
 
-        # Prepare optimized query variants (PRIORITY: full name first, base name as fallback)
-        queries = []
+        # Prepare query list
+        queries: list[str] = []
+
+        def add_query(query: str) -> None:
+            cleaned = query.strip()
+            if cleaned and cleaned not in queries:
+                queries.append(cleaned)
+
+        # === STEP 1: AI-Generated Queries (PRIMARY) ===
+        if self._ai_validator:
+            try:
+                ai_queries = await self._ai_validator.generate_search_queries(
+                    company_name=company_name,
+                    city=city,
+                    domain=domain,
+                    max_queries=5,
+                )
+                for q in ai_queries:
+                    add_query(q)
+                logger.info("Google Search: AI generated %d queries", len(ai_queries))
+            except Exception as e:
+                logger.warning("Google Search: AI query generation failed: %s", e)
+
+        # === STEP 2: Static Fallback Queries (SECONDARY) ===
+        # These are added after AI queries as backup
 
         # Variant 1: Full name + city + NIP (MOST SPECIFIC - exact match priority)
         if city:
-            queries.append(f'"{company_name}" "{city}" NIP')
+            add_query(f'"{company_name}" "{city}" NIP')
 
         # Variant 2: Full name + NIP (exact name, any location)
-        queries.append(f'"{company_name}" NIP')
+        add_query(f'"{company_name}" NIP')
 
         # Variant 3: Full name + city (no NIP keyword - find official site)
         if city:
-            queries.append(f'"{company_name}" "{city}"')
+            add_query(f'"{company_name}" "{city}"')
 
         # Variant 4: Full name alone (find official site)
-        queries.append(f'"{company_name}"')
+        add_query(f'"{company_name}"')
 
-        # Variant 5: Base name + city + NIP (FALLBACK - less specific)
+        # Variant 5: Full name (no quotes) + NIP (less strict than quoted)
+        if city:
+            add_query(f'{company_name} {city} NIP')
+        add_query(f'{company_name} NIP')
+
+        # Variant 6: Abbreviation for "centrum medyczne" → "CM" (if present)
+        if "centrum medyczne" in company_name:
+            cm_name = company_name.replace("centrum medyczne", "cm").strip()
+            if city:
+                add_query(f'{cm_name} {city} NIP')
+            add_query(f'{cm_name} NIP')
+
+        # Variant 7: Base name + city + NIP (FALLBACK - less specific)
         if city and base_name and base_name != company_name.lower():
-            queries.append(f'{base_name} {city} NIP')
+            add_query(f'{base_name} {city} NIP')
 
-        # Variant 6: Base name + NIP (LAST RESORT)
+        # Variant 8: Base name + NIP (LAST RESORT)
         if base_name and base_name != company_name.lower():
-            queries.append(f'{base_name} NIP')
+            add_query(f'{base_name} NIP')
 
-        logger.info("Google Search: trying %d query variants", len(queries))
+        logger.info("Google Search: trying %d total query variants (AI + static)", len(queries))
 
         # MULTI-PASS VALIDATION: Collect all NIP candidates, then choose the best
         candidates = []
+        rejected_nips = set()  # Track NIPs that were rejected by AI to avoid re-validation
 
         # Try each query variant
         for i, query in enumerate(queries, 1):
@@ -295,9 +331,14 @@ class GoogleSearchStrategy(BaseStrategy):
                 if not nip:
                     continue
 
-                # Skip if already found this NIP
+                # Skip if already found this NIP in candidates
                 if any(c['nip'] == nip for c in candidates):
                     logger.debug("Google Search: NIP %s already in candidates - skipping", nip)
+                    continue
+
+                # Skip if this NIP was already rejected by AI
+                if nip in rejected_nips:
+                    logger.debug("Google Search: NIP %s was previously rejected - skipping", nip)
                     continue
 
                 # Found NIP!
@@ -305,7 +346,8 @@ class GoogleSearchStrategy(BaseStrategy):
 
                 # PRE-FILTER: Fuzzy matching to avoid expensive AI calls
                 title = result.get("title", "")
-                name_match_score = calculate_name_match_score(company_name, title)
+                text_for_match = f"{title} {result.get('description', '')}"
+                name_match_score = calculate_name_match_score(company_name, text_for_match)
                 logger.info("Google Search: Fuzzy match score for '%s': %.2f", title, name_match_score)
 
                 if name_match_score < 0.5:
@@ -360,6 +402,7 @@ class GoogleSearchStrategy(BaseStrategy):
                             nip,
                             ai_validation_result.get("reasoning", "unknown reason")
                         )
+                        rejected_nips.add(nip)  # Remember this NIP was rejected
                         continue  # Try next result
 
                     if ai_validation_result.get("confidence", 0.0) < 0.7:
@@ -368,6 +411,7 @@ class GoogleSearchStrategy(BaseStrategy):
                             ai_validation_result.get("confidence", 0.0),
                             nip
                         )
+                        rejected_nips.add(nip)  # Remember this NIP was rejected
                         continue  # Try next result
 
                 # AI approved or AI disabled - add to candidates
@@ -412,6 +456,19 @@ class GoogleSearchStrategy(BaseStrategy):
                 len(candidates)
             )
 
+            # Build alternatives list (max 5, excluding best)
+            alternatives = []
+            for alt in candidates[1:6]:  # Skip best, take up to 5
+                alternatives.append(NIPCandidate(
+                    nip=alt['nip'],
+                    nip_formatted=format_nip(alt['nip']),
+                    company_name_found=alt.get('source_title'),
+                    confidence=alt['confidence'],
+                    source_url=alt.get('source_url'),
+                    source_domain=alt.get('discovered_domain'),
+                    reasoning=alt.get('ai_validation', {}).get('reasoning') if alt.get('ai_validation') else None,
+                ))
+
             return NIPResult(
                 company_name=company_name,
                 city=city,
@@ -420,6 +477,7 @@ class GoogleSearchStrategy(BaseStrategy):
                 nip_formatted=format_nip(best['nip']),
                 confidence=best['confidence'],
                 strategy_used=SearchStrategy.GOOGLE_SEARCH,
+                alternatives=alternatives,  # Add alternatives list
                 warnings=[],
                 cost_usd=0.015,  # Google Search + AI validation cost
                 metadata={
@@ -432,7 +490,6 @@ class GoogleSearchStrategy(BaseStrategy):
                     "ai_validation": best['ai_validation'],
                     "name_match_score": best['name_match_score'],
                     "total_candidates": len(candidates),
-                    "rejected_candidates": [c['nip'] for c in candidates[1:]],
                 },
             )
 

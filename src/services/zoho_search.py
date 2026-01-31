@@ -18,6 +18,9 @@ from ..models.lead_output import (
     MatchSignals,
     ContactExistsResult,
     AccountExistsResult,
+    ZohoFieldUpdate,
+    NormalizedData,
+    ScrapedContactData,
 )
 from ..utils.validators import extract_email_domain, is_public_email_domain, normalize_phone
 from ..utils.phone_formatter import PhoneFormatter
@@ -63,8 +66,198 @@ CONTACT_SEARCH_FIELDS = [
 # Pola do pobrania przy wyszukiwaniu firm
 ACCOUNT_SEARCH_FIELDS = [
     "id", "Account_Name", "Firma_NIP", "Website", "Domena_z_www",
-    "Parent_Account", "Billing_City", "Billing_Street"
+    "Parent_Account", "Billing_City", "Billing_Street",
+    "Phone", "Fax",
 ]
+
+
+# ============================================
+# Funkcje wykrywania nowych pól
+# ============================================
+
+
+def detect_new_contact_fields(
+    existing_record: dict,
+    incoming_data: NormalizedData,
+) -> list[ZohoFieldUpdate]:
+    """
+    Porównuje dane z Zoho Contact z nowymi danymi OSOBY.
+    Zwraca listę pól do uzupełnienia.
+
+    UWAGA: Dane ze scrapingu (email firmy, telefon z footera) to dane FIRMY (Account),
+    nie osoby (Contact)! Nie mieszamy.
+
+    Args:
+        existing_record: Rekord Contact z Zoho
+        incoming_data: Znormalizowane dane osoby z leada
+
+    Returns:
+        Lista ZohoFieldUpdate z polami do aktualizacji
+    """
+    updates: list[ZohoFieldUpdate] = []
+    phone_formatter = PhoneFormatter()
+
+    # Śledź które pola już zostały zaproponowane do aktualizacji
+    assigned_fields: set[str] = set()
+
+    # === EMAIL OSOBY (z leada) ===
+    zoho_emails = set()
+    for field in EMAIL_FIELDS:
+        val = existing_record.get(field)
+        if val and isinstance(val, str):
+            zoho_emails.add(val.lower().strip())
+
+    # Email z leada - to email osoby
+    if incoming_data.email:
+        email_lower = incoming_data.email.lower().strip()
+        if email_lower not in zoho_emails:
+            target_field = None
+            for field in EMAIL_FIELDS:
+                if not existing_record.get(field) and field not in assigned_fields:
+                    target_field = field
+                    break
+            if target_field:
+                updates.append(ZohoFieldUpdate(
+                    field_name=target_field,
+                    new_value=incoming_data.email,
+                    reason="nowy email osoby z leada",
+                ))
+                assigned_fields.add(target_field)
+
+    # === TELEFON OSOBY (z leada) ===
+    zoho_phones = set()
+    for field in PHONE_FIELDS:
+        val = existing_record.get(field)
+        if val:
+            normalized = phone_formatter.normalize_for_comparison(val)
+            if normalized:
+                zoho_phones.add(normalized)
+
+    # Telefon z leada - to telefon osoby
+    if incoming_data.phone:
+        phone_normalized = phone_formatter.normalize_for_comparison(incoming_data.phone)
+        if phone_normalized and phone_normalized not in zoho_phones:
+            target_field = None
+            for field in PHONE_FIELDS:
+                if not existing_record.get(field) and field not in assigned_fields:
+                    target_field = field
+                    break
+            if target_field:
+                updates.append(ZohoFieldUpdate(
+                    field_name=target_field,
+                    new_value=incoming_data.phone_formatted or incoming_data.phone,
+                    reason="nowy telefon osoby z leada",
+                ))
+                assigned_fields.add(target_field)
+
+    # Mobile z leada
+    if incoming_data.mobile:
+        phone_normalized = phone_formatter.normalize_for_comparison(incoming_data.mobile)
+        if phone_normalized and phone_normalized not in zoho_phones:
+            if not existing_record.get("Mobile") and "Mobile" not in assigned_fields:
+                updates.append(ZohoFieldUpdate(
+                    field_name="Mobile",
+                    new_value=incoming_data.mobile,
+                    reason="nowy telefon komórkowy osoby z leada",
+                ))
+                assigned_fields.add("Mobile")
+
+    return updates
+
+
+def detect_new_account_fields(
+    existing_record: dict,
+    incoming_data: NormalizedData,
+    scraped_data: Optional[ScrapedContactData] = None,
+) -> list[ZohoFieldUpdate]:
+    """
+    Porównuje dane z Zoho Account z nowymi danymi FIRMY.
+    Zwraca listę pól do uzupełnienia.
+
+    scraped_data zawiera dane FIRMY (email kontaktowy, telefon z footera, adres) -
+    to są dane firmowe, nie osobowe!
+
+    Args:
+        existing_record: Rekord Account z Zoho
+        incoming_data: Znormalizowane dane firmy z leada
+        scraped_data: Dane FIRMY zebrane podczas crawlowania
+
+    Returns:
+        Lista ZohoFieldUpdate z polami do aktualizacji
+    """
+    updates: list[ZohoFieldUpdate] = []
+
+    # === DOMENA / WEBSITE ===
+    zoho_website = existing_record.get("Website") or ""
+    zoho_domain = existing_record.get("Domena_z_www") or ""
+
+    if scraped_data and scraped_data.domain:
+        domain = scraped_data.domain.lower().replace("www.", "")
+        if not zoho_domain and domain not in zoho_website.lower():
+            updates.append(ZohoFieldUpdate(
+                field_name="Domena_z_www",
+                new_value=domain,
+                reason="domena ze strony firmy",
+            ))
+        if not zoho_website:
+            updates.append(ZohoFieldUpdate(
+                field_name="Website",
+                new_value=f"https://{domain}",
+                reason="strona www ze scrapingu",
+            ))
+
+    # === TELEFON FIRMOWY (ze scrapingu - to telefon FIRMY, np. z footera) ===
+    zoho_phone = existing_record.get("Phone") or ""
+    if not zoho_phone and scraped_data and scraped_data.phones:
+        updates.append(ZohoFieldUpdate(
+            field_name="Phone",
+            new_value=scraped_data.phones[0],
+            reason="telefon firmowy ze strony www",
+        ))
+
+    # === EMAIL FIRMOWY (ze scrapingu - kontakt@firma.pl, rejestracja@firma.pl) ===
+    # To są emaile FIRMY, nie osoby! Mogą iść do pola np. "Email_firmowy" w Account
+    # (jeśli takie pole istnieje w Zoho)
+
+    # === NIP ===
+    zoho_nip = existing_record.get("Firma_NIP") or ""
+    if not zoho_nip and incoming_data.nip:
+        updates.append(ZohoFieldUpdate(
+            field_name="Firma_NIP",
+            new_value=incoming_data.nip,
+            reason="NIP znaleziony przez NIPFinderV3",
+        ))
+
+    # === ADRES SIEDZIBY (jeśli brak w Zoho) ===
+    zoho_city = existing_record.get("Billing_City") or ""
+    if not zoho_city and incoming_data.city:
+        updates.append(ZohoFieldUpdate(
+            field_name="Billing_City",
+            new_value=incoming_data.city,
+            reason="miasto firmy z leada",
+        ))
+
+    zoho_street = existing_record.get("Billing_Street") or ""
+    if not zoho_street and incoming_data.street:
+        updates.append(ZohoFieldUpdate(
+            field_name="Billing_Street",
+            new_value=incoming_data.street,
+            reason="ulica firmy z leada",
+        ))
+
+    # === ADRES ZE SCRAPINGU (jeśli brak w Zoho i mamy ze strony) ===
+    if scraped_data and scraped_data.addresses:
+        if not zoho_street:
+            # Już dodaliśmy z leada? Sprawdź
+            street_already_added = any(u.field_name == "Billing_Street" for u in updates)
+            if not street_already_added:
+                updates.append(ZohoFieldUpdate(
+                    field_name="Billing_Street",
+                    new_value=scraped_data.addresses[0],
+                    reason="adres firmy ze strony www",
+                ))
+
+    return updates
 
 
 class ZohoSearchService:

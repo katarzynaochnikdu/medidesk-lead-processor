@@ -1,0 +1,404 @@
+{
+  "company": {
+    "nip": "5542485321",
+    "regon": "092993191",
+    "krs": null,
+    "nazwa_pelna": "CONSULTRON S. LISTOPADZKI, J. SZYPERSKI, P. JARZEMSKI SPÓŁKA JAWNA",
+    "nazwa_zwyczajowa": "Data for business growth",
+    "adres_siedziby": {
+      "ulica": "ul. Bydgoskiego Batalionu Obrony Narodowej 10A",
+      "kod": "85-825",
+      "miasto": "Bydgoszcz",
+      "wojewodztwo": "KUJAWSKO-POMORSKIE"
+    },
+    "kategoryzacja_ai": {
+      "platnik_uslug": [
+        "Komercyjne"
+      ],
+      "specjalizacja": [],
+      "wielospecjalistyczne": [],
+      "typ_wlasnosci": "Prywatny (Private)",
+      "kategoria_konta": null,
+      "branza": null,
+      "ai_confidence": 0.1,
+      "ai_reasoning": "Na podstawie nazwy (CONSULTRON) i opisu ('Data for business growth') firma nie jest placówką medyczną, lecz dostawcą danych biznesowych. Kategorie medyczne nie mają zastosowania."
+    },
+    "social_media": {
+      "website": "https://okredo.com/pl-pl/firma/consultron-s-listopadzki-j-szyperski-p-jarzemski-spolka-jawna-krs-0000081578",
+      "facebook": "https://www.facebook.com/OkredoLT",
+      "instagram": null,
+      "linkedin": "https://www.linkedin.com/company/okredo",
+      "tiktok": null,
+      "x": null
+    },
+    "activity_score": {
+      "total": 35,
+      "recommendation": "COLD",
+      "breakdown": {
+        "google_maps": 25,
+        "facebook": 0,
+        "instagram": 0,
+        "tiktok": 0,
+        "website": 5,
+        "network": 5
+      },
+      "signals": [
+        "Google Maps 5.0/5",
+        "Google 60 recenzji",
+        "SSL aktywny",
+        "Sieć 5 placówek"
+      ]
+    },
+    "placowki": [
+      {
+        "typ_adresu": "-None-",
+        "adres": {
+          "ulica": "ul. Księdza Ignacego Skorupki 98",
+          "kod": "85-156",
+          "miasto": "Bydgoszcz",
+          "wojewodztwo": null
+        },
+        "kontakty": [
+          {
+            "typ": "telefon",
+            "wartosc": "+48 509 832 532",
+            "opis": "Google Maps"
+          }
+        ],
+        "godziny_otwarcia": "pią: ZAMknięte; sob: ZAMknięte; nie: ZAMknięte; pon: 15:00 to 20:00; wto: ZAMknięte; śro: ZAMknięte; czw: 15:00 to 20:00",
+        "coordinates": {
+          "lat": 53.1086831,
+          "lng": 17.9776662
+        },
+        "google_maps_place_id": "ChIJQ_dbbW8UA0cRbNiJbE9J4Ok",
+        "google_rating": 5.0,
+        "google_reviews_count": 10,
+        "reviews_insights": {
+          "total_reviews_analyzed": 6,
+          "avg_rating": 5.0,
+          "top_complaints": [],
+          "top_praises": [
+            {
+              "insight": "Lekarz dokładnie tłumaczy i uspokaja pacjentów",
+              "count": 2,
+              "citations": [
+                {
+                  "text": "Bardzo dobry lekarz, Pan Piotr wszystko dokładnie tłumaczy, wyjaśnia. Do badań podchodzi skrupulatnie.",
+                  "date": "2022-09-28",
+                  "author": "Radosław Oryl",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChZDSUhNMG9nS0VJQ0FnSURld05DbEt3EAE!2m1!1s0x0:0xe9e0494f6c89d86c!3m1!1s2@1:CIHM0ogKEICAgIDewNClKw%7CCgwIsKDSmQYQ6J_tzQM%7C?hl=pl"
+                },
+                {
+                  "text": "Jak zawsze jestem pod ogromnym, ogromnym wrażeniem Pana doktora Piotra Słupskiego. Nigdy nie czuję skrępowania, stresu, bo wiem, że każdy niepokój z mojej strony jest tłumiony w zarodku. Uśmiech, wied...",
+                  "date": "2020-11-12",
+                  "author": "Edyta Nowacka",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChZDSUhNMG9nS0VJQ0FnSUNpdmFmZU9REAE!2m1!1s0x0:0xe9e0494f6c89d86c!3m1!1s2@1:CIHM0ogKEICAgICivafeOQ%7CCgsI6ri2_QUQuNL4CQ%7C?hl=pl"
+                }
+              ]
+            },
+            {
+              "insight": "Miła obsługa i atmosfera w placówce",
+              "count": 2,
+              "citations": [
+                {
+                  "text": "Bardzo lubie chodze tu i obsługa miła zabawki dla dzieci (dzielnych pacjętów♥♥)",
+                  "date": "2023-11-08",
+                  "author": "Maria Janer",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChdDSUhNMG9nS0VJQ0FnSURGdWVtX3FnRRAB!2m1!1s0x0:0xe9e0494f6c89d86c!3m1!1s2@1:CIHM0ogKEICAgIDFuem_qgE%7CCgwInKuuqgYQsOT7zwI%7C?hl=pl"
+                },
+                {
+                  "text": "Miła atmosfera, super kontakt. Polecam z czystym sercem!",
+                  "date": "2021-03-24",
+                  "author": "Łukasz Boruta",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChZDSUhNMG9nS0VJQ0FnSUNLNEpuYUpBEAE!2m1!1s0x0:0xe9e0494f6c89d86c!3m1!1s2@1:CIHM0ogKEICAgICK4JnaJA%7CCgsIxqTuggYQ0K7ncw%7C?hl=pl"
+                }
+              ]
+            }
+          ],
+          "common_themes": [
+            "Komunikacja lekarza z pacjentem",
+            "Pozytywna atmosfera i obsługa",
+            "Profesjonalizm i wiedza lekarza"
+          ],
+          "summary": "Na podstawie dostępnych recenzji nie można ocenić komunikacji zdalnej (telefony, maile), ponieważ brakuje na ten temat informacji. Recenzje wskazują jednak na bardzo pozytywną komunikację na miejscu: obsługa jest oceniana jako miła, a lekarz chwalony za dokładne tłumaczenie i budowanie poczucia bezpieczeństwa.",
+          "confidence": 1.0
+        }
+      },
+      {
+        "typ_adresu": "-None-",
+        "adres": {
+          "ulica": "ul. Mieczysława Karłowicza 22",
+          "kod": "85-092",
+          "miasto": "Bydgoszcz",
+          "wojewodztwo": null
+        },
+        "kontakty": [
+          {
+            "typ": "telefon",
+            "wartosc": "+48 523 460 660",
+            "opis": "Google Maps"
+          }
+        ],
+        "godziny_otwarcia": null,
+        "coordinates": {
+          "lat": 53.1232319,
+          "lng": 18.0271805
+        },
+        "google_maps_place_id": "ChIJ6ccBgJITA0cRbBXmUZ966rI",
+        "google_rating": 5.0,
+        "google_reviews_count": 5,
+        "reviews_insights": {
+          "total_reviews_analyzed": 2,
+          "avg_rating": 5.0,
+          "top_complaints": [],
+          "top_praises": [
+            {
+              "insight": "Lekarz dokładnie słucha pacjenta i tłumaczy",
+              "count": 1,
+              "citations": [
+                {
+                  "text": "Profesor dokładnie słucha, bada i tłumaczy. Jestem bardzo zadowolony.",
+                  "date": "2021-02-07",
+                  "author": "Mirosław Kwiatkowski",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChdDSUhNMG9nS0VJQ0FnSUN5MWFldXJBRRAB!2m1!1s0x0:0xb2ea7a9f51e6156c!3m1!1s2@1:CIHM0ogKEICAgICy1aeurAE%7CCgwI956BgQYQ-O_etgM%7C?hl=pl"
+                }
+              ]
+            },
+            {
+              "insight": "Bardzo wysoka ocena kompetencji lekarza urologa",
+              "count": 1,
+              "citations": [
+                {
+                  "text": "Dotychczas nie trafiłem na lepszego urologa ☺️",
+                  "date": "2022-05-19",
+                  "author": "Ryszard Targanski",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChZDSUhNMG9nS0VJQ0FnSUQyaFpLN01REAE!2m1!1s0x0:0xb2ea7a9f51e6156c!3m1!1s2@1:CIHM0ogKEICAgID2hZK7MQ%7CCgwI7o6alAYQ2JSw0gE%7C?hl=pl"
+                }
+              ]
+            }
+          ],
+          "common_themes": [
+            "Profesjonalizm lekarza",
+            "Dobra komunikacja lekarza z pacjentem (podczas wizyty)"
+          ],
+          "summary": "Dostępne recenzje nie zawierają żadnych informacji na temat kontaktu z placówką (telefony, maile, recepcja). Chwalona jest natomiast komunikacja lekarza z pacjentem bezpośrednio podczas wizyty, w tym umiejętność słuchania i tłumaczenia.",
+          "confidence": 1.0
+        }
+      },
+      {
+        "typ_adresu": "-None-",
+        "adres": {
+          "ulica": "ul. Bydgoskiego Batalionu Obrony Narodowej 10a",
+          "kod": "85-825",
+          "miasto": "Bydgoszcz",
+          "wojewodztwo": null
+        },
+        "kontakty": [
+          {
+            "typ": "telefon",
+            "wartosc": "+48 523 202 050",
+            "opis": "Google Maps"
+          }
+        ],
+        "godziny_otwarcia": null,
+        "coordinates": {
+          "lat": 53.1035064,
+          "lng": 18.0508651
+        },
+        "google_maps_place_id": "ChIJFez_H_YTA0cR_lXA4rXGEWc",
+        "google_rating": null,
+        "google_reviews_count": null,
+        "reviews_insights": null
+      },
+      {
+        "typ_adresu": "-None-",
+        "adres": {
+          "ulica": "ul. Bartosza Głowackiego 15",
+          "kod": "85-614",
+          "miasto": "Bydgoszcz",
+          "wojewodztwo": null
+        },
+        "kontakty": [
+          {
+            "typ": "telefon",
+            "wartosc": "+48 504 618 186",
+            "opis": "Google Maps"
+          }
+        ],
+        "godziny_otwarcia": "pią: 07:30 to 16:15; sob: 09:00 to 13:00; nie: ZAMknięte; pon: 07:30 to 16:15; wto: 07:30 to 16:15; śro: 07:30 to 16:15; czw: 07:30 to 16:15",
+        "coordinates": {
+          "lat": 53.132419,
+          "lng": 18.039416
+        },
+        "google_maps_place_id": "ChIJKY5n4fATA0cR4Y_-Cd0_SUc",
+        "google_rating": 4.6,
+        "google_reviews_count": 43,
+        "reviews_insights": {
+          "total_reviews_analyzed": 27,
+          "avg_rating": 4.5813953488372094,
+          "top_complaints": [
+            {
+              "insight": "Niezgodne godziny otwarcia, pracownik często nieobecny.",
+              "count": 2,
+              "citations": [
+                {
+                  "text": "Otwierają jak chcą…..",
+                  "date": "2024-05-28",
+                  "author": "Magda",
+                  "rating": 2,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChZDSUhNMG9nS0VJQ0FnSURUbThLWkRREAE!2m1!1s0x0:0x47493fdd09fe8fe1!3m1!1s2@1:CIHM0ogKEICAgIDTm8KZDQ%7CCgwI57HWsgYQkMLFjgI%7C?hl=pl"
+                },
+                {
+                  "text": "Zmieńcie godziny otwarcia na Google bo człowiek jedzie na marne",
+                  "date": "2023-12-29",
+                  "author": "Zuza",
+                  "rating": 1,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChdDSUhNMG9nS0VJQ0FnSUMxdG9tby1RRRAB!2m1!1s0x0:0x47493fdd09fe8fe1!3m1!1s2@1:CIHM0ogKEICAgIC1tomo-QE%7CCgwIxaS7rAYQ8PTd7wE%7C?hl=pl"
+                }
+              ]
+            },
+            {
+              "insight": "Zbyt wysoka cena w porównaniu do konkurencji.",
+              "count": 1,
+              "citations": [
+                {
+                  "text": "70 zł kosztuje w Krispol napełnienie butli CO2 5l 3,75kg CO2, ale po sprawdzeniu pozostałych firm w Bydgoszczy okazało się, że aż o ok.40% oferta Krispol jest wyższa od pozostałych! Regularna cena to ...",
+                  "date": "2024-07-18",
+                  "author": "Monner Mooner",
+                  "rating": 1,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChZDSUhNMG9nS0VJQ0FnSURyc2FHblhBEAE!2m1!1s0x0:0x47493fdd09fe8fe1!3m1!1s2@1:CIHM0ogKEICAgIDrsaGnXA%7CCgwI6v_itAYQ0L7B6gI%7C?hl=pl"
+                }
+              ]
+            },
+            {
+              "insight": "Usługa nie została wykonana.",
+              "count": 1,
+              "citations": [
+                {
+                  "text": "Brak wykonania usługi.",
+                  "date": "2025-04-11",
+                  "author": "G G",
+                  "rating": 1,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChZDSUhNMG9nS0VJQ0FnTURJMmNPVkJ3EAE!2m1!1s0x0:0x47493fdd09fe8fe1!3m1!1s2@1:CIHM0ogKEICAgMDI2cOVBw%7CCgwIhtXjvwYQ0PSg8gE%7C?hl=pl"
+                }
+              ]
+            }
+          ],
+          "top_praises": [
+            {
+              "insight": "Bardzo szybka, sprawna obsługa na miejscu.",
+              "count": 10,
+              "citations": [
+                {
+                  "text": "Sprawa z gaśnicą załatwiona bardzo szybko i profesjonalnie.",
+                  "date": "2025-08-09",
+                  "author": "Dariusz Poraziński",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2xOd1RWbDRNMmc0ZW13MFlsVkRibFJ4UW1ScFMzYxAB!2m1!1s0x0:0x47493fdd09fe8fe1!3m1!1s2@1:CAIQACodChtycF9oOlNwTVl4M2g4emw0YlVDblRxQmRpS3c%7C0c_njcZ4gea%7C?hl=pl"
+                },
+                {
+                  "text": "Bardzo dobry punkt, gaśnica odświeżona na poczekaniu.Polecam.",
+                  "date": "2025-05-08",
+                  "author": "Jerzy Polanowicz",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChdDSUhNMG9nS0VNT1Y2LXVmeDRQUjdRRRAB!2m1!1s0x0:0x47493fdd09fe8fe1!3m1!1s2@1:CIHM0ogKEMOV6-ufx4PR7QE%7CCgsI3KLzwAYQoKXqWQ%7C?hl=pl"
+                },
+                {
+                  "text": "Skorzystałam z ładowania butli/naboju do wody sodowej. Butla naładowana super, błyskawicznie. Cena konkurencyjna. Jak dla mnie blisko, więc trochę bezkonkurencyjnie. Ale obsługa miła. No i, co ważne, ...",
+                  "date": "2024-09-21",
+                  "author": "Agata Kozicka",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChZDSUhNMG9nS0VJQ0FnSUNua0x1dEJnEAE!2m1!1s0x0:0x47493fdd09fe8fe1!3m1!1s2@1:CIHM0ogKEICAgICnkLutBg%7CCgwIw-m8twYQ2JqbggI%7C?hl=pl"
+                }
+              ]
+            },
+            {
+              "insight": "Miła, profesjonalna i pomocna obsługa klienta.",
+              "count": 7,
+              "citations": [
+                {
+                  "text": "Rzeczowa i profesjonalna obsługa.",
+                  "date": "2025-08-02",
+                  "author": "Henryk Olkowski",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2t4bmVEVkhNSFF3T1RNMlp6UkNjSFo1TFZGWGFVRRAB!2m1!1s0x0:0x47493fdd09fe8fe1!3m1!1s2@1:CAIQACodChtycF9oOkxneDVHMHQwOTM2ZzRCcHZ5LVFXaUE%7C0cYTRDD9uZW%7C?hl=pl"
+                },
+                {
+                  "text": "Skorzystałam z ładowania butli/naboju do wody sodowej. Butla naładowana super, błyskawicznie. Cena konkurencyjna. Jak dla mnie blisko, więc trochę bezkonkurencyjnie. Ale obsługa miła. No i, co ważne, ...",
+                  "date": "2024-09-21",
+                  "author": "Agata Kozicka",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChZDSUhNMG9nS0VJQ0FnSUNua0x1dEJnEAE!2m1!1s0x0:0x47493fdd09fe8fe1!3m1!1s2@1:CIHM0ogKEICAgICnkLutBg%7CCgwIw-m8twYQ2JqbggI%7C?hl=pl"
+                },
+                {
+                  "text": "Bardzo sprawnie i w miłej atmosferze.",
+                  "date": "2022-11-21",
+                  "author": "Maciej Pszczola",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChdDSUhNMG9nS0VJQ0FnSUQtaEszNWd3RRAB!2m1!1s0x0:0x47493fdd09fe8fe1!3m1!1s2@1:CIHM0ogKEICAgID-hK35gwE%7CCgwIu7XtmwYQ2NSv5wE%7C?hl=pl"
+                }
+              ]
+            },
+            {
+              "insight": "Elastyczność i pomoc po kontakcie telefonicznym.",
+              "count": 2,
+              "citations": [
+                {
+                  "text": "Skorzystałam z ładowania butli/naboju do wody sodowej. Butla naładowana super, błyskawicznie. Cena konkurencyjna. Jak dla mnie blisko, więc trochę bezkonkurencyjnie. Ale obsługa miła. No i, co ważne, ...",
+                  "date": "2024-09-21",
+                  "author": "Agata Kozicka",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChZDSUhNMG9nS0VJQ0FnSUNua0x1dEJnEAE!2m1!1s0x0:0x47493fdd09fe8fe1!3m1!1s2@1:CIHM0ogKEICAgICnkLutBg%7CCgwIw-m8twYQ2JqbggI%7C?hl=pl"
+                },
+                {
+                  "text": "Serwisant super.Gość jechał na urlop ale na mój telefon podjechał i poratował.Polecam.Dobre wrażenie zostaje.",
+                  "date": "2022-08-13",
+                  "author": "Marek Rytlewski",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChZDSUhNMG9nS0VJQ0FnSUR1dUlXU1BBEAE!2m1!1s0x0:0x47493fdd09fe8fe1!3m1!1s2@1:CIHM0ogKEICAgIDuuIWSPA%7CCgsIlubclwYQgJmGFw%7C?hl=pl"
+                }
+              ]
+            }
+          ],
+          "common_themes": [
+            "Konieczność telefonicznego potwierdzenia wizyty",
+            "Szybka obsługa na poczekaniu",
+            "Serwis gaśnic i napełnianie butli CO2"
+          ],
+          "summary": "Komunikacja z placówką opiera się na kontakcie telefonicznym, który jest niezbędny do umówienia wizyty. Klienci, którzy dzwonią, chwalą pomoc i elastyczność (np. możliwość umówienia się poza standardowymi godzinami), jednak brak wcześniejszego kontaktu może skutkować wizytą 'na marne' z powodu pracy w terenie. Recenzje nie wspominają o oddzwanianiu czy komunikacji mailowej.",
+          "confidence": 1.0
+        }
+      }
+    ],
+    "metadata": {
+      "scraped_at": "2026-01-30T20:56:54.526053",
+      "sources_used": [
+        "nip_lookup",
+        "gus",
+        "website",
+        "google_maps",
+        "google_reviews_analysis",
+        "facebook",
+        "ai_categorization"
+      ],
+      "processing_time_ms": 137171,
+      "cost_usd": 0.019,
+      "errors": [],
+      "warnings": [],
+      "data_validation": {
+        "contacts_match": false,
+        "contacts_discrepancies": [
+          "Telefon tylko w Google Maps: 523202050, 504618186, 523460660, 509832532"
+        ],
+        "address_match": true,
+        "address_discrepancies": []
+      }
+    }
+  }
+}

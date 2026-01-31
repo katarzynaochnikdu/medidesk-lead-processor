@@ -1,0 +1,450 @@
+[
+  {
+    "name": "Klinika OT.CO",
+    "website": "https://klinikaotco.pl",
+    "success": true,
+    "activity_score": 70,
+    "recommendation": "HOT_LEAD",
+    "signals": [
+      "Google Maps 4.7/5",
+      "Google 900 recenzji",
+      "Facebook 10.4K followers",
+      "Instagram 15.8K followers",
+      "IG aktywny < 14 dni",
+      "TikTok 49.0K",
+      "SSL aktywny",
+      "Sieć 5 placówek"
+    ],
+    "social_media": {
+      "facebook": "https://www.facebook.com/ot.co.clinic/",
+      "instagram": "https://www.instagram.com/otcoclinic/",
+      "tiktok": "https://www.tiktok.com/@klinikaotco?",
+      "linkedin": null
+    },
+    "social_profiles": [
+      {
+        "platform": "facebook",
+        "followers": 10369,
+        "verified": false
+      },
+      {
+        "platform": "instagram",
+        "followers": 15849,
+        "verified": false
+      },
+      {
+        "platform": "tiktok",
+        "followers": 49000,
+        "verified": false
+      }
+    ],
+    "categorization": {
+      "specjalizacja": [
+        "Medycyna Estetyczna"
+      ],
+      "platnik_uslug": [
+        "Komercyjne"
+      ],
+      "wielospecjalistyczne": [
+        "chirurgia plastyczna",
+        "dermatologia",
+        "laryngologia",
+        "okulistyka"
+      ],
+      "typ_wlasnosci": "Prywatny (Private)",
+      "confidence": 0.99,
+      "reasoning": null
+    },
+    "placowki_count": 2,
+    "google_best_rating": 4.6,
+    "google_total_reviews": 878,
+    "kontakty": [
+      {
+        "typ": "telefon",
+        "wartosc": "+48 221 230 333"
+      },
+      {
+        "typ": "email",
+        "wartosc": "kontakt@klinikaotco.pl"
+      },
+      {
+        "typ": "email",
+        "wartosc": "pr@klinikaotco.pl"
+      },
+      {
+        "typ": "email",
+        "wartosc": "media@klinikaotco.pl"
+      }
+    ],
+    "processing_time_ms": 204905,
+    "cost_usd": 0.019,
+    "sources_used": [
+      "website",
+      "gus",
+      "google_maps",
+      "google_reviews_analysis",
+      "facebook",
+      "instagram",
+      "tiktok",
+      "ai_categorization"
+    ],
+    "warnings": [],
+    "errors": [],
+    "json_path": "C:\\Users\\kochn\\.cursor\\Medidesk\\Leads_extraction\\company_intel\\results_klinika_otco.json"
+  },
+  {
+    "name": "Klinika Ambroziak",
+    "website": "https://klinikaambroziak.pl",
+    "success": true,
+    "activity_score": 65,
+    "recommendation": "LUKEWARM",
+    "signals": [
+      "Google Maps 4.8/5",
+      "Google 825 recenzji",
+      "Facebook 78.2K followers",
+      "Instagram 64.4K followers",
+      "IG aktywny < 14 dni",
+      "SSL aktywny",
+      "Sieć 3 placówek"
+    ],
+    "social_media": {
+      "facebook": "https://www.facebook.com/KlinikaAmbroziak",
+      "instagram": "https://www.instagram.com/klinika_ambroziak/",
+      "tiktok": null,
+      "linkedin": null
+    },
+    "social_profiles": [
+      {
+        "platform": "facebook",
+        "followers": 78162,
+        "verified": false
+      },
+      {
+        "platform": "instagram",
+        "followers": 64351,
+        "verified": false
+      }
+    ],
+    "categorization": {
+      "specjalizacja": [
+        "Medycyna Estetyczna"
+      ],
+      "platnik_uslug": [
+        "Komercyjne"
+      ],
+      "wielospecjalistyczne": [
+        "chirurgia plastyczna",
+        "dermatologia",
+        "laryngologia"
+      ],
+      "typ_wlasnosci": "Prywatny (Private)",
+      "confidence": 0.99,
+      "reasoning": null
+    },
+    "placowki_count": 3,
+    "google_best_rating": 4.8,
+    "google_total_reviews": 825,
+    "kontakty": [
+      {
+        "typ": "telefon",
+        "wartosc": "+48 221 115 005"
+      },
+      {
+        "typ": "telefon",
+        "wartosc": "+48 726 101 000"
+      }
+    ],
+    "processing_time_ms": 193314,
+    "cost_usd": 0.012,
+    "sources_used": [
+      "website",
+      "google_maps",
+      "google_reviews_analysis",
+      "facebook",
+      "instagram",
+      "ai_categorization"
+    ],
+    "warnings": [],
+    "errors": [],
+    "json_path": "C:\\Users\\kochn\\.cursor\\Medidesk\\Leads_extraction\\company_intel\\results_klinika_ambroziak.json"
+  },
+  {
+    "name": "FabSkin",
+    "website": "https://fabskin.pl",
+    "success": true,
+    "activity_score": 60,
+    "recommendation": "LUKEWARM",
+    "signals": [
+      "Google Maps 4.6/5",
+      "Google 372 recenzji",
+      "Facebook 4.2K followers",
+      "Instagram 2.3K followers",
+      "IG aktywny < 14 dni",
+      "SSL aktywny"
+    ],
+    "social_media": {
+      "facebook": "https://www.facebook.com/FabSkinMedycynaEstetyczna",
+      "instagram": "https://www.instagram.com/fabskin.medycyna.estetyczna/",
+      "tiktok": null,
+      "linkedin": null
+    },
+    "social_profiles": [
+      {
+        "platform": "facebook",
+        "followers": 4233,
+        "verified": false
+      },
+      {
+        "platform": "instagram",
+        "followers": 2325,
+        "verified": false
+      }
+    ],
+    "categorization": {
+      "specjalizacja": [
+        "Medycyna Estetyczna"
+      ],
+      "platnik_uslug": [
+        "Komercyjne"
+      ],
+      "wielospecjalistyczne": [
+        "chirurgia plastyczna"
+      ],
+      "typ_wlasnosci": "Prywatny (Private)",
+      "confidence": 0.95,
+      "reasoning": "Tekst jednoznacznie identyfikuje placówkę jako 'Klinika medycyny estetycznej' i wymienia liczne zabiegi z tego zakresu (toksyna botulinowa, kwas hialuronowy, lasery). Oferta zawiera również 'Blefaroplastyka powiek', co jest zabiegiem z chirurgii plastycznej. Usługi są komercyjne."
+    },
+    "placowki_count": 1,
+    "google_best_rating": 4.6,
+    "google_total_reviews": 372,
+    "kontakty": [
+      {
+        "typ": "email",
+        "wartosc": "fabskin@fabskin.pl"
+      },
+      {
+        "typ": "telefon",
+        "wartosc": "+48 221 268 008"
+      }
+    ],
+    "processing_time_ms": 164730,
+    "cost_usd": 0.004,
+    "sources_used": [
+      "website",
+      "google_maps",
+      "google_reviews_analysis",
+      "facebook",
+      "instagram",
+      "ai_categorization"
+    ],
+    "warnings": [],
+    "errors": [],
+    "json_path": "C:\\Users\\kochn\\.cursor\\Medidesk\\Leads_extraction\\company_intel\\results_fabskin.json"
+  },
+  {
+    "name": "Voltamed",
+    "website": "https://voltamed.pl",
+    "success": true,
+    "activity_score": 15,
+    "recommendation": "COLD",
+    "signals": [
+      "Google 92 recenzji",
+      "SSL aktywny"
+    ],
+    "social_media": {
+      "facebook": "https://www.facebook.com/VoltaMed",
+      "instagram": null,
+      "tiktok": null,
+      "linkedin": null
+    },
+    "social_profiles": [
+      {
+        "platform": "facebook",
+        "followers": 597,
+        "verified": false
+      }
+    ],
+    "categorization": {
+      "specjalizacja": [
+        "Diagnostyka",
+        "POZ"
+      ],
+      "platnik_uslug": [
+        "Komercyjne"
+      ],
+      "wielospecjalistyczne": [],
+      "typ_wlasnosci": "Prywatny (Private)",
+      "confidence": 0.9,
+      "reasoning": null
+    },
+    "placowki_count": 2,
+    "google_best_rating": 3.1,
+    "google_total_reviews": 92,
+    "kontakty": [
+      {
+        "typ": "telefon",
+        "wartosc": "+48 228 540 194"
+      },
+      {
+        "typ": "telefon",
+        "wartosc": "+48 226 540 233"
+      },
+      {
+        "typ": "email",
+        "wartosc": "info@voltamed.pl"
+      },
+      {
+        "typ": "email",
+        "wartosc": "rejestracja@voltamed.pl"
+      }
+    ],
+    "processing_time_ms": 208400,
+    "cost_usd": 0.008,
+    "sources_used": [
+      "website",
+      "google_maps",
+      "google_reviews_analysis",
+      "facebook",
+      "ai_categorization"
+    ],
+    "warnings": [],
+    "errors": [],
+    "json_path": "C:\\Users\\kochn\\.cursor\\Medidesk\\Leads_extraction\\company_intel\\results_voltamed.json"
+  },
+  {
+    "name": "Perspecteeth",
+    "website": "https://perspecteeth.pl",
+    "success": true,
+    "activity_score": 30,
+    "recommendation": "COLD",
+    "signals": [
+      "Google Maps 5.0/5",
+      "Instagram 6.5K followers",
+      "SSL aktywny"
+    ],
+    "social_media": {
+      "facebook": null,
+      "instagram": "https://www.instagram.com/dr_gluszek/",
+      "tiktok": null,
+      "linkedin": null
+    },
+    "social_profiles": [
+      {
+        "platform": "instagram",
+        "followers": 6498,
+        "verified": false
+      }
+    ],
+    "categorization": {
+      "specjalizacja": [
+        "Stomatologia"
+      ],
+      "platnik_uslug": [
+        "Komercyjne"
+      ],
+      "wielospecjalistyczne": [],
+      "typ_wlasnosci": "Prywatny (Private)",
+      "confidence": 1.0,
+      "reasoning": null
+    },
+    "placowki_count": 1,
+    "google_best_rating": 5.0,
+    "google_total_reviews": 38,
+    "kontakty": [
+      {
+        "typ": "telefon",
+        "wartosc": "+48 570 994 552"
+      },
+      {
+        "typ": "email",
+        "wartosc": "kontakt@perspecteeth.pl"
+      }
+    ],
+    "processing_time_ms": 96593,
+    "cost_usd": 0.004,
+    "sources_used": [
+      "website",
+      "google_maps",
+      "google_reviews_analysis",
+      "instagram",
+      "ai_categorization"
+    ],
+    "warnings": [],
+    "errors": [],
+    "json_path": "C:\\Users\\kochn\\.cursor\\Medidesk\\Leads_extraction\\company_intel\\results_perspecteeth.json"
+  },
+  {
+    "name": "Aldent Wroclaw",
+    "website": "https://aldent.wroclaw.pl",
+    "success": true,
+    "activity_score": 15,
+    "recommendation": "COLD",
+    "signals": [
+      "Google 80 recenzji",
+      "SSL aktywny"
+    ],
+    "social_media": {
+      "facebook": "https://www.facebook.com/aldentwroclaw/",
+      "instagram": null,
+      "tiktok": null,
+      "linkedin": null
+    },
+    "social_profiles": [
+      {
+        "platform": "facebook",
+        "followers": 512,
+        "verified": false
+      }
+    ],
+    "categorization": {
+      "specjalizacja": [
+        "Stomatologia"
+      ],
+      "platnik_uslug": [
+        "NFZ",
+        "Komercyjne"
+      ],
+      "wielospecjalistyczne": [],
+      "typ_wlasnosci": "Prywatny (Private)",
+      "confidence": 1.0,
+      "reasoning": "Tekst jednoznacznie wskazuje, że jest to gabinet stomatologiczny ('Stomatolog', 'Gabinet dentystyczny') oferujący szeroki zakres usług dentystycznych. Wzmianka 'Przyjmujemy pacjentów także w ramach umowy z NFZ' potwierdza płatnika."
+    },
+    "placowki_count": 1,
+    "google_best_rating": 4.1,
+    "google_total_reviews": 80,
+    "kontakty": [
+      {
+        "typ": "telefon",
+        "wartosc": "+48 717 500 937"
+      },
+      {
+        "typ": "telefon",
+        "wartosc": "+48 713 508 615"
+      },
+      {
+        "typ": "telefon",
+        "wartosc": "+48 607 343 124"
+      },
+      {
+        "typ": "telefon",
+        "wartosc": "+48 732 470 211"
+      },
+      {
+        "typ": "email",
+        "wartosc": "rejestracja-arbuzowa@aldent.wroclaw.pl"
+      }
+    ],
+    "processing_time_ms": 130296,
+    "cost_usd": 0.004,
+    "sources_used": [
+      "website",
+      "google_maps",
+      "google_reviews_analysis",
+      "facebook",
+      "ai_categorization"
+    ],
+    "warnings": [],
+    "errors": [],
+    "json_path": "C:\\Users\\kochn\\.cursor\\Medidesk\\Leads_extraction\\company_intel\\results_aldent_wroclaw.json"
+  }
+]

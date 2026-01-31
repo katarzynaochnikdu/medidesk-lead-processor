@@ -1,0 +1,222 @@
+{
+  "company": {
+    "nip": null,
+    "regon": null,
+    "krs": null,
+    "nazwa_pelna": "Perspecteeth",
+    "nazwa_zwyczajowa": "Perspecteeth – Uśmiechnij się!",
+    "adres_siedziby": null,
+    "kategoryzacja_ai": {
+      "platnik_uslug": [
+        "Komercyjne"
+      ],
+      "specjalizacja": [
+        "Stomatologia"
+      ],
+      "wielospecjalistyczne": [],
+      "typ_wlasnosci": "Prywatny (Private)",
+      "kategoria_konta": null,
+      "branza": null,
+      "ai_confidence": 1.0,
+      "ai_reasoning": null
+    },
+    "social_media": {
+      "website": "https://perspecteeth.pl",
+      "facebook": null,
+      "instagram": "https://www.instagram.com/dr_gluszek/",
+      "linkedin": null,
+      "tiktok": null,
+      "x": null
+    },
+    "activity_score": {
+      "total": 30,
+      "recommendation": "COLD",
+      "breakdown": {
+        "google_maps": 15,
+        "facebook": 0,
+        "instagram": 10,
+        "tiktok": 0,
+        "website": 5
+      },
+      "signals": [
+        "Google Maps 5.0/5",
+        "Instagram 6.5K followers",
+        "SSL aktywny"
+      ]
+    },
+    "placowki": [
+      {
+        "typ_adresu": "-None-",
+        "adres": {
+          "ulica": "ul. Bluszczańska 54",
+          "kod": "00-712",
+          "miasto": "Warszawa",
+          "wojewodztwo": null
+        },
+        "kontakty": [
+          {
+            "typ": "telefon",
+            "wartosc": "+48 570 994 552",
+            "opis": null
+          },
+          {
+            "typ": "email",
+            "wartosc": "kontakt@perspecteeth.pl",
+            "opis": null
+          }
+        ],
+        "godziny_otwarcia": "pią: 09:00 to 18:00; sob: ZAMknięte; nie: ZAMknięte; pon: 09:00 to 18:00; wto: 09:00 to 18:00; śro: 09:00 to 18:00; czw: 09:00 to 18:00",
+        "coordinates": {
+          "lat": 52.2105601,
+          "lng": 21.0658173
+        },
+        "google_maps_place_id": "ChIJZZWLCI7NHkcRO5FhboiQJA8",
+        "google_rating": 5.0,
+        "google_reviews_count": 38,
+        "reviews_insights": {
+          "total_reviews_analyzed": 33,
+          "avg_rating": 5.0,
+          "top_complaints": [],
+          "top_praises": [
+            {
+              "insight": "Przemiła atmosfera i profesjonalna obsługa od wejścia",
+              "count": 9,
+              "citations": [
+                {
+                  "text": "Bardzo profesjonalna, doświadczona i uprzejma obsługa. Salon perfekcyjny, czysty, nowoczesny. Usługa perfekto, jestem już blisko końca i wszystko zgodnie z planem :) gorąco polecam",
+                  "date": "2026-01-08",
+                  "author": "Jacek Serwański",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2tSbWNYUlhOVzFPVVV3NFYzaG1YemxrTnpsd1ptYxAB!2m1!1s0x0:0xf2490886e61913b!3m1!1s2@1:CAIQACodChtycF9oOkRmcXRXNW1OUUw4V3hmXzlkNzlwZmc%7C0dMzMnE5Ks9%7C?hl=pl"
+                },
+                {
+                  "text": "Z całego serca polecam! Dr.Głuszek najlepszy ortodonta! Super człowiek o wielkim sercu,zawsze uśmiechnięty! Atmosfera od samego wejścia przemiła ! POLECAMY!",
+                  "date": "2025-12-12",
+                  "author": "Iwona Szydłowska",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT25VM1duZzNlV3cyWHpWSk1FSk9MV2d6TFdaa1JWRRAB!2m1!1s0x0:0xf2490886e61913b!3m1!1s2@1:CAIQACodChtycF9oOnU3Wng3eWw2XzVJMEJOLWgzLWZkRVE%7C0dDy1sDBouf%7C?hl=pl"
+                },
+                {
+                  "text": "Szczerze polecam ekipę. Leczenie przebiegło pomyślnie. W trakcie i po leczeniu pacjent jest całkowicie zaopiekowany. Przemiła atmosfera i pełny profesjonalizm.",
+                  "date": "2025-12-05",
+                  "author": "Radosława Paperova",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2t4VFVrcHpVamxGZGxsc1VqQlVkWFF3YjFScVIxRRAB!2m1!1s0x0:0xf2490886e61913b!3m1!1s2@1:CAIQACodChtycF9oOkxTUkpzUjlFdllsUjBUdXQwb1RqR1E%7C0dBiw5O2cRp%7C?hl=pl"
+                }
+              ]
+            },
+            {
+              "insight": "Dokładne i zrozumiałe tłumaczenie procesu leczenia",
+              "count": 5,
+              "citations": [
+                {
+                  "text": "Dr Łukasz Głuszek to najlepszy ortodonta w Warszawie! Wspaniały specjalista, a jednocześnie człowiek, który do każdego pacjenta podchodzi z pełnym zaangażowaniem i indywidualnym podejściem. Wszystko d...",
+                  "date": "2025-11-20",
+                  "author": "Monika Sendecka",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2tSWk4zcHJVRmw2VVhKRlN6WnJlVGRuVDFWeGJIYxAB!2m1!1s0x0:0xf2490886e61913b!3m1!1s2@1:CAIQACodChtycF9oOkRZN3prUFl6UXJFSzZreTdnT1VxbHc%7C0d6rwN1rZ2P%7C?hl=pl"
+                },
+                {
+                  "text": "Najlepszy gabinet ortodontyczny z jakim miałem kontakt. Wszytko zawsze wyjaśnione precyzyjnie i dokładnie. Efekty zgodne z oczekiwaniami i prognozą na początku leczenia. Polecam",
+                  "date": "2025-10-24",
+                  "author": "Paweł Anioł",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2xkVk5rUkdPSE5aUVhwS2FFaExOSGxDYW1SbVpXYxAB!2m1!1s0x0:0xf2490886e61913b!3m1!1s2@1:CAIQACodChtycF9oOldVNkRGOHNZQXpKaEhLNHlCamRmZWc%7C0cysokrNkWX%7C?hl=pl"
+                },
+                {
+                  "text": "Serdecznie polecam. To moje najlepsze doświadczenie z gabinetem stomatologicznym w życiu. Byłam u pani ortodontki dr Czermińskiej, wszystko wyjaśnione, moje obawy rozwiane i dodatkowo zostało mi podpo...",
+                  "date": "2025-09-17",
+                  "author": "Anna G. (Aneczka96)",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2sxV1pESm1hVzF2WjI4MmVEWlpUVVZCYUZOWWJFRRAB!2m1!1s0x0:0xf2490886e61913b!3m1!1s2@1:CAIQACodChtycF9oOk1WZDJmaW1vZ282eDZZTUVBaFNYbEE%7C0cmgVEAQLDd%7C?hl=pl"
+                }
+              ]
+            },
+            {
+              "insight": "Pacjent czuje się w pełni zaopiekowany",
+              "count": 5,
+              "citations": [
+                {
+                  "text": "Bardzo polecam Pana Doktora Łukasza Głuszka. Świetny specjalista i fachowiec w swojej dziedzinie. Efekt leczenia dokładnie taki jakiego oczekiwałem a nawet lepszy. Czułem się bardzo dobrze zaopiekowan...",
+                  "date": "2025-12-25",
+                  "author": "Adam Wo",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2psTmRWTXhSRE0wZUZsMlUwbHZaeTFMWVV0alZtYxAB!2m1!1s0x0:0xf2490886e61913b!3m1!1s2@1:CAIQACodChtycF9oOjlNdVMxRDM0eFl2U0lvZy1LYUtjVmc%7C0dIKhj4LIcJ%7C?hl=pl"
+                },
+                {
+                  "text": "Szczerze polecam ekipę. Leczenie przebiegło pomyślnie. W trakcie i po leczeniu pacjent jest całkowicie zaopiekowany. Przemiła atmosfera i pełny profesjonalizm.",
+                  "date": "2025-12-05",
+                  "author": "Radosława Paperova",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2t4VFVrcHpVamxGZGxsc1VqQlVkWFF3YjFScVIxRRAB!2m1!1s0x0:0xf2490886e61913b!3m1!1s2@1:CAIQACodChtycF9oOkxTUkpzUjlFdllsUjBUdXQwb1RqR1E%7C0dBiw5O2cRp%7C?hl=pl"
+                },
+                {
+                  "text": "Dr Głuszek to złoto :) – pełen profesjonalizm i super atmosfera i wszystko tłumaczone krok po kroku.Polecam z całego serca każdemu, kto chce mieć piękny uśmiech i czuć się zaopiekowany w 100%! Klinika...",
+                  "date": "2025-08-14",
+                  "author": "Natalia Barańska",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2xKMVkyaFVSbGRQYW1ST2EyTnRiVkpEYzBKTE1GRRAB!2m1!1s0x0:0xf2490886e61913b!3m1!1s2@1:CAIQACodChtycF9oOlJ1Y2hURldPamROa2NtbVJDc0JLMFE%7C0cbVgwViBRy%7C?hl=pl"
+                }
+              ]
+            },
+            {
+              "insight": "Empatyczne i indywidualne podejście do pacjenta",
+              "count": 4,
+              "citations": [
+                {
+                  "text": "Dr Łukasz Głuszek to najlepszy ortodonta w Warszawie! Wspaniały specjalista, a jednocześnie człowiek, który do każdego pacjenta podchodzi z pełnym zaangażowaniem i indywidualnym podejściem. Wszystko d...",
+                  "date": "2025-11-20",
+                  "author": "Monika Sendecka",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2tSWk4zcHJVRmw2VVhKRlN6WnJlVGRuVDFWeGJIYxAB!2m1!1s0x0:0xf2490886e61913b!3m1!1s2@1:CAIQACodChtycF9oOkRZN3prUFl6UXJFSzZreTdnT1VxbHc%7C0d6rwN1rZ2P%7C?hl=pl"
+                },
+                {
+                  "text": "Serdecznie polecam. To moje najlepsze doświadczenie z gabinetem stomatologicznym w życiu. Byłam u pani ortodontki dr Czermińskiej, wszystko wyjaśnione, moje obawy rozwiane i dodatkowo zostało mi podpo...",
+                  "date": "2025-09-17",
+                  "author": "Anna G. (Aneczka96)",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2sxV1pESm1hVzF2WjI4MmVEWlpUVVZCYUZOWWJFRRAB!2m1!1s0x0:0xf2490886e61913b!3m1!1s2@1:CAIQACodChtycF9oOk1WZDJmaW1vZ282eDZZTUVBaFNYbEE%7C0cmgVEAQLDd%7C?hl=pl"
+                },
+                {
+                  "text": "Dziękuję za pomoc\nProfesjonalna i empatyczna ekipa",
+                  "date": "2025-09-13",
+                  "author": "Irmina Mała",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2pGZk9XSm1VVWR1YlZkS2QzaFZVRkZGUW01M09GRRAB!2m1!1s0x0:0xf2490886e61913b!3m1!1s2@1:CAIQACodChtycF9oOjFfOWJmUUdubVdKd3hVUFFFQm53OFE%7C0clOK_naPcz%7C?hl=pl"
+                }
+              ]
+            }
+          ],
+          "common_themes": [
+            "Profesjonalizm i wysokie kompetencje personelu (zwłaszcza dr. Głuszka)",
+            "Wyjątkowo przyjazna atmosfera i dbałość o komfort pacjenta",
+            "Nowoczesność, czystość i estetyka kliniki",
+            "Skuteczność leczenia i satysfakcja z efektów końcowych"
+          ],
+          "summary": "Analizowane recenzje nie zawierają żadnych informacji na temat kontaktu zdalnego (dodzwanianie, oddzwanianie, maile). Komunikacja bezpośrednia w placówce jest jednak oceniana wzorowo – pacjenci jednogłośnie chwalą przemiłą atmosferę, profesjonalną obsługę recepcji oraz szczegółowe wyjaśnienia ze strony lekarzy, co buduje poczucie pełnego zaopiekowania.",
+          "confidence": 1.0
+        }
+      }
+    ],
+    "metadata": {
+      "scraped_at": "2026-01-30T22:48:15.149603",
+      "sources_used": [
+        "website",
+        "google_maps",
+        "google_reviews_analysis",
+        "instagram",
+        "ai_categorization"
+      ],
+      "processing_time_ms": 96593,
+      "cost_usd": 0.004,
+      "errors": [],
+      "warnings": [],
+      "data_validation": {
+        "contacts_match": true,
+        "contacts_discrepancies": [],
+        "address_match": true,
+        "address_discrepancies": []
+      }
+    }
+  }
+}

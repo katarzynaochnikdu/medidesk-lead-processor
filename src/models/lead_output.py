@@ -247,6 +247,134 @@ class ProcessingRecommendation(BaseModel):
     suggestions: list[str] = Field(default_factory=list, description="Dodatkowe sugestie")
 
 
+# ============================================
+# Nowe modele dla IdentificationResult
+# ============================================
+
+
+class ZohoFieldUpdate(BaseModel):
+    """Pojedyncza aktualizacja pola w Zoho."""
+    
+    field_name: str = Field(..., description="Nazwa pola w Zoho (np. Secondary_Email)")
+    new_value: str = Field(..., description="Nowa wartość do wpisania")
+    reason: str = Field(..., description="Powód aktualizacji (np. 'nowy email z leada')")
+
+
+class ScrapedContactData(BaseModel):
+    """Dane kontaktowe zebrane podczas crawlowania strony firmy."""
+    
+    domain: Optional[str] = Field(None, description="Domena firmowa")
+    emails: list[str] = Field(default_factory=list, description="Adresy email znalezione na stronie")
+    phones: list[str] = Field(default_factory=list, description="Numery telefonów")
+    addresses: list[str] = Field(default_factory=list, description="Adresy")
+    social_links: dict[str, str] = Field(default_factory=dict, description="Linki do social media")
+    website_title: Optional[str] = Field(None, description="Tytuł strony")
+    source_urls: list[str] = Field(default_factory=list, description="URL-e źródłowe")
+
+
+class PersonResult(BaseModel):
+    """Wynik identyfikacji osoby (Contact) w Zoho."""
+    
+    # Czy osoba istnieje
+    exists: bool = Field(False, description="Czy kontakt istnieje w Zoho")
+    zcrm_id: Optional[str] = Field(None, description="ID kontaktu w Zoho (jeśli znaleziono)")
+    match_confidence: float = Field(0.0, ge=0.0, le=1.0, description="Pewność dopasowania")
+    match_reason: Optional[str] = Field(None, description="Powód dopasowania (np. E+L+A)")
+    
+    # Akcja do wykonania
+    action: Literal["create", "update", "link", "skip"] = Field(
+        "create", description="Akcja do wykonania"
+    )
+    
+    # Dane do CREATE (jeśli nie istnieje)
+    create_data: Optional[dict] = Field(
+        None, description="Pełne dane do utworzenia nowego Contact w Zoho"
+    )
+    
+    # Pola do UPDATE (jeśli istnieje, ale mamy nowe dane)
+    update_fields: list[ZohoFieldUpdate] = Field(
+        default_factory=list, description="Pola do aktualizacji w istniejącym rekordzie"
+    )
+    
+    # Kandydaci (jeśli kilka dopasowań)
+    candidates: list[DuplicateMatch] = Field(
+        default_factory=list, description="Lista kandydatów do ręcznego wyboru"
+    )
+    
+    # Czy wymaga ręcznego przeglądu
+    needs_review: bool = Field(False, description="Czy wymaga ręcznej weryfikacji")
+
+
+class CompanyResult(BaseModel):
+    """Wynik identyfikacji firmy (Account) w Zoho."""
+    
+    # Czy firma istnieje
+    exists: bool = Field(False, description="Czy firma istnieje w Zoho")
+    zcrm_id: Optional[str] = Field(None, description="ID Account w Zoho (jeśli znaleziono)")
+    parent_zcrm_id: Optional[str] = Field(None, description="ID siedziby (parent) jeśli to placówka")
+    match_confidence: float = Field(0.0, ge=0.0, le=1.0, description="Pewność dopasowania")
+    match_reason: Optional[str] = Field(None, description="Powód dopasowania (NIP, domena, nazwa)")
+    
+    # Akcja do wykonania
+    action: Literal["create", "update", "create_child", "skip"] = Field(
+        "create", description="Akcja do wykonania"
+    )
+    
+    # Dane do CREATE (jeśli nie istnieje) - zawiera też dane z GUS
+    create_data: Optional[dict] = Field(
+        None, description="Pełne dane do utworzenia nowego Account w Zoho"
+    )
+    
+    # Pola do UPDATE (jeśli istnieje, ale mamy nowe dane)
+    update_fields: list[ZohoFieldUpdate] = Field(
+        default_factory=list, description="Pola do aktualizacji w istniejącym rekordzie"
+    )
+    
+    # Kandydaci (jeśli kilka dopasowań)
+    candidates: list[DuplicateMatch] = Field(
+        default_factory=list, description="Lista kandydatów do ręcznego wyboru"
+    )
+    
+    # Dane z GUS
+    gus_data: Optional[GUSData] = Field(None, description="Dane z rejestru GUS")
+    
+    # Dane zebrane podczas crawlowania
+    scraped_data: Optional[ScrapedContactData] = Field(
+        None, description="Dane kontaktowe zebrane ze strony firmy"
+    )
+
+
+class IdentificationResult(BaseModel):
+    """
+    Wynik identyfikacji leada - actionable JSON dla Zoho.
+    
+    Zawiera informacje o osobie i firmie:
+    - Czy istnieją w Zoho
+    - Jeśli tak - jakie ID i co zaktualizować
+    - Jeśli nie - pełne dane do utworzenia
+    """
+    
+    success: bool = Field(True, description="Czy przetwarzanie zakończyło się sukcesem")
+    processing_time_ms: int = Field(0, description="Czas przetwarzania w ms")
+    
+    # Wyniki identyfikacji
+    person: PersonResult = Field(
+        default_factory=PersonResult, description="Wynik identyfikacji osoby"
+    )
+    company: CompanyResult = Field(
+        default_factory=CompanyResult, description="Wynik identyfikacji firmy"
+    )
+    
+    # Powiązanie osoba-firma
+    link_person_to_company: bool = Field(
+        False, description="Czy powiązać osobę z firmą (nowy kontakt + istniejąca firma)"
+    )
+    
+    # Metadane
+    warnings: list[str] = Field(default_factory=list, description="Ostrzeżenia")
+    errors: list[str] = Field(default_factory=list, description="Błędy")
+
+
 class LeadOutput(BaseModel):
     """
     Pełna odpowiedź z przetworzenia leada.

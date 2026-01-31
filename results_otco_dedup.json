@@ -1,0 +1,140 @@
+{
+  "company": {
+    "nip": null,
+    "regon": null,
+    "krs": null,
+    "nazwa_pelna": "Klinika OT.CO",
+    "nazwa_zwyczajowa": "Klinika OT.CO → Klinika medycyny estetycznej w Warszawie",
+    "adres_siedziby": null,
+    "kategoryzacja_ai": {
+      "platnik_uslug": [],
+      "specjalizacja": [],
+      "wielospecjalistyczne": [],
+      "typ_wlasnosci": null,
+      "kategoria_konta": null,
+      "branza": null,
+      "ai_confidence": 0.0,
+      "ai_reasoning": null
+    },
+    "social_media": {
+      "website": "https://klinikaotco.pl",
+      "facebook": "https://www.facebook.com/ot.co.clinic/",
+      "instagram": "https://www.instagram.com/otcoclinic/",
+      "linkedin": null,
+      "tiktok": "https://www.tiktok.com/@klinikaotco?",
+      "x": null
+    },
+    "activity_score": {
+      "total": 35,
+      "recommendation": "COLD",
+      "breakdown": {
+        "google_maps": 25,
+        "facebook": 0,
+        "instagram": 0,
+        "tiktok": 0,
+        "website": 5,
+        "network": 5
+      },
+      "signals": [
+        "Google Maps 4.7/5",
+        "Google 915 recenzji",
+        "SSL aktywny",
+        "Sieć 5 placówek"
+      ]
+    },
+    "placowki": [
+      {
+        "typ_adresu": "-None-",
+        "adres": {
+          "ulica": "ul. Bartycka 24B/U1",
+          "kod": "00-716",
+          "miasto": "Warszawa",
+          "wojewodztwo": null
+        },
+        "kontakty": [
+          {
+            "typ": "telefon",
+            "wartosc": "+48 221 230 333",
+            "opis": null
+          },
+          {
+            "typ": "email",
+            "wartosc": "kontakt@klinikaotco.pl",
+            "opis": null
+          },
+          {
+            "typ": "email",
+            "wartosc": "pr@klinikaotco.pl",
+            "opis": null
+          },
+          {
+            "typ": "email",
+            "wartosc": "media@klinikaotco.pl",
+            "opis": null
+          }
+        ],
+        "godziny_otwarcia": "pią: 09:00 to 21:00; sob: 09:00 to 16:00; nie: ZAMknięte; pon: 09:00 to 21:00; wto: 09:00 to 21:00; śro: 09:00 to 21:00; czw: 09:00 to 21:00",
+        "coordinates": {
+          "lat": 52.2127075,
+          "lng": 21.0603572
+        },
+        "google_maps_place_id": "ChIJi03vuWHNHkcRw8QPwLYMYqM",
+        "google_rating": 4.6,
+        "google_reviews_count": 731,
+        "reviews_insights": null
+      },
+      {
+        "typ_adresu": "-None-",
+        "adres": {
+          "ulica": "Zgrupowania AK \"Żmija\" 12",
+          "kod": "01-864",
+          "miasto": "Warszawa",
+          "wojewodztwo": null
+        },
+        "kontakty": [
+          {
+            "typ": "telefon",
+            "wartosc": "+48 221 230 333",
+            "opis": null
+          },
+          {
+            "typ": "email",
+            "wartosc": "kontakt@klinikaotco.pl",
+            "opis": null
+          },
+          {
+            "typ": "email",
+            "wartosc": "pr@klinikaotco.pl",
+            "opis": null
+          },
+          {
+            "typ": "email",
+            "wartosc": "media@klinikaotco.pl",
+            "opis": null
+          }
+        ],
+        "godziny_otwarcia": "pią: 08:00 to 20:00; sob: ZAMknięte; nie: ZAMknięte; pon: 08:00 to 20:00; wto: 08:00 to 20:00; śro: 08:00 to 20:00; czw: 08:00 to 20:00",
+        "coordinates": {
+          "lat": 52.269791,
+          "lng": 20.9365135
+        },
+        "google_maps_place_id": "ChIJ16Q70aHLHkcRXzA5ePgMaZ8",
+        "google_rating": 4.3,
+        "google_reviews_count": 147,
+        "reviews_insights": null
+      }
+    ],
+    "metadata": {
+      "scraped_at": "2026-01-30T19:44:32.608340",
+      "sources_used": [
+        "website",
+        "google_maps",
+        "reviews_analysis"
+      ],
+      "processing_time_ms": 131674,
+      "cost_usd": 0.019,
+      "errors": [],
+      "warnings": []
+    }
+  }
+}

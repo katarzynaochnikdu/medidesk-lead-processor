@@ -245,11 +245,25 @@ class NIPFinderV3:
                 validation = await self.validator.validate(result.nip, company_name, domain or predicted_domain)
                 result.validation = validation
 
-                # STRICT MODE: Reject if domain validation failed
+                # STRICT MODE: Reject if domain validation failed (but allow high AI confidence)
                 if self.settings.require_domain_for_acceptance:
+                    # Check if AI validation gave high confidence
+                    ai_confidence = result.metadata.get("ai_validation", {}).get("confidence", 0.0) if result.metadata else 0.0
+                    
                     if not validation.domain_valid and (domain or predicted_domain):
-                        logger.warning("⚠️ STRICT MODE: Rejecting NIP - domain validation FAILED")
-                        # Don't return, continue to next strategy
+                        # HIGH AI CONFIDENCE OVERRIDE: Accept if AI is very confident (≥0.90)
+                        if ai_confidence >= 0.90:
+                            logger.info("✅ HIGH AI CONFIDENCE (%.2f) - accepting despite domain validation failure", ai_confidence)
+                            result.warnings = result.warnings or []
+                            result.warnings.append(f"Domain validation failed but AI confidence high ({ai_confidence:.2f})")
+                            await self._cache_result(result)
+                            result.processing_time_ms = int((time.time() - start_time) * 1000)
+                            logger.info("✅ LEVEL 3: Google Search SUCCESS (NIP=%s, cost=$%.4f)",
+                                      result.nip, result.cost_usd)
+                            return result
+                        else:
+                            logger.warning("⚠️ STRICT MODE: Rejecting NIP - domain validation FAILED and AI confidence too low (%.2f)", ai_confidence)
+                            # Don't return, continue to next strategy
                     else:
                         # Domain validated OR no domain to validate against
                         await self._cache_result(result)
@@ -304,10 +318,40 @@ class NIPFinderV3:
             # Use Google Search results to discover domain
             if self.google_search:
                 # Re-run Google Search just to get search results (without NIP extraction)
-                google_result = await self.google_search._google_search_apify(
-                    f'"{company_name}" "{city}"' if city else f'"{company_name}"',
-                    max_results=10,
-                )
+                discovery_queries: list[str] = []
+
+                def add_query(query: str) -> None:
+                    cleaned = query.strip()
+                    if cleaned and cleaned not in discovery_queries:
+                        discovery_queries.append(cleaned)
+
+                if city:
+                    add_query(f'"{company_name}" "{city}"')
+                add_query(f'"{company_name}"')
+                if city:
+                    add_query(f"{company_name} {city}")
+                add_query(f"{company_name}")
+
+                base_name = extract_company_base_name(company_name)
+                if base_name and base_name != clean_name:
+                    if city:
+                        add_query(f"{base_name} {city}")
+                    add_query(base_name)
+
+                google_result = []
+                for query in discovery_queries:
+                    google_result = await self.google_search._google_search_apify(
+                        query,
+                        max_results=10,
+                    )
+                    if not google_result:
+                        google_result = await self.google_search._google_search_json_api(
+                            query,
+                            max_results=10,
+                        )
+                    if google_result:
+                        logger.info("AI Domain Discovery: using results from query '%s'", query)
+                        break
 
                 if google_result:
                     # Use AI to discover domain

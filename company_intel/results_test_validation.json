@@ -1,0 +1,271 @@
+{
+  "company": {
+    "nip": null,
+    "regon": null,
+    "krs": null,
+    "nazwa_pelna": "Klinika OT.CO",
+    "nazwa_zwyczajowa": "Klinika OT.CO → Klinika medycyny estetycznej w Warszawie",
+    "adres_siedziby": null,
+    "kategoryzacja_ai": {
+      "platnik_uslug": [
+        "Komercyjne"
+      ],
+      "specjalizacja": [
+        "Medycyna Estetyczna"
+      ],
+      "wielospecjalistyczne": [
+        "chirurgia plastyczna",
+        "dermatologia",
+        "laryngologia",
+        "okulistyka"
+      ],
+      "typ_wlasnosci": "Prywatny (Private)",
+      "kategoria_konta": null,
+      "branza": null,
+      "ai_confidence": 0.95,
+      "ai_reasoning": null
+    },
+    "social_media": {
+      "website": "https://klinikaotco.pl",
+      "facebook": "https://www.facebook.com/ot.co.clinic/",
+      "instagram": "https://www.instagram.com/otcoclinic/",
+      "linkedin": null,
+      "tiktok": "https://www.tiktok.com/@klinikaotco?",
+      "x": null
+    },
+    "activity_score": {
+      "total": 35,
+      "recommendation": "COLD",
+      "breakdown": {
+        "google_maps": 25,
+        "facebook": 0,
+        "instagram": 0,
+        "tiktok": 0,
+        "website": 5,
+        "network": 5
+      },
+      "signals": [
+        "Google Maps 4.6/5",
+        "Google 888 recenzji",
+        "SSL aktywny",
+        "Sieć 4 placówek"
+      ]
+    },
+    "placowki": [
+      {
+        "typ_adresu": "-None-",
+        "adres": {
+          "ulica": "ul. Bartycka 24B/U1",
+          "kod": "00-716",
+          "miasto": "Warszawa",
+          "wojewodztwo": null
+        },
+        "kontakty": [
+          {
+            "typ": "telefon",
+            "wartosc": "+48 221 230 333",
+            "opis": null
+          },
+          {
+            "typ": "email",
+            "wartosc": "kontakt@klinikaotco.pl",
+            "opis": null
+          },
+          {
+            "typ": "email",
+            "wartosc": "pr@klinikaotco.pl",
+            "opis": null
+          },
+          {
+            "typ": "email",
+            "wartosc": "media@klinikaotco.pl",
+            "opis": null
+          }
+        ],
+        "godziny_otwarcia": "pią: 09:00 to 21:00; sob: 09:00 to 16:00; nie: ZAMknięte; pon: 09:00 to 21:00; wto: 09:00 to 21:00; śro: 09:00 to 21:00; czw: 09:00 to 21:00",
+        "coordinates": {
+          "lat": 52.2127075,
+          "lng": 21.0603572
+        },
+        "google_maps_place_id": "ChIJi03vuWHNHkcRw8QPwLYMYqM",
+        "google_rating": 4.6,
+        "google_reviews_count": 731,
+        "reviews_insights": null
+      },
+      {
+        "typ_adresu": "-None-",
+        "adres": {
+          "ulica": "Zgrupowania AK \"Żmija\" 12",
+          "kod": "01-864",
+          "miasto": "Warszawa",
+          "wojewodztwo": null
+        },
+        "kontakty": [
+          {
+            "typ": "telefon",
+            "wartosc": "+48 221 230 333",
+            "opis": null
+          },
+          {
+            "typ": "email",
+            "wartosc": "kontakt@klinikaotco.pl",
+            "opis": null
+          },
+          {
+            "typ": "email",
+            "wartosc": "pr@klinikaotco.pl",
+            "opis": null
+          },
+          {
+            "typ": "email",
+            "wartosc": "media@klinikaotco.pl",
+            "opis": null
+          }
+        ],
+        "godziny_otwarcia": "pią: 08:00 to 20:00; sob: ZAMknięte; nie: ZAMknięte; pon: 08:00 to 20:00; wto: 08:00 to 20:00; śro: 08:00 to 20:00; czw: 08:00 to 20:00",
+        "coordinates": {
+          "lat": 52.269791,
+          "lng": 20.9365135
+        },
+        "google_maps_place_id": "ChIJ16Q70aHLHkcRXzA5ePgMaZ8",
+        "google_rating": 4.3,
+        "google_reviews_count": 147,
+        "reviews_insights": {
+          "total_reviews_analyzed": 48,
+          "avg_rating": 3.92,
+          "top_complaints": [
+            {
+              "insight": "Nieuprzejma i niekompetentna obsługa na recepcji",
+              "count": 3,
+              "citations": [
+                {
+                  "text": "Bardzo nieuprzejme podejście ze strony recepcji!!! Niekompetentni i bardzo niepoważnie podchodzą do swojej pracy, nie wystawiają L4, wyrażają się w sposób bardzo niemiły, jest tu chamstwo, nieuprzejmo...",
+                  "date": "2025-11-06",
+                  "author": "Ola Lalala",
+                  "rating": 2,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2swMlZUTldPUzFzTjFwbFZqZHhVM05VWTNoM1owRRAB!2m1!1s0x0:0x9f690cf87839305f!3m1!1s2@1:CAIQACodChtycF9oOk02VTNWOS1sN1plVjdxU3NUY3h3Z0E%7C0d27TEmqRrY%7C?hl=pl"
+                },
+                {
+                  "text": "Zapis na konsultacje z zabiegiem. Lekarz nie przygotowany, tylko konsultacja - brak zarezerwowania czasu na zabieg mimo rekomendacji do jego wykonania. Wymiana mailowa z sekretariatem, mimo wielokrotn...",
+                  "date": "2025-01-25",
+                  "author": "Marcin G.",
+                  "rating": 1,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChZDSUhNMG9nS0VJQ0FnSURfMVlMekl3EAE!2m1!1s0x0:0x9f690cf87839305f!3m1!1s2@1:CIHM0ogKEICAgID_1YLzIw%7CCgwIssbVvAYQkLCwmgE%7C?hl=pl"
+                },
+                {
+                  "text": "Klinikę ocenić muszę sumarycznie negatywnie, niestety.\nPomimo zapłaty bardzo dużej kwoty za operację, zespół pielęgniarski bardzo słaby, żona wyszła z kliniki zdegustowana słaba opieka, niemiłymi i op...",
+                  "date": "2024-11-19",
+                  "author": "Wiktor Bzdęga",
+                  "rating": 2,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChZDSUhNMG9nS0VJQ0FnSUQzNTRXTkRREAE!2m1!1s0x0:0x9f690cf87839305f!3m1!1s2@1:CIHM0ogKEICAgID354WNDQ%7CCgwI7aPzuQYQ6Mj91AI%7C?hl=pl"
+                }
+              ]
+            },
+            {
+              "insight": "Brak odbierania telefonów i unikanie odpowiedzialności",
+              "count": 5,
+              "citations": [
+                {
+                  "text": "Bardzo nieuprzejme podejście ze strony recepcji!!! Niekompetentni i bardzo niepoważnie podchodzą do swojej pracy, nie wystawiają L4, wyrażają się w sposób bardzo niemiły, jest tu chamstwo, nieuprzejmo...",
+                  "date": "2025-11-06",
+                  "author": "Ola Lalala",
+                  "rating": 2,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2swMlZUTldPUzFzTjFwbFZqZHhVM05VWTNoM1owRRAB!2m1!1s0x0:0x9f690cf87839305f!3m1!1s2@1:CAIQACodChtycF9oOk02VTNWOS1sN1plVjdxU3NUY3h3Z0E%7C0d27TEmqRrY%7C?hl=pl"
+                },
+                {
+                  "text": "Konsultacja u lekarza laryngologa całkiem pozytywna, Pani Doktor zaleciła operację, poleciła szpital w którym pracuje, wystawiła skierowanie, mówi że podrzuci do rejestracji, że ja się nie muszę fatyg...",
+                  "date": "2025-09-08",
+                  "author": "Łukasz",
+                  "rating": 1,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT25VMVowbHNPWFpIZWpoRk0xVktTa3hVYWtWWmMyYxAB!2m1!1s0x0:0x9f690cf87839305f!3m1!1s2@1:CAIQACodChtycF9oOnU1Z0lsOXZHejhFM1VKSkxUakVZc2c%7C0cjnLjAOy8P%7C?hl=pl"
+                },
+                {
+                  "text": "Nie polecam kliniki OT.CO – moje doświadczenie było bardzo negatywne.\n\nPrzeszczep włosów został wykonany przez asystentki, a lekarz praktycznie nie uczestniczył w zabiegu. Efekty są rozczarowujące – t...",
+                  "date": "2024-11-25",
+                  "author": "Kornel Olearka",
+                  "rating": 1,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChdDSUhNMG9nS0VJQ0FnSUNQcWFtOTl3RRAB!2m1!1s0x0:0x9f690cf87839305f!3m1!1s2@1:CIHM0ogKEICAgICPqam99wE%7CCgwIl7yTugYQ8IeT9QI%7C?hl=pl"
+                }
+              ]
+            }
+          ],
+          "top_praises": [
+            {
+              "insight": "Personel dzwoni do pacjenta z własnej inicjatywy",
+              "count": 2,
+              "citations": [
+                {
+                  "text": "Nie wiem co z tego będzie, ponieważ to mój trzeci dzień po przeszczepie, ale i tak daje 5, bo po pierwsze mam same pozytywne wrażenia i już wierzę, że bedzie dobrze, po drugie, bo czułem że nie jestem...",
+                  "date": "2025-12-25",
+                  "author": "gnvn fmvn",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2w4MmRubDVVa3QyVEVoRFQxWXllRzFLWlZGWlVuYxAB!2m1!1s0x0:0x9f690cf87839305f!3m1!1s2@1:CAIQACodChtycF9oOl82dnl5Ukt2TEhDT1YyeG1KZVFZUnc%7C0dI8WsROMta%7C?hl=pl"
+                },
+                {
+                  "text": "W środę poddałam się operacji powiększenia biustu. Moje pierwsze spostrzeżenia są naprawdę pozytywne. Zacznę od wspaniałej Pani, która była moim opiekunem pacjenta. Pani Agnieszka była wsparciem i dob...",
+                  "date": "2025-09-27",
+                  "author": "Ela „.”",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT21GYWNtdHhjWFkzV2pkMWJIbzBSR0ZOU2tkb1ZWRRAB!2m1!1s0x0:0x9f690cf87839305f!3m1!1s2@1:CAIQACodChtycF9oOmFacmtxcXY3Wjd1bHo0RGFNSkdoVVE%7C0cpzRkLLLy1%7C?hl=pl"
+                }
+              ]
+            },
+            {
+              "insight": "Miła, pomocna i profesjonalna obsługa recepcji",
+              "count": 3,
+              "citations": [
+                {
+                  "text": "Na operację powiększenia piersi zdecydowałam się celowo u Oleksii Zhuravel, ponieważ od dawna śledziłam jego pracę w mediach społecznościowych i bardzo podobały mi się jego efekty. Nie interesowałam s...",
+                  "date": "2026-01-30",
+                  "author": "Viktoria F",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT210TExUbGpiSE5LTFRVM01YcE5RbTR4Tm5Vd1JuYxAB!2m1!1s0x0:0x9f690cf87839305f!3m1!1s2@1:CAIQACodChtycF9oOmtLLTljbHNKLTU3MXpNQm4xNnUwRnc%7C0dTzP1j7vQW%7C?hl=pl"
+                },
+                {
+                  "text": "Jakiś czas temu byłam na konsultacjach u doktora Piotra Turkowskiego w szpitalu OT.CO . Do doktora trafiłam poprzez znaną osobę, którą zapytałam gdzie miała wykonany zabieg liposukcji. Trosze mnie zdz...",
+                  "date": "2025-11-27",
+                  "author": "Beata K",
+                  "rating": 2,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChdDSUhNMG9nS0VJQ0FnSURPXzlPLW9RRRAB!2m1!1s0x0:0x9f690cf87839305f!3m1!1s2@1:CIHM0ogKEICAgIDO_9O-oQE%7CCgsIwL_howYQ8PjjOA%7C?hl=pl"
+                },
+                {
+                  "text": "Chciałabym podziękować Pani Patrycji za profesjonalne podejście do pracy. Jest miła, uprzejma, uważna. Przechodzę u niej zabiegi kosmetyczne po liftingu okrężnym. Pomimo tego, że jestem Ukrainką, Pani...",
+                  "date": "2025-06-25",
+                  "author": "Lesedi",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2pGNVdFeHBMVUpHTTFSa1EyTmFhalphWkZsRExVRRAB!2m1!1s0x0:0x9f690cf87839305f!3m1!1s2@1:CAIQACodChtycF9oOjF5WExpLUJGM1RkQ2NaajZaZFlDLUE%7C0cM0kcCU_d_%7C?hl=pl"
+                }
+              ]
+            }
+          ],
+          "common_themes": [
+            "Skrajnie różne oceny pracy personelu (recepcja/pielęgniarki)",
+            "Kluczowa rola reputacji i efektów pracy konkretnych lekarzy",
+            "Problemy z obsługą reklamacji i komunikacją po zabiegu"
+          ],
+          "summary": "Komunikacja z placówką jest oceniana skrajnie różnie. Z jednej strony pacjenci chwalą proaktywny kontakt, osobistych opiekunów i dobrą organizację, z drugiej zaś skarżą się na nieuprzejmą recepcję, brak odbierania telefonów, wymijające odpowiedzi mailowe i unikanie odpowiedzialności w sytuacjach problemowych.",
+          "confidence": 0.54
+        }
+      }
+    ],
+    "metadata": {
+      "scraped_at": "2026-01-30T20:50:49.811204",
+      "sources_used": [
+        "website",
+        "google_maps",
+        "google_reviews_analysis",
+        "ai_categorization"
+      ],
+      "processing_time_ms": 204812,
+      "cost_usd": 0.015,
+      "errors": [],
+      "warnings": [],
+      "data_validation": {
+        "contacts_match": true,
+        "contacts_discrepancies": [],
+        "address_match": true,
+        "address_discrepancies": []
+      }
+    }
+  }
+}

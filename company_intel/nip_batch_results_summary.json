@@ -1,0 +1,249 @@
+[
+  {
+    "nip": "5542485321",
+    "success": true,
+    "company_name": "CONSULTRON S. LISTOPADZKI, J. SZYPERSKI, P. JARZEMSKI SPÓŁKA JAWNA",
+    "common_name": "Data for business growth",
+    "website": "https://okredo.com/pl-pl/firma/consultron-s-listopadzki-j-szyperski-p-jarzemski-spolka-jawna-krs-0000081578",
+    "activity_score": 35,
+    "recommendation": "COLD",
+    "signals": [
+      "Google Maps 5.0/5",
+      "Google 60 recenzji",
+      "SSL aktywny",
+      "Sieć 5 placówek"
+    ],
+    "categorization": {
+      "specjalizacja": [],
+      "platnik_uslug": [
+        "Komercyjne"
+      ],
+      "confidence": 0.1
+    },
+    "placowki_count": 4,
+    "social_profiles": [
+      {
+        "platform": "facebook",
+        "followers": 697
+      }
+    ],
+    "processing_time_ms": 137171,
+    "sources_used": [
+      "nip_lookup",
+      "gus",
+      "website",
+      "google_maps",
+      "google_reviews_analysis",
+      "facebook",
+      "ai_categorization"
+    ],
+    "errors": [],
+    "json_path": "C:\\Users\\kochn\\.cursor\\Medidesk\\Leads_extraction\\company_intel\\results_nip_5542485321.json"
+  },
+  {
+    "nip": "5882422041",
+    "success": true,
+    "company_name": "MEDYCZNA GDYNIA 3CITYMED SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ",
+    "common_name": "Przychodnia Medyczna Gdynia",
+    "website": "https://www.medycznagdynia.pl/",
+    "activity_score": 25,
+    "recommendation": "COLD",
+    "signals": [
+      "Google 96 recenzji",
+      "Instagram 522 followers",
+      "SSL aktywny"
+    ],
+    "categorization": {
+      "specjalizacja": [],
+      "platnik_uslug": [],
+      "confidence": 0.0
+    },
+    "placowki_count": 1,
+    "social_profiles": [
+      {
+        "platform": "facebook",
+        "followers": 771
+      },
+      {
+        "platform": "instagram",
+        "followers": 522
+      }
+    ],
+    "processing_time_ms": 100049,
+    "sources_used": [
+      "nip_lookup",
+      "gus",
+      "website",
+      "google_maps",
+      "google_reviews_analysis",
+      "facebook",
+      "instagram",
+      "ai_categorization"
+    ],
+    "errors": [],
+    "json_path": "C:\\Users\\kochn\\.cursor\\Medidesk\\Leads_extraction\\company_intel\\results_nip_5882422041.json"
+  },
+  {
+    "nip": "7831865315",
+    "success": true,
+    "company_name": "CMSTANLEY SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ",
+    "common_name": "Centrum Medyczne Poznań. Przychodnia Lekarska Poznań",
+    "website": "https://centrummedycznestanley.pl/",
+    "activity_score": 40,
+    "recommendation": "LUKEWARM",
+    "signals": [
+      "Google Maps 4.6/5",
+      "Google 693 recenzji",
+      "Facebook 3.0K followers",
+      "SSL aktywny"
+    ],
+    "categorization": {
+      "specjalizacja": [
+        "Rehabilitacja",
+        "Diagnostyka"
+      ],
+      "platnik_uslug": [
+        "Komercyjne"
+      ],
+      "confidence": 0.99
+    },
+    "placowki_count": 1,
+    "social_profiles": [
+      {
+        "platform": "facebook",
+        "followers": 2971
+      }
+    ],
+    "processing_time_ms": 106830,
+    "sources_used": [
+      "nip_lookup",
+      "gus",
+      "website",
+      "google_maps",
+      "google_reviews_analysis",
+      "facebook",
+      "ai_categorization"
+    ],
+    "errors": [],
+    "json_path": "C:\\Users\\kochn\\.cursor\\Medidesk\\Leads_extraction\\company_intel\\results_nip_7831865315.json"
+  },
+  {
+    "nip": "9571061749",
+    "success": true,
+    "company_name": "TREND SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ",
+    "common_name": null,
+    "website": "https://trend-group.com/",
+    "activity_score": 35,
+    "recommendation": "COLD",
+    "signals": [
+      "Google Maps 5.0/5",
+      "Google 108 recenzji",
+      "SSL aktywny",
+      "Sieć 5 placówek"
+    ],
+    "categorization": {
+      "specjalizacja": [],
+      "platnik_uslug": [],
+      "confidence": 0.0
+    },
+    "placowki_count": 5,
+    "social_profiles": [],
+    "processing_time_ms": 123996,
+    "sources_used": [
+      "nip_lookup",
+      "gus",
+      "website",
+      "google_maps",
+      "google_reviews_analysis"
+    ],
+    "errors": [],
+    "json_path": "C:\\Users\\kochn\\.cursor\\Medidesk\\Leads_extraction\\company_intel\\results_nip_9571061749.json"
+  },
+  {
+    "nip": "1131088680",
+    "success": true,
+    "company_name": "AWODENT Wojciech Radwański",
+    "common_name": "Strona główna",
+    "website": "https://awodent.com/",
+    "activity_score": 35,
+    "recommendation": "COLD",
+    "signals": [
+      "Google Maps 5.0/5",
+      "Google 281 recenzji",
+      "SSL aktywny",
+      "Sieć 5 placówek"
+    ],
+    "categorization": {
+      "specjalizacja": [
+        "Stomatologia",
+        "Medycyna Estetyczna",
+        "Diagnostyka"
+      ],
+      "platnik_uslug": [
+        "Komercyjne"
+      ],
+      "confidence": 0.99
+    },
+    "placowki_count": 5,
+    "social_profiles": [],
+    "processing_time_ms": 259124,
+    "sources_used": [
+      "nip_lookup",
+      "gus",
+      "website",
+      "google_maps",
+      "google_reviews_analysis",
+      "ai_categorization"
+    ],
+    "errors": [],
+    "json_path": "C:\\Users\\kochn\\.cursor\\Medidesk\\Leads_extraction\\company_intel\\results_nip_1131088680.json"
+  },
+  {
+    "nip": "5842809779",
+    "success": true,
+    "company_name": "PROBODY CLINIC SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ",
+    "common_name": "SPA ProBody",
+    "website": "https://spaprobody.pl/",
+    "activity_score": 40,
+    "recommendation": "LUKEWARM",
+    "signals": [
+      "Google Maps 4.9/5",
+      "Google 66 recenzji",
+      "Instagram 2.0K followers",
+      "SSL aktywny"
+    ],
+    "categorization": {
+      "specjalizacja": [
+        "Medycyna Estetyczna"
+      ],
+      "platnik_uslug": [
+        "Komercyjne"
+      ],
+      "confidence": 0.95
+    },
+    "placowki_count": 1,
+    "social_profiles": [
+      {
+        "platform": "facebook",
+        "followers": 89
+      },
+      {
+        "platform": "instagram",
+        "followers": 2015
+      }
+    ],
+    "processing_time_ms": 116254,
+    "sources_used": [
+      "nip_lookup",
+      "gus",
+      "website",
+      "google_maps",
+      "google_reviews_analysis",
+      "facebook",
+      "instagram",
+      "ai_categorization"
+    ],
+    "errors": [],
+    "json_path": "C:\\Users\\kochn\\.cursor\\Medidesk\\Leads_extraction\\company_intel\\results_nip_5842809779.json"
+  }
+]

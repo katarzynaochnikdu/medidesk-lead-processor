@@ -2,7 +2,7 @@
 Konfiguracja NIP Finder V3.
 """
 
-from pydantic import Field
+from pydantic import AliasChoices, Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -27,7 +27,8 @@ class NIPFinderV3Settings(BaseSettings):
 
     gus_api_key: str = Field(
         default="",
-        description="GUS API key (production key required)"
+        description="GUS API key (production key required)",
+        validation_alias=AliasChoices("gus_api_key", "regon_api_key_token"),
     )
 
     # Google AI Platform API Key (alternative to Vertex AI)

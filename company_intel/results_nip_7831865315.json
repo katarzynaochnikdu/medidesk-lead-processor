@@ -1,0 +1,223 @@
+{
+  "company": {
+    "nip": "7831865315",
+    "regon": "523280888",
+    "krs": null,
+    "nazwa_pelna": "CMSTANLEY SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ",
+    "nazwa_zwyczajowa": "Centrum Medyczne Poznań. Przychodnia Lekarska Poznań",
+    "adres_siedziby": {
+      "ulica": "ul. 28 Czerwca 1956 r. 135",
+      "kod": "61-544",
+      "miasto": "Poznań",
+      "wojewodztwo": "WIELKOPOLSKIE"
+    },
+    "kategoryzacja_ai": {
+      "platnik_uslug": [
+        "Komercyjne"
+      ],
+      "specjalizacja": [
+        "Rehabilitacja",
+        "Diagnostyka"
+      ],
+      "wielospecjalistyczne": [
+        "kardiologia",
+        "ortopedia"
+      ],
+      "typ_wlasnosci": "Prywatny (Private)",
+      "kategoria_konta": null,
+      "branza": null,
+      "ai_confidence": 0.99,
+      "ai_reasoning": "Tekst jednoznacznie wskazuje na prywatne centrum medyczne (spółka z o.o., 'prywatna przychodnia', 'cennik') oferujące szeroki zakres usług, w tym rehabilitację, diagnostykę USG, oraz konsultacje specjalistów takich jak ortopeda i kardiolog."
+    },
+    "social_media": {
+      "website": "https://centrummedycznestanley.pl/",
+      "facebook": "https://www.facebook.com/centrummedycznestanley",
+      "instagram": null,
+      "linkedin": null,
+      "tiktok": null,
+      "x": null
+    },
+    "activity_score": {
+      "total": 40,
+      "recommendation": "LUKEWARM",
+      "breakdown": {
+        "google_maps": 25,
+        "facebook": 10,
+        "instagram": 0,
+        "tiktok": 0,
+        "website": 5
+      },
+      "signals": [
+        "Google Maps 4.6/5",
+        "Google 693 recenzji",
+        "Facebook 3.0K followers",
+        "SSL aktywny"
+      ]
+    },
+    "placowki": [
+      {
+        "typ_adresu": "-None-",
+        "adres": {
+          "ulica": "ul. 28 Czerwca 1956 r. 135",
+          "kod": "61-544",
+          "miasto": "Poznań",
+          "wojewodztwo": null
+        },
+        "kontakty": [
+          {
+            "typ": "telefon",
+            "wartosc": "+48 532 411 514",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 616 490 555",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 616 490 556",
+            "opis": null
+          },
+          {
+            "typ": "email",
+            "wartosc": "rejestracja@centrummedycznestanley.pl",
+            "opis": null
+          }
+        ],
+        "godziny_otwarcia": "pią: 08:00 to 20:00; sob: 09:00 to 13:00; nie: ZAMknięte; pon: 08:00 to 20:00; wto: 08:00 to 20:00; śro: 08:00 to 20:00; czw: 08:00 to 20:00",
+        "coordinates": {
+          "lat": 52.390348,
+          "lng": 16.9196808
+        },
+        "google_maps_place_id": "ChIJnctzaSdbBEcRMD0s0tx4HUI",
+        "google_rating": 4.6,
+        "google_reviews_count": 693,
+        "reviews_insights": {
+          "total_reviews_analyzed": 24,
+          "avg_rating": 4.96,
+          "top_complaints": [
+            {
+              "insight": "Problem z przesyłaniem informacji do ubezpieczyciela",
+              "count": 1,
+              "citations": [
+                {
+                  "text": "Wszystko ok, oprócz braku integralności w przesyłaniu informacji z badania do kierującego na nie ubezpieczyciela.",
+                  "date": "2026-01-27",
+                  "author": "Piotr Wiśniewski",
+                  "rating": 4,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2pWQ1pISjFkMUppZVhsVlRHcFROMFpwV2xOTmJHYxAB!2m1!1s0x0:0x421d78dcd22c3d30!3m1!1s2@1:CAIQACodChtycF9oOjVCZHJ1d1JieXlVTGpTN0ZpWlNNbGc%7C0dTFXzOUr8C%7C?hl=pl"
+                }
+              ]
+            }
+          ],
+          "top_praises": [
+            {
+              "insight": "Bardzo miła i pomocna obsługa recepcji",
+              "count": 6,
+              "citations": [
+                {
+                  "text": "Bardzo miła obsługa.",
+                  "date": "2026-01-29",
+                  "author": "Tadeusz Madaliński",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT21wak1YbERWbDlKUzB4dldqRnlOV0l3UkRCT1NuYxAB!2m1!1s0x0:0x421d78dcd22c3d30!3m1!1s2@1:CAIQACodChtycF9oOmpjMXlDVl9JS0xvWjFyNWIwRDBOSnc%7C0dTpySD62Rv%7C?hl=pl"
+                },
+                {
+                  "text": "Bardzo miła i profesjonalna obsługa. Zarówno Pan Doktor Jacek zasługuje na bardzo dobrą opinię jak i w sklepie Pani Ania. Bardzo dziękuję za zaopiekowanie się mną.",
+                  "date": "2026-01-28",
+                  "author": "Krzysztof Wrobel",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT25ZemFHNUZUVU0yTFdsMlVuSjRXRVJFUkVKV1FXYxAB!2m1!1s0x0:0x421d78dcd22c3d30!3m1!1s2@1:CAIQACodChtycF9oOnYzaG5FTUM2LWl2UnJ4WEREREJWQWc%7C0dTUVt_MWCn%7C?hl=pl"
+                },
+                {
+                  "text": "Profesjonalne zaopiekowanie się pacjentem, przekazanie wszystkich informacji, miła obsługa.",
+                  "date": "2026-01-28",
+                  "author": "Robert Wikariak",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2t3NVkzWjFTRlJMTFhCUk9WTjZWa2RmZVU1R1JuYxAB!2m1!1s0x0:0x421d78dcd22c3d30!3m1!1s2@1:CAIQACodChtycF9oOkw5Y3Z1SFRLLXBROVN6VkdfeU5GRnc%7C0dTTZM2gAGi%7C?hl=pl"
+                }
+              ]
+            },
+            {
+              "insight": "Profesjonalizm i wysokie kompetencje personelu medycznego",
+              "count": 11,
+              "citations": [
+                {
+                  "text": "Bardzo miły i kompetentny Pan doktor,zlecił badania, rozpisal leki oraz wysluchal. Polecam",
+                  "date": "2026-01-29",
+                  "author": "Maria Berner-Marchwinska",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT25WRVkybE5Wakk1ZVVSVlVqZ3lPRFIyV1hWWGFXYxAB!2m1!1s0x0:0x421d78dcd22c3d30!3m1!1s2@1:CAIQACodChtycF9oOnVEY2lNVjI5eURVUjgyODR2WXVXaWc%7C0dTprPlKvgX%7C?hl=pl"
+                },
+                {
+                  "text": "Bardzo miła i profesjonalna obsługa. Zarówno Pan Doktor Jacek zasługuje na bardzo dobrą opinię jak i w sklepie Pani Ania. Bardzo dziękuję za zaopiekowanie się mną.",
+                  "date": "2026-01-28",
+                  "author": "Krzysztof Wrobel",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT25ZemFHNUZUVU0yTFdsMlVuSjRXRVJFUkVKV1FXYxAB!2m1!1s0x0:0x421d78dcd22c3d30!3m1!1s2@1:CAIQACodChtycF9oOnYzaG5FTUM2LWl2UnJ4WEREREJWQWc%7C0dTUVt_MWCn%7C?hl=pl"
+                },
+                {
+                  "text": "Profesjonalne zaopiekowanie się pacjentem, przekazanie wszystkich informacji, miła obsługa.",
+                  "date": "2026-01-28",
+                  "author": "Robert Wikariak",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2t3NVkzWjFTRlJMTFhCUk9WTjZWa2RmZVU1R1JuYxAB!2m1!1s0x0:0x421d78dcd22c3d30!3m1!1s2@1:CAIQACodChtycF9oOkw5Y3Z1SFRLLXBROVN6VkdfeU5GRnc%7C0dTTZM2gAGi%7C?hl=pl"
+                }
+              ]
+            },
+            {
+              "insight": "Dobra organizacja wizyt, punktualność, brak kolejek",
+              "count": 2,
+              "citations": [
+                {
+                  "text": "Jestem bardzo zadowolona z wizyty. Bez kolejki i opóźnień, sama wizyta również na plus. Dr Koch ma wprost dar do badania dzieci. Jego podejście jest zawsze super. Z jego gabinetu dzieci zawsze wychodz...",
+                  "date": "2026-01-28",
+                  "author": "Joanna Borowiak",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2s4MlgxZExlWHBMVkdWbVozSlhOVlZPTmpVMWMxRRAB!2m1!1s0x0:0x421d78dcd22c3d30!3m1!1s2@1:CAIQACodChtycF9oOk82X1dLeXpLVGVmZ3JXNVVONjU1c1E%7C0dTS-9rT2sS%7C?hl=pl"
+                },
+                {
+                  "text": "Miła obsługa, lekarz konkretny, w miarę punktualnie odbyło się badanie 👍",
+                  "date": "2026-01-27",
+                  "author": "IZABELA",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2xwWGJ5MTRlbkZUVTBoUVQyTnJaVWMxV0dsTWVVRRAB!2m1!1s0x0:0x421d78dcd22c3d30!3m1!1s2@1:CAIQACodChtycF9oOlpXby14enFTU0hQT2NrZUc1WGlMeUE%7C0dTFqI8srKt%7C?hl=pl"
+                }
+              ]
+            }
+          ],
+          "common_themes": [
+            "Miła i profesjonalna obsługa recepcji",
+            "Wysokie kompetencje i zaangażowanie specjalistów",
+            "Dobra organizacja i punktualność"
+          ],
+          "summary": "Recenzje nie zawierają żadnych informacji na temat komunikacji telefonicznej lub mailowej. Komunikacja bezpośrednia w placówce, realizowana przez personel recepcji, jest natomiast bardzo wysoko i konsekwentnie chwalona za bycie miłą, pomocną i profesjonalną.",
+          "confidence": 1.0
+        }
+      }
+    ],
+    "metadata": {
+      "scraped_at": "2026-01-30T21:00:46.856218",
+      "sources_used": [
+        "nip_lookup",
+        "gus",
+        "website",
+        "google_maps",
+        "google_reviews_analysis",
+        "facebook",
+        "ai_categorization"
+      ],
+      "processing_time_ms": 106830,
+      "cost_usd": 0.004,
+      "errors": [],
+      "warnings": [],
+      "data_validation": {
+        "contacts_match": true,
+        "contacts_discrepancies": [],
+        "address_match": true,
+        "address_discrepancies": []
+      }
+    }
+  }
+}

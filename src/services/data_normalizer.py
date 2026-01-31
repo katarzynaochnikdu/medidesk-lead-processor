@@ -1,6 +1,6 @@
 """
 Główny serwis normalizacji danych.
-Orkiestruje wszystkie komponenty: AI, GUS, Zoho.
+Orkiestruje wszystkie komponenty: AI, GUS, Zoho, NIPFinderV3.
 """
 
 import asyncio
@@ -23,6 +23,7 @@ from ..utils.validators import (
     extract_email_domain,
     format_nip,
     format_phone,
+    is_public_email_domain,
     is_valid_nip,
     normalize_nip,
     normalize_phone,
@@ -30,7 +31,16 @@ from ..utils.validators import (
 from .gus_client import GUSClient, get_gus_client
 from .vertex_ai import VertexAIService, get_vertex_ai_service
 from .zoho_search import ZohoSearchService, get_zoho_search_service
-from .brave_search import BraveSearchService, get_brave_search_service
+
+# NIPFinderV3 - zaawansowane wyszukiwanie NIP
+try:
+    from nip_finder_v3.core.orchestrator import NIPFinderV3
+    from nip_finder_v3.models import ScrapedCompanyData
+    NIP_FINDER_V3_AVAILABLE = True
+except ImportError:
+    NIP_FINDER_V3_AVAILABLE = False
+    NIPFinderV3 = None
+    ScrapedCompanyData = None
 
 logger = logging.getLogger(__name__)
 
@@ -38,7 +48,7 @@ logger = logging.getLogger(__name__)
 class DataNormalizerService:
     """
     Główny serwis przetwarzania leadów.
-    Koordynuje wszystkie etapy: normalizacja AI, GUS, deduplikacja.
+    Koordynuje wszystkie etapy: normalizacja AI, GUS, deduplikacja, NIPFinderV3.
     
     Rozszerzalny design:
     - Każdy komponent można wymienić (dependency injection)
@@ -52,7 +62,7 @@ class DataNormalizerService:
         vertex_ai_service: Optional[VertexAIService] = None,
         gus_client: Optional[GUSClient] = None,
         zoho_service: Optional[ZohoSearchService] = None,
-        brave_service: Optional[BraveSearchService] = None,
+        nip_finder: Optional["NIPFinderV3"] = None,
         use_mocks: bool = False,
     ):
         self.settings = settings or get_settings()
@@ -67,16 +77,76 @@ class DataNormalizerService:
         self.zoho_service = zoho_service or get_zoho_search_service(
             self.settings, use_mock=use_mocks
         )
-        self.brave_service = brave_service if not use_mocks else None
-        if not use_mocks and not brave_service:
-            self.brave_service = get_brave_search_service(self.settings)
+        
+        # NIPFinderV3 - zaawansowane wyszukiwanie NIP z dodatkowym scrapingiem danych
+        self.nip_finder = nip_finder
+        if not use_mocks and not nip_finder and NIP_FINDER_V3_AVAILABLE:
+            self.nip_finder = NIPFinderV3()
+        
+        # Przechowuje zebrane dane z crawlowania (email, tel, adres, social)
+        self._scraped_company_data: Optional["ScrapedCompanyData"] = None
+        
+        # Cache ostatniego wyniku GUS (żeby nie robić 2x tego samego lookup)
+        self._last_gus_nip: Optional[str] = None
+        self._last_gus_data: Optional[GUSData] = None
+    
+    def get_scraped_company_data(self) -> Optional["ScrapedCompanyData"]:
+        """
+        Zwraca dane zebrane podczas ostatniego crawlowania NIPFinderV3.
+        
+        Używaj tej metody, żeby re-używać zebrane dane (email, telefon, adres, social)
+        zamiast robić scraping po raz drugi.
+        
+        Returns:
+            ScrapedCompanyData lub None jeśli nie było scrapingu
+        """
+        return self._scraped_company_data
+    
+    def clear_scraped_company_data(self) -> None:
+        """Czyści dane z ostatniego scrapingu."""
+        self._scraped_company_data = None
+    
+    async def get_gus_data_cached(self, nip: str) -> GUSData:
+        """
+        Zwraca dane GUS z cache lub wykonuje lookup.
+        
+        Zapewnia że dla tego samego NIP nie robimy lookup dwa razy.
+        
+        Args:
+            nip: NIP (10 cyfr)
+            
+        Returns:
+            GUSData z danymi firmy
+        """
+        clean_nip = normalize_nip(nip)
+        if not clean_nip:
+            return GUSData(found=False, error="Nieprawidłowy format NIP")
+        
+        # Sprawdź cache
+        if self._last_gus_nip == clean_nip and self._last_gus_data is not None:
+            logger.debug("GUS cache hit dla NIP=%s", clean_nip)
+            return self._last_gus_data
+        
+        # Wykonaj lookup
+        gus_data = await self.gus_client.lookup_nip(clean_nip)
+        
+        # Zapisz w cache
+        self._last_gus_nip = clean_nip
+        self._last_gus_data = gus_data
+        
+        return gus_data
+    
+    def clear_gus_cache(self) -> None:
+        """Czyści cache GUS."""
+        self._last_gus_nip = None
+        self._last_gus_data = None
     
     async def close(self):
         """Zamknij wszystkie połączenia."""
         await self.gus_client.close()
         await self.zoho_service.close()
-        if self.brave_service:
-            await self.brave_service.close()
+        if self.nip_finder:
+            await self.nip_finder.close()
     
     async def process_lead(
         self,
@@ -118,56 +188,72 @@ class DataNormalizerService:
             # 3. Uzupełnij dane z walidatorów
             normalized = self._enhance_normalized_data(normalized, lead_input)
             
-            # 3.5. Brave Search - szukaj NIP jeśli nie mamy
-            if not normalized.nip and normalized.company_name and self.brave_service:
+            # 3.5. NIPFinderV3 - szukaj NIP jeśli nie mamy (8-poziomowa kaskada)
+            self._scraped_company_data = None  # Reset
+            if not normalized.nip and normalized.company_name and self.nip_finder:
                 # Wyciągnij domenę z emaila (jeśli nie jest publiczna)
-                email_domain = None
-                if normalized.email:
-                    from ..utils.validators import extract_email_domain, is_public_email_domain
-                    email_domain = extract_email_domain(normalized.email)
+                email_for_search = normalized.email
+                if email_for_search:
+                    email_domain = extract_email_domain(email_for_search)
                     if email_domain and is_public_email_domain(email_domain):
-                        email_domain = None  # Ignoruj domeny publiczne (gmail, outlook)
+                        email_for_search = None  # Ignoruj publiczne domeny
                 
-                logger.info("Brak NIP - szukam przez Brave Search dla: %s (domena: %s)", 
-                           normalized.company_name, email_domain or "brak")
+                logger.info(
+                    "Brak NIP - szukam przez NIPFinderV3 dla: %s (miasto: %s, email: %s)",
+                    normalized.company_name,
+                    normalized.city or "brak",
+                    email_for_search or "brak",
+                )
                 try:
-                    found_nip = await self.brave_service.find_nip(
-                        normalized.company_name,
-                        email_domain=email_domain
+                    nip_result = await self.nip_finder.find_nip(
+                        company_name=normalized.company_name,
+                        city=normalized.city,
+                        email=email_for_search,
                     )
-                    if found_nip:
-                        # Waliduj NIP z domeną (jeśli mamy domenę)
-                        validated = True
-                        if email_domain:
-                            try:
-                                validated = await self.brave_service.validate_nip_domain(
-                                    found_nip, 
-                                    email_domain
-                                )
-                                if not validated:
-                                    warnings.append(f"⚠️ NIP {format_nip(found_nip)} nie pasuje do domeny {email_domain} - wymaga weryfikacji")
-                                    logger.warning("NIP nie pasuje do domeny - obniżam pewność")
-                            except Exception as e:
-                                logger.warning("Błąd walidacji NIP vs domena: %s", e)
+                    
+                    if nip_result.found:
+                        normalized.nip = nip_result.nip
+                        normalized.nip_formatted = format_nip(nip_result.nip)
+                        normalized.nip_valid = is_valid_nip(nip_result.nip)
                         
-                        normalized.nip = found_nip
-                        normalized.nip_formatted = format_nip(found_nip)
-                        normalized.nip_valid = is_valid_nip(found_nip)
+                        # Zapisz zebrane dane kontaktowe (email, tel, adres, social)
+                        if nip_result.scraped_data:
+                            self._scraped_company_data = nip_result.scraped_data
+                            scraped_info = []
+                            if nip_result.scraped_data.emails:
+                                scraped_info.append(f"{len(nip_result.scraped_data.emails)} email")
+                            if nip_result.scraped_data.phones:
+                                scraped_info.append(f"{len(nip_result.scraped_data.phones)} tel")
+                            if nip_result.scraped_data.social_links:
+                                scraped_info.append(f"{len(nip_result.scraped_data.social_links)} social")
+                            if scraped_info:
+                                logger.info("NIPFinderV3: zebrano dodatkowe dane: %s", ", ".join(scraped_info))
                         
-                        if validated:
-                            warnings.append(f"NIP znaleziony przez Brave Search: {format_nip(found_nip)}")
-                        
-                        logger.info("Brave Search znalazł NIP: %s (zwalidowany: %s)", found_nip, validated)
+                        strategy_name = nip_result.strategy_used.value if nip_result.strategy_used else "unknown"
+                        warnings.append(
+                            f"NIP znaleziony przez {strategy_name}: {format_nip(nip_result.nip)} "
+                            f"(confidence: {nip_result.confidence:.0%})"
+                        )
+                        logger.info(
+                            "NIPFinderV3 znalazł NIP: %s (strategy: %s, confidence: %.2f)",
+                            nip_result.nip,
+                            strategy_name,
+                            nip_result.confidence,
+                        )
                     else:
-                        logger.info("Brave Search nie znalazł NIP dla: %s", normalized.company_name)
+                        logger.info("NIPFinderV3 nie znalazł NIP dla: %s", normalized.company_name)
+                        # Nawet jeśli nie znaleziono NIP, mogą być zebrane dane kontaktowe
+                        if nip_result.scraped_data:
+                            self._scraped_company_data = nip_result.scraped_data
+                            
                 except Exception as e:
-                    logger.warning("Błąd wyszukiwania NIP przez Brave: %s", e)
-                    warnings.append(f"Nie udało się znaleźć NIP przez Brave Search")
+                    logger.warning("Błąd wyszukiwania NIP przez NIPFinderV3: %s", e)
+                    warnings.append("Nie udało się znaleźć NIP przez NIPFinderV3")
             
-            # 4. GUS lookup
+            # 4. GUS lookup (z cache - żeby nie robić 2x tego samego)
             gus_data = GUSData(found=False)
             if not skip_gus and normalized.nip:
-                gus_data = await self.gus_client.lookup_nip(normalized.nip)
+                gus_data = await self.get_gus_data_cached(normalized.nip)
                 if gus_data.found:
                     # Uzupełnij brakujące dane z GUS
                     normalized = self._merge_gus_data(normalized, gus_data)

@@ -1,0 +1,512 @@
+{
+  "company": {
+    "nip": null,
+    "regon": null,
+    "krs": null,
+    "nazwa_pelna": "Klinika Ambroziak",
+    "nazwa_zwyczajowa": "Klinika medycyny estetycznej w Warszawie",
+    "adres_siedziby": null,
+    "kategoryzacja_ai": {
+      "platnik_uslug": [
+        "Komercyjne"
+      ],
+      "specjalizacja": [
+        "Medycyna Estetyczna"
+      ],
+      "wielospecjalistyczne": [
+        "chirurgia plastyczna",
+        "dermatologia",
+        "laryngologia"
+      ],
+      "typ_wlasnosci": "Prywatny (Private)",
+      "kategoria_konta": null,
+      "branza": null,
+      "ai_confidence": 0.99,
+      "ai_reasoning": null
+    },
+    "social_media": {
+      "website": "https://klinikaambroziak.pl",
+      "facebook": "https://www.facebook.com/KlinikaAmbroziak",
+      "instagram": "https://www.instagram.com/klinika_ambroziak/",
+      "linkedin": null,
+      "tiktok": null,
+      "x": null
+    },
+    "activity_score": {
+      "total": 65,
+      "recommendation": "LUKEWARM",
+      "breakdown": {
+        "google_maps": 25,
+        "facebook": 10,
+        "instagram": 20,
+        "tiktok": 0,
+        "website": 5,
+        "network": 5
+      },
+      "signals": [
+        "Google Maps 4.8/5",
+        "Google 825 recenzji",
+        "Facebook 78.2K followers",
+        "Instagram 64.4K followers",
+        "IG aktywny < 14 dni",
+        "SSL aktywny",
+        "Sieć 3 placówek"
+      ]
+    },
+    "placowki": [
+      {
+        "typ_adresu": "-None-",
+        "adres": {
+          "ulica": "ul. Kosiarzy 9A",
+          "kod": "02-953",
+          "miasto": "Warszawa",
+          "wojewodztwo": null
+        },
+        "kontakty": [
+          {
+            "typ": "telefon",
+            "wartosc": "+48 221 115 005",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 726 101 000",
+            "opis": null
+          }
+        ],
+        "godziny_otwarcia": "pią: 10:00 to 20:00; sob: ZAMknięte; nie: ZAMknięte; pon: 10:00 to 20:00; wto: 10:00 to 20:00; śro: 10:00 to 20:00; czw: 10:00 to 20:00",
+        "coordinates": {
+          "lat": 52.1715942,
+          "lng": 21.0822052
+        },
+        "google_maps_place_id": "ChIJd-WL7OQtGUcRi6trm4SO5iw",
+        "google_rating": 4.8,
+        "google_reviews_count": 189,
+        "reviews_insights": {
+          "total_reviews_analyzed": 44,
+          "avg_rating": 4.92,
+          "top_complaints": [
+            {
+              "insight": "Niemiła obsługa i niesympatyczny personel.",
+              "count": 1,
+              "citations": [
+                {
+                  "text": "Nie polecam nie miła obsługa za drogo. Nie polecam kliniki. Dermatolog nie  sympatyczna.",
+                  "date": "2025-12-30",
+                  "author": "Sylwia Bączek-Żołna",
+                  "rating": 1,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2pKWlkxRk9iMHRMWkRkNlIwaGxWbXhPWTNFd1VtYxAB!2m1!1s0x0:0x2ce68e849b6bab8b!3m1!1s2@1:CAIQACodChtycF9oOjJZY1FOb0tLZDd6R0hlVmxOY3EwUmc%7C0dK3X9WNNLy%7C?hl=pl"
+                }
+              ]
+            }
+          ],
+          "top_praises": [
+            {
+              "insight": "Miła, pomocna i profesjonalna obsługa recepcji.",
+              "count": 17,
+              "citations": [
+                {
+                  "text": "Polecam Klinikę Ambroziak w Warszawie. Od pewnego czasu leczę się u pani doktor Łukowskiej i mogę polecić zarówno panią doktor, jak i całą klinikę. Profesjonalne podejście do pacjenta i miła atmosfera...",
+                  "date": "2025-12-17",
+                  "author": "Maja Płuciennik",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT205bmRtbDBVa0ZaUzJVdFlqTnZORTV4UVZFdGEyYxAB!2m1!1s0x0:0x2ce68e849b6bab8b!3m1!1s2@1:CAIQACodChtycF9oOm9ndml0UkFZS2UtYjNvNE5xQVEta2c%7C0dFjnA7kIZk%7C?hl=pl"
+                },
+                {
+                  "text": "Moja wizyta w klinice Ambroziak bardzo profesjonalna, przemiła obsługa, wspaniała atmosfera, jestem bardzo zadowolona i polecam bardzo Klinikę Ambroziak.",
+                  "date": "2025-12-10",
+                  "author": "Uliczna Sala Gimnastyczna",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT20xa2RVWklaRnBvYzI0dFJVRjRSVEJoVUZsMGQyYxAB!2m1!1s0x0:0x2ce68e849b6bab8b!3m1!1s2@1:CAIQACodChtycF9oOm1kdUZIZFpoc24tRUF4RTBhUFl0d2c%7C0dDHqgWSvi6%7C?hl=pl"
+                },
+                {
+                  "text": "Bardzo miła obsługa i pracownicy. Pani dr Julia Sieczych, do której chodzę na wizyty, jest osobą bardzo pomocną i zawsze coś dobrego doradzi.",
+                  "date": "2025-12-08",
+                  "author": "Marianna Pabisiak",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2pGalNubEpiVFJ6V200M2VUaG9SVkpGWTNsR05XYxAB!2m1!1s0x0:0x2ce68e849b6bab8b!3m1!1s2@1:CAIQACodChtycF9oOjFjSnlJbTRzWm43eThoRVJFY3lGNWc%7C0dCiD2Dq1T2%7C?hl=pl"
+                }
+              ]
+            },
+            {
+              "insight": "Empatyczni lekarze, którzy słuchają i tłumaczą.",
+              "count": 12,
+              "citations": [
+                {
+                  "text": "Świetnia klinika dermatologiczna gdzie pacjent czuję się zawsze zaopiekowany. W szczególności chciałbym polecić panią doktor Monikę Kałowską znakomitą dermatolog z wieloletnim doświadczeniem która jes...",
+                  "date": "2026-01-30",
+                  "author": "john szewczyk",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT25sYVpVaERiR05tVlhodVMxOU1iME5MTjBJMVpHYxAB!2m1!1s0x0:0x2ce68e849b6bab8b!3m1!1s2@1:CAIQACodChtycF9oOnlaZUhDbGNmVXhuS19Mb0NLN0I1ZGc%7C0dU5qMmWX-Z%7C?hl=pl"
+                },
+                {
+                  "text": "Z całego serca polecam Klinikę AMBROZIAK, Dr. Ewę Woźniak-Roszkowską i personel w nim zatrudniony, który z ogromnym zaangażowaniem i indywidualnym podejściem do pacjenta pomaga dobrać i przeprowadzić ...",
+                  "date": "2026-01-27",
+                  "author": "Małgorzata Szabelska",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2sxemFrcE5VMGR3VEhSd1FXRnJhMnc0UlU5RVdtYxAB!2m1!1s0x0:0x2ce68e849b6bab8b!3m1!1s2@1:CAIQACodChtycF9oOk1zakpNU0dwTHRwQWFra2w4RU9EWmc%7C0dTEqW7PYkF%7C?hl=pl"
+                },
+                {
+                  "text": "Zabieg u dr Rosiak-Buller przebigl w dobrej, empatycznej atmosferze. Sedecznie polecam.",
+                  "date": "2025-12-16",
+                  "author": "Aneta Rasik",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2pGUVQyVllRbU0zZEdaemJtVmZTVFJoYldkV1NXYxAB!2m1!1s0x0:0x2ce68e849b6bab8b!3m1!1s2@1:CAIQACodChtycF9oOjFQT2VYQmM3dGZzbmVfSTRhbWdWSWc%7C0dFGEkE5t8w%7C?hl=pl"
+                }
+              ]
+            }
+          ],
+          "common_themes": [
+            "Profesjonalizm personelu i lekarzy",
+            "Miła, empatyczna i pomocna obsługa",
+            "Skuteczność leczenia i zadowolenie z efektów"
+          ],
+          "summary": "Komunikacja z pacjentami w placówce jest oceniana bardzo wysoko, szczególnie w odniesieniu do obsługi recepcyjnej, która jest opisywana jako profesjonalna, miła i pomocna. Pacjenci chwalą również lekarzy za empatyczne podejście, słuchanie i dokładne wyjaśnianie procesu leczenia. W recenzjach brakuje danych na temat zdalnych kanałów kontaktu, jak telefony czy e-maile.",
+          "confidence": 1.0
+        }
+      },
+      {
+        "typ_adresu": "-None-",
+        "adres": {
+          "ulica": "ul. Mikołaja Kopernika 15/lok. 3",
+          "kod": "00-367",
+          "miasto": "Warszawa",
+          "wojewodztwo": null
+        },
+        "kontakty": [
+          {
+            "typ": "telefon",
+            "wartosc": "+48 221 115 005",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 726 101 000",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 607 474 800",
+            "opis": "Google Maps"
+          }
+        ],
+        "godziny_otwarcia": "pią: 10:00 to 20:00; sob: ZAMknięte; nie: ZAMknięte; pon: 10:00 to 20:00; wto: 10:00 to 20:00; śro: 10:00 to 20:00; czw: 10:00 to 20:00",
+        "coordinates": {
+          "lat": 52.2353625,
+          "lng": 21.0204919
+        },
+        "google_maps_place_id": "ChIJic2fXM_NHkcRzRnOevwHtbI",
+        "google_rating": 4.6,
+        "google_reviews_count": 39,
+        "reviews_insights": {
+          "total_reviews_analyzed": 31,
+          "avg_rating": 4.514285714285714,
+          "top_complaints": [
+            {
+              "insight": "Trudności z dodzwonieniem się na infolinię.",
+              "count": 1,
+              "citations": [
+                {
+                  "text": "Bardzo słaba obsługa.\n\nZadzwoniłem dzień wcześniej by zapytać się czy jest możliwość kupienia voucheru prezentowego w tym salonie “od ręki”, w godzinach pracy. Zostałem poinformowany, że jest taka opc...",
+                  "date": "2024-12-12",
+                  "author": "Oskar Wichowicz",
+                  "rating": 1,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChZDSUhNMG9nS0VJQ0FnSUN2dWJTcExnEAE!2m1!1s0x0:0xb2b507fc7ace19cd!3m1!1s2@1:CIHM0ogKEICAgICvubSpLg%7CCgwI5OPsugYQ8JO_6AE%7C?hl=pl"
+                }
+              ]
+            },
+            {
+              "insight": "Brak odpowiedzi na wiadomości e-mail.",
+              "count": 1,
+              "citations": [
+                {
+                  "text": "Łaskę robią że na maila odpiszą. Coś nieprawdopodobnego. Poziom obsługi zerowy. Może zamiast skakać na instagramie to zajmijcie się robotą bo barterowi celebryci wam pensji nie wypłacą.",
+                  "date": "2025-01-01",
+                  "author": "Ezi Wojcik",
+                  "rating": 1,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChdDSUhNMG9nS0VJQ0FnSUNmZzZXVzZ3RRAB!2m1!1s0x0:0xb2b507fc7ace19cd!3m1!1s2@1:CIHM0ogKEICAgICfg6WW6wE%7CCgwImMnSuwYQqLOK3QE%7C?hl=pl"
+                }
+              ]
+            },
+            {
+              "insight": "Słaba obsługa i brak personelu na miejscu.",
+              "count": 1,
+              "citations": [
+                {
+                  "text": "Bardzo słaba obsługa.\n\nZadzwoniłem dzień wcześniej by zapytać się czy jest możliwość kupienia voucheru prezentowego w tym salonie “od ręki”, w godzinach pracy. Zostałem poinformowany, że jest taka opc...",
+                  "date": "2024-12-12",
+                  "author": "Oskar Wichowicz",
+                  "rating": 1,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChZDSUhNMG9nS0VJQ0FnSUN2dWJTcExnEAE!2m1!1s0x0:0xb2b507fc7ace19cd!3m1!1s2@1:CIHM0ogKEICAgICvubSpLg%7CCgwI5OPsugYQ8JO_6AE%7C?hl=pl"
+                }
+              ]
+            }
+          ],
+          "top_praises": [
+            {
+              "insight": "Niezwykle miła, pomocna i profesjonalna obsługa recepcji.",
+              "count": 10,
+              "citations": [
+                {
+                  "text": "To najwspanialsze miejsce w Polsce do wykonywania zabiegów upiększających💪💪💪 Od samego początku przy wejściu do pięknego miejsca wita uśmiechnięta Pani Katarzyna🥰 która służy pomocą na każdym etapie p...",
+                  "date": "2026-01-30",
+                  "author": "Jaro Zdan",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT21oVFMwVjJVbkpXYjBSNFpHZFlNRFJYYVVJM2RrRRAB!2m1!1s0x0:0xb2b507fc7ace19cd!3m1!1s2@1:CAIQACodChtycF9oOmhTS0V2UnJWb0R4ZGdYMDRXaUI3dkE%7C0dUCt8NAeix%7C?hl=pl"
+                },
+                {
+                  "text": "Z całego serca polecam  lekarza  Marka Opalę.Pełen profesjonalizm, ogromna wiedza i indywidualne podejście do pacjenta sprawiają, że można czuć się w 100% bezpiecznie i komfortowo. Lekarz wszystko dok...",
+                  "date": "2025-12-17",
+                  "author": "Ola W",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2tONVNGVnNZVXAxU1ZkeWRHaG1OMmRDT1ZKNVRVRRAB!2m1!1s0x0:0xb2b507fc7ace19cd!3m1!1s2@1:CAIQACodChtycF9oOkN5SFVsYUp1SVdydGhmN2dCOVJ5TUE%7C0dFmV3bfbBH%7C?hl=pl"
+                },
+                {
+                  "text": "Serdecznie polecam! Chodzę od niedawna i jestem bardzo zadowolona z usług i przecudownej obsługi na miejscu ♥️☺️",
+                  "date": "2025-11-18",
+                  "author": "Wiktoria Wojno",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2pGWWJrRm1hV2w1VlhNeloxaFdUVlZzTjNOdFNtYxAB!2m1!1s0x0:0xb2b507fc7ace19cd!3m1!1s2@1:CAIQACodChtycF9oOjFYbkFmaWl5VXMzZ1hWTVVsN3NtSmc%7C0d6CmrmFQ4g%7C?hl=pl"
+                }
+              ]
+            },
+            {
+              "insight": "Wysoki standard obsługi od pierwszego kontaktu.",
+              "count": 4,
+              "citations": [
+                {
+                  "text": "To najwspanialsze miejsce w Polsce do wykonywania zabiegów upiększających💪💪💪 Od samego początku przy wejściu do pięknego miejsca wita uśmiechnięta Pani Katarzyna🥰 która służy pomocą na każdym etapie p...",
+                  "date": "2026-01-30",
+                  "author": "Jaro Zdan",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT21oVFMwVjJVbkpXYjBSNFpHZFlNRFJYYVVJM2RrRRAB!2m1!1s0x0:0xb2b507fc7ace19cd!3m1!1s2@1:CAIQACodChtycF9oOmhTS0V2UnJWb0R4ZGdYMDRXaUI3dkE%7C0dUCt8NAeix%7C?hl=pl"
+                },
+                {
+                  "text": "Z całego serca polecam  lekarza  Marka Opalę.Pełen profesjonalizm, ogromna wiedza i indywidualne podejście do pacjenta sprawiają, że można czuć się w 100% bezpiecznie i komfortowo. Lekarz wszystko dok...",
+                  "date": "2025-12-17",
+                  "author": "Ola W",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2tONVNGVnNZVXAxU1ZkeWRHaG1OMmRDT1ZKNVRVRRAB!2m1!1s0x0:0xb2b507fc7ace19cd!3m1!1s2@1:CAIQACodChtycF9oOkN5SFVsYUp1SVdydGhmN2dCOVJ5TUE%7C0dFmV3bfbBH%7C?hl=pl"
+                },
+                {
+                  "text": "Klinika Ambroziak to absolutnie wyjątkowe miejsce na mapie Warszawy! Już od samego wejścia czuć niezwykłą atmosferę – Pani, która wita klientów, robi to z ogromną serdecznością i uśmiechem. Juz wtedy ...",
+                  "date": "2025-08-07",
+                  "author": "Sabina Jakubowska",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT25wdWRYbGtTa056YzJwVFdEUnJXSE5OU0VKZllXYxAB!2m1!1s0x0:0xb2b507fc7ace19cd!3m1!1s2@1:CAIQACodChtycF9oOnpudXlkSkNzc2pTWDRrWHNNSEJfYWc%7C0c_CP918X6S%7C?hl=pl"
+                }
+              ]
+            },
+            {
+              "insight": "Poczucie zaopiekowania i serdeczne powitanie przy wejściu.",
+              "count": 3,
+              "citations": [
+                {
+                  "text": "To najwspanialsze miejsce w Polsce do wykonywania zabiegów upiększających💪💪💪 Od samego początku przy wejściu do pięknego miejsca wita uśmiechnięta Pani Katarzyna🥰 która służy pomocą na każdym etapie p...",
+                  "date": "2026-01-30",
+                  "author": "Jaro Zdan",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT21oVFMwVjJVbkpXYjBSNFpHZFlNRFJYYVVJM2RrRRAB!2m1!1s0x0:0xb2b507fc7ace19cd!3m1!1s2@1:CAIQACodChtycF9oOmhTS0V2UnJWb0R4ZGdYMDRXaUI3dkE%7C0dUCt8NAeix%7C?hl=pl"
+                },
+                {
+                  "text": "Klinika Ambroziak to absolutnie wyjątkowe miejsce na mapie Warszawy! Już od samego wejścia czuć niezwykłą atmosferę – Pani, która wita klientów, robi to z ogromną serdecznością i uśmiechem. Juz wtedy ...",
+                  "date": "2025-08-07",
+                  "author": "Sabina Jakubowska",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT25wdWRYbGtTa056YzJwVFdEUnJXSE5OU0VKZllXYxAB!2m1!1s0x0:0xb2b507fc7ace19cd!3m1!1s2@1:CAIQACodChtycF9oOnpudXlkSkNzc2pTWDRrWHNNSEJfYWc%7C0c_CP918X6S%7C?hl=pl"
+                },
+                {
+                  "text": "Wizyta w Klinice dr Ambroziak jak zawsze przebiegła w profesjonalnej atmosferze. Szczególne podziękowania kieruję do Pani Katarzyny – Managera recepcji – która jak zwykle okazała się niezwykle pomocna...",
+                  "date": "2025-08-07",
+                  "author": "Arkadiusz Urbaniak",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2s4dGJtcDVXRzkwZUY5cWVWRnBUblZxTUhFeE1IYxAB!2m1!1s0x0:0xb2b507fc7ace19cd!3m1!1s2@1:CAIQACodChtycF9oOk8tbmp5WG90eF9qeVFpTnVqMHExMHc%7C0c_56IX5Fmk%7C?hl=pl"
+                }
+              ]
+            }
+          ],
+          "common_themes": [
+            "Jakość obsługi w recepcji",
+            "Profesjonalizm i podejście personelu medycznego",
+            "Luksusowy wystrój i atmosfera miejsca",
+            "Problemy z komunikacją zdalną (telefon/email)"
+          ],
+          "summary": "Komunikacja z placówką jest oceniana dwojako. Z jednej strony, obsługa na miejscu w recepcji jest masowo i entuzjastycznie chwalona za profesjonalizm, życzliwość i tworzenie przyjaznej atmosfery. Z drugiej strony, pojawiają się pojedyncze, ale bardzo konkretne skargi na komunikację zdalną, w tym trudności z dodzwonieniem się na infolinię i brak odpowiedzi na e-maile.",
+          "confidence": 1.0
+        }
+      },
+      {
+        "typ_adresu": "-None-",
+        "adres": {
+          "ulica": "Aleja Gen. Władysława Sikorskiego 13/U1",
+          "kod": "02-758",
+          "miasto": "Warszawa",
+          "wojewodztwo": null
+        },
+        "kontakty": [
+          {
+            "typ": "telefon",
+            "wartosc": "+48 221 115 005",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 726 101 000",
+            "opis": null
+          }
+        ],
+        "godziny_otwarcia": "pią: 10:00 to 20:00; sob: 10:00 to 18:00; nie: ZAMknięte; pon: 10:00 to 20:00; wto: 10:00 to 20:00; śro: 10:00 to 20:00; czw: 10:00 to 20:00",
+        "coordinates": {
+          "lat": 52.1853092,
+          "lng": 21.0447412
+        },
+        "google_maps_place_id": "ChIJ1a0bFbUyGUcR0kJtQFIX--4",
+        "google_rating": 4.3,
+        "google_reviews_count": 597,
+        "reviews_insights": {
+          "total_reviews_analyzed": 46,
+          "avg_rating": 4.62,
+          "top_complaints": [
+            {
+              "insight": "Brak kontaktu i odpowiedzi po zabiegu",
+              "count": 3,
+              "citations": [
+                {
+                  "text": "Zdecydowanie odradzam. Klinika chętnie bierze pieniądze, ale gdy pojawia się problem — przestaje istnieć. Lekarz zapewniał mnie, że zabieg skleroterapii przy tak małej ilości naczynek da efekt bez pro...",
+                  "date": "2026-01-25",
+                  "author": "Marta Sroka",
+                  "rating": 1,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT25WVVMyZHFURXBqTm1sek4yWjJTa0ZpWTFFM1puYxAB!2m1!1s0x0:0xeefb1752406d42d2!3m1!1s2@1:CAIQACodChtycF9oOnVUS2dqTEpjNmlzN2Z2SkFiY1E3Znc%7C0dSTRVTTBmd%7C?hl=pl"
+                },
+                {
+                  "text": "Po wypełnieniu bruzd mam twarde grudki, które lekarz wykonujący zabieg nazywa „przejściowym zjawiskiem”. Minęły cztery miesiące i nic się nie poprawiło. Czuję, że moje obawy są ignorowane. Brak troski...",
+                  "date": "2025-12-07",
+                  "author": "koko sanka",
+                  "rating": 1,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2xkRFpVTkVUVVkyVjFBd2FtaEtiMHhUUm5WclowRRAB!2m1!1s0x0:0xeefb1752406d42d2!3m1!1s2@1:CAIQACodChtycF9oOldDZUNETUY2V1AwamhKb0xTRnVrZ0E%7C0dCBcsIuuFn%7C?hl=pl"
+                },
+                {
+                  "text": "Nie jestem zadowolona z obsługi, byłam na zamykaniu naczynek na twarzy. Laser był źle nastawiony powstały rany z których lała się krew, koło nosa pozostały mi ślady. Pani doktor nie była zbytnio zaint...",
+                  "date": "2025-11-24",
+                  "author": "Agnieszka Nocuń",
+                  "rating": 1,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2xKUUxXRnpSbVphZEdSUVlqTXdaVFpHTmtWTWRrRRAB!2m1!1s0x0:0xeefb1752406d42d2!3m1!1s2@1:CAIQACodChtycF9oOlJQLWFzRmZadGRQYjMwZTZGNkVMdkE%7C0d84dcDyrFF%7C?hl=pl"
+                }
+              ]
+            },
+            {
+              "insight": "Lekarzowi brakuje empatii dla drugiego człowieka",
+              "count": 1,
+              "citations": [
+                {
+                  "text": "Pan doktor nie wie czym jest empatia dla drugiego człowieka",
+                  "date": "2025-12-08",
+                  "author": "Cosmo Cosmo",
+                  "rating": 1,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT21KaVEySnhUamRJZEVNemNqRmtXRFpYYVU5V09YYxAB!2m1!1s0x0:0xeefb1752406d42d2!3m1!1s2@1:CAIQACodChtycF9oOmJiQ2JxTjdIdEMzcjFkWDZXaU9WOXc%7C0dCpVInadle%7C?hl=pl"
+                }
+              ]
+            }
+          ],
+          "top_praises": [
+            {
+              "insight": "Lekarze są empatyczni i wszystko dokładnie tłumaczą",
+              "count": 8,
+              "citations": [
+                {
+                  "text": "Pani doktor Agnieszka Czarnecka to wspaniała specjalistka z ogromną wiedzą i doświadczeniem. Zawsze wszystko dokładnie tłumaczy, podchodzi do pacjentki z empatią i spokojem. Jest bardzo sympatyczna i ...",
+                  "date": "2026-01-20",
+                  "author": "Mirella Chojnacka",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT25ZeFFWSlpVSEJMWW5kU1ZYQndZbE5DU1RsUlltYxAB!2m1!1s0x0:0xeefb1752406d42d2!3m1!1s2@1:CAIQACodChtycF9oOnYxQVJZUHBLYndSVXBwYlNCSTlRYmc%7C0dQt749MrFC%7C?hl=pl"
+                },
+                {
+                  "text": "I visited last week due to my varicose veins in my leg. The reception team made me and my wife very welcome and comfortable. After filling out a few forms, a very polite lady approached me and stated ...",
+                  "date": "2025-11-30",
+                  "author": "K W",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT21JdGEwMHhTakZEZVRocFVuWnpWMVpJUkVZeVRYYxAB!2m1!1s0x0:0xeefb1752406d42d2!3m1!1s2@1:CAIQACodChtycF9oOmIta00xSjFDeThpUnZzV1ZIREYyTXc%7C0dA9lO-3QZP%7C?hl=pl"
+                },
+                {
+                  "text": "Gorąco polecam Klinikę Ambroziak oraz Panią Beatę Dudzińską- Czajkę, której pacjentką jestem już ponad 10 lat. Profesjonalne podejście, ogromna wiedza oraz pełna troska o potrzeby pacjenta sprawiają, ...",
+                  "date": "2025-11-19",
+                  "author": "Dominika Zając",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT20xMWFVWnRXRlZNVjB4MWJXWm9VVlJoUVZadVkyYxAB!2m1!1s0x0:0xeefb1752406d42d2!3m1!1s2@1:CAIQACodChtycF9oOm11aUZtWFVMV0x1bWZoUVRhQVZuY2c%7C0d6NIAWdSRb%7C?hl=pl"
+                }
+              ]
+            },
+            {
+              "insight": "Bardzo miła i pomocna obsługa recepcji",
+              "count": 6,
+              "citations": [
+                {
+                  "text": "Polecam bardzo cudowna panią dr Justynę Milewska z Kliniki Ambroziak. Uporała się z moim rosacea z którym walczyłam od lat. Odważyłam się tez u pani dr Justyny skorzystać z dobroci medycyny estetyczne...",
+                  "date": "2025-12-10",
+                  "author": "Anna P.",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT205ak5rbHdWSEpOYjFoRU9GOTNjM054Tm5OUmFVRRAB!2m1!1s0x0:0xeefb1752406d42d2!3m1!1s2@1:CAIQACodChtycF9oOm9jNklwVHJNb1hEOF93c3NxNnNRaUE%7C0dDQerlXrgc%7C?hl=pl"
+                },
+                {
+                  "text": "I visited last week due to my varicose veins in my leg. The reception team made me and my wife very welcome and comfortable. After filling out a few forms, a very polite lady approached me and stated ...",
+                  "date": "2025-11-30",
+                  "author": "K W",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT21JdGEwMHhTakZEZVRocFVuWnpWMVpJUkVZeVRYYxAB!2m1!1s0x0:0xeefb1752406d42d2!3m1!1s2@1:CAIQACodChtycF9oOmIta00xSjFDeThpUnZzV1ZIREYyTXc%7C0dA9lO-3QZP%7C?hl=pl"
+                },
+                {
+                  "text": "Chciałabym serdecznie polecić Klinikę Ambroziak. Lekarze pracują z ogromną precyzją i dbałością o komfort pacjenta, Panie kosmetolog, asystujące przy zabiegach są zawsze bardzo uprzejme, pomocne i świ...",
+                  "date": "2025-11-13",
+                  "author": "Aneta Panek",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT21reWVFSjBWa2gwVm1KRVVURllVazVNWkRWSlptYxAB!2m1!1s0x0:0xeefb1752406d42d2!3m1!1s2@1:CAIQACodChtycF9oOmkyeEJ0Vkh0VmJEUTFYUk5MZDVJZmc%7C0d4_hfDyvjO%7C?hl=pl"
+                }
+              ]
+            },
+            {
+              "insight": "Doskonała komunikacja i opieka w razie powikłań",
+              "count": 1,
+              "citations": [
+                {
+                  "text": "Z pełnym przekonaniem mogę polecić Klinikę Ambroziak. Byłem pacjentem, który akurat miał mniej szczęścia i zakwalifikował się do grona osób z powikłaniami po zabiegu – co jednak najważniejsze, komplik...",
+                  "date": "2025-10-28",
+                  "author": "Adam Beyrowski",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT25jeWEydGtOMlIyWjFCSWVtTTVOR3Q0UWpkNlNVRRAB!2m1!1s0x0:0xeefb1752406d42d2!3m1!1s2@1:CAIQACodChtycF9oOncya2tkN2R2Z1BIemM5NGt4Qjd6SUE%7C0d-ClDjuVj3%7C?hl=pl"
+                }
+              ]
+            }
+          ],
+          "common_themes": [
+            "Komunikacja i empatia lekarzy",
+            "Jakość obsługi recepcji",
+            "Opieka i kontakt po zabiegu (w razie problemów)"
+          ],
+          "summary": "Komunikacja z placówką jest spolaryzowana. Z jednej strony, pacjenci masowo chwalą niezwykle uprzejmą i pomocną obsługę recepcji oraz empatyczne podejście lekarzy. Z drugiej strony, pojawiają się krytyczne skargi na całkowity brak kontaktu i ignorowanie pacjenta w przypadku wystąpienia problemów po zabiegu, co wskazuje na poważne luki w komunikacji pozabiegowej.",
+          "confidence": 0.83
+        }
+      }
+    ],
+    "metadata": {
+      "scraped_at": "2026-01-30T22:40:25.411374",
+      "sources_used": [
+        "website",
+        "google_maps",
+        "google_reviews_analysis",
+        "facebook",
+        "instagram",
+        "ai_categorization"
+      ],
+      "processing_time_ms": 193314,
+      "cost_usd": 0.012,
+      "errors": [],
+      "warnings": [],
+      "data_validation": {
+        "contacts_match": true,
+        "contacts_discrepancies": [],
+        "address_match": true,
+        "address_discrepancies": []
+      }
+    }
+  }
+}

@@ -5,6 +5,7 @@ Modułowy design - łatwy do rozszerzenia o nowe funkcje AI.
 
 import json
 import logging
+import time
 from typing import Any, Optional
 
 from ..config import Settings, get_settings
@@ -196,9 +197,86 @@ class VertexAIService:
             raise RuntimeError("Vertex AI not initialized")
         
         try:
+            def _agent_log(hypothesis_id: str, location: str, message: str, data: dict[str, Any]) -> None:
+                try:
+                    payload = {
+                        "sessionId": "debug-session",
+                        "runId": "pre-fix",
+                        "hypothesisId": hypothesis_id,
+                        "location": location,
+                        "message": message,
+                        "data": data,
+                        "timestamp": int(time.time() * 1000),
+                    }
+                    with open(
+                        r"c:\Users\kochn\.cursor\Medidesk\Leads_extraction\.cursor\debug.log",
+                        "a",
+                        encoding="utf-8",
+                    ) as log_file:
+                        log_file.write(json.dumps(payload, ensure_ascii=False) + "\n")
+                except Exception:
+                    pass
+
+            def _is_non_empty(value: Any) -> bool:
+                if value is None:
+                    return False
+                if isinstance(value, str):
+                    return value.strip() != ""
+                if isinstance(value, (list, dict, tuple, set)):
+                    return len(value) > 0
+                return True
+
+            query_keys = [
+                k for k in input_data.keys()
+                if isinstance(k, str) and "query" in k.lower()
+            ]
+            non_empty_fields = [
+                k for k, v in input_data.items()
+                if _is_non_empty(v)
+            ]
+            non_empty_non_query = [
+                k for k in non_empty_fields
+                if k not in query_keys and k != "_full_context"
+            ]
+            full_context_val = input_data.get("_full_context")
+            full_context_len = len(full_context_val) if isinstance(full_context_val, str) else 0
+
+            # region agent log
+            _agent_log(
+                "H1",
+                "vertex_ai.py:normalize_data:input_summary",
+                "Input summary for normalization",
+                {
+                    "keys_count": len(input_data.keys()),
+                    "query_keys": query_keys,
+                    "query_keys_has_top": any(
+                        isinstance(k, str) and "top" in k.lower() for k in query_keys
+                    ),
+                    "non_empty_fields_count": len(non_empty_fields),
+                    "non_empty_non_query_count": len(non_empty_non_query),
+                    "has_full_context": isinstance(full_context_val, str) and full_context_val.strip() != "",
+                    "full_context_len": full_context_len,
+                },
+            )
+            # endregion
+
             # Przygotuj prompt
             input_json = json.dumps(input_data, ensure_ascii=False, indent=2)
             prompt = NORMALIZATION_USER_PROMPT_TEMPLATE.format(input_data=input_json)
+
+            # region agent log
+            _agent_log(
+                "H2",
+                "vertex_ai.py:normalize_data:prompt_ready",
+                "Prompt prepared for AI",
+                {
+                    "input_json_len": len(input_json),
+                    "prompt_len": len(prompt),
+                    "has_full_context": isinstance(full_context_val, str) and full_context_val.strip() != "",
+                    "only_query_like": len(query_keys) > 0 and len(non_empty_non_query) == 0,
+                },
+            )
+            # endregion
             
             # Wywołaj model z retry
             max_retries = 2
@@ -280,6 +358,42 @@ class VertexAIService:
                     raise e  # Rzuć oryginalny błąd
             
             # Konwertuj na model
+            keyword = normalized_dict.get("company_keyword")
+            keyword_present = isinstance(keyword, str) and keyword.strip() != ""
+            keyword_words = len(keyword.strip().split()) if keyword_present else 0
+            generic_words = {
+                "medyczne",
+                "medyczny",
+                "medical",
+                "clinic",
+                "klinika",
+                "przychodnia",
+                "szpital",
+                "nzoz",
+                "spzoz",
+                "centrum",
+                "cm",
+            }
+            keyword_has_generic = False
+            if keyword_present:
+                keyword_has_generic = any(
+                    w.lower() in generic_words for w in keyword.strip().split()
+                )
+
+            # region agent log
+            _agent_log(
+                "H3",
+                "vertex_ai.py:normalize_data:ai_output_summary",
+                "AI output keyword summary",
+                {
+                    "company_keyword_present": keyword_present,
+                    "company_keyword_words": keyword_words,
+                    "company_keyword_has_generic": keyword_has_generic,
+                    "company_name_present": bool(normalized_dict.get("company_name")),
+                },
+            )
+            # endregion
+
             return NormalizedData(
                 first_name=normalized_dict.get("first_name"),
                 last_name=normalized_dict.get("last_name"),

@@ -1,0 +1,502 @@
+{
+  "company": {
+    "nip": "1131088680",
+    "regon": "012232735",
+    "krs": null,
+    "nazwa_pelna": "AWODENT Wojciech Radwański",
+    "nazwa_zwyczajowa": "Strona główna",
+    "adres_siedziby": {
+      "ulica": "ul. Łukasza Gołębiowskiego 2",
+      "kod": "01-504",
+      "miasto": "Warszawa",
+      "wojewodztwo": "MAZOWIECKIE"
+    },
+    "kategoryzacja_ai": {
+      "platnik_uslug": [
+        "Komercyjne"
+      ],
+      "specjalizacja": [
+        "Stomatologia",
+        "Medycyna Estetyczna",
+        "Diagnostyka"
+      ],
+      "wielospecjalistyczne": [],
+      "typ_wlasnosci": "Prywatny (Private)",
+      "kategoria_konta": null,
+      "branza": null,
+      "ai_confidence": 0.99,
+      "ai_reasoning": null
+    },
+    "social_media": {
+      "website": "https://awodent.com/",
+      "facebook": null,
+      "instagram": null,
+      "linkedin": null,
+      "tiktok": null,
+      "x": null
+    },
+    "activity_score": {
+      "total": 35,
+      "recommendation": "COLD",
+      "breakdown": {
+        "google_maps": 25,
+        "facebook": 0,
+        "instagram": 0,
+        "tiktok": 0,
+        "website": 5,
+        "network": 5
+      },
+      "signals": [
+        "Google Maps 5.0/5",
+        "Google 281 recenzji",
+        "SSL aktywny",
+        "Sieć 5 placówek"
+      ]
+    },
+    "placowki": [
+      {
+        "typ_adresu": "-None-",
+        "adres": {
+          "ulica": "ul. ul, Gołębiowskiego 2",
+          "kod": "01-504",
+          "miasto": "Warszawa",
+          "wojewodztwo": null
+        },
+        "kontakty": [
+          {
+            "typ": "telefon",
+            "wartosc": "+48 226 661 833",
+            "opis": null
+          }
+        ],
+        "godziny_otwarcia": null,
+        "coordinates": {
+          "lat": 52.2622776,
+          "lng": 20.9812407
+        },
+        "google_maps_place_id": "ChIJ8Qrif5LLHkcRa6vO6nqhqGM",
+        "google_rating": 5.0,
+        "google_reviews_count": 7,
+        "reviews_insights": {
+          "total_reviews_analyzed": 1,
+          "avg_rating": 5.0,
+          "top_complaints": [],
+          "top_praises": [
+            {
+              "insight": "Profesjonalna i bezbolesna obsługa medyczna",
+              "count": 1,
+              "citations": [
+                {
+                  "text": "Profesjonalnie i bezboleśnie. Gorąco polecam! Z pewnością tu wrócę.",
+                  "date": "2020-07-23",
+                  "author": "Emilee Kalina",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChZDSUhNMG9nS0VJQ0FnSUQ4MWY2ekJnEAE!2m1!1s0x0:0x63a8a17aeaceab6b!3m1!1s2@1:CIHM0ogKEICAgID81f6zBg%7CCgwIqpLn-AUQ8NvU0wM%7C?hl=pl"
+                }
+              ]
+            }
+          ],
+          "common_themes": [
+            "Profesjonalizm",
+            "Jakość usługi medycznej",
+            "Zadowolenie pacjenta"
+          ],
+          "summary": "Na podstawie dostarczonej recenzji nie można ocenić komunikacji placówki z pacjentami. Recenzja nie zawiera żadnych informacji na temat kontaktu telefonicznego, mailowego ani obsługi w recepcji.",
+          "confidence": 1.0
+        }
+      },
+      {
+        "typ_adresu": "-None-",
+        "adres": {
+          "ulica": "ul. Polnej Róży 6",
+          "kod": "02-798",
+          "miasto": "Warszawa",
+          "wojewodztwo": null
+        },
+        "kontakty": [
+          {
+            "typ": "telefon",
+            "wartosc": "+48 226 661 833",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 694 451 832",
+            "opis": "Google Maps"
+          }
+        ],
+        "godziny_otwarcia": "pią: 10:00 to 16:00; sob: ZAMknięte; nie: ZAMknięte; pon: 15:00 to 20:00; wto: 09:00 to 15:00; śro: 09:00 to 15:00; czw: 12:00 to 20:00",
+        "coordinates": {
+          "lat": 52.1282938,
+          "lng": 21.063721
+        },
+        "google_maps_place_id": "ChIJl8gLJJgtGUcRgzTqT5yjGFg",
+        "google_rating": 4.5,
+        "google_reviews_count": 99,
+        "reviews_insights": {
+          "total_reviews_analyzed": 46,
+          "avg_rating": 4.64,
+          "top_complaints": [
+            {
+              "insight": "Niedokładnie lub pośpiesznie wykonane zabiegi",
+              "count": 4,
+              "citations": [
+                {
+                  "text": "Jakiś czas się tu leczyłam i skorzystałam z wielu usług. Pewne rzeczy zrobione były dobrze, inne mniej dokładnie - wiem po konsultacji z innym dentystą. Raz musiałam reklamować źle wykonaną koronę, a ...",
+                  "date": "2024-09-07",
+                  "author": "Malinowy Chruśniak",
+                  "rating": 3,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChdDSUhNMG9nS0VJQ0FnSUNIdmNDVnV3RRAB!2m1!1s0x0:0x5818a39c4fea3483!3m1!1s2@1:CIHM0ogKEICAgICHvcCVuwE%7CCgwI-crztgYQ4K_kvwI%7C?hl=pl"
+                },
+                {
+                  "text": "Jestem zawiedziona poziomem wykonanej usługi w tym gabinecie. Byłam na zabiegu higienizacji (w pełnej kwocie, nie grupon) i została ona wykonana na odwal. W związku z dużym bóle chciałam dokończyć zab...",
+                  "date": "2024-01-28",
+                  "author": "Julia Sztreja",
+                  "rating": 1,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChdDSUhNMG9nS0VJQ0FnSUN0Mk5xRnBnRRAB!2m1!1s0x0:0x5818a39c4fea3483!3m1!1s2@1:CIHM0ogKEICAgICt2NqFpgE%7CCgwImbbarQYQqImIiQM%7C?hl=pl"
+                },
+                {
+                  "text": "Odradzam. Problem sprawia im dorobienie dziecku jedynki.\n1 podejscie w lutym- ząb dorobiony byl tak duży, ze wystawał dziecku z ust. Koszt uslugi 400 zl. Poprawka na koszt gabinetu czyli strata czasu....",
+                  "date": "2023-09-23",
+                  "author": "Paulina Moskwa",
+                  "rating": 1,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChZDSUhNMG9nS0VJQ0FnSURaeUxDYVFBEAE!2m1!1s0x0:0x5818a39c4fea3483!3m1!1s2@1:CIHM0ogKEICAgIDZyLCaQA%7CCgwIxJi6qAYQwNHc8gI%7C?hl=pl"
+                }
+              ]
+            },
+            {
+              "insight": "Proponowanie niepotrzebnego, kosztownego leczenia",
+              "count": 1,
+              "citations": [
+                {
+                  "text": "Na przeglądzie przy okazji higienizacji pani doktor znalazła 9(!) ubytków do zrobienia. Podliczyły mi to panie na 3 tyś. zł. Ciężko mi było uwierzyć że w ciągu roku mogło powstać aż tyle ubytków więc ...",
+                  "date": "2025-01-13",
+                  "author": "PAULINA KOSTRZEWSKA",
+                  "rating": 1,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChZDSUhNMG9nS0VJQ0FnSUNfak55ME1REAE!2m1!1s0x0:0x5818a39c4fea3483!3m1!1s2@1:CIHM0ogKEICAgIC_jNy0MQ%7CCgwIkZmUvAYQ-JXU8wE%7C?hl=pl"
+                }
+              ]
+            }
+          ],
+          "top_praises": [
+            {
+              "insight": "Miła, profesjonalna i pomocna obsługa personelu",
+              "count": 11,
+              "citations": [
+                {
+                  "text": "Bardzo dobry gabinet stomatologiczny, kompetentni lekarze, jak i cały personel. Gabinet godny polecenia!",
+                  "date": "2025-07-06",
+                  "author": "Majkel_J",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2tOUFNqVmFUSGhGT1dkSGJETTRhemN0WjNGdVVtYxAB!2m1!1s0x0:0x5818a39c4fea3483!3m1!1s2@1:CAIQACodChtycF9oOkNPSjVaTHhFOWdHbDM4azctZ3FuUmc%7C0cPaXYXvRTO%7C?hl=pl"
+                },
+                {
+                  "text": "Jakiś czas się tu leczyłam i skorzystałam z wielu usług. Pewne rzeczy zrobione były dobrze, inne mniej dokładnie - wiem po konsultacji z innym dentystą. Raz musiałam reklamować źle wykonaną koronę, a ...",
+                  "date": "2024-09-07",
+                  "author": "Malinowy Chruśniak",
+                  "rating": 3,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChdDSUhNMG9nS0VJQ0FnSUNIdmNDVnV3RRAB!2m1!1s0x0:0x5818a39c4fea3483!3m1!1s2@1:CIHM0ogKEICAgICHvcCVuwE%7CCgwI-crztgYQ4K_kvwI%7C?hl=pl"
+                },
+                {
+                  "text": "Miła  profesjona  obsługa  chętnie tu wrócę  . Serdecznie polecam",
+                  "date": "2024-05-22",
+                  "author": "Marcin Kaniewski",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChdDSUhNMG9nS0VJQ0FnSURULU1QVTFnRRAB!2m1!1s0x0:0x5818a39c4fea3483!3m1!1s2@1:CIHM0ogKEICAgIDT-MPU1gE%7CCgwIg7-3sgYQwMrT2gI%7C?hl=pl"
+                }
+              ]
+            },
+            {
+              "insight": "Szybkie terminy wizyt i sprawny kontakt",
+              "count": 4,
+              "citations": [
+                {
+                  "text": "Jakiś czas się tu leczyłam i skorzystałam z wielu usług. Pewne rzeczy zrobione były dobrze, inne mniej dokładnie - wiem po konsultacji z innym dentystą. Raz musiałam reklamować źle wykonaną koronę, a ...",
+                  "date": "2024-09-07",
+                  "author": "Malinowy Chruśniak",
+                  "rating": 3,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChdDSUhNMG9nS0VJQ0FnSUNIdmNDVnV3RRAB!2m1!1s0x0:0x5818a39c4fea3483!3m1!1s2@1:CIHM0ogKEICAgICHvcCVuwE%7CCgwI-crztgYQ4K_kvwI%7C?hl=pl"
+                },
+                {
+                  "text": "EURODENT2000 to zdecydowanie najlepszy wybór jeśli chodzi o dentystę na Ursynowie. Błyskawiczny kontakt i bardzo szybkie terminy.",
+                  "date": "2023-11-16",
+                  "author": "Katarzyna Rosicka",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChdDSUhNMG9nS0VJQ0FnSUNsdXZ1enF3RRAB!2m1!1s0x0:0x5818a39c4fea3483!3m1!1s2@1:CIHM0ogKEICAgICluvuzqwE%7CCgsIitzZqgYQwPDbZw%7C?hl=pl"
+                },
+                {
+                  "text": "Potrzebowałem pilnie pomocy stomatologicznej - wizyta nazajutrz wieczorem, pełny profesjonalizm, sympatyczna Pani Doktor, ząbek po leczeniu śliczny  co szczególnie  ważne  bo jest to jedynka. Bardzo d...",
+                  "date": "2023-08-05",
+                  "author": "Jarosław Kusz",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChZDSUhNMG9nS0VJQ0FnSUNwNGRyd01BEAE!2m1!1s0x0:0x5818a39c4fea3483!3m1!1s2@1:CIHM0ogKEICAgICp4drwMA%7CCgwIr7S4pgYQkMq2nQM%7C?hl=pl"
+                }
+              ]
+            },
+            {
+              "insight": "Dokładne wyjaśnianie planu leczenia przez lekarzy",
+              "count": 3,
+              "citations": [
+                {
+                  "text": "Pani Karolina była moją dentystką podczas robienia implantów. Bardzo miła i cierpliwa osoba. Wyjaśniła mi cały proces w prosty sposób i odpowiedziała na wszystkie moje pytania. Zrobiła wszystko, żebym...",
+                  "date": "2023-08-25",
+                  "author": "Maciej „Szyenk” Ryłko",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChdDSUhNMG9nS0VJQ0FnSURweGJmSC1RRRAB!2m1!1s0x0:0x5818a39c4fea3483!3m1!1s2@1:CIHM0ogKEICAgIDpxbfH-QE%7CCgwIiayjpwYQsJHFiQI%7C?hl=pl"
+                },
+                {
+                  "text": "Bardzo miło wspominam wizytę u pani Karoliny Toborowskiej w EURODENT2000. To bardzo miła i doświadczona dentystka, która świetnie wyjaśniła mi, jak wygląda wykonanie licówek. Wszystko poszło sprawnie ...",
+                  "date": "2023-05-12",
+                  "author": "Marcin Buraczewski",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChZDSUhNMG9nS0VJQ0FnSUN4M0pTZUtREAE!2m1!1s0x0:0x5818a39c4fea3483!3m1!1s2@1:CIHM0ogKEICAgICx3JSeKQ%7CCgwI36P6ogYQ4PG48AI%7C?hl=pl"
+                },
+                {
+                  "text": "EURODENT2000, który niedawno odwiedziłam, zasługuje na moją szczerą rekomendację. Polecam go z całego serca i z czystym sumieniem każdemu, kto potrzebuje profesjonalnego leczenia jamy ustnej.\n\nJuż od ...",
+                  "date": "2023-04-06",
+                  "author": "Violetta Miniszewska",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChZDSUhNMG9nS0VJQ0FnSUNSaFpHMmJ3EAE!2m1!1s0x0:0x5818a39c4fea3483!3m1!1s2@1:CIHM0ogKEICAgICRhZG2bw%7CCgwIq5u6oQYQ2L2CwQE%7C?hl=pl"
+                }
+              ]
+            }
+          ],
+          "common_themes": [
+            "Profesjonalizm i przyjazna atmosfera",
+            "Sprzeczne opinie o jakości i uczciwości leczenia",
+            "Łatwość umówienia wizyty i dostępność terminów"
+          ],
+          "summary": "Komunikacja z recepcją i umawianie wizyt są oceniane bardzo pozytywnie, pacjenci chwalą miłą obsługę i szybkie terminy. Brakuje informacji o kontakcie telefonicznym czy mailowym, jednak pojawiają się skrajnie negatywne opinie dotyczące komunikacji z niektórymi lekarzami, w tym zarzuty o nieuczciwe plany leczenia.",
+          "confidence": 1.0
+        }
+      },
+      {
+        "typ_adresu": "-None-",
+        "adres": {
+          "ulica": "ul. Grzybowska 85",
+          "kod": "00-844",
+          "miasto": "Warszawa",
+          "wojewodztwo": null
+        },
+        "kontakty": [
+          {
+            "typ": "telefon",
+            "wartosc": "+48 226 661 833",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 226 603 800",
+            "opis": "Google Maps"
+          }
+        ],
+        "godziny_otwarcia": "pią: 08:00 to 21:00; sob: 08:00 to 15:00; nie: ZAMknięte; pon: 08:00 to 21:00; wto: 08:00 to 21:00; śro: 08:00 to 21:00; czw: 08:00 to 21:00",
+        "coordinates": {
+          "lat": 52.2325938,
+          "lng": 20.9789667
+        },
+        "google_maps_place_id": "ChIJjxtgZiLNHkcRs1dJ4G8vTdI",
+        "google_rating": 4.3,
+        "google_reviews_count": 78,
+        "reviews_insights": null
+      },
+      {
+        "typ_adresu": "-None-",
+        "adres": {
+          "ulica": "ul. Ludwika Waryńskiego 9",
+          "kod": null,
+          "miasto": "Warszawa",
+          "wojewodztwo": null
+        },
+        "kontakty": [
+          {
+            "typ": "telefon",
+            "wartosc": "+48 226 661 833",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 226 215 004",
+            "opis": "Google Maps"
+          }
+        ],
+        "godziny_otwarcia": "pią: 09:00 to 19:00; sob: ZAMknięte; nie: ZAMknięte; pon: 09:00 to 19:00; wto: 09:00 to 19:00; śro: 09:00 to 19:00; czw: 09:00 to 19:00",
+        "coordinates": {
+          "lat": 52.2209207,
+          "lng": 21.0150947
+        },
+        "google_maps_place_id": "ChIJ_bHBNu_MHkcRt9KZhjDwQ_c",
+        "google_rating": 4.0,
+        "google_reviews_count": 49,
+        "reviews_insights": null
+      },
+      {
+        "typ_adresu": "-None-",
+        "adres": {
+          "ulica": "ul. Łukasza Gołębiowskiego 2",
+          "kod": "01-504",
+          "miasto": "Warszawa",
+          "wojewodztwo": null
+        },
+        "kontakty": [
+          {
+            "typ": "telefon",
+            "wartosc": "+48 226 661 833",
+            "opis": null
+          }
+        ],
+        "godziny_otwarcia": "pią: 09:00 to 15:30; sob: ZAMknięte; nie: ZAMknięte; pon: 09:00 to 20:00; wto: 09:00 to 20:00; śro: 09:00 to 20:00; czw: 09:00 to 20:00",
+        "coordinates": {
+          "lat": 52.2622826,
+          "lng": 20.9812277
+        },
+        "google_maps_place_id": "ChIJN0ZogY3LHkcR7l4AEw8he_c",
+        "google_rating": 4.7,
+        "google_reviews_count": 48,
+        "reviews_insights": {
+          "total_reviews_analyzed": 31,
+          "avg_rating": 4.666666666666667,
+          "top_complaints": [
+            {
+              "insight": "Brak pomocy telefonicznej w nagłym przypadku.",
+              "count": 1,
+              "citations": [
+                {
+                  "text": "Bardzo nie polecam tego zakładu. Zero podejścia do pacjenta. Kiedy dzwoniłam w awaryjnej sytuacji, mimo że miałam kilkakrotnie zadzwonić zamiast zadbać o pacjenta usłyszałam dzwoniąc 3 raz \"no to trud...",
+                  "date": "2024-10-24",
+                  "author": "Joanna Zimmermann (JZ)",
+                  "rating": 1,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChdDSUhNMG9nS0VJQ0FnSURYNU1ldWxRRRAB!2m1!1s0x0:0xf77b210f13005eee!3m1!1s2@1:CIHM0ogKEICAgIDX5MeulQE%7CCgsIqZLpuAYQ6KijRA%7C?hl=pl"
+                }
+              ]
+            },
+            {
+              "insight": "Lekceważąca komunikacja lekarza podczas wizyty.",
+              "count": 1,
+              "citations": [
+                {
+                  "text": "Zamknąłem oczy na to, że musiałem czekać ponad 15 min od umówionej godziny. Zamknąłem ich i na to, że pani lekarz sprawdzała mnie bez maseczki. Ale kiedy jeszcze zaczęła gadać z kimś i mi na te dziąsł...",
+                  "date": "2022-09-22",
+                  "author": "Cyryl Łukieniuk",
+                  "rating": 1,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChZDSUhNMG9nS0VJQ0FnSUNlNDRMTVN3EAE!2m1!1s0x0:0xf77b210f13005eee!3m1!1s2@1:CIHM0ogKEICAgICe44LMSw%7CCgsI5pKymQYQkKnFeA%7C?hl=pl"
+                }
+              ]
+            }
+          ],
+          "top_praises": [
+            {
+              "insight": "Skuteczna pomoc w nagłych, awaryjnych przypadkach.",
+              "count": 3,
+              "citations": [
+                {
+                  "text": "Trafiłam z polecenia i już zostanę. Cudowne miejsce, wspaniali ludzie i 100% profesjonalizmu. Dzięki Doktorowi Radwańskiemu mam piękne zęby i mogę się uśmiechać bez ograniczeń :) można tez liczyć na p...",
+                  "date": "2023-11-21",
+                  "author": "Kinga Zajdel",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChdDSUhNMG9nS0VJQ0FnSUNsaWZHMnNBRRAB!2m1!1s0x0:0xf77b210f13005eee!3m1!1s2@1:CIHM0ogKEICAgIClifG2sAE%7CCgsItefxqgYQ-PXERw%7C?hl=pl"
+                },
+                {
+                  "text": "Polecam! Fachowcy jakich mało . Wyrywałem dolna szóstke niestety nie poszło jak potrzeba i zostały 2 korzenie musiałem szukac chirurga żeby dokończyć \"robote\". W paru miejscach Mi odmowili i powiedzie...",
+                  "date": "2022-05-11",
+                  "author": "Kamil Maciejewski",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChdDSUhNMG9nS0VJQ0FnSUQycW9TTnVBRRAB!2m1!1s0x0:0xf77b210f13005eee!3m1!1s2@1:CIHM0ogKEICAgID2qoSNuAE%7CCgwIlP3vkwYQ0OvhhwI%7C?hl=pl"
+                },
+                {
+                  "text": "Korzystam z usług  Awodent ponad 8 lat.  Leczy mnie Pan Wojciech, powiem Tak nie ma możliwości żeby \"grzebać \" mógł kto inny w moich zębach.\nPełen profesjonalizm, nigdy z pilnym przypadkiem jak dziś z...",
+                  "date": "2018-09-18",
+                  "author": "Łukasz Fabisiak",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChZDSUhNMG9nS0VJQ0FnSURndDRQMFh3EAE!2m1!1s0x0:0xf77b210f13005eee!3m1!1s2@1:CIHM0ogKEICAgIDgt4P0Xw%7CCgsIkLGE3QUQoPOJRw%7C?hl=pl"
+                }
+              ]
+            },
+            {
+              "insight": "Profesjonalna i przyjazna obsługa w recepcji.",
+              "count": 3,
+              "citations": [
+                {
+                  "text": "Super miejsce, miła sympatyczna obsługa z humorem, po wyrwaniu dolnej 8ki zero powikłań. Tylko ból, no ale tego się nie uniknie. Żadnego puchnięcia. Cenowo tez lepiej niż za górę. A jeszcze byłem taki...",
+                  "date": "2023-05-20",
+                  "author": "Gamer Games",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChZDSUhNMG9nS0VJQ0FnSUN4aWZHY2N3EAE!2m1!1s0x0:0xf77b210f13005eee!3m1!1s2@1:CIHM0ogKEICAgICxifGccw%7CCgwIxNOiowYQ8Mjd4wI%7C?hl=pl"
+                },
+                {
+                  "text": "My experience at this clinic has been very good! Dr. Radwanski has been very helpful with all my dental implant care, which is 10 of them.   Both of the dentists at Awodent are very good and detailed!...",
+                  "date": "2019-01-10",
+                  "author": "Chester Tepiak",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChdDSUhNMG9nS0VJQ0FnSURJaWY2QW9BRRAB!2m1!1s0x0:0xf77b210f13005eee!3m1!1s2@1:CIHM0ogKEICAgIDIif6AoAE%7CCgwI1Izc4QUQvNDd_QE%7C?hl=pl"
+                },
+                {
+                  "text": "This clinic is great, clean, modern, and has high technology.  Dr. Radwanski has a very friendly demeanor and knows his profession very well! I am extremely satisfied! All the staff that works there i...",
+                  "date": "2019-01-09",
+                  "author": "Sue Tepiak",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChZDSUhNMG9nS0VJQ0FnSURJc2R5ZkRREAE!2m1!1s0x0:0xf77b210f13005eee!3m1!1s2@1:CIHM0ogKEICAgIDIsdyfDQ%7CCgwI1-PX4QUQltK2hwM%7C?hl=pl"
+                }
+              ]
+            },
+            {
+              "insight": "Dostępność i łatwość umówienia wizyty telefonicznie.",
+              "count": 3,
+              "citations": [
+                {
+                  "text": "Trafiłam z polecenia i już zostanę. Cudowne miejsce, wspaniali ludzie i 100% profesjonalizmu. Dzięki Doktorowi Radwańskiemu mam piękne zęby i mogę się uśmiechać bez ograniczeń :) można tez liczyć na p...",
+                  "date": "2023-11-21",
+                  "author": "Kinga Zajdel",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChdDSUhNMG9nS0VJQ0FnSUNsaWZHMnNBRRAB!2m1!1s0x0:0xf77b210f13005eee!3m1!1s2@1:CIHM0ogKEICAgIClifG2sAE%7CCgsItefxqgYQ-PXERw%7C?hl=pl"
+                },
+                {
+                  "text": "Polecam! Fachowcy jakich mało . Wyrywałem dolna szóstke niestety nie poszło jak potrzeba i zostały 2 korzenie musiałem szukac chirurga żeby dokończyć \"robote\". W paru miejscach Mi odmowili i powiedzie...",
+                  "date": "2022-05-11",
+                  "author": "Kamil Maciejewski",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChdDSUhNMG9nS0VJQ0FnSUQycW9TTnVBRRAB!2m1!1s0x0:0xf77b210f13005eee!3m1!1s2@1:CIHM0ogKEICAgID2qoSNuAE%7CCgwIlP3vkwYQ0OvhhwI%7C?hl=pl"
+                },
+                {
+                  "text": "Doskonały specjalista stomatolog. Gorąco polecam. Szybko, profesjonalnie, świetne wyczucie problemu. Bardzo kontaktowy.  Dla stałych klientów dostępny od razu. Higienistka stomatologiczna Pani Danusia...",
+                  "date": "2018-12-17",
+                  "author": "u u",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChZDSUhNMG9nS0VJQ0FnSURJMEp2cENREAE!2m1!1s0x0:0xf77b210f13005eee!3m1!1s2@1:CIHM0ogKEICAgIDI0JvpCQ%7CCgwIu6ff4AUQiIeriwI%7C?hl=pl"
+                }
+              ]
+            }
+          ],
+          "common_themes": [
+            "Wysoki profesjonalizm i fachowość personelu medycznego",
+            "Przyjazna atmosfera i indywidualne podejście do pacjenta",
+            "Skuteczna pomoc pacjentom z lękiem przed dentystą"
+          ],
+          "summary": "Komunikacja z placówką jest oceniana dwojako, choć z przewagą opinii pozytywnych. Pacjenci chwalą możliwość uzyskania pomocy w nagłych przypadkach oraz profesjonalną i przyjazną obsługę recepcji. Pojedyncze, ale bardzo krytyczne głosy wskazują jednak na problemy z uzyskaniem pomocy telefonicznej w sytuacji awaryjnej, co sugeruje niespójność w standardach obsługi.",
+          "confidence": 0.71
+        }
+      }
+    ],
+    "metadata": {
+      "scraped_at": "2026-01-30T21:07:41.367772",
+      "sources_used": [
+        "nip_lookup",
+        "gus",
+        "website",
+        "google_maps",
+        "google_reviews_analysis",
+        "ai_categorization"
+      ],
+      "processing_time_ms": 259124,
+      "cost_usd": 0.02,
+      "errors": [],
+      "warnings": [],
+      "data_validation": {
+        "contacts_match": true,
+        "contacts_discrepancies": [],
+        "address_match": true,
+        "address_discrepancies": []
+      }
+    }
+  }
+}

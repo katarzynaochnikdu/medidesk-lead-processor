@@ -1,0 +1,194 @@
+{
+  "company": {
+    "nip": null,
+    "nazwa_pelna": "Klinika OTCO",
+    "nazwa_zwyczajowa": "Klinika OT.CO → Klinika medycyny estetycznej w Warszawie",
+    "kategoryzacja_ai": {
+      "platnik_uslug": [],
+      "specjalizacja": [],
+      "wielospecjalistyczne": [],
+      "typ_wlasnosci": null,
+      "kategoria_konta": null,
+      "branza": null,
+      "ai_confidence": 0.0,
+      "ai_reasoning": "No JSON in response"
+    },
+    "social_media": {
+      "website": "https://klinikaotco.pl",
+      "facebook": "https://www.facebook.com/ot.co.clinic/",
+      "instagram": "https://www.instagram.com/otcoclinic/",
+      "linkedin": null,
+      "tiktok": "https://www.tiktok.com/@klinikaotco?",
+      "x": null
+    },
+    "activity_score": {
+      "total": 70,
+      "recommendation": "HOT_LEAD",
+      "breakdown": {
+        "google_maps": 25,
+        "facebook": 10,
+        "instagram": 20,
+        "tiktok": 5,
+        "website": 5,
+        "network": 5
+      },
+      "signals": [
+        "Google Maps 4.7/5",
+        "Google 900 recenzji",
+        "Facebook 10.4K followers",
+        "Instagram 15.8K followers",
+        "IG aktywny < 14 dni",
+        "TikTok 49.0K",
+        "SSL aktywny",
+        "Sieć 5 placówek"
+      ]
+    },
+    "placowki": [
+      {
+        "typ_adresu": "-None-",
+        "adres": {
+          "ulica": "Zgrupowania AK \"Żmija\" 12",
+          "kod": "01-864",
+          "miasto": "Warszawa",
+          "wojewodztwo": null
+        },
+        "kontakty": [
+          {
+            "typ": "telefon",
+            "wartosc": "+48 22 123 03 33",
+            "opis": "Google Maps"
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48221230333",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48798762",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+485213873364",
+            "opis": null
+          },
+          {
+            "typ": "email",
+            "wartosc": "kontakt@klinikaotco.pl",
+            "opis": null
+          },
+          {
+            "typ": "email",
+            "wartosc": "pr@klinikaotco.pl",
+            "opis": null
+          },
+          {
+            "typ": "email",
+            "wartosc": "media@klinikaotco.pl",
+            "opis": null
+          }
+        ],
+        "godziny_otwarcia": "pią: 08:00 to 20:00; sob: ZAMknięte; nie: ZAMknięte",
+        "google_maps_place_id": "ChIJ16Q70aHLHkcRXzA5ePgMaZ8",
+        "google_rating": 4.3,
+        "google_reviews_count": 147
+      },
+      {
+        "typ_adresu": "-None-",
+        "adres": {
+          "ulica": "Zgrupowania AK \"Żmija\" 12",
+          "kod": "01-864",
+          "miasto": "Warszawa",
+          "wojewodztwo": null
+        },
+        "kontakty": [
+          {
+            "typ": "telefon",
+            "wartosc": "+48 22 123 03 33",
+            "opis": "Google Maps"
+          }
+        ],
+        "godziny_otwarcia": "pią: 08:00 to 20:00; sob: ZAMknięte; nie: ZAMknięte",
+        "google_maps_place_id": "ChIJQyrma4fLHkcRELSdr2Z2D14",
+        "google_rating": null,
+        "google_reviews_count": null
+      },
+      {
+        "typ_adresu": "-None-",
+        "adres": {
+          "ulica": "Zgrupowania AK \"Żmija\" 12",
+          "kod": "01-876",
+          "miasto": "Warszawa",
+          "wojewodztwo": null
+        },
+        "kontakty": [
+          {
+            "typ": "telefon",
+            "wartosc": "+48 22 123 03 33",
+            "opis": "Google Maps"
+          }
+        ],
+        "godziny_otwarcia": "pią: 10:00 to 20:00; sob: ZAMknięte; nie: ZAMknięte",
+        "google_maps_place_id": "ChIJP3PCNh81GUcREWkEvM9u0E8",
+        "google_rating": 3.8,
+        "google_reviews_count": 10
+      },
+      {
+        "typ_adresu": "-None-",
+        "adres": {
+          "ulica": "Bartycka 24B/U1",
+          "kod": "00-716",
+          "miasto": "Warszawa",
+          "wojewodztwo": null
+        },
+        "kontakty": [
+          {
+            "typ": "telefon",
+            "wartosc": "+48 22 123 03 33",
+            "opis": "Google Maps"
+          }
+        ],
+        "godziny_otwarcia": "pią: 09:00 to 21:00; sob: 09:00 to 16:00; nie: ZAMknięte",
+        "google_maps_place_id": "ChIJi03vuWHNHkcRw8QPwLYMYqM",
+        "google_rating": 4.6,
+        "google_reviews_count": 731
+      },
+      {
+        "typ_adresu": "-None-",
+        "adres": {
+          "ulica": "Zgrupowania AK \"Żmija\" 12",
+          "kod": "01-876",
+          "miasto": "Warszawa",
+          "wojewodztwo": null
+        },
+        "kontakty": [
+          {
+            "typ": "telefon",
+            "wartosc": "+48 22 123 03 33",
+            "opis": "Google Maps"
+          }
+        ],
+        "godziny_otwarcia": "pią: 09:00 to 20:00; sob: ZAMknięte; nie: ZAMknięte",
+        "google_maps_place_id": "ChIJvdh2F1A1GUcRWUKvImNDwFY",
+        "google_rating": 4.7,
+        "google_reviews_count": 12
+      }
+    ],
+    "metadata": {
+      "scraped_at": "2026-01-30T15:31:08.616943",
+      "sources_used": [
+        "website",
+        "google_maps",
+        "facebook",
+        "instagram",
+        "tiktok",
+        "ai_categorization"
+      ],
+      "processing_time_ms": 97673,
+      "cost_usd": 0.015,
+      "errors": [],
+      "warnings": []
+    }
+  }
+}

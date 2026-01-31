@@ -1,0 +1,6 @@
+company,found,nip,nip_formatted,strategy,confidence,alternatives_count,alternatives_json,time_ms,cost_usd
+Centrum Rehabilitacji I Kardiologii Solutaris Prokopczuk Spółka Jawna,True,7492088894,749-208-88-94,SearchStrategy.GOOGLE_SEARCH,0.895,0,,120545,0.015
+Max Hemp Spółka Z Ograniczoną Odpowiedzialnością,True,9141566659,914-156-66-59,SearchStrategy.GOOGLE_SEARCH,0.875,1,"[{'nip': '6421004079', 'nip_formatted': '642-100-40-79', 'company_name_found': 'Max Hemp Spółka Z Ograniczoną Odpowiedzialnością', 'confidence': 0.875}]",105890,0.015
+Nowoczesne Centrum Stomatologii Sypień Spółka z ograniczoną odpowiedzialnością,True,5472100071,547-210-00-71,SearchStrategy.GOOGLE_SEARCH,0.8999999999999999,0,,109170,0.015
+Dębowa 105 Stomatologia I Medycyna Estetyczna Spółka Z Ograniczoną Odpowiedzialnością,True,6342886820,634-288-68-20,SearchStrategy.GOOGLE_SEARCH,0.8999999999999999,1,"[{'nip': '6342945468', 'nip_formatted': '634-294-54-68', 'company_name_found': 'Dębowa 105 Stomatologia I Medycyna Estetyczna Spółka ...', 'confidence': 0.875}]",97767,0.015
+Klinika Witaminowa,True,5371131561,537-113-15-61,SearchStrategy.GOOGLE_SEARCH,0.925,1,"[{'nip': '8821754939', 'nip_formatted': '882-175-49-39', 'company_name_found': 'Polityka Prywatności | Klinika Witaminowa | Dzierżoniów', 'confidence': 0.875}]",73864,0.015

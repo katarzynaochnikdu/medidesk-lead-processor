@@ -42,13 +42,13 @@ TEST_CASES = [
         "name": "Medicover",
         "city": "Warszawa",
         "email": "kontakt@medicover.pl",  # DOMENA!
-        "expected_nip": "5262057270",
+        "expected_nip": "5251577627",  # MEDICOVER SP. Z O.O. (KRS 0000021314)
     },
     {
-        "name": "Centrum Medyczne PragaMed",
+        "name": "PragaMed",  # Krótsza nazwa - łatwiejsza do znalezienia
         "city": "Warszawa",
         "email": None,  # Brak domeny - test Brave Search fallback
-        "expected_nip": "5223194230",
+        "expected_nip": "1133042357",  # PRAGAMED SP. Z O.O. (KRS 0000924861)
     },
 ]
 

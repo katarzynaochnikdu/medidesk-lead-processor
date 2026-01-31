@@ -1,0 +1,278 @@
+{
+  "company": {
+    "nip": "5882422041",
+    "regon": "365708118",
+    "krs": null,
+    "nazwa_pelna": "MEDYCZNA GDYNIA 3CITYMED SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ",
+    "nazwa_zwyczajowa": "Przychodnia Medyczna Gdynia",
+    "adres_siedziby": {
+      "ulica": "ul. Władysława IV 59",
+      "kod": "81-384",
+      "miasto": "Gdynia",
+      "wojewodztwo": "POMORSKIE"
+    },
+    "kategoryzacja_ai": {
+      "platnik_uslug": [],
+      "specjalizacja": [],
+      "wielospecjalistyczne": [],
+      "typ_wlasnosci": null,
+      "kategoria_konta": null,
+      "branza": null,
+      "ai_confidence": 0.0,
+      "ai_reasoning": "No JSON in response: {\"platnik_uslug\":[\"Komercyjne\"],\"specjalizacja\":[\"Medycyna Estetyczna\",\"Rehabilitacja\",\"Diagnostyka\"],\"wielospecjalistyczne\":[\"dermatologia\",\"ginekologia\",\"kardiologia\",\"ortopedia\",\"laryngologia\"],\"ty"
+    },
+    "social_media": {
+      "website": "https://www.medycznagdynia.pl/",
+      "facebook": "https://www.facebook.com/medycznagdynia",
+      "instagram": "https://www.instagram.com/medycznagdyniaestetica/",
+      "linkedin": null,
+      "tiktok": null,
+      "x": null
+    },
+    "activity_score": {
+      "total": 25,
+      "recommendation": "COLD",
+      "breakdown": {
+        "google_maps": 10,
+        "facebook": 0,
+        "instagram": 10,
+        "tiktok": 0,
+        "website": 5
+      },
+      "signals": [
+        "Google 96 recenzji",
+        "Instagram 522 followers",
+        "SSL aktywny"
+      ]
+    },
+    "placowki": [
+      {
+        "typ_adresu": "-None-",
+        "adres": {
+          "ulica": "ul. Władysława IV 59",
+          "kod": "81-384",
+          "miasto": "Gdynia",
+          "wojewodztwo": null
+        },
+        "kontakty": [
+          {
+            "typ": "telefon",
+            "wartosc": "+48 585 004 687",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 585 004 688",
+            "opis": null
+          },
+          {
+            "typ": "email",
+            "wartosc": "wizyta@medycznagdynia.pl",
+            "opis": null
+          }
+        ],
+        "godziny_otwarcia": "pią: 08:00 to 20:00; sob: 09:00 to 14:00; nie: 09:00 to 14:00; pon: 08:00 to 20:00; wto: 08:00 to 20:00; śro: 08:00 to 20:00; czw: 08:00 to 20:00",
+        "coordinates": {
+          "lat": 54.509963,
+          "lng": 18.5375219
+        },
+        "google_maps_place_id": "ChIJqZ5GkH6n_UYR10Ja4toaclg",
+        "google_rating": 3.9,
+        "google_reviews_count": 96,
+        "reviews_insights": {
+          "total_reviews_analyzed": 45,
+          "avg_rating": 3.82,
+          "top_complaints": [
+            {
+              "insight": "Duże opóźnienia i zła organizacja wizyt",
+              "count": 6,
+              "citations": [
+                {
+                  "text": "Przybyliśmy na wizytę o 14:30. Lekarz demonstracyjnie zaprosił inną pacjentkę na naszych oczach. O 14:50 podeszliśmy do recepcji, aby zapytać o powód. Dziewczyna tylko mrugała oczami i twierdziła, że ...",
+                  "date": "2026-01-08",
+                  "author": "Anna Chudiakowa",
+                  "rating": 1,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2prME5FNHRWekJITVZSRlZ6ZGhkWGN5UkdZM2JXYxAB!2m1!1s0x0:0x58721adae25a42d7!3m1!1s2@1:CAIQACodChtycF9oOjk0NE4tVzBHMVRFVzdhdXcyRGY3bWc%7C0dMvojVz3TD%7C?hl=pl"
+                },
+                {
+                  "text": "kobiety na  recepcji po prostu strach — jeszcze w darmowej przychodni można to zrozumieć, ale to przecież prywatna klinika. Więcej tu nie przyjdę!\nByłam umówiona na konkretną godzinę do lekarza, a prz...",
+                  "date": "2025-12-16",
+                  "author": "Suzanna Miers",
+                  "rating": 2,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2kxeWJYQlJOVE40U1d0VmNqRkRZamRtUTFGbGNsRRAB!2m1!1s0x0:0x58721adae25a42d7!3m1!1s2@1:CAIQACodChtycF9oOi1ybXBRNTN4SWtVcjFDYjdmQ1FlclE%7C0dFOV7Zme2N%7C?hl=pl"
+                },
+                {
+                  "text": "Zapłaciłam 290 zł za siedzenie w poczekalni. Nie polecam. Godzina opóźnienia. Brak poszanowania czasu innych.",
+                  "date": "2025-02-24",
+                  "author": "xxnikola1234",
+                  "rating": 1,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChdDSUhNMG9nS0VJQ0FnTURnanFfWTdBRRAB!2m1!1s0x0:0x58721adae25a42d7!3m1!1s2@1:CIHM0ogKEICAgMDgjq_Y7AE%7CCgwI6PnyvQYQuOSbowE%7C?hl=pl"
+                }
+              ]
+            },
+            {
+              "insight": "Nieprofesjonalna i niepomocna obsługa w recepcji",
+              "count": 4,
+              "citations": [
+                {
+                  "text": "Przybyliśmy na wizytę o 14:30. Lekarz demonstracyjnie zaprosił inną pacjentkę na naszych oczach. O 14:50 podeszliśmy do recepcji, aby zapytać o powód. Dziewczyna tylko mrugała oczami i twierdziła, że ...",
+                  "date": "2026-01-08",
+                  "author": "Anna Chudiakowa",
+                  "rating": 1,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2prME5FNHRWekJITVZSRlZ6ZGhkWGN5UkdZM2JXYxAB!2m1!1s0x0:0x58721adae25a42d7!3m1!1s2@1:CAIQACodChtycF9oOjk0NE4tVzBHMVRFVzdhdXcyRGY3bWc%7C0dMvojVz3TD%7C?hl=pl"
+                },
+                {
+                  "text": "kobiety na  recepcji po prostu strach — jeszcze w darmowej przychodni można to zrozumieć, ale to przecież prywatna klinika. Więcej tu nie przyjdę!\nByłam umówiona na konkretną godzinę do lekarza, a prz...",
+                  "date": "2025-12-16",
+                  "author": "Suzanna Miers",
+                  "rating": 2,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2kxeWJYQlJOVE40U1d0VmNqRkRZamRtUTFGbGNsRRAB!2m1!1s0x0:0x58721adae25a42d7!3m1!1s2@1:CAIQACodChtycF9oOi1ybXBRNTN4SWtVcjFDYjdmQ1FlclE%7C0dFOV7Zme2N%7C?hl=pl"
+                },
+                {
+                  "text": "Lekarzom nie mogę nic zarzucić, jednak Pani blondynka z doklejanymi rzęsami w recepcji na Bema dnia 28 sierpnia po godzinie 16.00 była bardzo niemiła i co więcej nie przestrzega rodo. Głośno przeczyta...",
+                  "date": "2023-08-28",
+                  "author": "Daria Nadrowska",
+                  "rating": 1,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChdDSUhNMG9nS0VJQ0FnSURwODhUd3FBRRAB!2m1!1s0x0:0x58721adae25a42d7!3m1!1s2@1:CIHM0ogKEICAgIDp88TwqAE%7CCgsI24G0pwYQ2IaGLQ%7C?hl=pl"
+                }
+              ]
+            },
+            {
+              "insight": "Problemy z odwoływaniem i umawianiem wizyt",
+              "count": 3,
+              "citations": [
+                {
+                  "text": "odwołują wizyty bo wysłali sms - w 21 wieku nie umieją zadzwonić - człowiek jedzie 30 minut marnuje paliwo - szkoda czasu energii - nie poważne podejście - nie polecam",
+                  "date": "2025-11-24",
+                  "author": "Kornelia Jed",
+                  "rating": 1,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT25wbE9IazNOemM0ZGt4WlZWQlJSazFaTW1GYWVrRRAB!2m1!1s0x0:0x58721adae25a42d7!3m1!1s2@1:CAIQACodChtycF9oOnplOHk3Nzc4dkxZVVBRRk1ZMmFaekE%7C0d82tMlRJE8%7C?hl=pl"
+                },
+                {
+                  "text": "Zapisałam się na poniedziałek na pilne badania . W piątek (3 dni przed wizytą ) dostałam telefon , że jednak Pani doktor nie przyjmuje w poniedziałki i proponują inny termin ( oczywiście nieakceptowal...",
+                  "date": "2024-08-30",
+                  "author": "Judyta",
+                  "rating": 1,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChZDSUhNMG9nS0VJQ0FnSUQ3djdpOEVBEAE!2m1!1s0x0:0x58721adae25a42d7!3m1!1s2@1:CIHM0ogKEICAgID7v7i8EA%7CCgwI4uHGtgYQkNTNsAM%7C?hl=pl"
+                },
+                {
+                  "text": "Od ponad dwóch miesięcy, próbuję umówić się na wizytę do lekarza. Pani w recepcji powtarza tą samą regułkę, brak wolnych terminów, brak terminarza, proszę zadzwonić jutro itd itd. Zaproponowała, abym ...",
+                  "date": "2022-08-30",
+                  "author": "Dorota Deluga",
+                  "rating": 1,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChZDSUhNMG9nS0VJQ0FnSUR1bTUzQmF3EAE!2m1!1s0x0:0x58721adae25a42d7!3m1!1s2@1:CIHM0ogKEICAgIDum53Baw%7CCgsI3PS2mAYQiIThKQ%7C?hl=pl"
+                }
+              ]
+            }
+          ],
+          "top_praises": [
+            {
+              "insight": "Miła, pomocna i kompetentna obsługa recepcji",
+              "count": 10,
+              "citations": [
+                {
+                  "text": "Polecam tę prywatną przychodnię z całego serca! Od momentu wejścia czuć profesjonalizm i ciepłą atmosferę. Personel jest niesamowicie uprzejmy i pomocny, a lekarze poświęcają pacjentowi dużo czasu i u...",
+                  "date": "2025-12-09",
+                  "author": "Dawid Kurasiński",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT201VVZuZFpUV1psV0V0SmMwZ3dSa00zWTE5aVFrRRAB!2m1!1s0x0:0x58721adae25a42d7!3m1!1s2@1:CAIQACodChtycF9oOm5UVndZTWZlWEtJc0gwRkM3Y19iQkE%7C0dD05614nB-%7C?hl=pl"
+                },
+                {
+                  "text": "Bardzo polecam wizyta odbyła się bez opóźnień, podejście lekarza było bardzo profesjonalne. Panie na rejestracji przemiłe i uśmiechnięte. Na pewno wrócę.",
+                  "date": "2024-11-19",
+                  "author": "Zuzanna Zielińska",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChdDSUhNMG9nS0VJQ0FnSUQzaDlidHNRRRAB!2m1!1s0x0:0x58721adae25a42d7!3m1!1s2@1:CIHM0ogKEICAgID3h9btsQE%7CCgsI647yuQYQiLrTew%7C?hl=pl"
+                },
+                {
+                  "text": "Z całego serca polecam tę przychodnie - wszystkie oddziały.\nKażdy lekarz u którego miałam okazję być wykazał się ogromną wiedzą, empatią i bardzo dobrym podejściem do pacjenta.\nPersonel rejestracji go...",
+                  "date": "2024-11-19",
+                  "author": "Aniela Kołodziejczak",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChZDSUhNMG9nS0VJQ0FnSUQzaDRicmV3EAE!2m1!1s0x0:0x58721adae25a42d7!3m1!1s2@1:CIHM0ogKEICAgID3h4brew%7CCgwIp43yuQYQ8J7B8QI%7C?hl=pl"
+                }
+              ]
+            },
+            {
+              "insight": "Profesjonalni, empatyczni i zaangażowani lekarze",
+              "count": 15,
+              "citations": [
+                {
+                  "text": "kobiety na  recepcji po prostu strach — jeszcze w darmowej przychodni można to zrozumieć, ale to przecież prywatna klinika. Więcej tu nie przyjdę!\nByłam umówiona na konkretną godzinę do lekarza, a prz...",
+                  "date": "2025-12-16",
+                  "author": "Suzanna Miers",
+                  "rating": 2,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2kxeWJYQlJOVE40U1d0VmNqRkRZamRtUTFGbGNsRRAB!2m1!1s0x0:0x58721adae25a42d7!3m1!1s2@1:CAIQACodChtycF9oOi1ybXBRNTN4SWtVcjFDYjdmQ1FlclE%7C0dFOV7Zme2N%7C?hl=pl"
+                },
+                {
+                  "text": "Polecam tę prywatną przychodnię z całego serca! Od momentu wejścia czuć profesjonalizm i ciepłą atmosferę. Personel jest niesamowicie uprzejmy i pomocny, a lekarze poświęcają pacjentowi dużo czasu i u...",
+                  "date": "2025-12-09",
+                  "author": "Dawid Kurasiński",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT201VVZuZFpUV1psV0V0SmMwZ3dSa00zWTE5aVFrRRAB!2m1!1s0x0:0x58721adae25a42d7!3m1!1s2@1:CAIQACodChtycF9oOm5UVndZTWZlWEtJc0gwRkM3Y19iQkE%7C0dD05614nB-%7C?hl=pl"
+                },
+                {
+                  "text": "Neurolog, Pani Bogumiła Gulcz - profesjonalistka w każdym calu. Polecam.",
+                  "date": "2025-02-27",
+                  "author": "Mirosława Cuper",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChZDSUhNMG9nS0VJQ0FnTURnMjlTbkl3EAE!2m1!1s0x0:0x58721adae25a42d7!3m1!1s2@1:CIHM0ogKEICAgMDg29SnIw%7CCgwIpsiCvgYQ-P24zwM%7C?hl=pl"
+                }
+              ]
+            },
+            {
+              "insight": "Łatwy kontakt telefoniczny i sprawna rejestracja",
+              "count": 2,
+              "citations": [
+                {
+                  "text": "Świetna obsługa, bardzo miłe i pomocne osoby na recepcji, żadnego problemu z umawianiem się telefonicznie. Miły personel medyczny, wszystko można załatwić od ręki. Plus za parking przed budynkiem. Pol...",
+                  "date": "2023-07-03",
+                  "author": "Julia Rudnik",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChdDSUhNMG9nS0VJQ0FnSUNKX2FxZnZBRRAB!2m1!1s0x0:0x58721adae25a42d7!3m1!1s2@1:CIHM0ogKEICAgICJ_aqfvAE%7CCgwIn6CLpQYQkJ_0mwM%7C?hl=pl"
+                },
+                {
+                  "text": "Polecam przychodnie, punktualnie - nigdy nie czekalam w kolejce, zawsze można się dodzwonić bezproblemowo, w miarę szybkie terminy. Polecam laryngolog dr Klecha, która przyjeła mnie w sobotę, to duzy ...",
+                  "date": "2023-01-16",
+                  "author": "Alicja",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChZDSUhNMG9nS0VJQ0FnSURCaW9IcVRREAE!2m1!1s0x0:0x58721adae25a42d7!3m1!1s2@1:CIHM0ogKEICAgIDBioHqTQ%7CCgwIxICVngYQwO-ThwM%7C?hl=pl"
+                }
+              ]
+            }
+          ],
+          "common_themes": [
+            "Skrajnie spolaryzowana ocena obsługi w recepcji",
+            "Niespójność w punktualności i organizacji wizyt",
+            "Wysoka ocena kompetencji i empatii lekarzy"
+          ],
+          "summary": "Komunikacja z placówką jest skrajnie niespójna i stanowi główny punkt zapalny. Z jednej strony pacjenci chwalą miłą i pomocną obsługę recepcji oraz łatwość kontaktu telefonicznego, jednak równie liczne skargi dotyczą niekompetentnego personelu, problemów z umówieniem wizyty, opóźnień i nieefektywnego informowania o odwołanych terminach.",
+          "confidence": 1.0
+        }
+      }
+    ],
+    "metadata": {
+      "scraped_at": "2026-01-30T20:58:47.421332",
+      "sources_used": [
+        "nip_lookup",
+        "gus",
+        "website",
+        "google_maps",
+        "google_reviews_analysis",
+        "facebook",
+        "instagram",
+        "ai_categorization"
+      ],
+      "processing_time_ms": 100049,
+      "cost_usd": 0.004,
+      "errors": [],
+      "warnings": [],
+      "data_validation": {
+        "contacts_match": true,
+        "contacts_discrepancies": [],
+        "address_match": true,
+        "address_discrepancies": []
+      }
+    }
+  }
+}

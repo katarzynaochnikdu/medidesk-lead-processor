@@ -1,0 +1,270 @@
+{
+  "company": {
+    "nip": "5213873364",
+    "regon": "384091580",
+    "krs": null,
+    "nazwa_pelna": "KLINIKA OSIPOWICZ & TURKOWSKI SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ",
+    "nazwa_zwyczajowa": "Klinika OT.CO → Klinika medycyny estetycznej w Warszawie",
+    "adres_siedziby": {
+      "ulica": "ul. Bartycka 24B/U1",
+      "kod": "00-716",
+      "miasto": "Warszawa",
+      "wojewodztwo": "MAZOWIECKIE"
+    },
+    "kategoryzacja_ai": {
+      "platnik_uslug": [
+        "Komercyjne"
+      ],
+      "specjalizacja": [
+        "Medycyna Estetyczna"
+      ],
+      "wielospecjalistyczne": [
+        "chirurgia plastyczna",
+        "dermatologia",
+        "laryngologia",
+        "okulistyka"
+      ],
+      "typ_wlasnosci": "Prywatny (Private)",
+      "kategoria_konta": null,
+      "branza": null,
+      "ai_confidence": 0.99,
+      "ai_reasoning": null
+    },
+    "social_media": {
+      "website": "https://klinikaotco.pl",
+      "facebook": "https://www.facebook.com/ot.co.clinic/",
+      "instagram": "https://www.instagram.com/otcoclinic/",
+      "linkedin": null,
+      "tiktok": "https://www.tiktok.com/@klinikaotco?",
+      "x": null
+    },
+    "activity_score": {
+      "total": 70,
+      "recommendation": "HOT_LEAD",
+      "breakdown": {
+        "google_maps": 25,
+        "facebook": 10,
+        "instagram": 20,
+        "tiktok": 5,
+        "website": 5,
+        "network": 5
+      },
+      "signals": [
+        "Google Maps 4.7/5",
+        "Google 900 recenzji",
+        "Facebook 10.4K followers",
+        "Instagram 15.8K followers",
+        "IG aktywny < 14 dni",
+        "TikTok 49.0K",
+        "SSL aktywny",
+        "Sieć 5 placówek"
+      ]
+    },
+    "placowki": [
+      {
+        "typ_adresu": "-None-",
+        "adres": {
+          "ulica": "Zgrupowania AK \"Żmija\" 12",
+          "kod": "01-864",
+          "miasto": "Warszawa",
+          "wojewodztwo": null
+        },
+        "kontakty": [
+          {
+            "typ": "telefon",
+            "wartosc": "+48 221 230 333",
+            "opis": null
+          },
+          {
+            "typ": "email",
+            "wartosc": "kontakt@klinikaotco.pl",
+            "opis": null
+          },
+          {
+            "typ": "email",
+            "wartosc": "pr@klinikaotco.pl",
+            "opis": null
+          },
+          {
+            "typ": "email",
+            "wartosc": "media@klinikaotco.pl",
+            "opis": null
+          }
+        ],
+        "godziny_otwarcia": "pią: 08:00 to 20:00; sob: ZAMknięte; nie: ZAMknięte; pon: 08:00 to 20:00; wto: 08:00 to 20:00; śro: 08:00 to 20:00; czw: 08:00 to 20:00",
+        "coordinates": {
+          "lat": 52.269791,
+          "lng": 20.9365135
+        },
+        "google_maps_place_id": "ChIJ16Q70aHLHkcRXzA5ePgMaZ8",
+        "google_rating": 4.3,
+        "google_reviews_count": 147,
+        "reviews_insights": null
+      },
+      {
+        "typ_adresu": "-None-",
+        "adres": {
+          "ulica": "ul. Bartycka 24B/U1",
+          "kod": "00-716",
+          "miasto": "Warszawa",
+          "wojewodztwo": null
+        },
+        "kontakty": [
+          {
+            "typ": "telefon",
+            "wartosc": "+48 221 230 333",
+            "opis": null
+          },
+          {
+            "typ": "email",
+            "wartosc": "kontakt@klinikaotco.pl",
+            "opis": null
+          },
+          {
+            "typ": "email",
+            "wartosc": "pr@klinikaotco.pl",
+            "opis": null
+          },
+          {
+            "typ": "email",
+            "wartosc": "media@klinikaotco.pl",
+            "opis": null
+          }
+        ],
+        "godziny_otwarcia": "pią: 09:00 to 21:00; sob: 09:00 to 16:00; nie: ZAMknięte; pon: 09:00 to 21:00; wto: 09:00 to 21:00; śro: 09:00 to 21:00; czw: 09:00 to 21:00",
+        "coordinates": {
+          "lat": 52.2127075,
+          "lng": 21.0603572
+        },
+        "google_maps_place_id": "ChIJi03vuWHNHkcRw8QPwLYMYqM",
+        "google_rating": 4.6,
+        "google_reviews_count": 731,
+        "reviews_insights": {
+          "total_reviews_analyzed": 46,
+          "avg_rating": 4.58,
+          "top_complaints": [
+            {
+              "insight": "Powierzchowne konsultacje bez diagnozy i propozycji leczenia.",
+              "count": 2,
+              "citations": [
+                {
+                  "text": "No cóż niestety nie mogę napisać nic dobrego moja wizyta przebiegła szybko około 2min.miałem nadzieje na diagnozę myślałem ze będzie jakieś  badanie czy co cos w tym rodzaju niestety pani dermatolog n...",
+                  "date": "2026-01-27",
+                  "author": "Paweł Miłoszewski",
+                  "rating": 1,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2poMk0xQTRXR3czVmtsdFZVZFRPV1kxZDJzMlFWRRAB!2m1!1s0x0:0xa3620cb6c00fc4c3!3m1!1s2@1:CAIQACodChtycF9oOjh2M1A4WGw3VkltVUdTOWY1d2s2QVE%7C0dTCYZCceKw%7C?hl=pl"
+                },
+                {
+                  "text": "Skusiłem się na dobre opinie i postanowiłem wybrać tę klinikę. Niestety, na ten moment doświadczenie jest negatywne. Dość droga konsultacja okazała się niczym szczególnym – lekarz pokazał zdjęcia, któ...",
+                  "date": "2025-09-24",
+                  "author": "Dzianis",
+                  "rating": 1,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT205RVgzWlFTekk1VEVKbU9EQnpZV0pXTFU1WlZWRRAB!2m1!1s0x0:0xa3620cb6c00fc4c3!3m1!1s2@1:CAIQACodChtycF9oOm9EX3ZQSzI5TEJmODBzYWJWLU5ZVVE%7C0cowY0pnjEI%7C?hl=pl"
+                }
+              ]
+            },
+            {
+              "insight": "Recepcja nie wysyła obiecanych informacji mailowo.",
+              "count": 1,
+              "citations": [
+                {
+                  "text": "Wizyta i zabiegi w porządku.\nPani lekarz wzbudzila we mnie zaufanie. Odniosłam wrażenie że rozumie moje potrzeby i jest w stanie zaproponowac właściwe zabiegi stosowanie do potrzeby,  przygotowala dla...",
+                  "date": "2025-10-16",
+                  "author": "Magda JANUSZKA",
+                  "rating": 4,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT21OQ1NXeFhObkJFTVhKelkyUkljMlpsZWt0bVdXYxAB!2m1!1s0x0:0xa3620cb6c00fc4c3!3m1!1s2@1:CAIQACodChtycF9oOmNCSWxXNnBEMXJzY2RIc2ZlektmWWc%7C0cwED3d34vi%7C?hl=pl"
+                }
+              ]
+            }
+          ],
+          "top_praises": [
+            {
+              "insight": "Personel dokładnie i wyczerpująco wszystko tłumaczy.",
+              "count": 7,
+              "citations": [
+                {
+                  "text": "Polecam Klinikę Osipowicz oraz panią doktor Katarzynę Osiewicz. Dzięki profesjonalnemu podejściu i świetnie dobranemu zabiegowi udało mi się skutecznie pozbyć naczyniek na twarzy. Pani Doktor wszystko...",
+                  "date": "2026-01-19",
+                  "author": "Beata Machniewska",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2xSNU1GRnZabGQyVEd4Mk4xOTNhR2RPWldNelpuYxAB!2m1!1s0x0:0xa3620cb6c00fc4c3!3m1!1s2@1:CAIQACodChtycF9oOlR5MFFvZld2TGx2N193aGdOZWMzZnc%7C0dQWRZtOD1-%7C?hl=pl"
+                },
+                {
+                  "text": "Byłam na konsultacji kosmetologicznej u pani Karoliny, która swoją wiedzę łączy z wyjątkowym podejściem do klienta. Potrafi nie tylko doradzić, ale też szczerze odradzić zabieg, jeśli w danym momencie...",
+                  "date": "2025-12-12",
+                  "author": "Magdalena P",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2xCR09GSnRkMDl6ZUMxUVdpMHRTWFk0YkhKWGNHYxAB!2m1!1s0x0:0xa3620cb6c00fc4c3!3m1!1s2@1:CAIQACodChtycF9oOlBGOFJtd09zeC1QWi0tSXY4bHJXcGc%7C0dDwMAIJvHi%7C?hl=pl"
+                },
+                {
+                  "text": "Polecam klinikę OT.CO Clinic, szczególnie zabiegi u pani Justyny. Pani Justyna posiada dużą wiedzę i doświadczenie. Gdy mam jakieś wątpliwości to zawsze mogę liczyć na wyjaśnienie problemu.",
+                  "date": "2025-12-10",
+                  "author": "Michał Kijak",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChZDSUhNMG9nS0VJQ0FnSUQ1cHB2Q1B3EAE!2m1!1s0x0:0xa3620cb6c00fc4c3!3m1!1s2@1:CIHM0ogKEICAgID5ppvCPw%7CCgwI0qTdqQYQ8Oz41gI%7C?hl=pl"
+                }
+              ]
+            },
+            {
+              "insight": "Bardzo miła, uprzejma i pomocna obsługa.",
+              "count": 7,
+              "citations": [
+                {
+                  "text": "Zgłosiłem się do OT.CO Clinic z problemem laryngologicznym. Sprawa została załatwiona szybko, profesjonalnie i w bardzo uprzejmej atmosferze. Wysoka jakość usługi, duża kultura osobista i realna trosk...",
+                  "date": "2025-12-21",
+                  "author": "Marcin Jabłoński",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2pkbmRWWkhYelk0Y0RCMlpucFliMUV4T0hkS1ZXYxAB!2m1!1s0x0:0xa3620cb6c00fc4c3!3m1!1s2@1:CAIQACodChtycF9oOjdndVZHXzY4cDB2ZnpYb1ExOHdKVWc%7C0dH-bB4jVjC%7C?hl=pl"
+                },
+                {
+                  "text": "Profesjonalna kadra i bardzo mila obsluga. Polecam!",
+                  "date": "2025-12-20",
+                  "author": "Beata Czyzewska",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2s4eWJYTjVMVlZmWVV0TE9YbE5UWEpIYVhoWE1tYxAB!2m1!1s0x0:0xa3620cb6c00fc4c3!3m1!1s2@1:CAIQACodChtycF9oOk8ybXN5LVVfYUtLOXlNTXJHaXhXMmc%7C0dGb8OqfvMo%7C?hl=pl"
+                },
+                {
+                  "text": "Polecam, bardzo miła i troskliwą obsługa, komfortowe warunki i kompetentna pani kosmetolog.",
+                  "date": "2025-11-24",
+                  "author": "Beata Rostkowska-Suszczyńska",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2w5bFNFaGFRbHBEYTBSWk4zZHFPSGRoZG5BMGRXYxAB!2m1!1s0x0:0xa3620cb6c00fc4c3!3m1!1s2@1:CAIQACodChtycF9oOl9lSEhaQlpDa0RZN3dqOHdhdnA0dWc%7C0d86FxjZ3_R%7C?hl=pl"
+                }
+              ]
+            }
+          ],
+          "common_themes": [
+            "Szczegółowe wyjaśnianie procedur i planu leczenia",
+            "Uprzejmość i empatyczne podejście personelu (lekarze i recepcja)",
+            "Niespójność w komunikacji administracyjnej (np. brak maili)"
+          ],
+          "summary": "Komunikacja z personelem medycznym jest oceniana znakomicie – pacjenci chwalą szczegółowe wyjaśnienia, empatię i poczucie bycia wysłuchanym. Obsługa recepcji jest również postrzegana jako bardzo miła i pomocna. Jedynym zidentyfikowanym problemem w komunikacji jest pojedynczy, ale istotny przypadek braku odpowiedzi mailowej z obiecanymi informacjami od recepcji.",
+          "confidence": 0.74
+        }
+      }
+    ],
+    "metadata": {
+      "scraped_at": "2026-01-30T22:37:12.091614",
+      "sources_used": [
+        "website",
+        "gus",
+        "google_maps",
+        "google_reviews_analysis",
+        "facebook",
+        "instagram",
+        "tiktok",
+        "ai_categorization"
+      ],
+      "processing_time_ms": 204905,
+      "cost_usd": 0.019,
+      "errors": [],
+      "warnings": [],
+      "data_validation": {
+        "contacts_match": true,
+        "contacts_discrepancies": [],
+        "address_match": true,
+        "address_discrepancies": []
+      }
+    }
+  }
+}

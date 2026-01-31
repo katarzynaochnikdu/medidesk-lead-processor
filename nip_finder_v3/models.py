@@ -49,6 +49,73 @@ class ValidationResult(BaseModel):
     errors: list[str] = Field(default_factory=list, description="Lista błędów walidacji")
 
 
+class NIPCandidate(BaseModel):
+    """Kandydat na NIP - alternatywna propozycja."""
+
+    nip: str = Field(..., description="NIP (10 cyfr)")
+    nip_formatted: str = Field(..., description="NIP sformatowany (XXX-XXX-XX-XX)")
+    company_name_found: Optional[str] = Field(None, description="Nazwa firmy znaleziona przy NIP")
+    confidence: float = Field(0.0, description="Poziom pewności (0.0-1.0)")
+    source_url: Optional[str] = Field(None, description="URL źródła")
+    source_domain: Optional[str] = Field(None, description="Domena źródła")
+    reasoning: Optional[str] = Field(None, description="Uzasadnienie AI")
+
+
+class ScrapedCompanyData(BaseModel):
+    """Dane zebrane podczas crawlowania strony firmy."""
+
+    # Domena źródłowa
+    domain: Optional[str] = Field(None, description="Domena firmowa")
+
+    # Dane kontaktowe znalezione na stronie
+    emails: list[str] = Field(
+        default_factory=list, description="Adresy email znalezione na stronie"
+    )
+    phones: list[str] = Field(
+        default_factory=list, description="Numery telefonów w formacie +48XXXXXXXXX"
+    )
+    addresses: list[str] = Field(
+        default_factory=list, description="Adresy znalezione na stronie"
+    )
+
+    # Social media
+    social_links: dict[str, str] = Field(
+        default_factory=dict,
+        description="Linki do social media {platform: url}",
+    )
+
+    # Metadane strony
+    website_title: Optional[str] = Field(None, description="Tytuł strony (<title>)")
+
+    # Źródła danych
+    source_urls: list[str] = Field(
+        default_factory=list, description="URL-e z których pobrano dane"
+    )
+
+    def merge(self, other: "ScrapedCompanyData") -> "ScrapedCompanyData":
+        """Łączy dane z innego ScrapedCompanyData (bez duplikatów)."""
+        # Emails - unique
+        all_emails = list(dict.fromkeys(self.emails + other.emails))
+        # Phones - unique
+        all_phones = list(dict.fromkeys(self.phones + other.phones))
+        # Addresses - unique
+        all_addresses = list(dict.fromkeys(self.addresses + other.addresses))
+        # Social links - merge dicts (other overwrites)
+        merged_social = {**self.social_links, **other.social_links}
+        # Source URLs - unique
+        all_sources = list(dict.fromkeys(self.source_urls + other.source_urls))
+
+        return ScrapedCompanyData(
+            domain=self.domain or other.domain,
+            emails=all_emails,
+            phones=all_phones,
+            addresses=all_addresses,
+            social_links=merged_social,
+            website_title=self.website_title or other.website_title,
+            source_urls=all_sources,
+        )
+
+
 class NIPResult(BaseModel):
     """Wynik wyszukiwania NIP."""
 
@@ -56,10 +123,16 @@ class NIPResult(BaseModel):
     company_name: str = Field(..., description="Nazwa firmy (input)")
     city: Optional[str] = Field(None, description="Miasto (input)")
 
-    # Wynik
+    # Wynik główny (best choice)
     found: bool = Field(..., description="Czy NIP został znaleziony")
     nip: Optional[str] = Field(None, description="NIP (10 cyfr)")
     nip_formatted: Optional[str] = Field(None, description="NIP sformatowany (XXX-XXX-XX-XX)")
+
+    # Alternatywni kandydaci (maybe - max 5)
+    alternatives: list[NIPCandidate] = Field(
+        default_factory=list, 
+        description="Alternatywni kandydaci (max 5) - inne możliwe NIPy"
+    )
 
     # Metadane
     confidence: float = Field(0.0, description="Poziom pewności (0.0-1.0)")
@@ -71,6 +144,11 @@ class NIPResult(BaseModel):
     processing_time_ms: int = Field(0, description="Czas przetwarzania w ms")
     cost_usd: float = Field(0.0, description="Koszt zapytania w USD")
     metadata: dict = Field(default_factory=dict, description="Dodatkowe metadane (strategy-specific)")
+
+    # Dane zebrane podczas crawlowania
+    scraped_data: Optional[ScrapedCompanyData] = Field(
+        None, description="Dane kontaktowe zebrane podczas scrapingu (email, tel, adres, social)"
+    )
 
     # Cache metadata
     from_cache: bool = Field(False, description="Czy wynik z cache")

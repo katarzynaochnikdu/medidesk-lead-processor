@@ -1,0 +1,278 @@
+{
+  "company": {
+    "nip": null,
+    "regon": null,
+    "krs": null,
+    "nazwa_pelna": "Voltamed",
+    "nazwa_zwyczajowa": "Klinika psychiatryczna i psychoterapii Warszawa",
+    "adres_siedziby": null,
+    "kategoryzacja_ai": {
+      "platnik_uslug": [
+        "Komercyjne"
+      ],
+      "specjalizacja": [
+        "Diagnostyka",
+        "POZ"
+      ],
+      "wielospecjalistyczne": [],
+      "typ_wlasnosci": "Prywatny (Private)",
+      "kategoria_konta": null,
+      "branza": null,
+      "ai_confidence": 0.9,
+      "ai_reasoning": null
+    },
+    "social_media": {
+      "website": "https://voltamed.pl",
+      "facebook": "https://www.facebook.com/VoltaMed",
+      "instagram": null,
+      "linkedin": null,
+      "tiktok": null,
+      "x": null
+    },
+    "activity_score": {
+      "total": 15,
+      "recommendation": "COLD",
+      "breakdown": {
+        "google_maps": 10,
+        "facebook": 0,
+        "instagram": 0,
+        "tiktok": 0,
+        "website": 5
+      },
+      "signals": [
+        "Google 92 recenzji",
+        "SSL aktywny"
+      ]
+    },
+    "placowki": [
+      {
+        "typ_adresu": "-None-",
+        "adres": {
+          "ulica": "ul. Żelazna 76A/U1",
+          "kod": "00-894",
+          "miasto": "Warszawa",
+          "wojewodztwo": null
+        },
+        "kontakty": [
+          {
+            "typ": "telefon",
+            "wartosc": "+48 228 540 194",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 226 540 233",
+            "opis": null
+          },
+          {
+            "typ": "email",
+            "wartosc": "info@voltamed.pl",
+            "opis": null
+          },
+          {
+            "typ": "email",
+            "wartosc": "rejestracja@voltamed.pl",
+            "opis": null
+          }
+        ],
+        "godziny_otwarcia": "pią: 08:00 to 21:00; sob: ZAMknięte; nie: ZAMknięte; pon: 08:00 to 21:00; wto: 08:00 to 21:00; śro: 08:00 to 21:00; czw: 08:00 to 21:00",
+        "coordinates": {
+          "lat": 52.2385788,
+          "lng": 20.9896817
+        },
+        "google_maps_place_id": "ChIJEberz4bMHkcR8A6U-BQ7zkw",
+        "google_rating": 3.1,
+        "google_reviews_count": 13,
+        "reviews_insights": {
+          "total_reviews_analyzed": 7,
+          "avg_rating": 3.076923076923077,
+          "top_complaints": [
+            {
+              "insight": "Brak informacji o opóźnieniach i zmianach wizyt",
+              "count": 4,
+              "citations": [
+                {
+                  "text": "Zdecydowanie odradzam. Brak szacunku dla pacjenta i brak empatii dla chorych. Potwierdzam, ciagle przekladnie i odwolywanie wizyt, ktore musisz oplacac z wyprzedzeniem. Nawet nie przepraszaja. Lekarze...",
+                  "date": "2025-12-07",
+                  "author": "Ja Tyoni",
+                  "rating": 1,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2pVNWJWSTBhV05RTjFvMFJIWkdWRTFFTWxwRExXYxAB!2m1!1s0x0:0x4cce3b14f8940ef0!3m1!1s2@1:CAIQACodChtycF9oOjU5bVI0aWNQN1o0RHZGVE1EMlpDLWc%7C0dCOLW2FZdb%7C?hl=pl"
+                },
+                {
+                  "text": "Nie polecam wręcz odradzam. Niepoważna klinika która najpierw przekłada a potem nie znajduje czasu dla pacjenta ale pieniądze arze kasuje idtazu. Niepoważni ludzie",
+                  "date": "2025-08-25",
+                  "author": "Justyna P.",
+                  "rating": 1,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT25CcE0wdEVjbDlFY3pkc1VGQlhWMmhpUjI0d1FXYxAB!2m1!1s0x0:0x4cce3b14f8940ef0!3m1!1s2@1:CAIQACodChtycF9oOnBpM0tEcl9EczdsUFBXV2hiR24wQWc%7C0cf8M_HmbJS%7C?hl=pl"
+                },
+                {
+                  "text": "Nie polecam miejsca nikomu. Szkoda, że nie można dać 0, bo 1 gwiazdka to już zdecydowanie za dużo. Wizyta opóźniona o godzinę , zero informacji, mimo, że sami mają zapis w regulaminie, o konieczności ...",
+                  "date": "2024-04-07",
+                  "author": "Michał A",
+                  "rating": 1,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChdDSUhNMG9nS0VJQ0FnSUREd3ViaHNBRRAB!2m1!1s0x0:0x4cce3b14f8940ef0!3m1!1s2@1:CIHM0ogKEICAgIDDwubhsAE%7CCgwIz_zIsAYQoK_R-QE%7C?hl=pl"
+                }
+              ]
+            },
+            {
+              "insight": "Lekarze nie informują pacjenta o diagnozie",
+              "count": 2,
+              "citations": [
+                {
+                  "text": "Zdecydowanie odradzam - przy bardzo poważnym zaburzeniu i przeżyciach, lekarz psychiatra nie wsłuchujący się w pacjenta i nie zainteresowany jego prawdziwym stanem. Przez całe leczenie nie otrzymałam ...",
+                  "date": "2024-05-06",
+                  "author": "Paulina G",
+                  "rating": 1,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChdDSUhNMG9nS0VJQ0FnSURqbmN2cHdRRRAB!2m1!1s0x0:0x4cce3b14f8940ef0!3m1!1s2@1:CIHM0ogKEICAgIDjncvpwQE%7CCgsIyLPjsQYQiIK1Kg%7C?hl=pl"
+                },
+                {
+                  "text": "Tak jak większość klinika nastawiona na kasę na nic więcej dobro pacjenta jest zerowe, jednem z lekarzy nie słucha, wystawia diagnozy bez poinformowania pacjenta o diagnozie i daje leki po których czł...",
+                  "date": "2023-10-14",
+                  "author": "Michał L",
+                  "rating": 1,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChdDSUhNMG9nS0VJQ0FnSUM1b2ZubzRnRRAB!2m1!1s0x0:0x4cce3b14f8940ef0!3m1!1s2@1:CIHM0ogKEICAgIC5ofno4gE%7CCgwInaSqqQYQwO37sAE%7C?hl=pl"
+                }
+              ]
+            },
+            {
+              "insight": "Lekarz zapomina o wystawieniu recepty",
+              "count": 2,
+              "citations": [
+                {
+                  "text": "Nie polecam miejsca nikomu. Szkoda, że nie można dać 0, bo 1 gwiazdka to już zdecydowanie za dużo. Wizyta opóźniona o godzinę , zero informacji, mimo, że sami mają zapis w regulaminie, o konieczności ...",
+                  "date": "2024-04-07",
+                  "author": "Michał A",
+                  "rating": 1,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChdDSUhNMG9nS0VJQ0FnSUREd3ViaHNBRRAB!2m1!1s0x0:0x4cce3b14f8940ef0!3m1!1s2@1:CIHM0ogKEICAgIDDwubhsAE%7CCgwIz_zIsAYQoK_R-QE%7C?hl=pl"
+                },
+                {
+                  "text": "Nie polecam, wizyta umowiona online płacisz 300zl, o opóźnieniu prawie godzinę nikt nie informuje, lekarz pracujący za karę, zero pomocy, o wystawieniu recepty zapomnial.",
+                  "date": "2024-04-07",
+                  "author": "Ania Kawiecka",
+                  "rating": 1,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChdDSUhNMG9nS0VJQ0FnSUREd3FiUzhBRRAB!2m1!1s0x0:0x4cce3b14f8940ef0!3m1!1s2@1:CIHM0ogKEICAgIDDwqbS8AE%7CCgwIiPzIsAYQ6M79gwE%7C?hl=pl"
+                }
+              ]
+            },
+            {
+              "insight": "Brak empatii i przeprosin ze strony personelu",
+              "count": 2,
+              "citations": [
+                {
+                  "text": "Zdecydowanie odradzam. Brak szacunku dla pacjenta i brak empatii dla chorych. Potwierdzam, ciagle przekladnie i odwolywanie wizyt, ktore musisz oplacac z wyprzedzeniem. Nawet nie przepraszaja. Lekarze...",
+                  "date": "2025-12-07",
+                  "author": "Ja Tyoni",
+                  "rating": 1,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2pVNWJWSTBhV05RTjFvMFJIWkdWRTFFTWxwRExXYxAB!2m1!1s0x0:0x4cce3b14f8940ef0!3m1!1s2@1:CAIQACodChtycF9oOjU5bVI0aWNQN1o0RHZGVE1EMlpDLWc%7C0dCOLW2FZdb%7C?hl=pl"
+                },
+                {
+                  "text": "Nie polecam miejsca nikomu. Szkoda, że nie można dać 0, bo 1 gwiazdka to już zdecydowanie za dużo. Wizyta opóźniona o godzinę , zero informacji, mimo, że sami mają zapis w regulaminie, o konieczności ...",
+                  "date": "2024-04-07",
+                  "author": "Michał A",
+                  "rating": 1,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChdDSUhNMG9nS0VJQ0FnSUREd3ViaHNBRRAB!2m1!1s0x0:0x4cce3b14f8940ef0!3m1!1s2@1:CIHM0ogKEICAgIDDwubhsAE%7CCgwIz_zIsAYQoK_R-QE%7C?hl=pl"
+                }
+              ]
+            },
+            {
+              "insight": "Utrudniony kontakt z lekarzem po wizycie",
+              "count": 1,
+              "citations": [
+                {
+                  "text": "Zdecydowanie odradzam - przy bardzo poważnym zaburzeniu i przeżyciach, lekarz psychiatra nie wsłuchujący się w pacjenta i nie zainteresowany jego prawdziwym stanem. Przez całe leczenie nie otrzymałam ...",
+                  "date": "2024-05-06",
+                  "author": "Paulina G",
+                  "rating": 1,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChdDSUhNMG9nS0VJQ0FnSURqbmN2cHdRRRAB!2m1!1s0x0:0x4cce3b14f8940ef0!3m1!1s2@1:CIHM0ogKEICAgIDjncvpwQE%7CCgsIyLPjsQYQiIK1Kg%7C?hl=pl"
+                }
+              ]
+            }
+          ],
+          "top_praises": [
+            {
+              "insight": "Profesjonalni lekarze z dużymi zasobami empatii",
+              "count": 1,
+              "citations": [
+                {
+                  "text": "Profesjonalnie, miło  i spokojnie. Doświadczeni  lekarze  z dużymi zasobami  empatii.",
+                  "date": "2020-01-13",
+                  "author": "agata witt",
+                  "rating": 5,
+                  "review_url": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChZDSUhNMG9nS0VJQ0FnSURNLTZqTkp3EAE!2m1!1s0x0:0x4cce3b14f8940ef0!3m1!1s2@1:CIHM0ogKEICAgIDM-6jNJw%7CCgwI7Njx8AUQoPyDxQE%7C?hl=pl"
+                }
+              ]
+            }
+          ],
+          "common_themes": [
+            "Problemy z komunikacją dot. terminów i opóźnień",
+            "Brak empatii i informacji od lekarzy",
+            "Kwestie płatności za odwołane/przełożone wizyty",
+            "Błędy proceduralne (np. niewystawienie recepty)"
+          ],
+          "summary": "Komunikacja z pacjentami jest kluczowym i powtarzającym się problemem. Pacjenci masowo skarżą się na brak informacji o opóźnieniach i zmianach terminów, co jest głównym zarzutem. Dodatkowo, komunikacja ze strony lekarzy jest oceniana jako pozbawiona empatii, a kluczowe informacje, jak diagnoza czy recepta, nie są przekazywane bez ponaglenia.",
+          "confidence": 1.0
+        }
+      },
+      {
+        "typ_adresu": "-None-",
+        "adres": {
+          "ulica": "ul. Belgijska 11/8",
+          "kod": "02-511",
+          "miasto": "Warszawa",
+          "wojewodztwo": null
+        },
+        "kontakty": [
+          {
+            "typ": "telefon",
+            "wartosc": "+48 228 540 194",
+            "opis": null
+          },
+          {
+            "typ": "telefon",
+            "wartosc": "+48 226 540 233",
+            "opis": null
+          },
+          {
+            "typ": "email",
+            "wartosc": "info@voltamed.pl",
+            "opis": null
+          },
+          {
+            "typ": "email",
+            "wartosc": "rejestracja@voltamed.pl",
+            "opis": null
+          }
+        ],
+        "godziny_otwarcia": "pią: 08:00 to 21:00; sob: 09:00 to 15:00; nie: ZAMknięte; pon: 08:00 to 21:00; wto: 08:00 to 21:00; śro: 08:00 to 21:00; czw: 08:00 to 21:00",
+        "coordinates": {
+          "lat": 52.2024865,
+          "lng": 21.0242428
+        },
+        "google_maps_place_id": "ChIJ31057SvNHkcRdMnZetciu2Y",
+        "google_rating": 2.7,
+        "google_reviews_count": 79,
+        "reviews_insights": null
+      }
+    ],
+    "metadata": {
+      "scraped_at": "2026-01-30T22:46:38.550338",
+      "sources_used": [
+        "website",
+        "google_maps",
+        "google_reviews_analysis",
+        "facebook",
+        "ai_categorization"
+      ],
+      "processing_time_ms": 208400,
+      "cost_usd": 0.008,
+      "errors": [],
+      "warnings": [],
+      "data_validation": {
+        "contacts_match": true,
+        "contacts_discrepancies": [],
+        "address_match": true,
+        "address_discrepancies": []
+      }
+    }
+  }
+}
