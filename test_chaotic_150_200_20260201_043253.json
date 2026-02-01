@@ -1,0 +1,417 @@
+{
+  "timestamp": "2026-02-01T04:32:53.449641",
+  "total": 51,
+  "success_count": 0,
+  "fail_count": 51,
+  "success_rate": 0.0,
+  "results": [
+    {
+      "row_number": 150,
+      "input": "City Clinic",
+      "expected_nip": "5341172897",
+      "found_nip": null,
+      "success": false,
+      "error": "'tuple' object has no attribute 'get'"
+    },
+    {
+      "row_number": 151,
+      "input": "Nova Medical",
+      "expected_nip": "1182127533",
+      "found_nip": null,
+      "success": false,
+      "error": "'tuple' object has no attribute 'get'"
+    },
+    {
+      "row_number": 152,
+      "input": "Bioskaner",
+      "expected_nip": "5423240688",
+      "found_nip": null,
+      "success": false,
+      "error": "'tuple' object has no attribute 'get'"
+    },
+    {
+      "row_number": 153,
+      "input": "Dr Maj Podochirurgia",
+      "expected_nip": "5961663916",
+      "found_nip": null,
+      "success": false,
+      "error": "'tuple' object has no attribute 'get'"
+    },
+    {
+      "row_number": 154,
+      "input": "Szpital Zespolony w Lesznie",
+      "expected_nip": "6971598635",
+      "found_nip": null,
+      "success": false,
+      "error": "'tuple' object has no attribute 'get'"
+    },
+    {
+      "row_number": 155,
+      "input": "Otolaryngolodzy24",
+      "expected_nip": "7010799617",
+      "found_nip": null,
+      "success": false,
+      "error": "'tuple' object has no attribute 'get'"
+    },
+    {
+      "row_number": 156,
+      "input": "Przychodnia Kalina",
+      "expected_nip": "9570782607",
+      "found_nip": null,
+      "success": false,
+      "error": "'tuple' object has no attribute 'get'"
+    },
+    {
+      "row_number": 157,
+      "input": "Dentity 5 | Stomatologia bez Bólu",
+      "expected_nip": "5272934908",
+      "found_nip": null,
+      "success": false,
+      "error": "'tuple' object has no attribute 'get'"
+    },
+    {
+      "row_number": 158,
+      "input": "Medica Olesno",
+      "expected_nip": "5761054259",
+      "found_nip": null,
+      "success": false,
+      "error": "'tuple' object has no attribute 'get'"
+    },
+    {
+      "row_number": 159,
+      "input": "Doktor Lu (LuMedic)",
+      "expected_nip": "7971680840",
+      "found_nip": null,
+      "success": false,
+      "error": "'tuple' object has no attribute 'get'"
+    },
+    {
+      "row_number": 160,
+      "input": "Dentysta z Wieży (Medyczne Rewolucje)",
+      "expected_nip": "5871748477",
+      "found_nip": null,
+      "success": false,
+      "error": "'tuple' object has no attribute 'get'"
+    },
+    {
+      "row_number": 161,
+      "input": "Dentalblue",
+      "expected_nip": "5423458246",
+      "found_nip": null,
+      "success": false,
+      "error": "'tuple' object has no attribute 'get'"
+    },
+    {
+      "row_number": 162,
+      "input": "Jeżycka 44",
+      "expected_nip": "6991892243",
+      "found_nip": null,
+      "success": false,
+      "error": "'tuple' object has no attribute 'get'"
+    },
+    {
+      "row_number": 163,
+      "input": "NZOZ Łomianki",
+      "expected_nip": "5261627433",
+      "found_nip": null,
+      "success": false,
+      "error": "'tuple' object has no attribute 'get'"
+    },
+    {
+      "row_number": 164,
+      "input": "Poliklinika Doktora Bessera",
+      "expected_nip": "6251443347",
+      "found_nip": null,
+      "success": false,
+      "error": "'tuple' object has no attribute 'get'"
+    },
+    {
+      "row_number": 165,
+      "input": "CM Kamionki",
+      "expected_nip": "6652480590",
+      "found_nip": null,
+      "success": false,
+      "error": "'tuple' object has no attribute 'get'"
+    },
+    {
+      "row_number": 166,
+      "input": "inTOsmile Ortodoncja Tarnawski",
+      "expected_nip": "6482297331",
+      "found_nip": null,
+      "success": false,
+      "error": "'tuple' object has no attribute 'get'"
+    },
+    {
+      "row_number": 167,
+      "input": "Glam Smile",
+      "expected_nip": "7831763081",
+      "found_nip": null,
+      "success": false,
+      "error": "'tuple' object has no attribute 'get'"
+    },
+    {
+      "row_number": 168,
+      "input": "Fizjoline - Szczecin",
+      "expected_nip": "9552376162",
+      "found_nip": null,
+      "success": false,
+      "error": "'tuple' object has no attribute 'get'"
+    },
+    {
+      "row_number": 169,
+      "input": "Dentity 7 | Centrum Stomatologiczne Twój Uśmiech",
+      "expected_nip": "5272935061",
+      "found_nip": null,
+      "success": false,
+      "error": "'tuple' object has no attribute 'get'"
+    },
+    {
+      "row_number": 170,
+      "input": "Klinika Dr Stachura",
+      "expected_nip": "8513180595",
+      "found_nip": null,
+      "success": false,
+      "error": "'tuple' object has no attribute 'get'"
+    },
+    {
+      "row_number": 171,
+      "input": "Mimedica Sp. z o. o.",
+      "expected_nip": "8381878317",
+      "found_nip": null,
+      "success": false,
+      "error": "'tuple' object has no attribute 'get'"
+    },
+    {
+      "row_number": 172,
+      "input": "Vita Plus Legnica",
+      "expected_nip": "6912543822",
+      "found_nip": null,
+      "success": false,
+      "error": "'tuple' object has no attribute 'get'"
+    },
+    {
+      "row_number": 173,
+      "input": "Medikar Home Care",
+      "expected_nip": "5213922140",
+      "found_nip": null,
+      "success": false,
+      "error": "'tuple' object has no attribute 'get'"
+    },
+    {
+      "row_number": 174,
+      "input": "Medinet Września",
+      "expected_nip": "7891731446",
+      "found_nip": null,
+      "success": false,
+      "error": "'tuple' object has no attribute 'get'"
+    },
+    {
+      "row_number": 175,
+      "input": "Orthoteam Stomatologia Warmuz",
+      "expected_nip": "6141614486",
+      "found_nip": null,
+      "success": false,
+      "error": "'tuple' object has no attribute 'get'"
+    },
+    {
+      "row_number": 176,
+      "input": "Szpital Powiatowy im.A.Wolańczyka w Złotoryi",
+      "expected_nip": "7272794963",
+      "found_nip": null,
+      "success": false,
+      "error": "'tuple' object has no attribute 'get'"
+    },
+    {
+      "row_number": 177,
+      "input": "Ortop",
+      "expected_nip": "7831662279",
+      "found_nip": null,
+      "success": false,
+      "error": "'tuple' object has no attribute 'get'"
+    },
+    {
+      "row_number": 178,
+      "input": "Rodamed",
+      "expected_nip": "6681971190",
+      "found_nip": null,
+      "success": false,
+      "error": "'tuple' object has no attribute 'get'"
+    },
+    {
+      "row_number": 179,
+      "input": "CM Polskiego Związku Głuchych",
+      "expected_nip": "1132868316",
+      "found_nip": null,
+      "success": false,
+      "error": "'tuple' object has no attribute 'get'"
+    },
+    {
+      "row_number": 180,
+      "input": "Ars Medica Olsztyn",
+      "expected_nip": "7393705504",
+      "found_nip": null,
+      "success": false,
+      "error": "'tuple' object has no attribute 'get'"
+    },
+    {
+      "row_number": 181,
+      "input": "Klinika Infemini",
+      "expected_nip": "5213895408",
+      "found_nip": null,
+      "success": false,
+      "error": "'tuple' object has no attribute 'get'"
+    },
+    {
+      "row_number": 182,
+      "input": "Rehadent",
+      "expected_nip": "9512515114",
+      "found_nip": null,
+      "success": false,
+      "error": "'tuple' object has no attribute 'get'"
+    },
+    {
+      "row_number": 183,
+      "input": "NZOZ PROVITA J.Słobodzian",
+      "expected_nip": "6121837970",
+      "found_nip": null,
+      "success": false,
+      "error": "'tuple' object has no attribute 'get'"
+    },
+    {
+      "row_number": 184,
+      "input": "NZOZ Twoje Zdrowie EL",
+      "expected_nip": "5782583448",
+      "found_nip": null,
+      "success": false,
+      "error": "'tuple' object has no attribute 'get'"
+    },
+    {
+      "row_number": 185,
+      "input": "Klinika Kwiatek",
+      "expected_nip": "7792509360",
+      "found_nip": null,
+      "success": false,
+      "error": "'tuple' object has no attribute 'get'"
+    },
+    {
+      "row_number": 186,
+      "input": "Diagnostyka Obrazowa",
+      "expected_nip": "7831825132",
+      "found_nip": null,
+      "success": false,
+      "error": "'tuple' object has no attribute 'get'"
+    },
+    {
+      "row_number": 187,
+      "input": "Zdrowie Piaseczna",
+      "expected_nip": "1231267583",
+      "found_nip": null,
+      "success": false,
+      "error": "'tuple' object has no attribute 'get'"
+    },
+    {
+      "row_number": 188,
+      "input": "Szpital Pod Bukami",
+      "expected_nip": "5471938501",
+      "found_nip": null,
+      "success": false,
+      "error": "'tuple' object has no attribute 'get'"
+    },
+    {
+      "row_number": 189,
+      "input": "SCM Estetic",
+      "expected_nip": "6751541320",
+      "found_nip": null,
+      "success": false,
+      "error": "'tuple' object has no attribute 'get'"
+    },
+    {
+      "row_number": 190,
+      "input": "Feminature Clinic",
+      "expected_nip": "5213897100",
+      "found_nip": null,
+      "success": false,
+      "error": "'tuple' object has no attribute 'get'"
+    },
+    {
+      "row_number": 191,
+      "input": "Zdrowie Kielce (MR)",
+      "expected_nip": "6572776182",
+      "found_nip": null,
+      "success": false,
+      "error": "'tuple' object has no attribute 'get'"
+    },
+    {
+      "row_number": 192,
+      "input": "Artmedica Sp. z o. o.",
+      "expected_nip": "8792679542",
+      "found_nip": null,
+      "success": false,
+      "error": "'tuple' object has no attribute 'get'"
+    },
+    {
+      "row_number": 193,
+      "input": "Tomograf Tychy",
+      "expected_nip": "6461007954",
+      "found_nip": null,
+      "success": false,
+      "error": "'tuple' object has no attribute 'get'"
+    },
+    {
+      "row_number": 194,
+      "input": "Fundacja ”Potrafię Pomóc” Na Rzecz Dzieci Niepełnosprawnych Z Wadami Rozwojowymi",
+      "expected_nip": "8992642928",
+      "found_nip": null,
+      "success": false,
+      "error": "cannot unpack non-iterable NoneType object"
+    },
+    {
+      "row_number": 195,
+      "input": "109 Szpital Wojskowy Z Przychodnią - Samodzielny Publiczny Zakład Opieki Zdrowotnej",
+      "expected_nip": "8512543558",
+      "found_nip": null,
+      "success": false,
+      "error": "'tuple' object has no attribute 'get'"
+    },
+    {
+      "row_number": 196,
+      "input": "Centrum Medyczne Popularna",
+      "expected_nip": "1133112098",
+      "found_nip": null,
+      "success": false,
+      "error": "'tuple' object has no attribute 'get'"
+    },
+    {
+      "row_number": 197,
+      "input": "Projekt Uśmiech",
+      "expected_nip": "9571120216",
+      "found_nip": null,
+      "success": false,
+      "error": "'tuple' object has no attribute 'get'"
+    },
+    {
+      "row_number": 198,
+      "input": "WIP Medic",
+      "expected_nip": "8982253792",
+      "found_nip": null,
+      "success": false,
+      "error": "'tuple' object has no attribute 'get'"
+    },
+    {
+      "row_number": 199,
+      "input": "Arkamedic",
+      "expected_nip": "6462889821",
+      "found_nip": null,
+      "success": false,
+      "error": "'tuple' object has no attribute 'get'"
+    },
+    {
+      "row_number": 200,
+      "input": "Medicers",
+      "expected_nip": "5361756377",
+      "found_nip": null,
+      "success": false,
+      "error": "'tuple' object has no attribute 'get'"
+    }
+  ]
+}

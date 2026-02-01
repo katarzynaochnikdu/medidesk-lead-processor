@@ -100,6 +100,7 @@ class GoogleSearchStrategy(BaseStrategy):
                 "resultsPerPage": max_results,
                 "countryCode": self.settings.google_search_country,
                 "languageCode": self.settings.google_search_language,
+                "searchLanguage": self.settings.google_search_language,  # Restrict to Polish pages
                 "mobileResults": False,
                 "includeUnfilteredResults": False,
             }
@@ -130,18 +131,81 @@ class GoogleSearchStrategy(BaseStrategy):
                 lambda: list(self._apify_client.dataset(dataset_id).iterate_items())
             )
 
-            # Extract organic results
+            # Extract results from all sources (AI Overview, Featured Snippet, Organic)
             results = []
             for item in items:
+                # === AI OVERVIEW (highest priority - Google's AI-generated answer) ===
+                # This often contains NIP directly in the answer!
+                ai_overview = item.get("aiOverview")
+                if ai_overview:
+                    # AI Overview can be a dict or list of dicts
+                    if isinstance(ai_overview, dict):
+                        ai_text = ai_overview.get("text", "") or ai_overview.get("answer", "")
+                        ai_sources = ai_overview.get("sources", [])
+                        if ai_text:
+                            results.append({
+                                "title": "[AI Overview]",
+                                "description": ai_text,
+                                "url": ai_sources[0].get("url", "") if ai_sources else "",
+                                "source_type": "ai_overview",
+                            })
+                            logger.info("Google Search (Apify): AI Overview found: %s...", ai_text[:100])
+                    elif isinstance(ai_overview, list):
+                        for ao in ai_overview:
+                            ai_text = ao.get("text", "") or ao.get("answer", "")
+                            if ai_text:
+                                results.append({
+                                    "title": "[AI Overview]",
+                                    "description": ai_text,
+                                    "url": "",
+                                    "source_type": "ai_overview",
+                                })
+                
+                # === FEATURED SNIPPET (high priority - direct answer box) ===
+                featured_snippet = item.get("featuredSnippet")
+                if featured_snippet:
+                    fs_text = featured_snippet.get("text", "") or featured_snippet.get("description", "")
+                    fs_url = featured_snippet.get("url", "") or featured_snippet.get("link", "")
+                    if fs_text:
+                        results.append({
+                            "title": featured_snippet.get("title", "[Featured Snippet]"),
+                            "description": fs_text,
+                            "url": fs_url,
+                            "source_type": "featured_snippet",
+                        })
+                        logger.info("Google Search (Apify): Featured Snippet found: %s...", fs_text[:100])
+                
+                # === KNOWLEDGE GRAPH (company info panel) ===
+                knowledge_graph = item.get("knowledgeGraph")
+                if knowledge_graph:
+                    kg_title = knowledge_graph.get("title", "")
+                    kg_description = knowledge_graph.get("description", "")
+                    # Also check for attributes that might contain NIP
+                    kg_attrs = knowledge_graph.get("attributes", {})
+                    kg_text = f"{kg_title} {kg_description}"
+                    for key, value in kg_attrs.items():
+                        if isinstance(value, str):
+                            kg_text += f" {key}: {value}"
+                    if kg_text.strip():
+                        results.append({
+                            "title": kg_title or "[Knowledge Graph]",
+                            "description": kg_text,
+                            "url": knowledge_graph.get("website", ""),
+                            "source_type": "knowledge_graph",
+                        })
+                        logger.info("Google Search (Apify): Knowledge Graph found: %s", kg_title)
+                
+                # === ORGANIC RESULTS (standard search results) ===
                 organic_results = item.get("organicResults", [])
                 for result in organic_results:
                     results.append({
                         "title": result.get("title", ""),
                         "description": result.get("description", ""),
                         "url": result.get("url", ""),
+                        "source_type": "organic",
                     })
 
-            logger.info("Google Search (Apify): found %d results", len(results))
+            logger.info("Google Search (Apify): found %d results (incl. AI Overview, snippets)", len(results))
             return results
 
         except Exception as e:
